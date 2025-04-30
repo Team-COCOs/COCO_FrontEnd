@@ -14,6 +14,10 @@ export const HeaderStyle = styled.div`
 
     .Header_search {
       width: 80%;
+
+      .Header_searchPart {
+        width: 80%;
+      }
     }
   }
 `;
