@@ -55,5 +55,15 @@ export const LoginStyle = styled.div`
         }
       }
     }
+
+    .Login_saveEmail {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+
+      .Login_emailFont {
+      }
+    }
   }
 `;

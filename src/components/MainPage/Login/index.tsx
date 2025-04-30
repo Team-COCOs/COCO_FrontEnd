@@ -51,14 +51,12 @@ const ProfilePart = () => {
       </form>
 
       <div className="Login_saveEmail">
-        <label>
-          <input
-            type="checkbox"
-            checked={saveEmail}
-            onChange={(e) => setSaveEmail(e.target.checked)}
-          />
-          <span className="mainFont">이메일 저장</span>
-        </label>
+        <input
+          type="checkbox"
+          checked={saveEmail}
+          onChange={(e) => setSaveEmail(e.target.checked)}
+        />
+        <span className="Login_emailFont">이메일 저장</span>
       </div>
     </LoginStyle>
   );

@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "NeoDunggeunmo";
+  src: url("/fonts/neodgm_code.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
