@@ -16,7 +16,7 @@ export const LoginStyle = styled.div`
         gap: 3px;
 
         input {
-          height: 30px;
+          height: 32px;
           padding-left: 5px;
           border: none;
           background-color: rgb(236, 236, 236);
@@ -32,7 +32,7 @@ export const LoginStyle = styled.div`
 
       button {
         width: 40%;
-        height: 55px;
+        height: 60px;
         background: #b0b0b0;
         border: none;
         border-radius: 4px;
@@ -60,9 +60,16 @@ export const LoginStyle = styled.div`
       display: flex;
       align-items: center;
       gap: 5px;
-      margin-top: 10px;
+      margin-top: 5px;
+
+      input {
+        width: 15px;
+        height: 15px;
+      }
 
       .Login_emailFont {
+        font-size: 12px;
+        font-weight: bold;
       }
     }
   }

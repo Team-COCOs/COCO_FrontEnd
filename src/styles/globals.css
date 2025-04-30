@@ -47,8 +47,14 @@ a {
   color: #f87013;
 }
 
-.mainFont {
+/* 테마 폰트 */
+.pixelFont {
+  /* 모달 폰트 */
   font-family: "NeoDunggeunmo", sans-serif;
+}
+
+.mainFont {
+  font-family: "Dotum", "돋움", sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
