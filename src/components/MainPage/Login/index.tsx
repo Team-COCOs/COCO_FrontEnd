@@ -6,9 +6,12 @@ import axios from "axios";
 import Cookie from "js-cookie";
 import { useRouter } from "next/router";
 import { catchAxiosError } from "@/utils/catchAxiosError";
+import { useDispatch } from "react-redux";
+import { setReduxUser } from "@/store/reducers/userSlice";
 
 const ProfilePart = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [saveEmail, setSaveEmail] = useState(false);
 
   const formik = useFormik({
@@ -40,6 +43,9 @@ const ProfilePart = () => {
             path: "/", // 모든 페이지에서 접근 가능
             expires: 1, // 1일
           });
+
+          dispatch(setReduxUser(res.data.user));
+
           router.push("/");
         })
         .catch(catchAxiosError);
