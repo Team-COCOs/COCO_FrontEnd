@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const LoginStyle = styled.div`
   &.Login_wrap {
-    border: 3px solid rgb(219, 219, 219);
+    border: 3px solid #d3d3d3;
     padding: 10px;
 
     .Login_form {
@@ -37,10 +37,22 @@ export const LoginStyle = styled.div`
         border: none;
         border-radius: 4px;
         cursor: pointer;
+        box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.7),
+          inset 0 -2px 4px rgba(0, 0, 0, 0.2);
 
         font-size: 17px;
         font-weight: bold;
         color: white;
+
+        &:hover {
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2),
+            inset 0 -2px 4px rgba(235, 235, 235, 0.7);
+        }
+
+        &:active,
+        &:focus {
+          outline: none;
+        }
       }
     }
   }
