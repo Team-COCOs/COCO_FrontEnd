@@ -7,8 +7,10 @@ const CocoWorld = () => {
   return (
     <CocoWorldPageStyled className="CocoWorldPage_wrap">
       <div className="CocoWorldPage_container">
-        <div className="CocoWorldPage_profile">미니홈피</div>
-        <div className="CocoWorldPage_store"></div>
+        <div className="CocoWorldPage_left">
+          <div className="CocoWorldPage_book_wrap">책부분</div>
+        </div>
+        <div className="CocoWorldPage_right"></div>
       </div>
     </CocoWorldPageStyled>
   );
