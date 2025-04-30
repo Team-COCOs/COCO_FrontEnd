@@ -9,8 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "98.css": "^0.1.21",
+    "antd": "^5.24.9",
     "axios": "^1.9.0",
     "clsx": "^2.1.1",
+    "cookie": "^1.0.2",
+    "formik": "^2.4.6",
     "js-cookie": "^3.0.5",
     "next": "15.3.1",
     "react": "^19.0.0",
@@ -19,6 +23,7 @@
     "styled-components": "^6.1.17"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

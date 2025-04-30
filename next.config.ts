@@ -1,8 +1,56 @@
-import type { NextConfig } from "next";
+const path = require("path");
 
-const nextConfig: NextConfig = {
-  /* config options here */
+module.exports = {
   reactStrictMode: true,
-};
+  transpilePackages: [
+    "antd",
+    "@ant-design",
+    "@rc-component",
+    "rc-cascader",
+    "rc-checkbox",
+    "rc-collapse",
+    "rc-dialog",
+    "rc-drawer",
+    "rc-dropdown",
+    "rc-field-form",
+    "rc-image",
+    "rc-input",
+    "rc-input-number",
+    "rc-mentions",
+    "rc-menu",
+    "rc-motion",
+    "rc-notification",
+    "rc-pagination",
+    "rc-picker",
+    "rc-progress",
+    "rc-rate",
+    "rc-resize-observer",
+    "rc-segmented",
+    "rc-select",
+    "rc-slider",
+    "rc-steps",
+    "rc-switch",
+    "rc-table",
+    "rc-tabs",
+    "rc-textarea",
+    "rc-tooltip",
+    "rc-tree",
+    "rc-tree-select",
+    "rc-upload",
+    "rc-util",
+  ],
 
-export default nextConfig;
+  compiler: {
+    styledComponents: true,
+  },
+
+  // images: {
+  //   domains: ["localhost", "13.209.89.42", "15.164.52.122"], // 외부 접속을 위한 IP 추가
+  // },
+
+  // src/pages 디렉토리로 경로 설정
+  webpack(config) {
+    config.resolve.modules.push(path.resolve("./src"));
+    return config;
+  },
+};
