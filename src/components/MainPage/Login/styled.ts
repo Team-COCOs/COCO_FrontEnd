@@ -41,10 +41,6 @@ export const LoginStyle = styled.div`
         font-size: 17px;
         font-weight: bold;
         color: white;
-
-        &:hover {
-          background-color: ${({ theme }) => theme.colors.mainColor};
-        }
       }
     }
   }
