@@ -59,6 +59,7 @@ a {
 
 .mainFont {
   font-family: "Dotum", "돋움", sans-serif;
+  letter-spacing: -1.5px;
 }
 
 @media (prefers-color-scheme: dark) {

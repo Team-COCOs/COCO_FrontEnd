@@ -1,8 +1,9 @@
+import theme from "@/styles/theme";
 import styled from "styled-components";
 
 export const LoginStyle = styled.div`
   &.Login_wrap {
-    border: 3px solid #d3d3d3;
+    border: 3px solid rgb(233, 233, 233);
     padding: 10px;
 
     .Login_form {
@@ -22,6 +23,12 @@ export const LoginStyle = styled.div`
           background-color: rgb(236, 236, 236);
           width: 100%;
 
+          &::placeholder {
+            font-size: 12px;
+            font-weight: bold;
+            color: rgb(172, 172, 172);
+          }
+
           &:hover,
           &:active,
           &:focus {
@@ -33,7 +40,7 @@ export const LoginStyle = styled.div`
       button {
         width: 40%;
         height: 60px;
-        background: #b0b0b0;
+        background-color: #b0b0b0;
         border: none;
         border-radius: 4px;
         cursor: pointer;
@@ -59,17 +66,54 @@ export const LoginStyle = styled.div`
     .Login_saveEmail {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 3px;
       margin-top: 5px;
 
       input {
         width: 15px;
         height: 15px;
+        appearance: none; /* 기본 제거 */
+        background-color: rgb(236, 236, 236);
+        border: none;
+        border-radius: 0;
+        cursor: pointer;
+
+        &:checked {
+          appearance: auto; /* 기본 체크박스 */
+          background-color: initial;
+        }
       }
 
       .Login_emailFont {
         font-size: 12px;
         font-weight: bold;
+      }
+    }
+
+    .Loing_line {
+      height: 3px;
+      width: 100%;
+      background-color: ${theme.colors.mainColor};
+      margin-top: 3px;
+    }
+
+    .Login_etc {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin-top: 5px;
+
+      font-size: 12px;
+      font-weight: bold;
+
+      .Login_gray {
+        width: 2px;
+        height: 13px;
+        background-color: rgb(234, 234, 234);
+      }
+
+      .mainFont {
+        cursor: pointer;
       }
     }
   }
