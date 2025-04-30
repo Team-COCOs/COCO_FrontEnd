@@ -5,5 +5,6 @@ export const FooterStyled = styled.div`
     position: relative;
     bottom: 0;
     background-color: bisque;
+    height: 150px;
   }
 `;
