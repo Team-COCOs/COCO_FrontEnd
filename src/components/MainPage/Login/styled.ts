@@ -8,7 +8,7 @@ export const LoginStyle = styled.div`
     .Login_form {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 10px;
 
       .Login_inputs {
         display: flex;
@@ -33,6 +33,18 @@ export const LoginStyle = styled.div`
       button {
         width: 40%;
         height: 55px;
+        background: #b0b0b0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+
+        font-size: 17px;
+        font-weight: bold;
+        color: white;
+
+        &:hover {
+          background-color: ${({ theme }) => theme.colors.mainColor};
+        }
       }
     }
   }

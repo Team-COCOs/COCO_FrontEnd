@@ -12,7 +12,7 @@ const ProfilePart = () => {
           <input placeholder="이메일" />
           <input placeholder="비밀번호" />
         </div>
-        <button className="Login_btn"> 로그인 </button>
+        <button className="Login_btn"> &gt; 로그인 </button>
       </div>
     </LoginStyle>
   );
