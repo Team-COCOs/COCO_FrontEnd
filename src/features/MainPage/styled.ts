@@ -10,7 +10,7 @@ export const MainPageStyled = styled.div`
 
     .MainPage_container {
       display: flex;
-      gap: 20px;
+      gap: 10px;
       flex: 1;
 
       .MainPage_profile {
