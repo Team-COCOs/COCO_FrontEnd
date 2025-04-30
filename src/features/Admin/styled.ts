@@ -15,7 +15,7 @@ export const AdminPageStyled = styled.div`
       padding-left: 50px;
       font-size: 25px;
       font-weight: bold;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid rgba(5, 5, 5, 0.06);
       background-color: white;
       position: fixed;
       top: 0;
@@ -26,6 +26,7 @@ export const AdminPageStyled = styled.div`
       h2 {
         margin-left: 12px;
         font-size: 25px;
+        cursor: pointer;
       }
     }
     // 헤더 로고
@@ -33,6 +34,7 @@ export const AdminPageStyled = styled.div`
       display: flex;
       width: 55px;
       height: 55px;
+      cursor: pointer;
       img {
         width: 100%;
         height: 100%;
