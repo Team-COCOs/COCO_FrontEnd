@@ -32,6 +32,10 @@ body {
   margin: 0;
 }
 
+h2 {
+  all: unset;
+}
+
 a {
   color: inherit;
   text-decoration: none;
