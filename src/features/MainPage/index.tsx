@@ -12,6 +12,7 @@ const Login = () => {
 
   return (
     <MainPageStyled className={clsx("MainPage_wrap")}>
+      {/* <Header /> */}
       <div className="MainPage_container">
         <div className="MainPage_profile">
           <ProfilePart />

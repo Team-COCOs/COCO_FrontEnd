@@ -15,12 +15,10 @@ export const MainPageStyled = styled.div`
 
       .MainPage_profile {
         width: 20%;
-        background-color: powderblue;
       }
 
       .MainPage_store {
         width: 80%;
-        background-color: plum;
       }
     }
   }
