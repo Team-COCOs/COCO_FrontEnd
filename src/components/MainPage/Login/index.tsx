@@ -2,8 +2,13 @@ import { LoginStyle } from "./styled";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
+import axios from "axios";
+import Cookie from "js-cookie";
+import { useRouter } from "next/router";
+import { catchAxiosError } from "@/utils/catchAxiosError";
 
 const ProfilePart = () => {
+  const router = useRouter();
   const [saveEmail, setSaveEmail] = useState(false);
 
   const formik = useFormik({
@@ -12,11 +17,32 @@ const ProfilePart = () => {
       password: "",
     },
     onSubmit: (values) => {
+      const data = {
+        email: values.email,
+        password: values.password,
+      };
+
       if (saveEmail) {
         localStorage.setItem("saveEmail", values.email);
       } else {
         localStorage.removeItem("saveEmail");
       }
+
+      axios
+        .post("http://localhost:5000/auth/localLogin", data, {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }) // 서버 URL
+        .then((res) => {
+          Cookie.set("accessToken", res.data.token, {
+            path: "/", // 모든 페이지에서 접근 가능
+            expires: 1, // 1일
+          });
+          router.push("/");
+        })
+        .catch(catchAxiosError);
     },
   });
 
