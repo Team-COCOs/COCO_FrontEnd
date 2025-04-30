@@ -6,13 +6,14 @@ import clsx from "clsx";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import Header from "@/components/MainPage/Header";
 
 const Login = () => {
   const router = useRouter();
 
   return (
     <MainPageStyled className={clsx("MainPage_wrap")}>
-      {/* <Header /> */}
+      <Header />
       <div className="MainPage_container">
         <div className="MainPage_profile">
           <ProfilePart />

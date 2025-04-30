@@ -7,6 +7,7 @@ export const MainPageStyled = styled.div`
     max-width: 1280px;
     height: 100vh;
     margin: 0 auto;
+    padding: 10px 20px 0 20px;
 
     .MainPage_container {
       display: flex;

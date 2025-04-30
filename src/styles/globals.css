@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap");
+
 @font-face {
   font-family: "NeoDunggeunmo";
   src: url("/fonts/neodgm_code.ttf") format("truetype");
@@ -60,6 +62,12 @@ a {
 .mainFont {
   font-family: "Dotum", "돋움", sans-serif;
   letter-spacing: -1.5px;
+}
+
+.logoFont {
+  font-family: "Cal Sans", sans-serif;
+  font-weight: bold;
+  font-style: normal;
 }
 
 @media (prefers-color-scheme: dark) {
