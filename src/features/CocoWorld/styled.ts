@@ -14,7 +14,7 @@ export const CocoWorldPageStyled = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
-    background-image: url("/backgroundImg.png");
+    background-image: url("background/minihome_background.png");
     background-size: cover;
     background-position: center;
   }
@@ -36,5 +36,15 @@ export const CocoWorldPageStyled = styled.div`
     width: 95%;
     height: 90%;
     background-color: blue;
+    display: flex;
+    // 책 왼쪽
+    .CocoWorldPage_book_left {
+      width: 30%;
+      background-color: ${({ theme }) => theme.colors.mainColor};
+    }
+    // 책 오른쪽
+    .CocoWorldPage_book_right {
+      height: 70%;
+    }
   }
 `;
