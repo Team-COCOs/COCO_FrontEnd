@@ -2,8 +2,10 @@ import clsx from "clsx";
 import { TodayMiniStyle } from "./styled";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
 
-export const todayMiniDummy = [
+export const userInfo = [
   {
     id: 1,
     username: "하늘이",
@@ -33,25 +35,25 @@ export const todayMiniDummy = [
 
 const TodayMini = () => {
   const [index, setIndex] = useState(0);
-  const [point, setPoint] = useState(1); // 1 : 아래로 (1등 -> 5등), -1 : 위로 (5등 -> 1등)
+  const router = useRouter();
+
+  const getuserInfo = async () => {
+    try {
+      const res = await axios.get("http://localhost:5001/storeitems");
+      const userInfo = res.data;
+
+      console.log("인기 미니홈피 데이터 : ", userInfo);
+    } catch (e) {
+      console.log("인기 미니홈피 가져오기 에러 : ", e);
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIndex((prev) => {
-        let next = prev + point;
-
-        if (next >= todayMiniDummy.length) {
-          setPoint(-1);
-          next = prev - 1;
-        } else if (next < 0) {
-          setPoint(1);
-          next = prev + 1;
-        }
-        return next;
-      });
+      setIndex((prev) => (prev + 1) % userInfo.length);
     }, 1000);
     return () => clearInterval(interval);
-  }, [point]);
+  }, []);
 
   return (
     <TodayMiniStyle className={clsx("TodayMiniStyle_wrap")}>
@@ -59,12 +61,15 @@ const TodayMini = () => {
         <b className="mainColor">화제의</b> <b>미니홈피</b>
         <div className="TodayMini_line"></div>
         <ul className="Today_rank">
-          {todayMiniDummy.map((user, idx) => (
+          {userInfo.map((user, idx) => (
             <li
               key={user.id}
               className={clsx("rank_item", {
                 active: idx === index,
               })}
+              onClick={() => {
+                router.push(`/cocoworld/${user.id}`);
+              }}
             >
               <span className="rank_num">{idx + 1}</span>
               <span className="rank_name">{user.username}</span>
