@@ -50,9 +50,8 @@ const ProfilePart = () => {
           });
 
           console.log("로그인 대답: ", res.data);
-          console.log("dispatch 용: ", res.data.user);
 
-          dispatch(setReduxUser(res.data.user));
+          dispatch(setReduxUser(res.data));
 
           window.location.reload();
         })
