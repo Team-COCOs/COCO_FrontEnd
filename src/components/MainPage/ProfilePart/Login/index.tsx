@@ -44,12 +44,17 @@ const ProfilePart = () => {
             expires: 1 / 24, // 1일
           });
 
+          Cookie.set("refreshToken", res.data.refresh_token, {
+            path: "/", // 모든 페이지에서 접근 가능
+            expires: 1 / 24, // 1일
+          });
+
           console.log("로그인 대답: ", res.data);
           console.log("dispatch 용: ", res.data.user);
 
           dispatch(setReduxUser(res.data.user));
 
-          router.push("/");
+          window.location.reload();
         })
         .catch(catchAxiosError);
     },
