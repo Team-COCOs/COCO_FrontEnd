@@ -1,6 +1,10 @@
 import { SetProductStyled } from "./styled";
 import { useEffect } from "react";
 import { Table } from "antd";
+import axiosInstance from "@/utils/axiosInstance";
+import { useDispatch } from "react-redux";
+import { fetchStoreItems } from "@/store/reducers/storeItemSlice";
+import type { AppDispatch } from "@/store/store";
 
 interface SetProductProps {
   title: string;
@@ -8,6 +12,19 @@ interface SetProductProps {
 }
 
 const SetProduct: React.FC<SetProductProps> = ({ title, items }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleDelete = async (id: number) => {
+    try {
+      await axiosInstance.delete(`/storeitems/${id}`);
+      alert("삭제 성공!");
+      dispatch(fetchStoreItems());
+    } catch (error) {
+      alert("삭제 실패");
+      console.error(error);
+    }
+  };
+
   const columns = [
     {
       title: "ID",
@@ -40,6 +57,18 @@ const SetProduct: React.FC<SetProductProps> = ({ title, items }) => {
           return <img src={file} alt="product" style={{ width: 100 }} />;
         }
       },
+    },
+    {
+      title: "삭제",
+      key: "action",
+      render: (_: any, record: any) => (
+        <button
+          className="SetProduct_delete_btn"
+          onClick={() => handleDelete(record.id)}
+        >
+          삭제
+        </button>
+      ),
     },
   ];
 
