@@ -59,7 +59,6 @@ export const SignFormStyled = styled.div`
             display: flex;
             align-items: center;
             gap: 10px;
-            width: 100%;
           }
 
           @media (max-width: 965px) {
@@ -81,8 +80,7 @@ export const SignFormStyled = styled.div`
                 margin: 10px 0;
               }
 
-              .Sign_checkBtn,
-              .Sign-PhoneCheck {
+              .Sign_checkBtn {
                 width: 30% !important;
 
                 @media (max-width: 655px) {
@@ -225,6 +223,11 @@ export const SignFormStyled = styled.div`
 
           .Sign-PhoneCheck {
             width: 140px;
+
+            &:disabled {
+              cursor: not-allowed;
+              pointer-events: none;
+            }
 
             @media (max-width: 655px) {
               & {

@@ -1,8 +1,4 @@
 // 유효성 검사 함수들
-export const validateEmail = (email: string) => {
-  const regex = /^[a-zA-Z0-9._-]+@[a-zAZ0-9.-]+\.[a-zA-Z]{2,4}$/;
-  return regex.test(email);
-};
 
 export const validatePassword = (password: string) => {
   const isLengthValid = password.length >= 10;

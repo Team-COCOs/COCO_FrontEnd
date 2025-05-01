@@ -7,7 +7,6 @@ import { Router, useRouter } from "next/router";
 import Cookies from "js-cookie";
 
 import {
-  validateEmail,
   validateName,
   validatePassword,
   validatePhone,
@@ -33,12 +32,16 @@ const SignPage = () => {
   const [gender, setGender] = useState("man");
   const [birth, setBirth] = useState("solar");
 
+  const [birthYear, setBirthYear] = useState("");
+  const [birthMonth, setBirthMonth] = useState("");
+  const [birthDay, setBirthDay] = useState("");
+
   // 유효성 체크 상태 변수
-  const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isPasswordCheckValid, setIsPasswordCheckValid] = useState(false);
   const [isPhoneValid, setIsPhoneValid] = useState(false);
   const [isNameValid, setIsNameValid] = useState(false);
+  const [isBirthValid, setIsBirthValid] = useState(false);
 
   // 에러 메시지 상태 변수
   const [emailError, setEmailError] = useState("");
@@ -46,18 +49,11 @@ const SignPage = () => {
   const [passwordCheckError, setPasswordCheckError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [nameError, setNameError] = useState("");
+  const [birthError, setBirthError] = useState("");
 
   // 중복 여부 상태 변수
   const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
   const [isPhoneDuplicate, setIsPhoneDuplicate] = useState(false);
-
-  const handleEmailChange = (e: any) => {
-    const value = e.target.value;
-    setEmail(value);
-    const isValid = validateEmail(value);
-    setIsEmailValid(isValid);
-    setEmailError(isValid ? "" : "유효한 이메일을 입력해주세요.");
-  };
 
   const handlePasswordChange = (e: any) => {
     const value = e.target.value;
@@ -87,6 +83,49 @@ const SignPage = () => {
     setNameError(isValid ? "" : "이름을 입력해주세요.");
   };
 
+  const validateBirth = (yearStr: string, monthStr: string, dayStr: string) => {
+    const year = Number(yearStr.trim());
+    const month = Number(monthStr.trim());
+    const day = Number(dayStr.trim());
+
+    if (!yearStr || !monthStr || !dayStr) {
+      setBirthError(""); // 아직 다 안 입력했으면 에러 안 띄움
+      return;
+    }
+
+    const isValid =
+      !isNaN(year) &&
+      !isNaN(month) &&
+      !isNaN(day) &&
+      year >= 1900 &&
+      year <= 2025 &&
+      month >= 1 &&
+      month <= 12 &&
+      day >= 1 &&
+      day <= 31;
+
+    setBirthError(isValid ? "" : "올바른 생년월일을 입력해주세요.");
+    if (isValid) setIsBirthValid(true);
+  };
+
+  const handleBirthYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setBirthYear(value);
+    validateBirth(value, birthMonth, birthDay);
+  };
+
+  const handleBirthMonthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setBirthMonth(value);
+    validateBirth(birthYear, value, birthDay);
+  };
+
+  const handleBirthDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setBirthDay(value);
+    validateBirth(birthYear, birthMonth, value);
+  };
+
   const handlePhoneChange = (e: any) => {
     let value = e.target.value.replace(/[^\d]/g, "");
     if (value.length > 11) {
@@ -109,7 +148,7 @@ const SignPage = () => {
       const data = type === "email" ? { email } : { phone };
 
       const response = await axios.post(
-        `http://15.164.52.122/auth/check/${type}`,
+        `${process.env.NEXT_PUBLIC_API_UR}/auth/check/${type}`,
         data
       );
       if (response.data.exists) {
@@ -144,13 +183,17 @@ const SignPage = () => {
     }
   }, [token]);
 
+  useEffect(() => {
+    formik.setFieldValue("email", fullEmail);
+  }, [localPart, domain, customDomain, useCustomDomain]);
+
   // 버튼 활성화 여부 계산
   const isFormValid =
-    isEmailValid &&
     isPasswordValid &&
     isPasswordCheckValid &&
     isPhoneValid &&
-    isNameValid;
+    isNameValid &&
+    isBirthValid;
 
   const formik = useFormik({
     initialValues: {
@@ -159,29 +202,28 @@ const SignPage = () => {
       passwordCheck: "",
       name: "",
       phone: "",
+      gender: "",
+      birth_date: "",
     },
     onSubmit: (values) => {
+      const birthday = `${birthYear}-${birthMonth.padStart(
+        2,
+        "0"
+      )}-${birthDay.padStart(2, "0")}`;
+
       const data = {
         email: values.email,
         password: values.password,
         name: values.name,
         phone: values.phone,
+        gender,
+        birthday,
       };
-      axios
-        .post("http://15.164.52.122/auth/signup", data)
-        .then((response) => {
-          const userId = response.data.email;
 
-          return axios.post("http://15.164.52.122/users/userCheck", {
-            user_id: userId,
-          });
-        })
-        .then(() => {
-          router.push("/");
-        })
-        .catch((error) => {
-          console.error("회원가입 또는 이용약관 저장 실패:", error);
-        });
+      axios
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, data)
+        .then(() => router.push("/"))
+        .catch((error) => console.error("회원가입 실패:", error));
     },
   });
   return (
@@ -316,8 +358,8 @@ const SignPage = () => {
                 }}
                 placeholder="이름"
               />
-              <div className="Sign_error">{nameError}</div>
             </div>
+            <div className="Sign_error">{nameError}</div>
           </div>
 
           <div className="Sign_errorDiv">
@@ -334,7 +376,7 @@ const SignPage = () => {
                   formik.handleChange(e);
                   handlePhoneChange(e);
                 }}
-                placeholder="전화번호 (010-0000-0000)"
+                placeholder="전화번호"
               />
               <button
                 className="Sign-PhoneCheck"
@@ -370,40 +412,67 @@ const SignPage = () => {
             </div>
           </div>
 
-          <div className="Sign_div">
-            <div className="Sign_birthDiv">
-              <label htmlFor="birth" className="mainFont">
-                생년월일
-              </label>
-              <div className="Sign_inputs">
-                <input
-                  type="number"
-                  className="Sign_input"
-                  placeholder="연도"
-                />
-                <input type="number" className="Sign_input" placeholder="월" />
-                <input type="number" className="Sign_input" placeholder="일" />
+          <div className="Sign_errorDiv">
+            <div className="Sign_div">
+              <div className="Sign_birthDiv">
+                <label htmlFor="birth" className="mainFont">
+                  생년월일
+                </label>
+                <div className="Sign_inputs">
+                  <input
+                    type="number"
+                    className="Sign_input"
+                    placeholder="연도"
+                    value={birthYear}
+                    onChange={(e) => {
+                      setBirthYear(e.target.value);
+                      handleBirthYearChange(e);
+                    }}
+                  />
+                  <input
+                    type="number"
+                    className="Sign_input"
+                    placeholder="월"
+                    value={birthMonth}
+                    onChange={(e) => {
+                      setBirthMonth(e.target.value);
+                      handleBirthMonthChange(e);
+                    }}
+                  />
+                  <input
+                    type="number"
+                    className="Sign_input"
+                    placeholder="일"
+                    value={birthDay}
+                    onChange={(e) => {
+                      setBirthDay(e.target.value);
+                      handleBirthDayChange(e);
+                    }}
+                  />
+                </div>
+
+                <div className="Sign_birthRadio">
+                  <input
+                    type="radio"
+                    name="birth"
+                    value="solar"
+                    checked={birth === "solar"}
+                    onChange={(e) => setBirth(e.target.value)}
+                  />
+                  <p className="mainFont radioWidth">양력</p>
+                  <input
+                    type="radio"
+                    name="birth"
+                    value="lunar"
+                    className="Sign_radioBtn"
+                    onChange={(e) => setBirth(e.target.value)}
+                  />
+                  <p className="mainFont radioWidth">음력</p>
+                </div>
               </div>
             </div>
 
-            <div className="Sign_birthRadio">
-              <input
-                type="radio"
-                name="birth"
-                value="solar"
-                checked={birth === "solar"}
-                onChange={(e) => setBirth(e.target.value)}
-              />
-              <p className="mainFont radioWidth">양력</p>
-              <input
-                type="radio"
-                name="birth"
-                value="lunar"
-                className="Sign_radioBtn"
-                onChange={(e) => setBirth(e.target.value)}
-              />
-              <p className="mainFont radioWidth">음력</p>
-            </div>
+            <div className="Sign_error">{birthError}</div>
           </div>
 
           <div className="Sign_div Sign_center">
