@@ -9,10 +9,12 @@ interface SetProductProps {
 
 const SetProduct: React.FC<SetProductProps> = ({ title }) => {
   return (
-    <div>
-      <div>상품 관리</div>
-      <div>{title}</div>
-    </div>
+    <SetProductStyled>
+      <div className="SetProduct_wrap">
+        <div className="SetProduct_set_title">상품 관리</div>
+        <h2>{title}</h2>
+      </div>
+    </SetProductStyled>
   );
 };
 

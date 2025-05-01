@@ -48,10 +48,15 @@ export const AdminPageStyled = styled.div`
     }
     .Admin_content_left {
       width: 256px;
+      position: fixed;
+      left: 0;
+      height: 100vh;
+      z-index: 100;
     }
     .Admin_content_right {
       width: calc(100vw - 256px);
       padding: 25px 30px;
+      margin-left: 256px;
     }
   }
 `;
