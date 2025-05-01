@@ -58,19 +58,24 @@ export const AdvertisingStyle = styled.div`
       height: 150px;
     }
 
-    // store1
+    // store ads
     .Advertising7 {
       position: relative;
       width: 100%;
       height: 120px;
-      margin-top: -7px;
     }
 
     .Advertising1 {
       position: relative;
       width: 100%;
       height: 140px;
-      margin-top: 10px;
+      margin-top: 5px;
+    }
+
+    .Advertising5 {
+      position: relative;
+      width: 100%;
+      height: 180px;
     }
   }
 `;
