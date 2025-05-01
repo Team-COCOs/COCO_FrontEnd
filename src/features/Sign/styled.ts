@@ -4,7 +4,6 @@ export const SignFormStyled = styled.div`
   &.Sign_wrap {
     display: flex;
     flex-direction: column;
-    align-items: center;
     max-width: 1280px;
     height: 100vh;
     margin: 0 auto;
@@ -23,8 +22,9 @@ export const SignFormStyled = styled.div`
 
       .Sign_line {
         width: 100%;
-        height: 2px;
-        background-color: gray;
+        height: 3px;
+        background-color: rgb(130, 130, 130);
+        margin: 5px 0;
       }
     }
   }

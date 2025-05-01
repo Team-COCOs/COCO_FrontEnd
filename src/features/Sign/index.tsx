@@ -15,7 +15,16 @@ import Logo from "@/components/MainPage/Header/Logo";
 
 const SignPage = () => {
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  // 이메일
+  const [localPart, setLocalPart] = useState("");
+  const [domain, setDomain] = useState("naver.com");
+  const [customDomain, setCustomDomain] = useState("");
+  const [useCustomDomain, setUseCustomDomain] = useState(false);
+  const [email, setEmail] = useState();
+
+  const fullEmail = `${localPart}@${useCustomDomain ? customDomain : domain}`;
+
+  // 그 외
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [name, setName] = useState("");
@@ -184,23 +193,58 @@ const SignPage = () => {
           <div className="join-div">
             <label htmlFor="email">이메일</label>
             <input
-              className="joinform-input"
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => {
-                handleEmailChange(e);
-                formik.handleChange(e);
-              }}
-              placeholder="abc123@xxx.com"
+              type="text"
+              placeholder="abc123"
+              value={localPart}
+              onChange={(e) => setLocalPart(e.target.value)}
             />
-            <div className="join-errormessage">{emailError}</div>
+            <span>@</span>
+            {!useCustomDomain ? (
+              <select
+                value={domain}
+                onChange={(e) => {
+                  if (e.target.value === "custom") {
+                    setUseCustomDomain(true);
+                    setCustomDomain("");
+                  } else {
+                    setDomain(e.target.value);
+                  }
+                }}
+              >
+                <option value="naver.com">naver.com</option>
+                <option value="gmail.com">gmail.com</option>
+                <option value="hanmail.net">hanmail.net</option>
+                <option value="custom">직접입력</option>
+              </select>
+            ) : (
+              <input
+                type="text"
+                placeholder="example.com"
+                value={customDomain}
+                onChange={(e) => setCustomDomain(e.target.value)}
+                onBlur={() => {
+                  if (!customDomain) setUseCustomDomain(false);
+                }}
+              />
+            )}
+
             <button
-              className="join-check"
+              type="button"
               onClick={() => handleDuplicateCheck("email")}
+              style={{ backgroundColor: "#e74c3c", color: "white" }}
             >
-              이메일 중복 확인
+              중복확인
             </button>
+
+            {/* Formik 값 업데이트 */}
+            <input
+              type="hidden"
+              name="email"
+              value={fullEmail}
+              onChange={formik.handleChange}
+            />
+
+            <div className="join-errormessage">{emailError}</div>
           </div>
           <div className="join-div">
             <label htmlFor="password">비밀번호</label>
@@ -272,7 +316,7 @@ const SignPage = () => {
             <button
               className="joinbtn"
               type="submit"
-              disabled={!isFormValid || isEmailDuplicate || isPhoneDuplicate} // 각 입력의 유효성 상태에 기반하여 버튼을 활성화/비활성화
+              disabled={!isFormValid || isEmailDuplicate || isPhoneDuplicate}
             >
               가입하기
             </button>
