@@ -1,26 +1,30 @@
 import styled from "styled-components";
 
 export const SignFormStyled = styled.div`
-  &.MainPage_wrap {
+  &.Sign_wrap {
     display: flex;
     flex-direction: column;
+    align-items: center;
     max-width: 1280px;
     height: 100vh;
     margin: 0 auto;
+    padding: 30px 20px;
+    gap: 20px;
 
-    .MainPage_container {
+    .Sign_container {
+      width: 100%;
       display: flex;
-      gap: 5px;
-      flex: 1;
+      flex-direction: column;
 
-      .MainPage_profile {
-        width: 20%;
-        background-color: powderblue;
+      .Sign_text {
+        font-size: 17px;
+        color: ${({ theme }) => theme.colors.mainColor};
       }
 
-      .MainPage_store {
-        width: 80%;
-        background-color: plum;
+      .Sign_line {
+        width: 100%;
+        height: 2px;
+        background-color: gray;
       }
     }
   }

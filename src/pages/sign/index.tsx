@@ -1,9 +1,9 @@
-// import SignPage from "@/features/Sign";
-// import axios from "axios";
-// import { useEffect, useState } from "react";
+import SignPage from "@/features/Sign";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-// const Sign = () => {
-//   return <SignPage />;
-// };
+const Sign = () => {
+  return <SignPage />;
+};
 
-// export default Sign;
+export default Sign;

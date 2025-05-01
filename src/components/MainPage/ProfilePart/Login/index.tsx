@@ -100,7 +100,12 @@ const ProfilePart = () => {
       </div>
       <div className="Loing_line"></div>
       <div className="Login_etc">
-        <p className="mainFont mainColor Login_join">회원가입</p>
+        <p
+          className="mainFont mainColor Login_join"
+          onClick={() => router.push("/sign")}
+        >
+          회원가입
+        </p>
         <div className="Login_gray"></div>
         <div className="Login_find">
           <span className="mainFont">이메일</span>

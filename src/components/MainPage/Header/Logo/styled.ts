@@ -26,5 +26,11 @@ export const LogoStyle = styled.div`
       font-size: 28px;
       margin-top: -8px;
     }
+
+    /* 회원가입 로고 */
+    .Logo_sign {
+      display: flex;
+      flex-direction: row;
+    }
   }
 `;

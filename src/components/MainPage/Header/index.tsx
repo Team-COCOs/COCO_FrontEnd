@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <HeaderStyle className={clsx("Header_wrap")}>
       <div className="Header_logo">
-        <Logo />
+        <Logo type="header" />
       </div>
       <div className="Header_search">
         <div className="Header_searchPart">
