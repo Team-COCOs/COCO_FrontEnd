@@ -1,8 +1,5 @@
-// src/components/PrivateRoute.tsx
-import React, { ReactNode, useEffect, useState } from "react";
+// import React, { ReactNode, useEffect, useState } from "react";
 // import { useRouter } from "next/router";
-// import { useAuth } from "../context/AuthContext";
-// import Loading from "../components/Loading";
 // import Cookies from "js-cookie";
 
 // interface PrivateRouteProps {
@@ -10,7 +7,6 @@ import React, { ReactNode, useEffect, useState } from "react";
 // }
 
 // const PrivateRoute = ({ children }: PrivateRouteProps) => {
-//   const { isLoggedIn, checkLogin } = useAuth();
 //   const router = useRouter();
 //   const [checkingAuth, setCheckingAuth] = useState(true); // 3초 동안 로딩 상태
 
@@ -26,10 +22,6 @@ import React, { ReactNode, useEffect, useState } from "react";
 //       router.push("/");
 //     }
 //   }, [router]);
-
-//   if (checkingAuth) {
-//     return <Loading />; // 인증 상태 확인 중에는 로딩 화면 표시
-//   }
 
 //   return <>{children}</>; // 로그인된 경우 자식 컴포넌트 렌더링
 // };

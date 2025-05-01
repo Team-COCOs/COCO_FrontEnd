@@ -1,7 +1,5 @@
 import { SetProductStyled } from "./styled";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
 import { Table } from "antd";
 
 interface SetProductProps {
@@ -17,30 +15,28 @@ const SetProduct: React.FC<SetProductProps> = ({ title, items }) => {
       key: "id",
     },
     {
-      title: "Name",
+      title: "상품명",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Category",
+      title: "카테고리",
       dataIndex: "category",
       key: "category",
     },
     {
-      title: "Price",
+      title: "도토리",
       dataIndex: "price",
       key: "price",
     },
     {
-      title: "File",
+      title: "상품",
       dataIndex: "file",
       key: "file",
       render: (file: string, record: any) => {
         if (record.category === "bgm") {
-          // If the category is "bgm", render an audio player
           return <audio controls src={file} />;
         } else {
-          // For other categories, render an image
           return <img src={file} alt="product" style={{ width: 100 }} />;
         }
       },
@@ -57,13 +53,19 @@ const SetProduct: React.FC<SetProductProps> = ({ title, items }) => {
   }));
 
   return (
-    <div>
-      <div className="SetProduct_wrap">
-        <div className="SetProduct_set_title">상품 관리</div>
-        <h2>{title}</h2>
+    <SetProductStyled>
+      <div>
+        <div className="SetProduct_wrap">
+          <div className="SetProduct_set_title">상품 관리</div>
+          <h2>{title}</h2>
+        </div>
+        <Table
+          dataSource={dataSource}
+          columns={columns}
+          // pagination={pagination}
+        />
       </div>
-      <Table dataSource={dataSource} columns={columns} />
-    </div>
+    </SetProductStyled>
   );
 };
 export default SetProduct;

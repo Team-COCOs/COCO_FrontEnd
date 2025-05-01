@@ -6,6 +6,19 @@
   font-weight: normal;
   font-style: normal;
 }
+:where(.css-dev-only-do-not-override-1m63z2v).ant-table-wrapper
+  .ant-table-pagination-right {
+  justify-content: center !important;
+}
+
+:where(.css-dev-only-do-not-override-1m63z2v).ant-pagination
+  .ant-pagination-item-active
+  a,
+:where(.css-dev-only-do-not-override-1m63z2v).ant-pagination
+  .ant-pagination-item-active {
+  color: #f87013 !important;
+  border-color: #f87013 !important;
+}
 
 :root {
   --background: #ffffff;
