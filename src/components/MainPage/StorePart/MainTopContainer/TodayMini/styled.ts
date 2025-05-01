@@ -33,10 +33,11 @@ export const TodayMiniStyle = styled.div`
           margin: 4px 0;
           padding: 4px 8px;
           border-radius: 4px;
+          cursor: pointer;
 
           .rank_num {
-            background: #d8d8d8;
-            color: ${({ theme }) => theme.colors.mainColor};
+            background: rgb(170, 170, 170);
+            color: white;
             width: 18px;
             height: 18px;
             font-size: 12px;
