@@ -33,11 +33,11 @@ const Admin = () => {
       {/* 헤더 끝 */}
 
       <div className="Admin_content_wrap">
-        <div>
+        <div className="Admin_content_left">
           {/* 상품 관리 왼쪽 메뉴바 컴포넌트*/}
           <AdminNav onSelectKey={setSelectedKey} />
         </div>
-        <div>
+        <div className="Admin_content_right">
           {/* 상품 관리 오른쪽 content 컴포넌트*/}
           <AdminRight selectedKey={selectedKey} />
         </div>

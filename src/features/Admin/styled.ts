@@ -46,5 +46,12 @@ export const AdminPageStyled = styled.div`
     .Admin_content_wrap {
       display: flex;
     }
+    .Admin_content_left {
+      width: 256px;
+    }
+    .Admin_content_right {
+      width: calc(100vw - 256px);
+      padding: 25px 30px;
+    }
   }
 `;
