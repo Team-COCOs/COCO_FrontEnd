@@ -39,7 +39,7 @@ const ProfilePart = () => {
           },
         }) // 서버 URL
         .then((res) => {
-          Cookie.set("accessToken", res.data.token, {
+          Cookie.set("accessToken", res.data.access_token, {
             path: "/", // 모든 페이지에서 접근 가능
             expires: 1 / 24, // 1일
           });
