@@ -9,7 +9,7 @@ import { catchAxiosError } from "@/utils/catchAxiosError";
 import { useDispatch } from "react-redux";
 import { setReduxUser } from "@/store/reducers/userSlice";
 
-const ProfilePart = () => {
+const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [saveEmail, setSaveEmail] = useState(false);
@@ -53,7 +53,7 @@ const ProfilePart = () => {
 
           dispatch(setReduxUser(res.data));
 
-          window.location.reload();
+          router.push("/");
         })
         .catch(catchAxiosError);
     },
@@ -100,19 +100,19 @@ const ProfilePart = () => {
       <div className="Loing_line"></div>
       <div className="Login_etc">
         <p
-          className="mainFont mainColor Login_join"
+          className="mainColor Login_join"
           onClick={() => router.push("/sign")}
         >
           회원가입
         </p>
         <div className="Login_gray"></div>
         <div className="Login_find">
-          <span className="mainFont">이메일</span>
-          <span className="mainFont">/비밀번호찾기</span>
+          <span>이메일</span>
+          <span>/비밀번호찾기</span>
         </div>
       </div>
     </LoginStyle>
   );
 };
 
-export default ProfilePart;
+export default Login;

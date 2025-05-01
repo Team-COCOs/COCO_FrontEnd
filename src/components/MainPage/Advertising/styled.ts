@@ -35,7 +35,6 @@ export const AdvertisingStyle = styled.div`
       }
 
       .Advertising_font {
-        margin-top: 7px;
         font-size: 13px;
         color: rgb(210, 210, 210);
 
@@ -69,6 +68,20 @@ export const AdvertisingStyle = styled.div`
       position: relative;
       width: 100%;
       height: 140px;
+      margin-top: 5px;
+    }
+
+    .Advertising8 {
+      position: relative;
+      width: 100%;
+      height: 100px;
+      margin-top: 5px;
+    }
+
+    .Advertising3 {
+      position: relative;
+      width: 100%;
+      height: 400px;
       margin-top: 5px;
     }
 

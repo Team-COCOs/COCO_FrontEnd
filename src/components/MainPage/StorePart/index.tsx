@@ -1,15 +1,24 @@
-// import { MainPageStyled } from "./styled";
 import clsx from "clsx";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { StorePartStyle } from "./styled";
+import Image from "next/image";
 import Advertising from "../Advertising";
-import MainTopContainer from "./MainTopContainer";
+import TodayMini from "./TodayMini";
+import StoreContent from "./StoreContent";
 
 const StorePart = () => {
   return (
-    <MainTopContainer />
-    // <MainBottomContainer/>
+    <StorePartStyle className={clsx("StorePartStyle_wrap")}>
+      <div className="StorePartStyle_left">
+        <Advertising type="Advertising7" />
+        <Advertising type="Advertising1" />
+        <StoreContent />
+      </div>
+      <div className="StorePartStyle_right">
+        <TodayMini />
+        <Advertising type="Advertising5" />
+        <Advertising type="Advertising3" />
+      </div>
+    </StorePartStyle>
   );
 };
 

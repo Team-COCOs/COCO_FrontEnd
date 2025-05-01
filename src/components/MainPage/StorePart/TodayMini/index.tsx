@@ -39,7 +39,9 @@ const TodayMini = () => {
 
   const getuserInfo = async () => {
     try {
-      const res = await axios.get("http://localhost:5001/storeitems");
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/getPopularUser`
+      );
       const userInfo = res.data;
 
       console.log("인기 미니홈피 데이터 : ", userInfo);
