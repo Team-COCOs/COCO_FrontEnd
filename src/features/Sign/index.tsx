@@ -21,7 +21,7 @@ const SignPage = () => {
   const [domain, setDomain] = useState("naver.com");
   const [customDomain, setCustomDomain] = useState("");
   const [useCustomDomain, setUseCustomDomain] = useState(false);
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("");
 
   const fullEmail = `${localPart}@${useCustomDomain ? customDomain : domain}`;
 
@@ -30,7 +30,8 @@ const SignPage = () => {
   const [passwordCheck, setPasswordCheck] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("man");
+  const [birth, setBirth] = useState("solar");
 
   // 유효성 체크 상태 변수
   const [isEmailValid, setIsEmailValid] = useState(false);
@@ -193,163 +194,221 @@ const SignPage = () => {
         <div className="Sign_line"></div>
 
         <div className="Sign_form">
-          <div className="Sign_div">
-            <label htmlFor="email" className="mainFont">
-              이메일 아이디
-            </label>
-            <input
-              type="text"
-              className="Sign_input"
-              placeholder="abc123"
-              value={localPart}
-              onChange={(e) => setLocalPart(e.target.value)}
-            />
-            <span>@</span>
-            <input
-              type="text"
-              className="Sign_input"
-              placeholder="example.com"
-              value={useCustomDomain ? customDomain : domain}
-              onChange={(e) => setCustomDomain(e.target.value)}
-              onBlur={() => {
-                if (!customDomain) setUseCustomDomain(false);
-              }}
-              disabled={!useCustomDomain}
-            />
-            <select
-              className="Sign_input"
-              value={useCustomDomain ? "custom" : domain}
-              onChange={(e) => {
-                if (e.target.value === "custom") {
-                  setUseCustomDomain(true);
-                  setCustomDomain("");
-                } else {
-                  setUseCustomDomain(false);
-                  setDomain(e.target.value);
-                }
-              }}
-            >
-              <option value="naver.com">naver.com</option>
-              <option value="gmail.com">gmail.com</option>
-              <option value="hanmail.net">hanmail.net</option>
-              <option value="custom">직접입력</option>
-            </select>
+          <div className="Sign_errorDiv">
+            <div className="Sign_div">
+              <div className="Sign_birthDiv">
+                <label htmlFor="email" className="mainFont">
+                  이메일 아이디
+                </label>
+                <div className="Sign_inputs">
+                  <input
+                    type="text"
+                    className="Sign_input"
+                    placeholder="이메일"
+                    value={localPart}
+                    onChange={(e) => setLocalPart(e.target.value)}
+                  />
+                  <span>@</span>
+                  <input
+                    type="text"
+                    className="Sign_input"
+                    value={useCustomDomain ? customDomain : domain}
+                    onChange={(e) => setCustomDomain(e.target.value)}
+                    onBlur={() => {
+                      if (!customDomain) setUseCustomDomain(false);
+                    }}
+                    disabled={!useCustomDomain}
+                  />
+                  <select
+                    className="Sign_input"
+                    value={useCustomDomain ? "custom" : domain}
+                    onChange={(e) => {
+                      if (e.target.value === "custom") {
+                        setUseCustomDomain(true);
+                        setCustomDomain("");
+                      } else {
+                        setUseCustomDomain(false);
+                        setDomain(e.target.value);
+                      }
+                    }}
+                  >
+                    <option value="naver.com">naver.com</option>
+                    <option value="gmail.com">gmail.com</option>
+                    <option value="hanmail.net">hanmail.net</option>
+                    <option value="custom">직접입력</option>
+                  </select>
+                </div>
+              </div>
 
-            <button
-              type="button"
-              onClick={() => handleDuplicateCheck("email")}
-              className="Sign_checkBtn"
-            >
-              중복확인
-            </button>
+              <button
+                type="button"
+                onClick={() => handleDuplicateCheck("email")}
+                className="Sign_checkBtn"
+              >
+                중복확인
+              </button>
 
-            {/* Formik 값 업데이트 */}
-            <input
-              type="hidden"
-              name="email"
-              className="Sign_input"
-              value={fullEmail}
-              onChange={formik.handleChange}
-            />
+              {/* Formik 값 업데이트 */}
+              <input
+                type="hidden"
+                name="email"
+                className="Sign_input"
+                value={fullEmail}
+                onChange={formik.handleChange}
+              />
+            </div>
+            <div className="Sign_error">{emailError}</div>
           </div>
-          <div className="join-errormessage">{emailError}</div>
-          <div className="Sign_div">
-            <label htmlFor="password" className="mainFont">
-              비밀번호
-            </label>
-            <input
-              className="Sign_input longInput"
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => {
-                handlePasswordChange(e);
-                formik.handleChange(e);
-              }}
-              placeholder="비밀번호를 입력해주세요"
-            />
-            <div className="join-errormessage">{passwordError}</div>
+
+          <div className="Sign_errorDiv">
+            <div className="Sign_div">
+              <label htmlFor="password" className="mainFont">
+                비밀번호
+              </label>
+              <input
+                className="Sign_input longInput"
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => {
+                  handlePasswordChange(e);
+                  formik.handleChange(e);
+                }}
+                placeholder="비밀번호"
+              />
+            </div>
+            <div className="Sign_error">{passwordError}</div>
           </div>
-          <div className="Sign_div">
-            <label htmlFor="passwordCheck" className="mainFont">
-              비밀번호 확인
-            </label>
-            <input
-              className="Sign_input longInput"
-              type="password"
-              id="passwordCheck"
-              value={passwordCheck}
-              onChange={(e) => {
-                formik.handleChange(e);
-                handlePasswordCheckChange(e);
-              }}
-              placeholder="비밀번호 확인"
-            />
-            <div className="join-errormessage">{passwordCheckError}</div>
+
+          <div className="Sign_errorDiv">
+            <div className="Sign_div">
+              <label htmlFor="passwordCheck" className="mainFont">
+                비밀번호 확인
+              </label>
+              <input
+                className="Sign_input longInput"
+                type="password"
+                id="passwordCheck"
+                value={passwordCheck}
+                onChange={(e) => {
+                  formik.handleChange(e);
+                  handlePasswordCheckChange(e);
+                }}
+                placeholder="비밀번호 확인"
+              />
+            </div>
+            <div className="Sign_error">{passwordCheckError}</div>
           </div>
-          <div className="Sign_div">
-            <label htmlFor="name" className="mainFont">
-              이름
-            </label>
-            <input
-              className="Sign_input longInput"
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => {
-                formik.handleChange(e);
-                handleNameChange(e);
-              }}
-              placeholder="이름을 입력해주세요"
-            />
-            <div className="join-errormessage">{nameError}</div>
+
+          <div className="Sign_errorDiv">
+            <div className="Sign_div">
+              <label htmlFor="name" className="mainFont">
+                이름
+              </label>
+              <input
+                className="Sign_input longInput"
+                type="text"
+                id="name"
+                value={name}
+                onChange={(e) => {
+                  formik.handleChange(e);
+                  handleNameChange(e);
+                }}
+                placeholder="이름"
+              />
+              <div className="Sign_error">{nameError}</div>
+            </div>
           </div>
+
+          <div className="Sign_errorDiv">
+            <div className="Sign_div">
+              <label htmlFor="phone" className="mainFont">
+                전화번호
+              </label>
+              <input
+                className="Sign_input phoneInput"
+                type="text"
+                id="phone"
+                value={phone}
+                onChange={(e) => {
+                  formik.handleChange(e);
+                  handlePhoneChange(e);
+                }}
+                placeholder="전화번호 (010-0000-0000)"
+              />
+              <button
+                className="Sign-PhoneCheck"
+                onClick={() => handleDuplicateCheck("phone")}
+              >
+                전화번호 중복 확인
+              </button>
+            </div>
+            <div className="Sign_error">{phoneError}</div>
+          </div>
+
           <div className="Sign_div">
-            <label htmlFor="phone" className="mainFont">
-              전화번호
-            </label>
-            <input
-              className="Sign_input phoneInput"
-              type="text"
-              id="phone"
-              value={phone}
-              onChange={(e) => {
-                formik.handleChange(e);
-                handlePhoneChange(e);
-              }}
-              placeholder="010-0000-0000"
-            />
+            <div className="Sign_birthRadio">
+              <label htmlFor="gender" className="mainFont">
+                성별
+              </label>
+              <input
+                type="radio"
+                name="gender"
+                value="man"
+                checked={gender === "man"}
+                onChange={(e) => setGender(e.target.value)}
+              />
+              <p className="mainFont">남자</p>
+              <input
+                type="radio"
+                name="gender"
+                value="woman"
+                className="Sign_radioBtn"
+                onChange={(e) => setGender(e.target.value)}
+              />
+              <p className="mainFont">여자</p>
+            </div>
+          </div>
+
+          <div className="Sign_div">
+            <div className="Sign_birthDiv">
+              <label htmlFor="birth" className="mainFont">
+                생년월일
+              </label>
+              <div className="Sign_inputs">
+                <input
+                  type="number"
+                  className="Sign_input"
+                  placeholder="연도"
+                />
+                <input type="number" className="Sign_input" placeholder="월" />
+                <input type="number" className="Sign_input" placeholder="일" />
+              </div>
+            </div>
+
+            <div className="Sign_birthRadio">
+              <input
+                type="radio"
+                name="birth"
+                value="solar"
+                checked={birth === "solar"}
+                onChange={(e) => setBirth(e.target.value)}
+              />
+              <p className="mainFont radioWidth">양력</p>
+              <input
+                type="radio"
+                name="birth"
+                value="lunar"
+                className="Sign_radioBtn"
+                onChange={(e) => setBirth(e.target.value)}
+              />
+              <p className="mainFont radioWidth">음력</p>
+            </div>
+          </div>
+
+          <div className="Sign_div Sign_center">
             <button
               className="Sign-PhoneCheck"
-              onClick={() => handleDuplicateCheck("phone")}
-            >
-              전화번호 중복 확인
-            </button>
-          </div>
-          <div className="join-errormessage">{phoneError}</div>
-          <div className="Sign_div">
-            <label htmlFor="gender" className="mainFont">
-              성별
-            </label>
-            <input
-              type="radio"
-              name="gender"
-              value="man"
-              checked={gender === "man"}
-              onChange={(e) => setGender(e.target.value)}
-            />
-            남자
-            <input
-              type="radio"
-              name="gender"
-              value="woman"
-              onChange={(e) => setGender(e.target.value)}
-            />
-            여자
-          </div>
-          <div className="joinForm-btnDiv">
-            <button
-              className="joinbtn"
               type="submit"
               disabled={!isFormValid || isEmailDuplicate || isPhoneDuplicate}
             >
