@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Login from "@/components/MainPage/Login";
+import Advertising from "../Advertising";
 
 const ProfilePart = () => {
   return (
@@ -11,6 +12,7 @@ const ProfilePart = () => {
       {/* 로고 컴포넌트 */}
       <Login />
       {/* 광고 컴포넌트 */}
+      <Advertising type="Advertising3" />
     </ProfilePartStyle>
   );
 };
