@@ -1,5 +1,7 @@
 import { CocoWorldPageStyled } from "./styled";
 import { useRouter } from "next/router";
+import HomeTodayTitle from "../../components/MiniHomePage/HomeTodayTitle";
+import DiaryTitle from "../../components/MiniHomePage/DiaryTitle";
 
 const CocoWorld = () => {
   const router = useRouter();
@@ -12,13 +14,27 @@ const CocoWorld = () => {
             {/* 책 왼쪽 */}
             <div className="CocoWorldPage_book_left">
               <div className="CocoWorldPage_bookLeft_line">
-                <div className="CocoWorldPage_bookLeft_paper"></div>
+                <div className="CocoWorldPage_bookLeft_paper">
+                  {/* 투데이 컴포넌트*/}
+                  <div className="CocoWorldPage_bookLeft_todayWrap">
+                    <HomeTodayTitle />
+                  </div>
+                  {/* 다이어리 왼쪽 컴포넌트 */}
+                  <div className="CocoWorldPage_diary_left"></div>
+                </div>
               </div>
             </div>
             {/* 책 오른쪽 */}
             <div className="CocoWorldPage_book_right">
               <div className="CocoWorldPage_bookRight_line">
-                <div className="CocoWorldPage_bookRight_paper"></div>
+                <div className="CocoWorldPage_bookRight_paper">
+                  {/* 미니홈피 이름 */}
+                  <div className="CocoWorldPage_bookRight_todayWrap">
+                    <DiaryTitle />
+                  </div>
+                  {/* 다이어리 왼쪽 컴포넌트 */}
+                  <div className="CocoWorldPage_diary_Right"></div>
+                </div>
               </div>
             </div>
           </div>

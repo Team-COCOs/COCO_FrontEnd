@@ -83,6 +83,11 @@ a {
   font-style: normal;
 }
 
+.titleFont {
+  font-family: "Cal Sans", sans-serif;
+  font-style: normal;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
