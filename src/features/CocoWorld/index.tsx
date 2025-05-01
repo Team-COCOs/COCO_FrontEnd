@@ -15,7 +15,7 @@ const CocoWorld = () => {
             </div>
             {/* 책 오른쪽 */}
             <div className="CocoWorldPage_book_right">
-              <div className="CocoWorldPage_bookRight_line">오른쪽</div>
+              <div className="CocoWorldPage_bookRight_line"></div>
             </div>
           </div>
         </div>

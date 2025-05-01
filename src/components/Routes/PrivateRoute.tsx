@@ -23,7 +23,7 @@ import React, { ReactNode, useEffect, useState } from "react";
 //     } else {
 //       setCheckingAuth(false); // 로딩 종료 후 로그인되지 않은 상태로 처리
 //       alert("로그인이 필요합니다.");
-//       router.push("/login");
+//       router.push("/");
 //     }
 //   }, [router]);
 

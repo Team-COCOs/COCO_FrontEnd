@@ -7,6 +7,7 @@ declare module "styled-components" {
       lightColor: string;
       tabColor: string;
       bookColor: string;
+      bookLineColor: string;
     };
   }
 }
