@@ -29,8 +29,8 @@ export const CocoWorldPageStyled = styled.div`
     // 책 왼쪽
     .CocoWorldPage_book_left {
       width: 30%;
-      border-top-right-radius: 12px;
-      border-bottom-right-radius: 12px;
+      border-top-right-radius: 18px;
+      border-bottom-right-radius: 18px;
       background-color: ${({ theme }) => theme.colors.bookColor};
       display: flex;
       justify-content: flex-end;
@@ -41,14 +41,22 @@ export const CocoWorldPageStyled = styled.div`
         border-left: 1.5px #fffcfe dashed;
         border-top: 1.5px #fffcfe dashed;
         border-bottom: 1.5px #fffcfe dashed;
-        border-radius: 8px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 18px;
+        border-bottom-right-radius: 18px;
       }
     }
     // 책 오른쪽
     .CocoWorldPage_book_right {
+      border-right: 1px solid ${({ theme }) => theme.colors.tabColor};
+      position: relative;
+      left: -3.5px;
       width: 70%;
-      border-top-left-radius: 12px;
-      border-bottom-left-radius: 12px;
+      border-top-left-radius: 18px;
+      border-bottom-left-radius: 18px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
       background-color: ${({ theme }) => theme.colors.bookColor};
       display: flex;
       justify-content: flex-start;
@@ -59,7 +67,10 @@ export const CocoWorldPageStyled = styled.div`
         border-right: 1.5px #fffcfe dashed;
         border-top: 1.5px #fffcfe dashed;
         border-bottom: 1.5px #fffcfe dashed;
-        border-radius: 8px;
+        border-top-left-radius: 18px;
+        border-bottom-left-radius: 18px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
       }
     }
   }

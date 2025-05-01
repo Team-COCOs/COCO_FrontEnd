@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
+import Cookies from "js-cookie";
+import { Cookie } from "next/font/google";
 
 interface AddProductProps {
   title: string;
@@ -71,7 +73,7 @@ const AddProduct: React.FC<AddProductProps> = ({
       }
 
       console.log("폼 제출", values);
-
+      const accessToken = Cookies.get("accessToken");
       const baseURL = process.env.NEXT_PUBLIC_API_URL;
       const endpoint = type === "music" ? "/bgm" : "/storeitems";
 
@@ -79,7 +81,7 @@ const AddProduct: React.FC<AddProductProps> = ({
         await axios.post(`${baseURL}${endpoint}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            // Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
           withCredentials: true,
         });

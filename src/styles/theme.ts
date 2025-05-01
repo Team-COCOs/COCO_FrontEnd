@@ -6,6 +6,7 @@ const theme: DefaultTheme = {
     lightColor: "#fff4e6",
     tabColor: "#2686a3", // 초록 탭
     bookColor: "#a6cfdb", // book 배경
+    bookLineColor: "#8898a1", // book line color
   },
 };
 
