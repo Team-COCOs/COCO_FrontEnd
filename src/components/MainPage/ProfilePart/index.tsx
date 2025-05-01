@@ -12,7 +12,7 @@ const ProfilePart = () => {
       {/* 로고 컴포넌트 */}
       <Login />
       {/* 광고 컴포넌트 */}
-      <Advertising type="Advertising3" />
+      <Advertising type="Advertising4" />
     </ProfilePartStyle>
   );
 };
