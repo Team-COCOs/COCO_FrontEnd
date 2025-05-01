@@ -3,9 +3,8 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
-import axios from "axios";
+import axiosInstance from "@/utils/axiosInstance";
 import Cookies from "js-cookie";
-import { Cookie } from "next/font/google";
 
 interface AddProductProps {
   title: string;
@@ -77,12 +76,10 @@ const AddProduct: React.FC<AddProductProps> = ({
       const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
       try {
-        await axios.post(`${baseURL}/storeitems`, formData, {
+        await axiosInstance.post("/storeitems", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${accessToken}`,
           },
-          withCredentials: true,
         });
 
         formik.resetForm();

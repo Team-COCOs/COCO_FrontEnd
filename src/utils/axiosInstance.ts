@@ -51,7 +51,7 @@ axiosInstance.interceptors.response.use(
         if (!newAccessToken) {
           Cookies.remove("accessToken");
           Cookies.remove("refreshToken");
-          Router.push("/login");
+          Router.push("/");
           return Promise.reject(error);
         }
 
