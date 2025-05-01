@@ -8,6 +8,7 @@ declare module "styled-components" {
       tabColor: string;
       bookColor: string;
       bookLineColor: string;
+      bookPageColor: string;
     };
   }
 }

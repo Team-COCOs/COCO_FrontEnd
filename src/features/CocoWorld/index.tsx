@@ -11,11 +11,15 @@ const CocoWorld = () => {
           <div className="CocoWorldPage_book_wrap">
             {/* 책 왼쪽 */}
             <div className="CocoWorldPage_book_left">
-              <div className="CocoWorldPage_bookLeft_line">왼쪽</div>
+              <div className="CocoWorldPage_bookLeft_line">
+                <div className="CocoWorldPage_bookLeft_paper"></div>
+              </div>
             </div>
             {/* 책 오른쪽 */}
             <div className="CocoWorldPage_book_right">
-              <div className="CocoWorldPage_bookRight_line"></div>
+              <div className="CocoWorldPage_bookRight_line">
+                <div className="CocoWorldPage_bookRight_paper"></div>
+              </div>
             </div>
           </div>
         </div>
