@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
+import axios from "axios";
 
 interface AddProductProps {
   title: string;
@@ -58,7 +59,7 @@ const AddProduct: React.FC<AddProductProps> = ({
 
       return errors;
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("price", values.price);
@@ -70,7 +71,30 @@ const AddProduct: React.FC<AddProductProps> = ({
       }
 
       console.log("폼 제출", values);
-      // axios.post("/api/products", formData)
+
+      const baseURL = process.env.NEXT_PUBLIC_API_URL;
+      const endpoint = type === "music" ? "/bgm" : "/storeitems";
+
+      try {
+        await axios.post(`${baseURL}${endpoint}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            // Authorization: `Bearer ${accessToken}`,
+          },
+          withCredentials: true,
+        });
+        console.log("요청 성공!");
+
+        formik.resetForm();
+        setPreview(null);
+        setAudioURL(null);
+
+        // 페이지 새로고침
+        window.location.reload();
+      } catch (err) {
+        // 에러 로그 찍기
+        console.error(err);
+      }
     },
   });
 
