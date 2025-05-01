@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import Login from "@/components/MainPage/Login";
+import Login from "@/components/MainPage/ProfilePart/Login";
 import Advertising from "../Advertising";
 
 const ProfilePart = () => {

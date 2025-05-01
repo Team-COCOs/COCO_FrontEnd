@@ -3,9 +3,14 @@ import clsx from "clsx";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import Advertising from "../Advertising";
+import MainTopContainer from "./MainTopContainer";
 
 const StorePart = () => {
-  return <div> 검색 및 상점 </div>;
+  return (
+    <MainTopContainer />
+    // <MainBottomContainer/>
+  );
 };
 
 export default StorePart;

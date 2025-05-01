@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { HeaderStyle } from "./styled";
-import Logo from "../Logo";
-import Search from "../Search";
+import Logo from "./Logo";
+import Search from "./Search";
 import Advertising from "../Advertising";
 
 const Header = () => {
@@ -14,7 +14,9 @@ const Header = () => {
         <div className="Header_searchPart">
           <Search />
         </div>
-        <Advertising type="Advertising6" />
+        <div className="Header_ad">
+          <Advertising type="Advertising6" />
+        </div>
       </div>
     </HeaderStyle>
   );
