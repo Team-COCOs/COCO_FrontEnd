@@ -42,5 +42,9 @@ export const AdminPageStyled = styled.div`
       }
     }
     /* 헤더 끝 */
+    /* 본문 */
+    .Admin_content_wrap {
+      display: flex;
+    }
   }
 `;

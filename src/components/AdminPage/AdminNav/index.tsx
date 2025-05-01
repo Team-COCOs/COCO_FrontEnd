@@ -29,16 +29,21 @@ const items: MenuProps["items"] = [
   },
 ];
 
-const AdminNav = () => {
+// 타입 지정
+interface AdminNavProps {
+  onSelectKey: (key: string) => void;
+}
+
+const AdminNav: React.FC<AdminNavProps> = ({ onSelectKey }) => {
   const onClick = (e: any) => {
-    console.log("click ", e);
+    onSelectKey(e.key);
   };
 
   return (
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: "#f87013", // 주황색으로 설정
+          colorPrimary: "#f87013",
         },
       }}
     >
