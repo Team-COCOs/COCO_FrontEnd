@@ -28,6 +28,14 @@ export const SearchStyle = styled.div`
           color: ${({ theme }) => theme.colors.mainColor};
           font-weight: bold;
           margin-bottom: 2px;
+
+          @media (max-width: 1240px) {
+            font-size: 15px;
+          }
+
+          @media (max-width: 1200px) {
+            font-size: 13px;
+          }
         }
 
         input {

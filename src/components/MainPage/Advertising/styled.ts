@@ -4,6 +4,7 @@ export const AdvertisingStyle = styled.div`
   &.Advertising_wrap {
     margin-top: 7px;
 
+    // profile
     .Advertising_border {
       width: 100%;
       height: 200px;
@@ -23,19 +24,53 @@ export const AdvertisingStyle = styled.div`
         width: 100%;
         font-size: 14px;
         font-weight: bold;
+
+        @media (max-width: 1054px) {
+          font-size: 13px;
+        }
+
+        @media (max-width: 984px) {
+          font-size: 12px;
+        }
       }
 
       .Advertising_font {
         margin-top: 7px;
         font-size: 13px;
         color: rgb(210, 210, 210);
+
+        @media (max-width: 1054px) {
+          font-size: 12px;
+        }
+
+        @media (max-width: 984px) {
+          font-size: 11px;
+        }
       }
     }
 
+    // search
     .Advertising6 {
       position: relative;
-      width: 200px;
+      top: -20px;
+      right: -30px;
+      width: 250px;
       height: 150px;
+    }
+
+    // store1
+    .Advertising7 {
+      position: relative;
+      width: 100%;
+      height: 120px;
+      margin-top: -7px;
+    }
+
+    .Advertising1 {
+      position: relative;
+      width: 100%;
+      height: 140px;
+      margin-top: 10px;
     }
   }
 `;
