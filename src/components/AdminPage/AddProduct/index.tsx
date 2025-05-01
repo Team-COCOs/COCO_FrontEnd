@@ -72,8 +72,6 @@ const AddProduct: React.FC<AddProductProps> = ({
       }
 
       console.log("폼 제출", values);
-      const accessToken = Cookies.get("accessToken");
-      const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
       try {
         await axiosInstance.post("/storeitems", formData, {

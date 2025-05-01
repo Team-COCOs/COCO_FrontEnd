@@ -4,7 +4,7 @@ export const AdminPageStyled = styled.div`
   &.AdminPage_wrap {
     display: flex;
     flex-direction: column;
-    max-width: 1280px;
+    width: 1280px;
     padding-top: 80px;
     /* 헤더 */
     .AdminPage_header {

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "@/utils/axiosInstance";
+import axiosInstance from "@/utils/axiosInstance";
 
 // storeItems를 서버에서 가져오기
 export const fetchStoreItems = createAsyncThunk<
@@ -10,7 +10,7 @@ export const fetchStoreItems = createAsyncThunk<
   }
 >("storeItems/fetchStoreItems", async (category, { rejectWithValue }) => {
   try {
-    const response = await axios.get("/storeitems", {
+    const response = await axiosInstance.get("/storeitems", {
       params: category ? { category } : {},
     });
     return response.data;
