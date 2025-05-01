@@ -34,6 +34,8 @@ export const AdvertisingStyle = styled.div`
 
     .Advertising6 {
       position: relative;
+      width: 200px;
+      height: 150px;
     }
   }
 `;

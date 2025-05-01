@@ -13,6 +13,7 @@ export const HeaderStyle = styled.div`
     }
 
     .Header_search {
+      display: flex;
       width: 80%;
 
       .Header_searchPart {
