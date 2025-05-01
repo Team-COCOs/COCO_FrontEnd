@@ -88,11 +88,20 @@ const AddProduct: React.FC<AddProductProps> = ({
         formik.resetForm();
         setPreview(null);
         setAudioURL(null);
-        console.log("상품이 성공적으로 등록되었습니다!");
+
+        // 파일 input 수동 초기화
+        const fileInput =
+          document.querySelector<HTMLInputElement>('input[name="file"]');
+        if (fileInput) fileInput.value = "";
+
+        // duration 값 수동 초기화
+        formik.setFieldValue("duration", "");
+
+        alert("상품이 성공적으로 등록되었습니다!");
       } catch (err) {
         // 에러 로그 찍기
         console.error(err);
-        console.log("상품 등록에 실패했습니다. 다시 시도해 주세요.");
+        alert("상품 등록에 실패했습니다. 다시 시도해 주세요.");
       }
     },
   });
