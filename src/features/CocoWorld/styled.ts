@@ -14,7 +14,7 @@ export const CocoWorldPageStyled = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
-    background-image: url("background/minihome_background.png");
+    background-image: url("background/background.jpg");
     background-size: cover;
     background-position: center;
   }
@@ -66,6 +66,29 @@ export const CocoWorldPageStyled = styled.div`
           border-bottom-left-radius: 8px;
           border-top-right-radius: 20px;
           border-bottom-right-radius: 20px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          // 투데이 컴포 div
+          .CocoWorldPage_bookLeft_todayWrap {
+            width: 93%;
+            height: 9%;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            font-size: 10px;
+            padding-bottom: 3px;
+          }
+          // 왼쪽 안쪽 다이어리 속지
+          .CocoWorldPage_diary_left {
+            width: 93%;
+            height: 89%;
+            background-color: #ffffff;
+            border: 2px solid #c5c6c6;
+            border-radius: 8px;
+          }
         }
       }
     }
@@ -109,6 +132,29 @@ export const CocoWorldPageStyled = styled.div`
           border-bottom-left-radius: 15px;
           border-top-right-radius: 8px;
           border-bottom-right-radius: 8px;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          flex-direction: column;
+          padding-left: 8px;
+          // 미니홈피 이름 컴포 div
+          .CocoWorldPage_bookRight_todayWrap {
+            width: 98%;
+            height: 9%;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-end;
+            padding-bottom: 2.5px;
+            padding-left: 17px;
+          }
+          // 왼쪽 안쪽 다이어리 속지
+          .CocoWorldPage_diary_Right {
+            width: 98%;
+            height: 89%;
+            background-color: #ffffff;
+            border: 2px solid #c5c6c6;
+            border-radius: 8px;
+          }
         }
       }
     }
