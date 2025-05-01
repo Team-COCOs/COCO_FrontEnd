@@ -18,6 +18,51 @@ export const CocoWorldPageStyled = styled.div`
     background-size: cover;
     background-position: center;
   }
+
+  // 책 전체
+  .CocoWorldPage_book_wrap {
+    width: 95%;
+    height: 90%;
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden;
+    // 책 왼쪽
+    .CocoWorldPage_book_left {
+      width: 30%;
+      border-top-right-radius: 12px;
+      border-bottom-right-radius: 12px;
+      background-color: ${({ theme }) => theme.colors.bookColor};
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      .CocoWorldPage_bookLeft_line {
+        width: 94%;
+        height: 94%;
+        border-left: 1.5px #fffcfe dashed;
+        border-top: 1.5px #fffcfe dashed;
+        border-bottom: 1.5px #fffcfe dashed;
+        border-radius: 8px;
+      }
+    }
+    // 책 오른쪽
+    .CocoWorldPage_book_right {
+      width: 70%;
+      border-top-left-radius: 12px;
+      border-bottom-left-radius: 12px;
+      background-color: ${({ theme }) => theme.colors.bookColor};
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .CocoWorldPage_bookRight_line {
+        width: 97.5%;
+        height: 94%;
+        border-right: 1.5px #fffcfe dashed;
+        border-top: 1.5px #fffcfe dashed;
+        border-bottom: 1.5px #fffcfe dashed;
+        border-radius: 8px;
+      }
+    }
+  }
   // 왼쪽 전체
   .CocoWorldPage_left {
     width: 83%;
@@ -30,21 +75,5 @@ export const CocoWorldPageStyled = styled.div`
   .CocoWorldPage_right {
     width: 17%;
     height: 100%;
-  }
-  // 책 전체
-  .CocoWorldPage_book_wrap {
-    width: 95%;
-    height: 90%;
-    background-color: blue;
-    display: flex;
-    // 책 왼쪽
-    .CocoWorldPage_book_left {
-      width: 30%;
-      background-color: ${({ theme }) => theme.colors.mainColor};
-    }
-    // 책 오른쪽
-    .CocoWorldPage_book_right {
-      height: 70%;
-    }
   }
 `;

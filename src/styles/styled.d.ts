@@ -5,6 +5,8 @@ declare module "styled-components" {
     colors: {
       mainColor: string;
       lightColor: string;
+      tabColor: string;
+      bookColor: string;
     };
   }
 }
