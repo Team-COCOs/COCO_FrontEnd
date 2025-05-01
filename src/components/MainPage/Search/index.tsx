@@ -11,7 +11,7 @@ const Search = () => {
           <div className="Search_downBtn">
             <span className="Search_triangle"></span>
           </div>
-          <input type="text" placeholder="별자리로 알아보는 오늘의 운세" />
+          <input type="text" placeholder="다른 미니홈피를 검색해보세요." />
         </div>
       </div>
       <div className="Search_btn">검색</div>

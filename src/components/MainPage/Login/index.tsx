@@ -32,7 +32,7 @@ const ProfilePart = () => {
       }
 
       axios
-        .post("http://localhost:5000/auth/localLogin", data, {
+        .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/localLogin`, data, {
           withCredentials: true,
           headers: {
             "Content-Type": "application/json",
@@ -41,8 +41,10 @@ const ProfilePart = () => {
         .then((res) => {
           Cookie.set("accessToken", res.data.token, {
             path: "/", // 모든 페이지에서 접근 가능
-            expires: 1, // 1일
+            expires: 1 / 24, // 1일
           });
+
+          console.log(res.data);
 
           dispatch(setReduxUser(res.data.user));
 
