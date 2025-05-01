@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { Router, useRouter } from "next/router";
 import Cookies from "js-cookie";
+
 import {
   validateEmail,
   validateName,
@@ -171,11 +172,10 @@ const SignPage = () => {
 
           return axios.post("http://15.164.52.122/users/userCheck", {
             user_id: userId,
-            term: "이용약관",
           });
         })
         .then(() => {
-          router.push("/login");
+          router.push("/");
         })
         .catch((error) => {
           console.error("회원가입 또는 이용약관 저장 실패:", error);
@@ -185,53 +185,57 @@ const SignPage = () => {
   return (
     <SignFormStyled className={clsx("Sign_wrap")}>
       <Logo type="sign" />
+
+      <b className="Sign_text"> 프로필 입력</b>
+
       <form className="Sign_container" onSubmit={formik.handleSubmit}>
-        <b className="Sign_text"> 프로필 입력</b>
         <div className="Sign_line"></div>
 
-        <div className="joinform-divcontainer">
-          <div className="join-div">
+        <div className="Sign_form">
+          <div className="Sign_div">
             <label htmlFor="email">이메일</label>
             <input
               type="text"
+              className="Sign_input"
               placeholder="abc123"
               value={localPart}
               onChange={(e) => setLocalPart(e.target.value)}
             />
             <span>@</span>
-            {!useCustomDomain ? (
-              <select
-                value={domain}
-                onChange={(e) => {
-                  if (e.target.value === "custom") {
-                    setUseCustomDomain(true);
-                    setCustomDomain("");
-                  } else {
-                    setDomain(e.target.value);
-                  }
-                }}
-              >
-                <option value="naver.com">naver.com</option>
-                <option value="gmail.com">gmail.com</option>
-                <option value="hanmail.net">hanmail.net</option>
-                <option value="custom">직접입력</option>
-              </select>
-            ) : (
-              <input
-                type="text"
-                placeholder="example.com"
-                value={customDomain}
-                onChange={(e) => setCustomDomain(e.target.value)}
-                onBlur={() => {
-                  if (!customDomain) setUseCustomDomain(false);
-                }}
-              />
-            )}
+            <input
+              type="text"
+              className="Sign_input"
+              placeholder="example.com"
+              value={domain}
+              onChange={(e) => setCustomDomain(e.target.value)}
+              onBlur={() => {
+                if (!customDomain) setUseCustomDomain(false);
+              }}
+              disabled={!useCustomDomain}
+            />
+            <select
+              className="Sign_input"
+              value={domain}
+              onChange={(e) => {
+                if (e.target.value === "custom") {
+                  setUseCustomDomain(true);
+                  setCustomDomain("");
+                } else {
+                  setUseCustomDomain(false);
+                  setDomain(e.target.value);
+                }
+              }}
+            >
+              <option value="naver.com">naver.com</option>
+              <option value="gmail.com">gmail.com</option>
+              <option value="hanmail.net">hanmail.net</option>
+              <option value="custom">직접입력</option>
+            </select>
 
             <button
               type="button"
               onClick={() => handleDuplicateCheck("email")}
-              style={{ backgroundColor: "#e74c3c", color: "white" }}
+              className="Sign_checkBtn"
             >
               중복확인
             </button>
@@ -246,7 +250,7 @@ const SignPage = () => {
 
             <div className="join-errormessage">{emailError}</div>
           </div>
-          <div className="join-div">
+          <div className="Sign_div">
             <label htmlFor="password">비밀번호</label>
             <input
               className="joinform-input"
@@ -261,7 +265,7 @@ const SignPage = () => {
             />
             <div className="join-errormessage">{passwordError}</div>
           </div>
-          <div className="join-div">
+          <div className="Sign_div">
             <label htmlFor="passwordCheck">비밀번호 확인</label>
             <input
               className="joinform-input"
@@ -276,7 +280,7 @@ const SignPage = () => {
             />
             <div className="join-errormessage">{passwordCheckError}</div>
           </div>
-          <div className="join-div">
+          <div className="Sign_div">
             <label htmlFor="name">이름</label>
             <input
               className="joinform-input"
@@ -291,7 +295,7 @@ const SignPage = () => {
             />
             <div className="join-errormessage">{nameError}</div>
           </div>
-          <div className="join-div">
+          <div className="Sign_div">
             <label htmlFor="phone">전화번호</label>
             <input
               className="joinform-input"
