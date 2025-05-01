@@ -30,6 +30,7 @@ const SignPage = () => {
   const [passwordCheck, setPasswordCheck] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [gender, setGender] = useState("");
 
   // 유효성 체크 상태 변수
   const [isEmailValid, setIsEmailValid] = useState(false);
@@ -193,7 +194,9 @@ const SignPage = () => {
 
         <div className="Sign_form">
           <div className="Sign_div">
-            <label htmlFor="email">이메일</label>
+            <label htmlFor="email" className="mainFont">
+              이메일 아이디
+            </label>
             <input
               type="text"
               className="Sign_input"
@@ -206,7 +209,7 @@ const SignPage = () => {
               type="text"
               className="Sign_input"
               placeholder="example.com"
-              value={domain}
+              value={useCustomDomain ? customDomain : domain}
               onChange={(e) => setCustomDomain(e.target.value)}
               onBlur={() => {
                 if (!customDomain) setUseCustomDomain(false);
@@ -215,7 +218,7 @@ const SignPage = () => {
             />
             <select
               className="Sign_input"
-              value={domain}
+              value={useCustomDomain ? "custom" : domain}
               onChange={(e) => {
                 if (e.target.value === "custom") {
                   setUseCustomDomain(true);
@@ -244,16 +247,18 @@ const SignPage = () => {
             <input
               type="hidden"
               name="email"
+              className="Sign_input"
               value={fullEmail}
               onChange={formik.handleChange}
             />
-
-            <div className="join-errormessage">{emailError}</div>
           </div>
+          <div className="join-errormessage">{emailError}</div>
           <div className="Sign_div">
-            <label htmlFor="password">비밀번호</label>
+            <label htmlFor="password" className="mainFont">
+              비밀번호
+            </label>
             <input
-              className="joinform-input"
+              className="Sign_input longInput"
               type="password"
               id="password"
               value={password}
@@ -266,9 +271,11 @@ const SignPage = () => {
             <div className="join-errormessage">{passwordError}</div>
           </div>
           <div className="Sign_div">
-            <label htmlFor="passwordCheck">비밀번호 확인</label>
+            <label htmlFor="passwordCheck" className="mainFont">
+              비밀번호 확인
+            </label>
             <input
-              className="joinform-input"
+              className="Sign_input longInput"
               type="password"
               id="passwordCheck"
               value={passwordCheck}
@@ -281,9 +288,11 @@ const SignPage = () => {
             <div className="join-errormessage">{passwordCheckError}</div>
           </div>
           <div className="Sign_div">
-            <label htmlFor="name">이름</label>
+            <label htmlFor="name" className="mainFont">
+              이름
+            </label>
             <input
-              className="joinform-input"
+              className="Sign_input longInput"
               type="text"
               id="name"
               value={name}
@@ -296,9 +305,11 @@ const SignPage = () => {
             <div className="join-errormessage">{nameError}</div>
           </div>
           <div className="Sign_div">
-            <label htmlFor="phone">전화번호</label>
+            <label htmlFor="phone" className="mainFont">
+              전화번호
+            </label>
             <input
-              className="joinform-input"
+              className="Sign_input phoneInput"
               type="text"
               id="phone"
               value={phone}
@@ -308,13 +319,33 @@ const SignPage = () => {
               }}
               placeholder="010-0000-0000"
             />
-            <div className="join-errormessage">{phoneError}</div>
             <button
-              className="join-check"
+              className="Sign-PhoneCheck"
               onClick={() => handleDuplicateCheck("phone")}
             >
               전화번호 중복 확인
             </button>
+          </div>
+          <div className="join-errormessage">{phoneError}</div>
+          <div className="Sign_div">
+            <label htmlFor="gender" className="mainFont">
+              성별
+            </label>
+            <input
+              type="radio"
+              name="gender"
+              value="man"
+              checked={gender === "man"}
+              onChange={(e) => setGender(e.target.value)}
+            />
+            남자
+            <input
+              type="radio"
+              name="gender"
+              value="woman"
+              onChange={(e) => setGender(e.target.value)}
+            />
+            여자
           </div>
           <div className="joinForm-btnDiv">
             <button

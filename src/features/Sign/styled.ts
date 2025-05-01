@@ -4,7 +4,7 @@ export const SignFormStyled = styled.div`
   &.Sign_wrap {
     display: flex;
     flex-direction: column;
-    max-width: 1280px;
+    max-width: 1000px;
     height: 100vh;
     margin: 0 auto;
     padding: 30px 20px;
@@ -35,14 +35,54 @@ export const SignFormStyled = styled.div`
         gap: 15px;
         display: flex;
         flex-direction: column;
+        align-items: center;
 
         .Sign_div {
           display: flex;
+          align-items: center;
           gap: 10px;
-        }
+          width: 100%;
 
-        .Sign_input {
-          width: 200px;
+          .mainFont {
+            font-size: 14px;
+            font-weight: bold;
+          }
+
+          .Sign_input {
+            width: 170px;
+            height: 40px;
+          }
+
+          .longInput {
+            width: 70%;
+          }
+
+          .phoneInput {
+            width: 66%;
+          }
+
+          label {
+            width: 100px;
+          }
+
+          input {
+            border-width: 3px 2px 1px 3px;
+            border-style: solid;
+            border-color: rgb(211, 211, 211);
+            padding-left: 5px;
+          }
+
+          button {
+            width: 85px;
+            height: 40px;
+            color: white;
+            font-weight: bold;
+            background-color: ${({ theme }) => theme.colors.mainColor};
+          }
+
+          .Sign-PhoneCheck {
+            width: 140px;
+          }
         }
       }
     }
