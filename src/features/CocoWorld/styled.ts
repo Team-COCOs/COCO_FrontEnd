@@ -28,13 +28,21 @@ export const CocoWorldPageStyled = styled.div`
     overflow: hidden;
     // 책 왼쪽
     .CocoWorldPage_book_left {
+      // 선
+      border-left: 2px solid ${({ theme }) => theme.colors.bookLineColor};
+      border-top: 2px solid ${({ theme }) => theme.colors.bookLineColor};
+      border-bottom: 2px solid ${({ theme }) => theme.colors.bookLineColor};
       width: 30%;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
       border-top-right-radius: 18px;
       border-bottom-right-radius: 18px;
       background-color: ${({ theme }) => theme.colors.bookColor};
       display: flex;
       justify-content: flex-end;
       align-items: center;
+
+      // 책 왼쪽 점선
       .CocoWorldPage_bookLeft_line {
         width: 94%;
         height: 94%;
@@ -45,32 +53,63 @@ export const CocoWorldPageStyled = styled.div`
         border-bottom-left-radius: 10px;
         border-top-right-radius: 18px;
         border-bottom-right-radius: 18px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        // 책 종이 왼쪽
+        .CocoWorldPage_bookLeft_paper {
+          background-color: ${({ theme }) => theme.colors.bookPageColor};
+          width: 97%;
+          height: 97%;
+          border-top-left-radius: 8px;
+          border-bottom-left-radius: 8px;
+          border-top-right-radius: 20px;
+          border-bottom-right-radius: 20px;
+        }
       }
     }
     // 책 오른쪽
     .CocoWorldPage_book_right {
-      border-right: 1px solid ${({ theme }) => theme.colors.tabColor};
+      // 선
+      border-right: 2px solid ${({ theme }) => theme.colors.bookLineColor};
+      border-top: 2px solid ${({ theme }) => theme.colors.bookLineColor};
+      border-bottom: 2px solid ${({ theme }) => theme.colors.bookLineColor};
       position: relative;
       left: -3.5px;
       width: 70%;
       border-top-left-radius: 18px;
       border-bottom-left-radius: 18px;
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
       background-color: ${({ theme }) => theme.colors.bookColor};
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      /* 책 오른쪽 점선 */
       .CocoWorldPage_bookRight_line {
         width: 97.5%;
         height: 94%;
         border-right: 1.5px #fffcfe dashed;
         border-top: 1.5px #fffcfe dashed;
         border-bottom: 1.5px #fffcfe dashed;
-        border-top-left-radius: 18px;
-        border-bottom-left-radius: 18px;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        // 책 종이
+        .CocoWorldPage_bookRight_paper {
+          background-color: ${({ theme }) => theme.colors.bookPageColor};
+          width: 99%;
+          height: 97%;
+          border-top-left-radius: 15px;
+          border-bottom-left-radius: 15px;
+          border-top-right-radius: 8px;
+          border-bottom-right-radius: 8px;
+        }
       }
     }
   }
