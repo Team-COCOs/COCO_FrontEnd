@@ -6,7 +6,7 @@ const HomeTodayTitle = () => {
     <HomeTodayTitleStyled>
       <div>
         <div className="HomeTodayTitle_wrap">
-          <div className="HomeTodayTitle_number_title pixelFont">
+          <div className="HomeTodayTitle_number_title dotumFont">
             TODAY <span>0</span> | TOTAL 0
           </div>
         </div>

@@ -78,8 +78,7 @@ export const CocoWorldPageStyled = styled.div`
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            font-size: 10px;
-            padding-bottom: 3px;
+            padding-bottom: 4px;
           }
           // 왼쪽 안쪽 다이어리 속지
           .CocoWorldPage_diary_left {

@@ -32,7 +32,7 @@ const CocoWorld = () => {
                   </div>
                   {/* 다이어리 왼쪽 컴포넌트 */}
                   <div className="CocoWorldPage_diary_left">
-                    <HomeLeft />
+                    {activeTab === "Home" ? <HomeLeft /> : ""}
                   </div>
                 </div>
               </div>
@@ -47,7 +47,7 @@ const CocoWorld = () => {
                   </div>
                   {/* 다이어리 오른쪽 컴포넌트 */}
                   <div className="CocoWorldPage_diary_Right">
-                    <HomeRight />
+                    {activeTab === "Home" ? <HomeRight /> : ""}
                   </div>
                 </div>
               </div>
