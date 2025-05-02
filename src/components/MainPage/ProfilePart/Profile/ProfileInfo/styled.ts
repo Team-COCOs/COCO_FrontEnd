@@ -19,6 +19,7 @@ export const ProfileInfoStyle = styled.div`
       color: ${({ theme }) => theme.colors.mainColor};
       display: flex;
       align-items: center;
+      font-weight: bold;
     }
 
     .Profile_new {

@@ -7,6 +7,7 @@ import Dropdown from "@/components/Dropdown";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import ProfileInfo from "./ProfileInfo";
+import Dotori from "./Dotori";
 
 const userData = {
   name: "이수정",
@@ -97,16 +98,7 @@ const Profile = ({ setHasToken }: profileProps) => {
           <ProfileInfo label="새게시물" value={userData.newPost} />
           <ProfileInfo label="일촌신청" value={userData.friendRequest} />
 
-          <div className="Profile_infos">
-            <span className="Profile_newText">
-              <div className="Profile_dororiImg">
-                <Image src="/dotori.png" alt="dotori" fill />
-              </div>
-              {userData.dotoris}
-
-              <button>충전</button>
-            </span>
-          </div>
+          <Dotori dotori={userData.dotoris} />
         </div>
       </div>
 
