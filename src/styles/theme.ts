@@ -8,6 +8,7 @@ const theme: DefaultTheme = {
     bookColor: "#a6cfdb", // book 초록색 테두리 배경
     bookLineColor: "#8898a1", // book line color
     bookPageColor: "#f0f0f0",
+    NavyColor: "#000080",
   },
 };
 

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
+/* 오른쪽 컴포넌트 기본 CSS 이부분 사용 */
 export const HomeRightStyled = styled.div`
-  /* 오른쪽 컴포넌트 기본 CSS 이부분 사용 */
   border-radius: 5px;
   width: 100%;
   height: 100%;
@@ -71,21 +71,27 @@ export const HomeRightStyled = styled.div`
     .HomeRight_component_wrap {
       width: 92%;
       height: 100%;
-      /* 최근 게시물 컴포넌트 */
-      .HomeRight_RecentPhoto_component {
-        width: 100%;
-        min-height: 25%;
-      }
-      /* 홈 미니룸 컴포넌트 */
-      .HomeRight_HomeMiniroom_component {
-        width: 100%;
-        min-height: 50%;
-      }
-      /* 일촌평 컴포넌트 */
-      .HomeRight_FriendComment_component {
-        width: 100%;
-        min-height: 25%;
-      }
+      padding-left: 10px;
     }
+  }
+`;
+/* 오른쪽 컴포넌트 기본 CSS 위에서부터 여기까지 사용 */
+
+// 안에 컴포넌트 비율 CSS
+export const HomeRightComponentStyled = styled.div`
+  /* 최근 게시물 컴포넌트 */
+  .HomeRight_RecentPhoto_component {
+    width: 100%;
+    min-height: 25%;
+  }
+  /* 홈 미니룸 컴포넌트 */
+  .HomeRight_HomeMiniroom_component {
+    width: 100%;
+    min-height: 50%;
+  }
+  /* 일촌평 컴포넌트 */
+  .HomeRight_FriendComment_component {
+    width: 100%;
+    min-height: 25%;
   }
 `;

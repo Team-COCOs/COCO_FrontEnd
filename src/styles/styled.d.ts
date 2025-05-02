@@ -9,6 +9,7 @@ declare module "styled-components" {
       bookColor: string;
       bookLineColor: string;
       bookPageColor: string;
+      NavyColor: string;
     };
   }
 }
