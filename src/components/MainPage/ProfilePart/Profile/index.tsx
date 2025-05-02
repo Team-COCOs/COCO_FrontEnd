@@ -3,7 +3,10 @@ import { ProfileStyle } from "./styled";
 import clsx from "clsx";
 import Cookie from "js-cookie";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import Dropdown from "@/components/Dropdown";
+import { useEffect, useState } from "react";
+import axiosInstance from "@/lib/axios";
+import ProfileInfo from "./ProfileInfo";
 
 const userData = {
   name: "이수정",
@@ -19,12 +22,28 @@ const userData = {
   ],
 };
 
+interface Friend {
+  id: number;
+  name: string;
+}
+
+interface UserData {
+  name: string;
+  todayVisit: number;
+  newPost: number;
+  friendRequest: number;
+  avatar: string;
+  dotoris: number;
+  friends: Friend[];
+}
+
 interface profileProps {
-  setHasToken: any;
+  setHasToken: (value: boolean) => void;
 }
 
 const Profile = ({ setHasToken }: profileProps) => {
   const router = useRouter();
+  // const [userData, setUserData] = useState<UserData | null>(null);
 
   const logout = () => {
     Cookie.remove("accessToken");
@@ -34,28 +53,23 @@ const Profile = ({ setHasToken }: profileProps) => {
     router.push("/");
   };
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedLabel, setSelectedLabel] = useState("바로가기");
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const res = await axiosInstance.get(
+  //         `${process.env.NEXT_PUBLIC_API_URL}/user/profile`
+  //       );
 
-  const handleSelect = (friend: any) => {
-    setSelectedLabel(friend.name);
-    setIsOpen(false);
-    router.push(`/cocoworld?id=${friend.id}`);
-  };
+  //       setUserData(response.data);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        wrapperRef.current &&
-        !wrapperRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  //       console.log("유저 정보 대답 : ", res.data);
+  //     } catch (err) {
+  //       console.error("유저 정보 불러오기 실패", err);
+  //     }
+  //   };
+
+  //   fetchUserData();
+  // }, []);
 
   return (
     <ProfileStyle className={clsx("Profile_wrap")}>
@@ -75,36 +89,13 @@ const Profile = ({ setHasToken }: profileProps) => {
         </div>
 
         <div className="Profile_userInfo">
-          <div className="Profile_infos">
-            <span className="Profile_infoText">오늘방문자</span>
-            <span className="">{userData.todayVisit}</span>
-          </div>
-
-          <div className="Profile_infos">
-            <span className="Profile_infoText">새게시물</span>
-            <span className={userData.newPost > 0 ? "Profile_newText" : ""}>
-              {userData.newPost}
-              {userData.newPost > 0 ? (
-                <div className="Profile_new">N</div>
-              ) : (
-                <> </>
-              )}
-            </span>
-          </div>
-
-          <div className="Profile_infos">
-            <span className="Profile_infoText">일촌신청</span>
-            <span
-              className={userData.friendRequest > 0 ? "Profile_newText" : ""}
-            >
-              {userData.friendRequest}
-              {userData.friendRequest > 0 ? (
-                <div className="Profile_new">N</div>
-              ) : (
-                <> </>
-              )}
-            </span>
-          </div>
+          <ProfileInfo
+            label="오늘방문자"
+            value={userData.todayVisit}
+            showBadge={false}
+          />
+          <ProfileInfo label="새게시물" value={userData.newPost} />
+          <ProfileInfo label="일촌신청" value={userData.friendRequest} />
 
           <div className="Profile_infos">
             <span className="Profile_newText">
@@ -128,31 +119,12 @@ const Profile = ({ setHasToken }: profileProps) => {
         <span className="arrow">❯</span> 내 미니홈피 가기
       </button>
 
-      <div className="wrapper" ref={wrapperRef}>
-        <button
-          className="selectButton"
-          onClick={() => setIsOpen((prev) => !prev)}
-        >
-          {selectedLabel}
-          <p className="wrapper_font"> ▾ </p>
-        </button>
-
-        {isOpen && (
-          <ul className="dropdown">
-            {userData.friends.map((friend) => (
-              <li
-                key={friend.id}
-                className="option"
-                onClick={() => handleSelect(friend)}
-              >
-                {friend.name}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      <Dropdown label="바로가기" options={userData.friends} />
     </ProfileStyle>
   );
 };
 
 export default Profile;
+function dispatch(arg0: any) {
+  throw new Error("Function not implemented.");
+}

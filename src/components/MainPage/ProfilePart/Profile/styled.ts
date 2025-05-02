@@ -69,15 +69,6 @@ export const ProfileStyle = styled.div`
           align-items: center;
           cursor: pointer;
 
-          .Profile_infoText {
-            width: 100px;
-          }
-
-          span {
-            font-size: 12px;
-            width: 100px;
-          }
-
           .Profile_newText {
             color: ${({ theme }) => theme.colors.mainColor};
             display: flex;
@@ -98,16 +89,6 @@ export const ProfileStyle = styled.div`
               cursor: pointer;
               margin-left: 15px;
             }
-          }
-
-          .Profile_new {
-            font-size: 9px;
-            font-weight: bold;
-            color: white;
-            background-color: ${({ theme }) => theme.colors.mainColor};
-            padding: 0 3px;
-            border-radius: 3px;
-            margin-left: 5px;
           }
         }
       }
@@ -144,55 +125,6 @@ export const ProfileStyle = styled.div`
       font-size: 10px;
       font-weight: bold;
       color: white;
-    }
-
-    .wrapper {
-      position: relative;
-      width: 100%;
-      margin-top: 7px;
-      font-size: 13px;
-    }
-
-    .selectButton {
-      width: 100%;
-      padding: 3px 7px 2px 7px;
-      font-size: 13px;
-      cursor: pointer;
-      background-color: white;
-      border: 1px solid #aaa;
-      text-align: left;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .wrapper_font {
-      font-size: 16px;
-    }
-
-    .selectButton:focus {
-      outline: none;
-    }
-
-    .dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: white;
-      border: 1px solid #aaa;
-      border-top: none;
-      list-style: none;
-      z-index: 10;
-      border-radius: 0;
-    }
-
-    .option {
-      padding: 5px;
-      cursor: pointer;
-    }
-
-    .option:hover {
-      background-color: #eee;
     }
   }
 `;

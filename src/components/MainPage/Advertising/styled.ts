@@ -75,7 +75,6 @@ export const AdvertisingStyle = styled.div`
       position: relative;
       width: 100%;
       height: 100px;
-      margin-top: 5px;
     }
 
     .Advertising3 {
