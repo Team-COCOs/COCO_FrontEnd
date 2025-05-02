@@ -30,7 +30,6 @@ export const HomeProfileStyled = styled.div`
 
     .HomeProfile_imgWrap {
       box-sizing: border-box;
-
       width: 100%;
       height: 100%;
       display: flex;

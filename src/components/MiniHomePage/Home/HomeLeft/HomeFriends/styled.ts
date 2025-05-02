@@ -59,6 +59,6 @@ export const HomeFriendsStyled = styled.div`
   .HomeFriends_email {
     font-size: 11px;
     color: ${({ theme }) => theme.colors.mainColor};
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
 `;

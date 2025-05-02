@@ -19,11 +19,11 @@ export const HomeLeftStyled = styled.div`
     }
     .HomeLeft_HomeMusic {
       width: 100%;
-      height: 15%;
+      height: 20%;
     }
     .HomeLeft_HomeFriends {
       width: 100%;
-      height: 25%;
+      height: 20%;
     }
   }
 `;
