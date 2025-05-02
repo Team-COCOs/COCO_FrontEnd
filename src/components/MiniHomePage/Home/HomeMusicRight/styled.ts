@@ -81,14 +81,57 @@ export const HomeMusicRightStyled = styled.div`
     padding: 5px 10px;
   }
 
-  .volume-control {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .HomeMusicRight_volume-control input {
+    width: 35%; /* 슬라이더 너비 */
+    height: 5px; /* 트랙의 높이 */
+    border-radius: 8px;
+    outline: none;
+    transition: background 450ms ease-in;
+    -webkit-appearance: none;
+    accent-color: #ffca1d; /* 슬라이더 thumb의 색상 */
   }
 
-  .volume-control input {
-    width: 100px;
-    margin-top: 5px;
+  .HomeMusicRight_volume-control input::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 8px;
+  }
+
+  .HomeMusicRight_volume-control input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px; /* thumb의 너비 */
+    height: 8px; /* thumb의 높이 */
+    background-color: rgb(255, 244, 206); /* 주황색 */
+    border-radius: 50px;
+    border: 1.5px solid #bbb;
+    cursor: pointer;
+  }
+
+  .HomeMusicRight_volume-control input::-moz-range-track {
+    height: 8px;
+    border-radius: 8px;
+  }
+
+  .HomeMusicRight_volume-control input::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background-color: #ffca1d;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .HomeMusicRight_volume-control input::-ms-track {
+    height: 8px;
+    border-radius: 8px;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+
+  .HomeMusicRight_volume-control input::-ms-thumb {
+    width: 20px;
+    height: 20px;
+    background-color: #ffca1d;
+    border-radius: 50%;
+    cursor: pointer;
   }
 `;

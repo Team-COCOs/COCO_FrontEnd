@@ -9,16 +9,24 @@ const playlist = [
 const HomeMusicRight = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [currentTrack, setCurrentTrack] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [volume, setVolume] = useState(1); // 볼륨 상태 (1은 최대 볼륨)
+  const [isPlaying, setIsPlaying] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
+  const [volume, setVolume] = useState(1);
 
   useEffect(() => {
     const audio = audioRef.current;
     if (audio) {
       if (isPlaying) {
-        audio.play();
-        setHasPlayedOnce(true);
+        audio
+          .play()
+          .then(() => {
+            setHasPlayedOnce(true);
+          })
+          .catch((err) => {
+            console.warn("자동 재생 실패:", err);
+            setIsPlaying(false);
+            setHasPlayedOnce(false);
+          });
       } else {
         audio.pause();
       }
@@ -34,7 +42,40 @@ const HomeMusicRight = () => {
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVolume(Number(e.target.value));
+    const newVolume = Number(e.target.value);
+    setVolume(newVolume);
+
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = newVolume; // 오디오 볼륨을 변경
+    }
+  };
+  const stop = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+      setIsPlaying(false);
+    }
+  };
+
+  const togglePlay = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play().catch((e) => {
+        console.warn("자동 재생이 차단되었습니다.", e);
+      });
+    }
+    setIsPlaying((prev) => !prev);
+  };
+
+  const getVolumeBackground = (value: number) => {
+    const percentage = (value / 1) * 100; // max volume is 1
+    return `linear-gradient(to right, #ee6700 0%, #ee6700 ${percentage}%, #ececec ${percentage}%, #ececec 100%)`;
   };
 
   return (
@@ -47,15 +88,16 @@ const HomeMusicRight = () => {
               ref={audioRef}
               src={playlist[currentTrack].url}
               onEnded={nextTrack}
-              autoPlay
             />
             <div className="HomeMusicRight_title">
               {playlist.length === 0 ? (
                 <div className="scroll-text no-music">
                   🎵 음악을 등록하세요.
                 </div>
-              ) : !hasPlayedOnce ? (
-                <div className="scroll-text paused">⏸ 재생 중이지 않음</div>
+              ) : !hasPlayedOnce && !isPlaying ? (
+                <div className="scroll-text no-music">
+                  🎵 재생 버튼을 클릭해주세요.
+                </div>
               ) : (
                 <div
                   className={`scroll-text ${isPlaying ? "playing" : "paused"}`}
@@ -67,15 +109,14 @@ const HomeMusicRight = () => {
 
             {/* 버튼들 */}
             <div className="control-buttons">
+              <button onClick={togglePlay}>{isPlaying ? "⏸" : "▶"}</button>
+              <button onClick={stop}>⏹</button>
               <button onClick={prevTrack}>⏮</button>
-              <button onClick={() => setIsPlaying((p) => !p)}>
-                {isPlaying ? "⏸" : "▶"}
-              </button>
               <button onClick={nextTrack}>⏭</button>
             </div>
             {/* 볼륨 조절 */}
-            <div className="volume-control">
-              <label htmlFor="volume">Volume:</label>
+            <div className="HomeMusicRight_volume-control">
+              <label htmlFor="volume">🔊</label>
               <input
                 type="range"
                 id="volume"
@@ -84,6 +125,9 @@ const HomeMusicRight = () => {
                 step="0.01"
                 value={volume}
                 onChange={handleVolumeChange}
+                style={{
+                  background: getVolumeBackground(volume),
+                }}
               />
             </div>
           </div>
