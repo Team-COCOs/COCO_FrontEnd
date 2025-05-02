@@ -31,6 +31,7 @@ export const RecentPhotoStyled = styled.div`
       letter-spacing: 1px;
       grid-template-columns: repeat(2, 1fr);
       .RecentPhoto_new_tabs {
+        cursor: pointer;
         display: flex;
         border-bottom: 1.5px dotted #ddd;
         padding: 5px 2px;

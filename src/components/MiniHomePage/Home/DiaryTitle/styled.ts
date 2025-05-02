@@ -9,6 +9,7 @@ export const DiaryTitleStyled = styled.div`
     justify-content: space-between;
     align-items: end;
     .DiaryTitle_number_title {
+      letter-spacing: 1px;
       color: ${({ theme }) => theme.colors.bookColor};
     }
     .DiaryTitle_plus_friend {

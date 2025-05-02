@@ -7,7 +7,7 @@ const HomeTodayTitle = () => {
       <div>
         <div className="HomeTodayTitle_wrap">
           <div className="HomeTodayTitle_number_title dotumFont">
-            TODAY <span>0</span> | TOTAL 0
+            TODAY &nbsp;<span>0</span> &nbsp;&nbsp;|&nbsp;&nbsp;TOTAL &nbsp;0
           </div>
         </div>
       </div>

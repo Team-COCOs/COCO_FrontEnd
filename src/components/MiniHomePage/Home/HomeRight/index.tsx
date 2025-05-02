@@ -4,7 +4,12 @@ import FriendComment from "./FriendComment";
 import HomeMiniroom from "./HomeMiniroom";
 import RecentPhoto from "./RecentPhoto";
 
-const HomeRight = () => {
+interface HomeTabProps {
+  activeTab: string;
+  onTabClick: (tab: string) => void;
+}
+
+const HomeRight: React.FC<HomeTabProps> = ({ activeTab, onTabClick }) => {
   return (
     <HomeRightStyled>
       <div className="HomeRight_wrap">
@@ -12,7 +17,7 @@ const HomeRight = () => {
           <HomeRightComponentStyled>
             {/* 최근 게시물 컴포넌트 */}
             <div className="HomeRight_RecentPhoto_component">
-              <RecentPhoto />
+              <RecentPhoto activeTab={activeTab} onTabClick={onTabClick} />
             </div>
             <div className="HomeRight_HomeMiniroom_component">
               {/* 미니룸 컴포넌트 */}

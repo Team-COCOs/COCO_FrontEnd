@@ -21,7 +21,7 @@ export const HomeProfileStyled = styled.div`
 
       span {
         color: ${({ theme }) => theme.colors.tabColor};
-        font-size: 12px;
+        font-size: 11px;
         font-weight: bold;
         margin: 0px 10px;
         letter-spacing: 2px;
