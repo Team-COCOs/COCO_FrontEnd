@@ -7,7 +7,7 @@ export const HomeTodayTitleStyled = styled.div`
     color: #404040;
   }
   .HomeTodayTitle_number_title {
-    font-size: 10px;
+    font-size: 8px;
     font-weight: bold;
     span {
       color: red;

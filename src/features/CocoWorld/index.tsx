@@ -47,7 +47,14 @@ const CocoWorld = () => {
                   </div>
                   {/* 다이어리 오른쪽 컴포넌트 */}
                   <div className="CocoWorldPage_diary_Right">
-                    {activeTab === "Home" ? <HomeRight /> : ""}
+                    {activeTab === "Home" ? (
+                      <HomeRight
+                        activeTab={activeTab}
+                        onTabClick={handleTabClick}
+                      />
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>

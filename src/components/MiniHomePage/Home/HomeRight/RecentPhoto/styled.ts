@@ -31,6 +31,7 @@ export const RecentPhotoStyled = styled.div`
       letter-spacing: 1px;
       grid-template-columns: repeat(2, 1fr);
       .RecentPhoto_new_tabs {
+        cursor: pointer;
         display: flex;
         border-bottom: 1.5px dotted #ddd;
         padding: 5px 2px;
@@ -43,6 +44,15 @@ export const RecentPhotoStyled = styled.div`
           padding-left: 5px;
           font-weight: 600;
         }
+        @keyframes blink {
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.3;
+          }
+        }
         .RecentPhoto_new_alert {
           font-size: 7px;
           font-weight: bold;
@@ -51,6 +61,7 @@ export const RecentPhotoStyled = styled.div`
           padding: 2px 3px;
           border-radius: 3px;
           margin-left: 5px;
+          animation: blink 1s infinite;
         }
       }
     }

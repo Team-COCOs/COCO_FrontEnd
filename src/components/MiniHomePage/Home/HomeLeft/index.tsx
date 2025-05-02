@@ -1,12 +1,23 @@
 import { HomeLeftStyled } from "./styled";
 import { useEffect } from "react";
+import HomeFriends from "./HomeFriends";
+import HomeProfile from "../../Home/HomeLeft/HomeProfile";
+import HomeMusic from "../../Home/HomeLeft/HomeMusic";
 
 const HomeLeft = () => {
   return (
     <HomeLeftStyled>
-      <div>
-        <div className="HomeLeft_wrap">
-          <div className="HomeLeft_number_title">홈 왼쪽</div>
+      <div className="HomeLeft_wrap">
+        <div className="HomeLeft_componentWrap">
+          <div className="HomeLeft_HomeProfile">
+            <HomeProfile />
+          </div>
+          <div className="HomeLeft_HomeMusic">
+            <HomeMusic />
+          </div>
+          <div className="HomeLeft_HomeFriends">
+            <HomeFriends />
+          </div>
         </div>
       </div>
     </HomeLeftStyled>
