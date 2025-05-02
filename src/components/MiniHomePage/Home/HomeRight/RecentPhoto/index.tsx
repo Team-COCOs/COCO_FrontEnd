@@ -6,6 +6,9 @@ const RecentPhoto = () => {
     <RecentPhotoStyled>
       <div className="RecentPhoto_wrap">
         <div className="RecentPhoto_number_title">최근 게시물</div>
+        <p>
+          dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+        </p>
       </div>
     </RecentPhotoStyled>
   );
