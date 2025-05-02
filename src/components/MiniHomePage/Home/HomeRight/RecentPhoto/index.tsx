@@ -10,9 +10,11 @@ const RecentPhoto = () => {
   return (
     <RecentPhotoStyled>
       <div className="RecentPhoto_wrap">
-        <div className="RecentPhoto_title Gulim">최근 사진첩</div>
+        <div className="RecentPhoto_title Gulim">Updated Photo</div>
         <div className="RecentPhoto_new">
-          <div className="RecentPhoto_new_photo"></div>
+          <div className="RecentPhoto_new_photo">
+            {/* <div>· 오늘의 사진</div> */}
+          </div>
           <div className="RecentPhoto_new_alltab Gulim">
             {tabKeys.map((key) => (
               <div className="RecentPhoto_new_tabs">
