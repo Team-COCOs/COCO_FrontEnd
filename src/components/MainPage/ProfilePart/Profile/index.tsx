@@ -3,6 +3,7 @@ import { ProfileStyle } from "./styled";
 import clsx from "clsx";
 import Cookie from "js-cookie";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 const userData = {
   name: "이수정",
@@ -11,6 +12,11 @@ const userData = {
   friendRequest: 2,
   avatar: "/avatarImg/woman_avatar1.png",
   dotoris: 200,
+  friends: [
+    { id: 1, name: "김지은" },
+    { id: 2, name: "박민수" },
+    { id: 3, name: "최다혜" },
+  ],
 };
 
 interface profileProps {
@@ -27,6 +33,29 @@ const Profile = ({ setHasToken }: profileProps) => {
 
     router.push("/");
   };
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedLabel, setSelectedLabel] = useState("바로가기");
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const handleSelect = (friend: any) => {
+    setSelectedLabel(friend.name);
+    setIsOpen(false);
+    router.push(`/cocoworld?id=${friend.id}`);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <ProfileStyle className={clsx("Profile_wrap")}>
@@ -88,6 +117,39 @@ const Profile = ({ setHasToken }: profileProps) => {
             </span>
           </div>
         </div>
+      </div>
+
+      <button
+        className="Profile_btn"
+        onClick={() => {
+          router.push("/cocoworld");
+        }}
+      >
+        <span className="arrow">❯</span> 내 미니홈피 가기
+      </button>
+
+      <div className="wrapper" ref={wrapperRef}>
+        <button
+          className="selectButton"
+          onClick={() => setIsOpen((prev) => !prev)}
+        >
+          {selectedLabel}
+          <p className="wrapper_font"> ▾ </p>
+        </button>
+
+        {isOpen && (
+          <ul className="dropdown">
+            {userData.friends.map((friend) => (
+              <li
+                key={friend.id}
+                className="option"
+                onClick={() => handleSelect(friend)}
+              >
+                {friend.name}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </ProfileStyle>
   );
