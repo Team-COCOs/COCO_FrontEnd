@@ -4,7 +4,7 @@ export const RecentPhotoStyled = styled.div`
   border-radius: 5px;
   width: 100%;
   height: 100%;
-  padding-top: 10px;
+  padding-top: 8px;
   .RecentPhoto_wrap {
     .RecentPhoto_new {
       display: flex;
@@ -42,6 +42,15 @@ export const RecentPhotoStyled = styled.div`
           align-self: flex-end;
           padding-left: 5px;
           font-weight: 600;
+        }
+        .RecentPhoto_new_alert {
+          font-size: 7px;
+          font-weight: bold;
+          color: white;
+          background-color: ${({ theme }) => theme.colors.mainColor};
+          padding: 2px 3px;
+          border-radius: 3px;
+          margin-left: 5px;
         }
       }
     }

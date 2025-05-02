@@ -95,6 +95,7 @@ a {
 .Gulim {
   font-family: "Gulim", "굴림";
 }
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

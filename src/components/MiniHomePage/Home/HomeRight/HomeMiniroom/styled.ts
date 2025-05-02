@@ -8,25 +8,36 @@ export const HomeMiniroomStyled = styled.div`
   .HomeMiniroom_wrap {
     display: flex;
     flex-direction: column;
+    padding-top: 7px;
     /* 글씨 */
     .HomeMiniroom_number {
       color: ${({ theme }) => theme.colors.tabColor};
       font-size: 11px;
       font-weight: bolder;
       padding-bottom: 3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: "Gulim", sans-serif;
+      width: 100%;
+      span {
+        font-size: 12px;
+        font-weight: bolder;
+      }
     }
 
     .HomeMiniroom_imgWrap {
-      width: 80%;
-      height: 200px;
+      width: 100%;
+      height: 260px;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 0 auto;
+      overflow: hidden; // 이미지가 영역 밖으로 넘칠 경우 잘라냄
+
       img {
-        width: auto;
+        width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: cover; // 꽉 차게, 비율 유지하면서 넘치는 부분 잘림
       }
     }
   }
