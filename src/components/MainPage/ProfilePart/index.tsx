@@ -4,19 +4,38 @@ import Login from "@/components/MainPage/ProfilePart/Login";
 import Advertising from "../Advertising";
 import Cookie from "js-cookie";
 import Profile from "./Profile";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const ProfilePart = () => {
+  const [hasToken, setHasToken] = useState<boolean | null>(null);
+
+  const router = useRouter();
   const token = Cookie.get("accessToken");
+
+  useEffect(() => {
+    setHasToken(!!token); // 토큰 존재 여부만 저장
+  }, [token]);
+
+  if (hasToken === null) return null;
+
   return (
     <ProfilePartStyle className={clsx("ProfilePart_wrap")}>
-      {token ? <Profile /> : <Login />}
+      {hasToken ? <Profile setHasToken={setHasToken} /> : <Login />}
 
       <Advertising type="Advertising4" />
 
       {/* 광고 */}
       <div className="ProfilePart_eventHeader">
         <b className="ProfilePart_text"> 공지사항 </b>
-        <b className="ProfilePart_addText"> ‣ 더보기</b>
+        <b
+          className="ProfilePart_addText"
+          onClick={() => {
+            router.push("https://www.cyworld.com/");
+          }}
+        >
+          ‣ 더보기
+        </b>
       </div>
       <div className="ProfilePart_line"></div>
       <div className="ProfilePart_Texts">
@@ -27,7 +46,14 @@ const ProfilePart = () => {
       {/* 이벤트 */}
       <div className="ProfilePart_eventHeader">
         <b className="ProfilePart_text"> 이벤트 </b>
-        <b className="ProfilePart_addText"> ‣ 더보기</b>
+        <b
+          className="ProfilePart_addText"
+          onClick={() => {
+            router.push("https://www.cyworld.com/");
+          }}
+        >
+          ‣ 더보기
+        </b>
       </div>
       <div className="ProfilePart_line"></div>
       <div className="ProfilePart_eventImg">

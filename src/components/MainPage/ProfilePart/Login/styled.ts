@@ -112,7 +112,8 @@ export const LoginStyle = styled.div`
         background-color: rgb(234, 234, 234);
       }
 
-      .mainFont {
+      .Login_join,
+      .Login_find span {
         cursor: pointer;
       }
     }

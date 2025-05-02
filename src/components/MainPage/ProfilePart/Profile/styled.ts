@@ -36,5 +36,72 @@ export const ProfileStyle = styled.div`
       background-color: rgb(222, 222, 222);
       margin: 3px 0;
     }
+
+    .Profile_userInfos {
+      display: flex;
+      width: 100%;
+      gap: 10px;
+
+      .Profile_userImgBack {
+        width: 45%;
+        height: 95px;
+        background-color: rgb(233, 233, 233);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .Profile_userImg {
+          position: relative;
+          width: 55px;
+          height: 65px;
+        }
+      }
+
+      .Profile_userInfo {
+        width: 55%;
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        margin-top: 3px;
+
+        .Profile_infos {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+
+          .Profile_infoText {
+            width: 100px;
+          }
+
+          span {
+            font-size: 12px;
+            width: 100px;
+          }
+
+          .Profile_newText {
+            color: ${({ theme }) => theme.colors.mainColor};
+            display: flex;
+            align-items: center;
+
+            .Profile_dororiImg {
+              position: relative;
+              width: 20px;
+              height: 20px;
+              margin-right: 5px;
+            }
+          }
+
+          .Profile_new {
+            font-size: 9px;
+            font-weight: bold;
+            color: white;
+            background-color: ${({ theme }) => theme.colors.mainColor};
+            padding: 0 3px;
+            border-radius: 3px;
+            margin-left: 5px;
+          }
+        }
+      }
+    }
   }
 `;
