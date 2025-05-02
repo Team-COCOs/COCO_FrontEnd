@@ -22,7 +22,7 @@ const RecentPhoto = () => {
                   {TAB_LABELS[key]}
                 </div>
                 <span>0/10</span>
-                <span>N</span>
+                <span className="RecentPhoto_new_alert">N</span>
               </div>
             ))}
           </div>
