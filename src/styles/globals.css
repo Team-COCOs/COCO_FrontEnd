@@ -88,6 +88,10 @@ a {
   font-style: normal;
 }
 
+.dotumFont {
+  font-family: "Dotum", sans-serif, "돋움";
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

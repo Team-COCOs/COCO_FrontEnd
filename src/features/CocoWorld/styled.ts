@@ -161,7 +161,7 @@ export const CocoWorldPageStyled = styled.div`
   }
   // 왼쪽 전체
   .CocoWorldPage_left {
-    width: 83%;
+    width: 85%;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -169,7 +169,18 @@ export const CocoWorldPageStyled = styled.div`
   }
   // 오른쪽 전체
   .CocoWorldPage_right {
-    width: 17%;
+    width: 15%;
     height: 100%;
+  }
+  // 홈 탭 - 오른쪽 부분에 relative 랑 absolute로 맞춤
+  .CocoWorldPage_Tab_Wrap {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    width: 8%;
+    right: 4.4%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
