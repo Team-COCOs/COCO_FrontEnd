@@ -6,9 +6,9 @@ import Stores from "./Stores";
 
 const TABS = [
   { key: "skin", label: "스킨" },
-  { key: "minimi", label: "미니미" },
-  { key: "miniroom", label: "미니룸" },
-  { key: "music", label: "음악" },
+  { key: "MINIMI", label: "미니미" },
+  { key: "MINIROOM", label: "미니룸" },
+  { key: "BGM", label: "음악" },
 ];
 
 const StoreContent = () => {
