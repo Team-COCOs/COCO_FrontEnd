@@ -15,15 +15,12 @@ export const HomeLeftStyled = styled.div`
     }
     .HomeLeft_HomeProfile {
       width: 100%;
-      height: 60%;
-    }
-    .HomeLeft_HomeMusic {
-      width: 100%;
-      height: 20%;
+      height: 82%;
+      padding-bottom: 10px;
     }
     .HomeLeft_HomeFriends {
       width: 100%;
-      height: 20%;
+      height: 18%;
     }
   }
 `;

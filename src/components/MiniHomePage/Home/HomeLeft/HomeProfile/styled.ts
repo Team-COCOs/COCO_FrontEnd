@@ -11,17 +11,17 @@ export const HomeProfileStyled = styled.div`
     flex-direction: column;
     width: 100%;
     height: 100%;
-    gap: 7px;
+    gap: 5px;
     /* Today is... */
     .HomeProfile_todayis {
       border: 1.5px #eee solid;
-      padding: 4.5px 0px;
-      font-size: 12px;
+      padding: 3.5px 0px;
+      font-size: 11.5px;
       font-weight: bold;
 
       span {
         color: ${({ theme }) => theme.colors.tabColor};
-        font-size: 11px;
+        font-size: 10px;
         font-weight: bold;
         margin: 0px 10px;
         letter-spacing: 2px;
@@ -31,17 +31,22 @@ export const HomeProfileStyled = styled.div`
     .HomeProfile_imgWrap {
       box-sizing: border-box;
       width: 100%;
-      height: 100%;
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden; // 이미지가 영역 밖으로 넘칠 경우 잘라냄
+      overflow: hidden;
       background-color: ${({ theme }) => theme.colors.bookPageColor};
       img {
-        width: 80px; // 수정 필요
-        height: 80px; //  사이즈 수정 필요
+        width: 100%;
+        aspect-ratio: 1/1;
         object-fit: cover; // 꽉 차게, 비율 유지하면서 넘치는 부분 잘림
       }
+    }
+    .HomeProfile_textarea {
+      font-size: 11.5px;
+      color: navy;
+      line-height: 1.6;
     }
   }
 `;

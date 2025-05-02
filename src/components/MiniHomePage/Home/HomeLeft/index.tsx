@@ -2,7 +2,6 @@ import { HomeLeftStyled } from "./styled";
 import { useEffect } from "react";
 import HomeFriends from "./HomeFriends";
 import HomeProfile from "../../Home/HomeLeft/HomeProfile";
-import HomeMusic from "../../Home/HomeLeft/HomeMusic";
 
 const HomeLeft = () => {
   return (
@@ -12,9 +11,7 @@ const HomeLeft = () => {
           <div className="HomeLeft_HomeProfile">
             <HomeProfile />
           </div>
-          <div className="HomeLeft_HomeMusic">
-            <HomeMusic />
-          </div>
+
           <div className="HomeLeft_HomeFriends">
             <HomeFriends />
           </div>
