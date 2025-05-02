@@ -15,6 +15,9 @@ const HomeProfile = () => {
           난... ㄱ ㅏ끔... 눈물을 흘린 ㄷ r ....
           <br /> ㄱ r끔은 눈물을 참을 수 없는 내가 별루ㄷ ㅏ...
         </div>
+        <span className="HomeProfile_history">
+          <span>▶</span> HISTORY
+        </span>
       </div>
     </HomeProfileStyled>
   );

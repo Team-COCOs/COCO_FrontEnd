@@ -12,6 +12,8 @@ export const HomeProfileStyled = styled.div`
     width: 100%;
     height: 100%;
     gap: 5px;
+    border-bottom: 1px solid #ddd;
+    position: relative;
     /* Today is... */
     .HomeProfile_todayis {
       border: 1.5px #eee solid;
@@ -47,6 +49,17 @@ export const HomeProfileStyled = styled.div`
       font-size: 11.5px;
       color: navy;
       line-height: 1.6;
+    }
+  }
+  .HomeProfile_history {
+    position: absolute;
+    font-size: 7px;
+    padding-bottom: 1px;
+    bottom: 0px;
+
+    span {
+      font-size: 5px;
+      color: ${({ theme }) => theme.colors.tabColor};
     }
   }
 `;

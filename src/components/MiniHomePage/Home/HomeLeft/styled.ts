@@ -16,7 +16,6 @@ export const HomeLeftStyled = styled.div`
     .HomeLeft_HomeProfile {
       width: 100%;
       height: 82%;
-      padding-bottom: 10px;
     }
     .HomeLeft_HomeFriends {
       width: 100%;
