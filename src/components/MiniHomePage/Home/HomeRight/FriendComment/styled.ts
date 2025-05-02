@@ -40,7 +40,30 @@ export const FriendCommentStyled = styled.div`
     }
     input {
       width: 75%;
-      padding: 4px;
+      padding: 3px 6px;
+      font-size: 12px;
+      font-family: "Gulim", "Dotum", sans-serif;
+      background-color: #fefefe;
+      border: 1px solid #aaa;
+      box-shadow: inset 1px 1px 1px #ddd;
+      color: #333;
+      outline: none;
+    }
+    button {
+      padding: 4px 3px;
+      background-color: #ffffff;
+      border: 1px solid #999999;
+      font-family: "Gulim", "Dotum", sans-serif;
+      font-size: 11px;
+      color: black;
+      font-weight: bolder;
+      cursor: pointer;
+      box-shadow: 1.5px 2px 0px #ccc;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background-color: #f0f0f0;
     }
   }
 
