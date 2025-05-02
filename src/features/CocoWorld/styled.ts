@@ -170,6 +170,7 @@ export const CocoWorldPageStyled = styled.div`
   .CocoWorldPage_right {
     width: 13%;
     height: 100%;
+    position: relative;
   }
   // 홈 탭 - 오른쪽 부분에 relative 랑 absolute로 맞춤
   .CocoWorldPage_Tab_Wrap {

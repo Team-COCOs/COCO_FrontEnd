@@ -6,6 +6,7 @@ import DiaryTitle from "../../components/MiniHomePage/Home/DiaryTitle";
 import HomeLeft from "../../components/MiniHomePage/Home/HomeLeft";
 import HomeRight from "../../components/MiniHomePage/Home/HomeRight";
 import HomeTab from "../../components/MiniHomePage/Home/HomeTab";
+import HomeMusicRight from "@/components/MiniHomePage/Home/HomeMusicRight";
 
 const CocoWorld = () => {
   // 탭 상태 관리
@@ -65,7 +66,9 @@ const CocoWorld = () => {
             </div>
           </div>
         </div>
-        <div className="CocoWorldPage_right"></div>
+        <div className="CocoWorldPage_right">
+          <HomeMusicRight />
+        </div>
       </div>
     </CocoWorldPageStyled>
   );
