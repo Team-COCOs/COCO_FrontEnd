@@ -62,7 +62,7 @@ export const ProfileStyle = styled.div`
         display: flex;
         flex-direction: column;
         gap: 3px;
-        margin-top: 3px;
+        margin-top: 7px;
 
         .Profile_infos {
           display: flex;
@@ -89,6 +89,15 @@ export const ProfileStyle = styled.div`
               height: 20px;
               margin-right: 5px;
             }
+
+            button {
+              border: 1px solid rgb(190, 190, 190);
+              background-color: rgb(243, 243, 243);
+              font-size: 12px;
+              padding: 0 2px;
+              cursor: pointer;
+              margin-left: 15px;
+            }
           }
 
           .Profile_new {
@@ -102,6 +111,88 @@ export const ProfileStyle = styled.div`
           }
         }
       }
+    }
+
+    .Profile_btn {
+      width: 100%;
+      margin-top: 7px;
+      background: linear-gradient(
+        to bottom,
+        rgb(181, 181, 181) 0%,
+        rgb(150, 150, 150) 100%
+      );
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 13.5px;
+      font-weight: bold;
+      padding: 7px 5px 8px 5px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1), 1px 1px 2px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      text-align: center;
+      gap: 5px;
+
+      &:hover {
+        box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.6),
+          1px 1px 2px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .Profile_btn .arrow {
+      font-size: 10px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .wrapper {
+      position: relative;
+      width: 100%;
+      margin-top: 7px;
+      font-size: 13px;
+    }
+
+    .selectButton {
+      width: 100%;
+      padding: 3px 7px 2px 7px;
+      font-size: 13px;
+      cursor: pointer;
+      background-color: white;
+      border: 1px solid #aaa;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .wrapper_font {
+      font-size: 16px;
+    }
+
+    .selectButton:focus {
+      outline: none;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #aaa;
+      border-top: none;
+      list-style: none;
+      z-index: 10;
+      border-radius: 0;
+    }
+
+    .option {
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    .option:hover {
+      background-color: #eee;
     }
   }
 `;
