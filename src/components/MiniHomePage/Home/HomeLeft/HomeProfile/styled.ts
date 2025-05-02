@@ -15,13 +15,13 @@ export const HomeProfileStyled = styled.div`
     /* Today is... */
     .HomeProfile_todayis {
       border: 1.5px #eee solid;
-      padding: 5px 0px;
+      padding: 4.5px 0px;
       font-size: 12px;
       font-weight: bold;
 
       span {
         color: ${({ theme }) => theme.colors.tabColor};
-        font-size: 10px;
+        font-size: 12px;
         font-weight: bold;
         margin: 0px 10px;
         letter-spacing: 2px;

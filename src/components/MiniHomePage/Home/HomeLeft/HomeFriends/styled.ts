@@ -10,20 +10,55 @@ export const HomeFriendsStyled = styled.div`
     flex-direction: column;
     padding-top: 7px;
     /* 글씨 */
-    .HomeFriends_number {
-      color: ${({ theme }) => theme.colors.tabColor};
-      font-size: 11px;
-      font-weight: bolder;
-      padding-bottom: 3px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+
+    /* 일촌 파도타기 */
+    select {
+      padding: 5px 6px;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
       font-family: "Gulim", sans-serif;
-      width: 100%;
-      span {
-        font-size: 12px;
-        font-weight: bolder;
-      }
+      font-size: 12px;
+      color: #333333;
+      appearance: none; /* 브라우저 기본 화살표 제거 */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='10' viewBox='0 0 24 24' width='10' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 6px center;
+      background-size: 10px;
+      cursor: pointer;
+      min-width: 120px;
     }
+
+    select:focus {
+      outline: none;
+      border-color: #666;
+      background-color: #ffffff;
+    }
+    option {
+      border-radius: none !important;
+    }
+  }
+  /* 미니홈피 주인 이름 */
+  .HomeFriends_namebox {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 3px;
+    .HomeFriends_name {
+      font-size: 12px;
+      font-weight: bolder;
+    }
+    .HomeFriends_gender {
+      font-size: 11.5px;
+      color: #4b4b4b;
+      vertical-align: bottom;
+      padding: 0px 3px;
+    }
+  }
+  // 이메일
+  .HomeFriends_email {
+    font-size: 11px;
+    color: ${({ theme }) => theme.colors.mainColor};
+    margin-bottom: 10px;
   }
 `;

@@ -5,7 +5,7 @@ export const HomeLeftStyled = styled.div`
   border-radius: 5px;
   width: 100%;
   height: 100%;
-  padding: 12px 20px;
+  padding: 12px 25px;
   .HomeLeft_wrap {
     width: 100%;
     height: 100%;

@@ -6,7 +6,7 @@ const HomeProfile = () => {
     <HomeProfileStyled>
       <div className="HomeProfile_wrap">
         <div className="HomeProfile_todayis Gulim">
-          <span className="pixelFont">TODAY IS...</span> 행복❤️
+          <span className="pixelFont">TODAY IS...</span> 🌹 행복
         </div>
         <div className="HomeProfile_imgWrap">
           <img src="/avatarImg/minimi_firework.gif" alt="Profile img" />
