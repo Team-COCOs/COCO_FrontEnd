@@ -25,7 +25,7 @@ export const CocoWorldPageStyled = styled.div`
     height: 90%;
     display: flex;
     border-radius: 8px;
-    overflow: hidden;
+
     // 책 왼쪽
     .CocoWorldPage_book_left {
       // 선
@@ -167,11 +167,11 @@ export const CocoWorldPageStyled = styled.div`
     align-items: center;
   }
   // 오른쪽 전체
-  .CocoWorldPage_right {
+  /* .CocoWorldPage_right {
     width: 13%;
     height: 100%;
     position: relative;
-  }
+  } */
   // 홈 탭 - 오른쪽 부분에 relative 랑 absolute로 맞춤
   .CocoWorldPage_Tab_Wrap {
     position: relative;

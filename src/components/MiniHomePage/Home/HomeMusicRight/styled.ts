@@ -10,11 +10,19 @@ const scroll = keyframes`
 `;
 
 export const HomeMusicRightStyled = styled.div`
-  .HomeMusicRight_wrap {
+  /* .HomeMusicRight_wrap {
     position: absolute;
-    right: 45px;
+    right: 40px;
     top: 45px;
     width: 200px;
+    font-family: "굴림", "Gulim", sans-serif;
+    font-size: 11px;
+  } */
+  .HomeMusicRight_wrap {
+    position: absolute;
+    right: -215px;
+    top: 30px;
+    width: 185px;
     font-family: "굴림", "Gulim", sans-serif;
     font-size: 11px;
   }

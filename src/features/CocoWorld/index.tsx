@@ -56,6 +56,7 @@ const CocoWorld = () => {
                     ) : (
                       ""
                     )}
+                    <HomeMusicRight />
                   </div>
                 </div>
               </div>
@@ -66,9 +67,9 @@ const CocoWorld = () => {
             </div>
           </div>
         </div>
-        <div className="CocoWorldPage_right">
+        {/* <div className="CocoWorldPage_right">
           <HomeMusicRight />
-        </div>
+        </div> */}
       </div>
     </CocoWorldPageStyled>
   );
