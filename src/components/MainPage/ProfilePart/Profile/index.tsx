@@ -117,6 +117,3 @@ const Profile = ({ setHasToken }: profileProps) => {
 };
 
 export default Profile;
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}

@@ -8,11 +8,15 @@ import { useRouter } from "next/router";
 import { catchAxiosError } from "@/utils/catchAxiosError";
 import { useDispatch } from "react-redux";
 import { setReduxUser } from "@/store/reducers/userSlice";
+import Modal from "@/components/Modal";
 
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [saveEmail, setSaveEmail] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -41,12 +45,12 @@ const Login = () => {
         .then((res) => {
           Cookie.set("accessToken", res.data.access_token, {
             path: "/", // 모든 페이지에서 접근 가능
-            expires: 1 / 24, // 1일
+            expires: 1 / 24,
           });
 
           Cookie.set("refreshToken", res.data.refresh_token, {
-            path: "/", // 모든 페이지에서 접근 가능
-            expires: 1 / 24, // 1일
+            path: "/",
+            expires: 1 / 24,
           });
 
           console.log("로그인 대답: ", res.data);
@@ -55,7 +59,10 @@ const Login = () => {
 
           router.push("/");
         })
-        .catch(catchAxiosError);
+        .catch((e) => {
+          setMessage(e.response.data.message);
+          setIsOpen(true);
+        });
     },
   });
 
@@ -112,6 +119,13 @@ const Login = () => {
           </span>
         </div>
       </div>
+
+      <Modal
+        type="error"
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        message={message}
+      />
     </LoginStyle>
   );
 };

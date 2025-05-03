@@ -38,7 +38,12 @@ const ProfilePart = () => {
         </b>
       </div>
       <div className="ProfilePart_line"></div>
-      <div className="ProfilePart_Texts">
+      <div
+        className="ProfilePart_Texts"
+        onClick={() => {
+          router.push("https://www.cyworld.com/");
+        }}
+      >
         <b className="ProfilePart_addText">‣ 싸이월드 메인 개편</b>
         <b className="ProfilePart_addText">‣ 새 단장한 미니싸이월드</b>
       </div>
@@ -59,7 +64,12 @@ const ProfilePart = () => {
       <div className="ProfilePart_eventImg">
         <Advertising type="Advertising8" />
       </div>
-      <div className="ProfilePart_Texts">
+      <div
+        className="ProfilePart_Texts"
+        onClick={() => {
+          router.push("https://www.cyworld.com/");
+        }}
+      >
         <b className="ProfilePart_addText">‣ 감성 한 스푼, 담아갈래?</b>
         <b className="ProfilePart_addText">
           ‣ 미니홈피 BGM처럼 마음을 채워줄 공간
