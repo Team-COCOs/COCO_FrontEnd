@@ -33,7 +33,13 @@ const CocoWorld = () => {
                   </div>
                   {/* 다이어리 왼쪽 컴포넌트 */}
                   <div className="CocoWorldPage_diary_left">
-                    {activeTab === "Home" ? <HomeLeft /> : ""}
+                    {activeTab === "Home" ||
+                    activeTab === "Coco" ||
+                    activeTab === "Visitor" ? (
+                      <HomeLeft />
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>

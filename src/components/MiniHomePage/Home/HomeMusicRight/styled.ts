@@ -21,7 +21,7 @@ export const HomeMusicRightStyled = styled.div`
   .HomeMusicRight_wrap {
     position: absolute;
     right: -215px;
-    top: 30px;
+    top: 0px;
     width: 185px;
     font-family: "굴림", "Gulim", sans-serif;
     font-size: 11px;
@@ -31,13 +31,14 @@ export const HomeMusicRightStyled = styled.div`
   .HomeMusicRight_shop {
     width: 100%;
     background-color: #f7f7f7;
-    border: #ddd 2px solid;
+    border: #ddd 1.5px solid;
+    border-radius: 4.5px;
     padding-bottom: 10px;
-    margin-bottom: 3px;
+    margin-bottom: 5px;
     span {
       font-size: 11.5px;
       display: inline-block;
-      padding: 10px 10px 8px 10px;
+      padding: 12px 10px 8px 10px;
     }
     .HomeMusicRight_shop_imgallwrap {
       display: flex;
@@ -77,7 +78,7 @@ export const HomeMusicRightStyled = styled.div`
     align-items: center;
     gap: 5px;
     background-color: rgb(230, 230, 230);
-    padding: 8px;
+    padding: 5px;
     border: 1px solid #ccc;
   }
 
@@ -89,7 +90,7 @@ export const HomeMusicRightStyled = styled.div`
     padding: 2px 0;
     position: relative;
     padding-left: 28px;
-    height: 25px;
+    height: 23px;
     display: flex;
     align-items: center;
     justify-content: center;

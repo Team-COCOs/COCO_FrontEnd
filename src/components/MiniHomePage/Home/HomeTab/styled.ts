@@ -10,10 +10,10 @@ export const HomeTabStyled = styled.div`
     justify-content: center;
     align-items: center;
     color: white;
-    padding: 8px 2px;
+    padding: 8px 0px;
     min-height: 32.5px;
     width: 75%;
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: bolder;
     background-color: ${({ theme }) => theme.colors.tabColor};
     margin-bottom: 3.5px;
