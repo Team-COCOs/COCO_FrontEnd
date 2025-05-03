@@ -2,6 +2,7 @@ import axios from "axios";
 import { StoresStyle } from "./styled";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 interface StoreItem {
   id: number;
@@ -20,13 +21,13 @@ interface StoresProps {
 const Stores = ({ currentItems }: StoresProps) => {
   return (
     <StoresStyle className={clsx("Stores_wrap")}>
-      <div className="store-grid">
+      <div className="Stores-grid">
         {currentItems.map((item) => (
-          <div key={item.id} className="store-card">
+          <div key={item.id} className="Stores_card">
             {item.category === "BGM" ? (
               <>
-                <div className="bgm-info">
-                  <div className="item-name">
+                <div className="Stores_bgmInfo">
+                  <div className="Stores_itemName">
                     {item.name.length > 7
                       ? `${item.name.slice(0, 7)}...`
                       : item.name}
@@ -38,22 +39,29 @@ const Stores = ({ currentItems }: StoresProps) => {
                     controlsList="nodownload noplaybackrate"
                   />
                 </div>
-                <div className="item-price">도토리 {item.price}개</div>
-                <div className="btn-wrap">
+                <div className="Stores_itemPrice">도토리 {item.price}개</div>
+                <div className="Stores_btnWrap">
                   <button className="mainFont">구입</button>
                 </div>
               </>
             ) : (
               <>
-                <img src={item.file} alt={item.name} className="item-img" />
-                <div className="item-name">
+                <div
+                  className={clsx(
+                    "Stores_itemImg",
+                    item.category === "MINIMI" && "Stores_mini"
+                  )}
+                >
+                  <Image src={item.file} alt={item.name} fill />
+                </div>
+                <div className="Stores_itemName">
                   {item.name.length > 7
                     ? `${item.name.slice(0, 7)}...`
                     : item.name}
                 </div>
 
-                <div className="item-price">도토리 {item.price}개</div>
-                <div className="btn-wrap">
+                <div className="Stores_itemPrice">도토리 {item.price}개</div>
+                <div className="Stores_btnWrap">
                   <button className="mainFont">구입</button>
                 </div>
               </>

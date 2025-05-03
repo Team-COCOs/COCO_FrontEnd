@@ -2,46 +2,53 @@ import { styled } from "styled-components";
 
 export const StoresStyle = styled.div`
   &.Stores_wrap {
-    margin-top: 10px;
-    .store-grid {
+    margin-top: 15px;
+
+    .Stores-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
+      gap: 10px;
 
-    .store-card {
-      border: 1px solid #ccc;
-      padding: 12px;
-      text-align: center;
-      border-radius: 8px;
-      background: #fff;
-    }
+      .Stores_card {
+        padding: 12px;
+        text-align: center;
+        margin-bottom: 70px;
 
-    .item-img {
-      width: 100%;
-      height: auto;
-      border-radius: 4px;
-    }
+        .Stores_itemImg {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          border-radius: 4px;
+        }
 
-    .item-name {
-      font-size: 15px;
-      margin: 8px 0 4px;
-      font-weight: bold;
-    }
+        .Stores_mini {
+          position: relative;
+          width: 35%;
+          height: 73%;
+          margin: 0 auto;
+        }
 
-    .item-price {
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
+        .Stores_itemName {
+          font-size: 15px;
+          margin: 8px 0 4px;
+          font-weight: bold;
+        }
 
-    .btn-wrap button {
-      padding: 2px 3px;
-      border: none;
-      background: rgb(128, 128, 128);
-      color: white;
-      font-weight: bold;
-      border-radius: 3px;
-      cursor: pointer;
+        .Stores_itemPrice {
+          font-size: 14px;
+          margin-bottom: 8px;
+        }
+
+        .Stores_btnWrap button {
+          padding: 1px 3px;
+          border: none;
+          background: rgb(155, 155, 155);
+          color: white;
+          font-weight: bold;
+          border-radius: 3px;
+          cursor: pointer;
+        }
+      }
     }
   }
 `;
