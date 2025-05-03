@@ -1,5 +1,6 @@
 import { HomeMusicRightStyled } from "./styled";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 
 const playlist = [
   { title: "Y - 프리스타일", url: "/bgm/y-freestyle.mp3" },
@@ -7,11 +8,17 @@ const playlist = [
 ];
 
 const HomeMusicRight = () => {
+  const router = useRouter();
+
   const audioRef = useRef<HTMLAudioElement>(null);
   const [currentTrack, setCurrentTrack] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const [volume, setVolume] = useState(1);
+
+  const clickShop = () => {
+    router.push("/");
+  };
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -56,6 +63,7 @@ const HomeMusicRight = () => {
       audio.pause();
       audio.currentTime = 0;
       setIsPlaying(false);
+      setHasPlayedOnce(false);
     }
   };
 
@@ -82,7 +90,27 @@ const HomeMusicRight = () => {
     <HomeMusicRightStyled>
       <div className="HomeMusicRight_wrap">
         <div className="HomeMusicRightPlayer_wrap">
-          <div className="HomeMusicRight_number Gulim">MusicRight</div>
+          <div className="HomeMusicRight_number Gulim">
+            <div className="HomeMusicRight_shop">
+              <span>선물가게 / 추천 BGM</span>
+              <div className="HomeMusicRight_shop_imgallwrap">
+                <div>
+                  <img
+                    src="/bgm/noon.jpg"
+                    onClick={clickShop}
+                    alt="click minimishop"
+                  ></img>
+                </div>
+                <div>
+                  <img
+                    src="/bgm/12_32.jpg"
+                    onClick={clickShop}
+                    alt="click minimishop"
+                  ></img>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="HomeMusicRight_player">
             <audio
               ref={audioRef}
@@ -90,14 +118,11 @@ const HomeMusicRight = () => {
               onEnded={nextTrack}
             />
             <div className="HomeMusicRight_title">
+              <span className="HomeMusicRight_cd-icon">💿</span>
               {playlist.length === 0 ? (
-                <div className="scroll-text no-music">
-                  🎵 음악을 등록하세요.
-                </div>
+                <div className="scroll-text no-music">음악을 등록하세요.</div>
               ) : !hasPlayedOnce && !isPlaying ? (
-                <div className="scroll-text no-music">
-                  🎵 재생 버튼을 클릭해주세요.
-                </div>
+                <div className="scroll-text no-music">음악을 재생해보세요.</div>
               ) : (
                 <div
                   className={`scroll-text ${isPlaying ? "playing" : "paused"}`}
@@ -107,28 +132,35 @@ const HomeMusicRight = () => {
               )}
             </div>
 
-            {/* 버튼들 */}
-            <div className="control-buttons">
-              <button onClick={togglePlay}>{isPlaying ? "⏸" : "▶"}</button>
-              <button onClick={stop}>⏹</button>
-              <button onClick={prevTrack}>⏮</button>
-              <button onClick={nextTrack}>⏭</button>
-            </div>
             {/* 볼륨 조절 */}
             <div className="HomeMusicRight_volume-control">
-              <label htmlFor="volume">🔊</label>
-              <input
-                type="range"
-                id="volume"
-                min="0"
-                max="1"
-                step="0.01"
-                value={volume}
-                onChange={handleVolumeChange}
-                style={{
-                  background: getVolumeBackground(volume),
-                }}
-              />
+              {/* 버튼들 */}
+              <div className="control-buttons">
+                <button
+                  className="HomeMusicRight_startbtn"
+                  onClick={togglePlay}
+                >
+                  {isPlaying ? "⏸" : "⯈"}
+                </button>
+                <button onClick={stop}>◼</button>
+                <button onClick={prevTrack}>⏮</button>
+                <button onClick={nextTrack}>⏭</button>
+              </div>
+              <div className="HomeMusicRight_volBtn">
+                <label htmlFor="volume">🔊</label>
+                <input
+                  type="range"
+                  id="volume"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={volume}
+                  onChange={handleVolumeChange}
+                  style={{
+                    background: getVolumeBackground(volume),
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

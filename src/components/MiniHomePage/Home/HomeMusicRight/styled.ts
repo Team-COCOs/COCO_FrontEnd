@@ -14,14 +14,50 @@ export const HomeMusicRightStyled = styled.div`
     position: absolute;
     right: 45px;
     top: 45px;
-    background-color: #eee;
-    padding: 10px;
-    border: 1px solid #888;
     width: 200px;
     font-family: "굴림", "Gulim", sans-serif;
     font-size: 11px;
   }
 
+  /* 선물가게 */
+  .HomeMusicRight_shop {
+    width: 100%;
+    background-color: #f7f7f7;
+    border: #ddd 2px solid;
+    padding-bottom: 10px;
+    margin-bottom: 3px;
+    span {
+      font-size: 11.5px;
+      display: inline-block;
+      padding: 10px 10px 8px 10px;
+    }
+    .HomeMusicRight_shop_imgallwrap {
+      display: flex;
+      justify-content: center;
+      gap: 10px; /* 이미지 간 간격 */
+      width: 100%;
+      padding: 0px 10px;
+
+      div {
+        flex: 1 1 0; /* 동일한 너비 */
+        aspect-ratio: 1 / 1; /* 정사각형 비율 유지 */
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+          border: 1px solid #4b4b4b;
+          width: 100%;
+          height: 100%;
+          object-fit: cover; /* 이미지가 div 꽉 채우도록 */
+          display: block;
+        }
+      }
+    }
+  }
+
+  /* 음악 */
   .HomeMusicRight_number {
     font-weight: bold;
     margin-bottom: 4px;
@@ -31,25 +67,40 @@ export const HomeMusicRightStyled = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    background-color: #f7f7f7;
-    padding: 10px;
+    gap: 5px;
+    background-color: rgb(230, 230, 230);
+    padding: 8px;
     border: 1px solid #ccc;
-    text-align: center;
   }
 
   .HomeMusicRight_title {
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
-    border-top: 1px dashed #aaa;
-    border-bottom: 1px dashed #aaa;
-    padding: 5px 0;
+    border: 1px solid #aaa;
+    padding: 2px 0;
+    position: relative;
+    padding-left: 28px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7f7f7;
   }
-
+  .HomeMusicRight_cd-icon {
+    padding-left: 2px;
+    z-index: 5;
+    background-color: #f7f7f7;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+  }
   .scroll-text {
     display: inline-block;
     min-width: 100%;
+    color: #4b4b4b;
   }
 
   .scroll-text.playing {
@@ -67,24 +118,44 @@ export const HomeMusicRightStyled = styled.div`
     color: gray;
   }
 
+  // 볼륨 및 재생 버튼
+  .HomeMusicRight_volume-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  .HomeMusicRight_volBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
   .control-buttons {
     display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 
+    .HomeMusicRight_startbtn {
+      color: ${({ theme }) => theme.colors.mainColor};
+    }
+  }
+  // 재생버튼
   button {
-    font-size: 12px;
-    background-color: white;
-    border: 1px solid #999;
+    color: gray;
+    background-color: transparent;
+    border: none;
+    font-size: 10px;
     cursor: pointer;
-    padding: 5px 10px;
+    width: 12px;
   }
 
   .HomeMusicRight_volume-control input {
-    width: 35%; /* 슬라이더 너비 */
-    height: 5px; /* 트랙의 높이 */
-    border-radius: 8px;
+    margin-top: 2px;
+    width: 55%; /* 슬라이더 너비 */
+    height: 4px; /* 트랙의 높이 */
+    border-radius: 5px;
     outline: none;
     transition: background 450ms ease-in;
     -webkit-appearance: none;
