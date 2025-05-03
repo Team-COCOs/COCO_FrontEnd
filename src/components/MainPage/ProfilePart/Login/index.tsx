@@ -107,8 +107,9 @@ const Login = () => {
         </p>
         <div className="Login_gray"></div>
         <div className="Login_find">
-          <span>이메일</span>
-          <span>/비밀번호찾기</span>
+          <span onClick={() => router.push("/find")}>
+            이메일 / 비밀번호찾기
+          </span>
         </div>
       </div>
     </LoginStyle>

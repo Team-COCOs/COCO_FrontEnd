@@ -145,7 +145,9 @@ const SignPage = () => {
   // 중복 검사 함수 -> email, phone 중복 확인해서 중복이면 exists = true, 중복이 아니면 exists = false
   const handleDuplicateCheck = async (type: "email" | "phone") => {
     try {
-      const data = type === "email" ? { email } : { phone };
+      const cleanedPhone = phone.replace(/[^\d]/g, "");
+
+      const data = type === "email" ? { email } : { phone: cleanedPhone };
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_UR}/auth/check/${type}`,
@@ -167,7 +169,9 @@ const SignPage = () => {
         }
         alert({
           centered: true,
-          content: `사용 가능한 ${type}입니다.`,
+          content: `사용 가능한 ${
+            type === "email" ? "이메일" : "전화번호"
+          }입니다.`,
         });
       }
     } catch (error) {
@@ -206,6 +210,8 @@ const SignPage = () => {
       birth_date: "",
     },
     onSubmit: (values) => {
+      const cleanedPhone = values.phone.replace(/[^\d]/g, "");
+
       const birthday = `${birthYear}-${birthMonth.padStart(
         2,
         "0"
@@ -215,7 +221,7 @@ const SignPage = () => {
         email: values.email,
         password: values.password,
         name: values.name,
-        phone: values.phone,
+        phone: cleanedPhone,
         gender,
         birthday,
       };
@@ -226,6 +232,7 @@ const SignPage = () => {
         .catch((error) => console.error("회원가입 실패:", error));
     },
   });
+
   return (
     <SignFormStyled className={clsx("Sign_wrap")}>
       <Logo type="sign" />

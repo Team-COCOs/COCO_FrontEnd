@@ -243,7 +243,8 @@ export const SignFormStyled = styled.div`
         .Sign_error {
           position: absolute;
           font-size: 12px;
-          margin-left: 110px;
+
+          margin: 110px;
           color: red;
         }
       }

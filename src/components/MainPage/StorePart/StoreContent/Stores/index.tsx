@@ -19,6 +19,17 @@ interface StoresProps {
 }
 
 const Stores = ({ currentItems }: StoresProps) => {
+  const buyItem = (price: number) => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API_URL}/buyItem`, { price })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log("구매 실패:", e);
+      });
+  };
+
   return (
     <StoresStyle className={clsx("Stores_wrap")}>
       <div className="Stores-grid">
@@ -62,7 +73,12 @@ const Stores = ({ currentItems }: StoresProps) => {
 
                 <div className="Stores_itemPrice">도토리 {item.price}개</div>
                 <div className="Stores_btnWrap">
-                  <button className="mainFont">구입</button>
+                  <button
+                    className="mainFont"
+                    onClick={() => buyItem(item.price)}
+                  >
+                    구입
+                  </button>
                 </div>
               </>
             )}

@@ -8,29 +8,32 @@ interface LogoProps {
 
 const Logo = ({ type }: LogoProps) => {
   const router = useRouter();
+  const isHeader = type === "header";
   const isSign = type === "sign";
+  const isFind = type === "find";
 
   return (
-    <LogoStyle className={isSign ? "Logo_sign" : "Logo_wrap"}>
-      {!isSign && (
+    <LogoStyle className={!isHeader ? "Logo_sign" : "Logo_wrap"}>
+      {isHeader && (
         <div className="mainFont Logo_topText">코코월드를 시작페이지로</div>
       )}
 
       <div
-        className={isSign ? "Sign_img" : "Logo_img"}
+        className={!isHeader ? "Sign_img" : "Logo_img"}
         onClick={() => router.push("/")}
       >
         <Image src="/cocoworld.png" alt="logo" fill />
       </div>
 
       <p
-        className={`logoFont ${isSign ? "Sign_logoFont" : ""}`}
+        className={`logoFont ${!isHeader ? "Sign_logoFont" : ""}`}
         onClick={() => router.push("/")}
       >
         COCOWORLD
       </p>
 
       {isSign && <p className="logoFont Sign_font">회원가입</p>}
+      {isFind && <p className="logoFont Sign_font">계정 찾기</p>}
     </LogoStyle>
   );
 };
