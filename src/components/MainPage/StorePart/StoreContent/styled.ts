@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const StoreStyle = styled.div`
   &.Store_wrap {
-    padding: 10px 5px;
+    padding: 15px 5px;
 
     .Store_header {
       display: flex;
@@ -43,6 +43,28 @@ export const StoreStyle = styled.div`
       height: 2.5px;
       margin-top: 7px;
       background-color: rgb(164, 164, 164);
+    }
+
+    .Store_pagination {
+      display: flex;
+      text-align: center;
+
+      button {
+        font-size: 10.8px;
+        font-weight: 900;
+        color: ${({ theme }) => theme.colors.mainColor};
+        background-color: white;
+        margin: 0 5px;
+        padding: 0 3px;
+        cursor: pointer;
+        border-width: 2px 1px 1.5px 2px;
+        border-style: solid;
+        border-color: rgb(211, 211, 211);
+
+        &:disabled {
+          cursor: not-allowed;
+        }
+      }
     }
   }
 `;
