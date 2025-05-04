@@ -13,4 +13,9 @@ export const HomeTodayTitleStyled = styled.div`
       color: red;
     }
   }
+  @media (max-width: 769px) {
+    .HomeTodayTitle_number_title {
+      font-size: 11.5px;
+    }
+  }
 `;

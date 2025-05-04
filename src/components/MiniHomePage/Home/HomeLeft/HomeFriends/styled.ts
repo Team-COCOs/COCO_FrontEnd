@@ -47,6 +47,11 @@ export const HomeFriendsStyled = styled.div`
       }
     }
   }
+  @media (max-width: 1024px) {
+    .HomeFriends_wrap {
+      padding-top: 25px;
+    }
+  }
 
   /* 미니홈피 주인 이름 */
   .HomeFriends_namebox {

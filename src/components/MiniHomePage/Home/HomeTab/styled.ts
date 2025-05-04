@@ -3,8 +3,7 @@ import styled from "styled-components";
 export const HomeTabStyled = styled.div`
   width: 100%;
   height: 67%;
-  .HomeTab_wrap {
-  }
+
   .HomeTab_number_title {
     display: flex;
     justify-content: center;
@@ -29,6 +28,14 @@ export const HomeTabStyled = styled.div`
     .HomeTab_number_title {
       width: 85%;
       font-size: 9px;
+    }
+  }
+  @media (max-width: 769px) {
+    .HomeTab_number_title {
+      width: 100%;
+      font-size: 12px;
+      padding: 15px 0px;
+      margin-bottom: 5px;
     }
   }
   .HomeTab_item.active {

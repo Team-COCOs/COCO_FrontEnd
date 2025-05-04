@@ -73,6 +73,11 @@ export const HomeRightStyled = styled.div`
       height: 100%;
       padding-left: 10px;
     }
+    @media (max-width: 1024px) {
+      .HomeRight_component_wrap {
+        padding-left: 0px;
+      }
+    }
   }
 `;
 /* 오른쪽 컴포넌트 기본 CSS 위에서부터 여기까지 사용 */

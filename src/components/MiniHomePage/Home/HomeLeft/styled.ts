@@ -6,6 +6,9 @@ export const HomeLeftStyled = styled.div`
   width: 100%;
   height: 100%;
   padding: 12px 25px;
+  @media (max-width: 1024px) {
+    padding: 12px 15px;
+  }
   .HomeLeft_wrap {
     width: 100%;
     height: 100%;

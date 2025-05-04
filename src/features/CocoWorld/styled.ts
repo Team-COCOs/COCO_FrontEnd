@@ -15,6 +15,11 @@ export const CocoWorldPageStyled = styled.div`
       max-width: 1440px;
     }
   }
+  @media (max-width: 769px) {
+    &.CocoWorldPage_wrap {
+      height: auto;
+    }
+  }
   .CocoWorldPage_container {
     width: 100%;
     height: 100%;
@@ -22,6 +27,12 @@ export const CocoWorldPageStyled = styled.div`
     background-image: url("background/background.jpg");
     background-size: cover;
     background-position: center;
+  }
+  @media (max-width: 769px) {
+    .CocoWorldPage_container {
+      justify-content: center;
+      padding-top: 10px;
+    }
   }
 
   // 책 전체
@@ -85,6 +96,11 @@ export const CocoWorldPageStyled = styled.div`
             align-items: flex-end;
             padding-bottom: 4px;
           }
+          @media (max-width: 769px) {
+            .CocoWorldPage_bookLeft_todayWrap {
+              padding-top: 20px;
+            }
+          }
           // 왼쪽 안쪽 다이어리 속지
           .CocoWorldPage_diary_left {
             width: 93%;
@@ -95,7 +111,38 @@ export const CocoWorldPageStyled = styled.div`
           }
         }
       }
+      @media (max-width: 769px) {
+        .CocoWorldPage_bookLeft_line {
+          justify-content: center;
+          border: 1.5px #fffcfe dashed;
+          border-top-left-radius: 18px;
+          border-bottom-left-radius: 18px;
+          border-top-right-radius: 18px;
+          border-bottom-right-radius: 18px;
+          padding: 8px 0px;
+          .CocoWorldPage_bookLeft_paper {
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+            padding-bottom: 15px;
+          }
+        }
+      }
     }
+
+    @media (max-width: 769px) {
+      .CocoWorldPage_book_left {
+        width: 100%;
+        justify-content: center;
+        padding: 15px 0px;
+        border-top-left-radius: 18px;
+        border-bottom-left-radius: 18px;
+        border-top-right-radius: 18px;
+        border-bottom-right-radius: 18px;
+      }
+    }
+
     // 책 오른쪽
     .CocoWorldPage_book_right {
       // 선
@@ -204,49 +251,17 @@ export const CocoWorldPageStyled = styled.div`
     }
   }
 
-  @media (max-width: 768px) {
-    .CocoWorldPage_book_wrap {
-      height: 95%;
-      .CocoWorldPage_book_left,
-      .CocoWorldPage_book_right {
-        height: 48%;
-      }
-    }
-
+  @media (max-width: 769px) {
     .CocoWorldPage_Tab_Wrap {
+      position: absolute;
       width: 12%;
-      right: 2%;
+      right: 5.4%;
     }
   }
 
   @media (max-width: 480px) {
-    .CocoWorldPage_book_wrap {
-      height: 100%;
-      .CocoWorldPage_book_left,
-      .CocoWorldPage_book_right {
-        height: 48%;
-        width: 98%;
-      }
-    }
-
-    .CocoWorldPage_Tab_Wrap {
-      display: none;
-    }
   }
 
   @media (max-width: 386px) {
-    .CocoWorldPage_book_wrap {
-      .CocoWorldPage_book_left,
-      .CocoWorldPage_book_right {
-        height: 50%;
-        width: 100%;
-      }
-    }
-
-    .CocoWorldPage_bookRight_todayWrap,
-    .CocoWorldPage_bookLeft_todayWrap {
-      font-size: 12px;
-      padding-left: 8px;
-    }
   }
 `;

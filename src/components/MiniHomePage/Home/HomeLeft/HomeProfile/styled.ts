@@ -40,6 +40,17 @@ export const HomeProfileStyled = styled.div`
         }
       }
     }
+    @media (max-width: 769px) {
+      .HomeProfile_todayis {
+        font-size: 13.5px;
+        gap: 10px;
+        padding: 10px 20px;
+        span {
+          font-size: 13px;
+          margin-left: 0px;
+        }
+      }
+    }
 
     .HomeProfile_imgWrap {
       box-sizing: border-box;
@@ -64,6 +75,13 @@ export const HomeProfileStyled = styled.div`
     @media (max-width: 1024px) {
       .HomeProfile_textarea {
         font-size: 9.5px;
+      }
+    }
+    @media (max-width: 769px) {
+      .HomeProfile_textarea {
+        font-size: 15px;
+        height: 100px;
+        padding: 10px 15px;
       }
     }
   }
