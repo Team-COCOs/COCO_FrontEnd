@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface ErrorModal {
   onClose: () => void;
   message: string;
@@ -15,7 +17,10 @@ const ErrorModal = ({ onClose, message }: ErrorModal) => {
         </div>
       </div>
       <div className="window-body">
-        <p>{message}</p>
+        <div className="Error_img">
+          <Image src="/modal/errorModal.png" alt="error image" fill />
+        </div>
+        <p className="pixelFont">{message}</p>
       </div>
     </>
   );

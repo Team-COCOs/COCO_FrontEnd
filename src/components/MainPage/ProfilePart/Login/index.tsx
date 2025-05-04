@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { catchAxiosError } from "@/utils/catchAxiosError";
 import { useDispatch } from "react-redux";
 import { setReduxUser } from "@/store/reducers/userSlice";
-import Modal from "@/components/Modal";
+import ShadowModal from "@/components/ShadowModal";
 
 const Login = () => {
   const router = useRouter();
@@ -120,7 +120,7 @@ const Login = () => {
         </div>
       </div>
 
-      <Modal
+      <ShadowModal
         type="error"
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}

@@ -1,0 +1,11 @@
+.Error_img {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.pixelFont {
+  /* 모달 폰트 */
+  font-family: "NeoDunggeunmo", sans-serif;
+}
