@@ -39,6 +39,15 @@ export const HomeFriendsStyled = styled.div`
       border-radius: none !important;
     }
   }
+  @media (max-width: 1024px) {
+    .HomeFriends_wrap {
+      select {
+        min-width: 0px;
+        font-size: 10px;
+      }
+    }
+  }
+
   /* 미니홈피 주인 이름 */
   .HomeFriends_namebox {
     display: flex;
@@ -60,5 +69,10 @@ export const HomeFriendsStyled = styled.div`
     font-size: 11px;
     color: ${({ theme }) => theme.colors.mainColor};
     margin-bottom: 5px;
+  }
+  @media (max-width: 1024px) {
+    .HomeFriends_email {
+      font-size: 8px;
+    }
   }
 `;

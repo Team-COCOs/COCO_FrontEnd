@@ -25,6 +25,12 @@ export const HomeTabStyled = styled.div`
     border-color: #064d6c;
     cursor: pointer;
   }
+  @media (max-width: 1024px) {
+    .HomeTab_number_title {
+      width: 85%;
+      font-size: 9px;
+    }
+  }
   .HomeTab_item.active {
     background-color: #ffffff;
     color: black;

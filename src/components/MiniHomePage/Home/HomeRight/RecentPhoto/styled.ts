@@ -24,12 +24,12 @@ export const RecentPhotoStyled = styled.div`
     .RecentPhoto_new_alltab {
       border-top: 1.5px dotted #ddd;
       font-size: 12px;
-
       color: #4d4d4d;
       width: 48%;
       display: grid;
       letter-spacing: 1px;
       grid-template-columns: repeat(2, 1fr);
+
       .RecentPhoto_new_tabs {
         cursor: pointer;
         display: flex;
@@ -43,6 +43,11 @@ export const RecentPhotoStyled = styled.div`
           align-self: flex-end;
           padding-left: 5px;
           font-weight: 600;
+        }
+        @media (max-width: 1024px) {
+          span {
+            font-size: 7px;
+          }
         }
         @keyframes blink {
           0%,
@@ -63,6 +68,11 @@ export const RecentPhotoStyled = styled.div`
           margin-left: 5px;
           animation: blink 1s infinite;
         }
+      }
+    }
+    @media (max-width: 1024px) {
+      .RecentPhoto_new_alltab {
+        font-size: 10px;
       }
     }
   }

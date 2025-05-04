@@ -66,6 +66,21 @@ export const FriendCommentStyled = styled.div`
       background-color: #f0f0f0;
     }
   }
+  @media (max-width: 1024px) {
+    .FriendComment_inputWrap {
+      span {
+        width: 10%;
+        font-size: 9px;
+      }
+      input {
+        padding: 5px 2px;
+        font-size: 9.5px;
+      }
+      button {
+        padding: 4px 2px;
+      }
+    }
+  }
 
   .FriendComment_inputWrap button:disabled {
     opacity: 0.5;

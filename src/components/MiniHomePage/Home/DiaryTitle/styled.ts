@@ -12,6 +12,11 @@ export const DiaryTitleStyled = styled.div`
       letter-spacing: 1px;
       color: ${({ theme }) => theme.colors.bookColor};
     }
+    @media (max-width: 1024px) {
+      .DiaryTitle_number_title {
+        font-size: 15px;
+      }
+    }
     .DiaryTitle_plus_friend {
       font-size: 10px;
       font-weight: bold;

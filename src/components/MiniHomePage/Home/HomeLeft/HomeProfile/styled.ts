@@ -29,6 +29,17 @@ export const HomeProfileStyled = styled.div`
         letter-spacing: 2px;
       }
     }
+    @media (max-width: 1024px) {
+      .HomeProfile_todayis {
+        font-size: 8.5px;
+        gap: 10px;
+        padding: 3.5px 5px;
+        span {
+          font-size: 9px;
+          margin-left: 0px;
+        }
+      }
+    }
 
     .HomeProfile_imgWrap {
       box-sizing: border-box;
@@ -49,6 +60,11 @@ export const HomeProfileStyled = styled.div`
       font-size: 11.5px;
       color: navy;
       line-height: 1.6;
+    }
+    @media (max-width: 1024px) {
+      .HomeProfile_textarea {
+        font-size: 9.5px;
+      }
     }
   }
   .HomeProfile_history {

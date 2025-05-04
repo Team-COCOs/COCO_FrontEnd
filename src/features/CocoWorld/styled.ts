@@ -10,6 +10,11 @@ export const CocoWorldPageStyled = styled.div`
     margin: 0 auto;
     /* background-color: ${({ theme }) => theme.colors.mainColor}; */
   }
+  @media (min-width: 1281px) {
+    &.CocoWorldPage_wrap {
+      max-width: 1440px;
+    }
+  }
   .CocoWorldPage_container {
     width: 100%;
     height: 100%;
@@ -158,6 +163,11 @@ export const CocoWorldPageStyled = styled.div`
       }
     }
   }
+  @media (max-width: 769px) {
+    .CocoWorldPage_book_wrap {
+      flex-direction: column;
+    }
+  }
   // 왼쪽 전체
   .CocoWorldPage_left {
     width: 87%;
@@ -182,5 +192,61 @@ export const CocoWorldPageStyled = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  // 📱 반응형
+  @media (max-width: 1024px) {
+    .CocoWorldPage_book_wrap {
+      width: 97%;
+    }
+    // 왼쪽 전체
+    .CocoWorldPage_left {
+      width: 83%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .CocoWorldPage_book_wrap {
+      height: 95%;
+      .CocoWorldPage_book_left,
+      .CocoWorldPage_book_right {
+        height: 48%;
+      }
+    }
+
+    .CocoWorldPage_Tab_Wrap {
+      width: 12%;
+      right: 2%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .CocoWorldPage_book_wrap {
+      height: 100%;
+      .CocoWorldPage_book_left,
+      .CocoWorldPage_book_right {
+        height: 48%;
+        width: 98%;
+      }
+    }
+
+    .CocoWorldPage_Tab_Wrap {
+      display: none;
+    }
+  }
+
+  @media (max-width: 386px) {
+    .CocoWorldPage_book_wrap {
+      .CocoWorldPage_book_left,
+      .CocoWorldPage_book_right {
+        height: 50%;
+        width: 100%;
+      }
+    }
+
+    .CocoWorldPage_bookRight_todayWrap,
+    .CocoWorldPage_bookLeft_todayWrap {
+      font-size: 12px;
+      padding-left: 8px;
+    }
   }
 `;

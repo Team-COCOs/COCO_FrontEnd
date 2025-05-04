@@ -26,7 +26,14 @@ export const HomeMusicRightStyled = styled.div`
     font-family: "굴림", "Gulim", sans-serif;
     font-size: 11px;
   }
-
+  @media (max-width: 1024px) {
+    .HomeMusicRight_wrap {
+      position: absolute;
+      right: -185px;
+      top: 0px;
+      width: 155px;
+    }
+  }
   /* 선물가게 */
   .HomeMusicRight_shop {
     width: 100%;
