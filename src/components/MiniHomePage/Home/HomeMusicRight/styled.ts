@@ -34,6 +34,14 @@ export const HomeMusicRightStyled = styled.div`
       width: 155px;
     }
   }
+  @media (max-width: 769px) {
+    .HomeMusicRight_wrap {
+      position: static;
+      right: unset;
+      width: unset;
+      padding: 15px 10px;
+    }
+  }
   /* 선물가게 */
   .HomeMusicRight_shop {
     width: 100%;
@@ -72,11 +80,18 @@ export const HomeMusicRightStyled = styled.div`
       }
     }
   }
-
+  .HomeMusicRight_shop {
+    margin-bottom: 0px;
+  }
   /* 음악 */
   .HomeMusicRight_number {
     font-weight: bold;
     margin-bottom: 4px;
+  }
+  @media (max-width: 769px) {
+    .HomeMusicRight_shop {
+      border-radius: 0px;
+    }
   }
 
   .HomeMusicRight_player {

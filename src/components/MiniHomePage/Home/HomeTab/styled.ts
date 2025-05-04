@@ -38,6 +38,19 @@ export const HomeTabStyled = styled.div`
       margin-bottom: 5px;
     }
   }
+  @media (max-width: 480px) {
+    .HomeTab_number_title {
+      width: 100%;
+      font-size: 10px;
+      padding: 12px 0px;
+      margin-bottom: 5px;
+    }
+  }
+  @media (max-width: 386px) {
+    .HomeTab_number_title {
+      font-size: 8px;
+    }
+  }
   .HomeTab_item.active {
     background-color: #ffffff;
     color: black;

@@ -76,4 +76,16 @@ export const RecentPhotoStyled = styled.div`
       }
     }
   }
+  @media (max-width: 480px) {
+    .RecentPhoto_wrap {
+      .RecentPhoto_new {
+        display: block;
+      }
+
+      .RecentPhoto_new_alltab {
+        width: 100%;
+        /* grid-template-columns: repeat(1, 1fr); */
+      }
+    }
+  }
 `;

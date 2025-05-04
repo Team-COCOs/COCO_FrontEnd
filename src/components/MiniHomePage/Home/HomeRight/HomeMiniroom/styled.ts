@@ -40,5 +40,10 @@ export const HomeMiniroomStyled = styled.div`
         object-fit: cover; // 꽉 차게, 비율 유지하면서 넘치는 부분 잘림
       }
     }
+    @media (max-width: 480px) {
+      .HomeMiniroom_imgWrap {
+        height: auto;
+      }
+    }
   }
 `;

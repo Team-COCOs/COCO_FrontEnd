@@ -213,6 +213,37 @@ export const CocoWorldPageStyled = styled.div`
   @media (max-width: 769px) {
     .CocoWorldPage_book_wrap {
       flex-direction: column;
+      .CocoWorldPage_book_right {
+        left: 0px;
+        width: 100%;
+        justify-content: center;
+        border-top-left-radius: 18px;
+        border-bottom-left-radius: 18px;
+        border-top-right-radius: 18px;
+        border-bottom-right-radius: 18px;
+        padding: 15px 0px;
+        margin-bottom: 10px;
+        /* 책 오른쪽 점선 */
+        .CocoWorldPage_bookRight_line {
+          width: 94%;
+          height: 94%;
+          border: 1.5px #fffcfe dashed;
+          border-top-left-radius: 18px;
+          border-bottom-left-radius: 18px;
+          border-top-right-radius: 18px;
+          border-bottom-right-radius: 18px;
+          padding: 8px 0px;
+          align-items: center;
+          justify-content: center;
+          // 책 종이
+          .CocoWorldPage_bookRight_paper {
+            width: 97%;
+            border-radius: 15px;
+            align-items: center;
+            padding: 12px 15px;
+          }
+        }
+      }
     }
   }
   // 왼쪽 전체
@@ -235,7 +266,7 @@ export const CocoWorldPageStyled = styled.div`
     z-index: 10;
     height: 100%;
     width: 8%;
-    right: 4.4%;
+    right: 4.6%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -249,19 +280,27 @@ export const CocoWorldPageStyled = styled.div`
     .CocoWorldPage_left {
       width: 83%;
     }
+    .CocoWorldPage_Tab_Wrap {
+      right: 4.9%;
+    }
   }
 
   @media (max-width: 769px) {
     .CocoWorldPage_Tab_Wrap {
       position: absolute;
       width: 12%;
-      right: 5.4%;
+      right: 4.6%;
+    }
+  }
+  @media (max-width: 480px) {
+    .CocoWorldPage_Tab_Wrap {
+      right: 4.7%;
     }
   }
 
-  @media (max-width: 480px) {
-  }
-
   @media (max-width: 386px) {
+    .CocoWorldPage_Tab_Wrap {
+      right: 4.9%;
+    }
   }
 `;

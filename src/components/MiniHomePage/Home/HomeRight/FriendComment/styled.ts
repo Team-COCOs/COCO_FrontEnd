@@ -81,6 +81,62 @@ export const FriendCommentStyled = styled.div`
       }
     }
   }
+  @media (max-width: 769px) {
+    .FriendComment_inputWrap {
+      span {
+        width: 11.5%;
+        font-size: 11px;
+      }
+      input {
+        padding: 6px 5px;
+        font-size: 10px;
+      }
+      button {
+        padding: 6px 2px;
+      }
+    }
+  }
+  @media (max-width: 480px) {
+    .FriendComment_commentWrap {
+      padding: 6px 5px;
+    }
+    .FriendComment_inputWrap {
+      gap: 5px;
+      span {
+        font-size: 9px;
+        width: 10%;
+      }
+      input {
+        padding: 6px 3px;
+        font-size: 9px;
+      }
+      button {
+        padding: 6px 1px;
+        font-size: 8px;
+      }
+    }
+    .FriendComment_wrap .FriendComment_title span {
+      font-size: 9px;
+    }
+  }
+
+  @media (max-width: 386px) {
+    .FriendComment_commentWrap {
+      padding: 6px 5px;
+    }
+    .FriendComment_inputWrap {
+      gap: 3px;
+      span {
+        font-size: 8px;
+      }
+      input {
+        font-size: 7px;
+      }
+      button {
+        font-size: 7px;
+      }
+    }
+  }
 
   .FriendComment_inputWrap button:disabled {
     opacity: 0.5;

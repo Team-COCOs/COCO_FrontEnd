@@ -17,12 +17,22 @@ export const DiaryTitleStyled = styled.div`
         font-size: 15px;
       }
     }
+    @media (max-width: 480px) {
+      .DiaryTitle_number_title {
+        font-size: 10px;
+      }
+    }
     .DiaryTitle_plus_friend {
       font-size: 10px;
       font-weight: bold;
       color: ${({ theme }) => theme.colors.mainColor};
       cursor: pointer;
       letter-spacing: -0.5px;
+    }
+    @media (max-width: 480px) {
+      .DiaryTitle_plus_friend {
+        font-size: 8px;
+      }
     }
   }
 `;
