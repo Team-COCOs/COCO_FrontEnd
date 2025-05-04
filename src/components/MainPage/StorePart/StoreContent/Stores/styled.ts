@@ -14,6 +14,40 @@ export const StoresStyle = styled.div`
         text-align: center;
         margin-bottom: 70px;
 
+        .Stores_thumbnai {
+          position: relative;
+          width: 90px;
+          height: 90px;
+          margin: 0 auto;
+        }
+
+        .Stores_thumbnai.playing {
+          width: 90px;
+          height: 90px;
+          animation: rotateImage 5s linear infinite;
+        }
+
+        @keyframes rotateImage {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        .Stores_audio {
+          width: 150px;
+        }
+
+        audio::-webkit-media-controls-volume-slider {
+          display: none;
+        }
+
+        audio::-webkit-media-controls-mute-button {
+          display: none;
+        }
+
         .Stores_itemImg {
           position: relative;
           width: 100%;

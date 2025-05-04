@@ -3,6 +3,7 @@ import { StoresStyle } from "./styled";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import CustomAudio from "./CustomAudio";
 
 interface StoreItem {
   id: number;
@@ -30,6 +31,13 @@ const Stores = ({ currentItems }: StoresProps) => {
       });
   };
 
+  const [playingId, setPlayingId] = useState<number | null>(null);
+
+  // 재생 중인 이미지만 썸네일 돌아가게 해야 함
+  const handlePlay = (status: boolean, id: number) => {
+    setPlayingId(status ? id : null);
+  };
+
   return (
     <StoresStyle className={clsx("Stores_wrap")}>
       <div className="Stores-grid">
@@ -38,16 +46,26 @@ const Stores = ({ currentItems }: StoresProps) => {
             {item.category === "BGM" ? (
               <>
                 <div className="Stores_bgmInfo">
+                  <div
+                    className={clsx("Stores_thumbnai", {
+                      playing: playingId === item.id,
+                    })}
+                  >
+                    <Image
+                      src="/bgm/lp.png"
+                      alt="thumbnai image"
+                      width={90}
+                      height={90}
+                    />
+                  </div>
                   <div className="Stores_itemName">
                     {item.name.length > 7
                       ? `${item.name.slice(0, 7)}...`
                       : item.name}
                   </div>
-                  <audio
+                  <CustomAudio
                     src={item.file}
-                    controls
-                    preload="auto"
-                    controlsList="nodownload noplaybackrate"
+                    handlePlay={(status) => handlePlay(status, item.id)}
                   />
                 </div>
                 <div className="Stores_itemPrice">도토리 {item.price}개</div>
