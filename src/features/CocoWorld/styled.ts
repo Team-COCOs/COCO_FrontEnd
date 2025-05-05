@@ -197,6 +197,7 @@ export const CocoWorldPageStyled = styled.div`
             align-items: flex-end;
             padding-bottom: 2.5px;
             padding-left: 17px;
+            position: relative;
           }
           // 왼쪽 안쪽 다이어리 속지
           .CocoWorldPage_diary_Right {

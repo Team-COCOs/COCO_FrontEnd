@@ -7,11 +7,14 @@ import HomeLeft from "../../components/MiniHomePage/Home/HomeLeft";
 import HomeRight from "../../components/MiniHomePage/Home/HomeRight";
 import HomeTab from "../../components/MiniHomePage/Home/HomeTab";
 import HomeMusicRight from "@/components/MiniHomePage/Home/HomeMusicRight";
+import FriendModal from "@/components/MiniHomePage/FriendModal";
 
 const CocoWorld = () => {
   // 탭 상태 관리
   const [activeTab, setActiveTab] = useState<string>("Home");
   const router = useRouter();
+  // 모달
+  const [isOpen, setIsOpen] = useState(false);
 
   // 탭 클릭 시 상태 변경 함수
   const handleTabClick = (tab: string) => {
@@ -50,7 +53,13 @@ const CocoWorld = () => {
                 <div className="CocoWorldPage_bookRight_paper">
                   {/* 미니홈피 이름 */}
                   <div className="CocoWorldPage_bookRight_todayWrap">
-                    <DiaryTitle />
+                    <DiaryTitle setIsOpen={setIsOpen} />
+                    {/* 일촌 신청 모달 */}
+                    <FriendModal
+                      type="add"
+                      isOpen={isOpen}
+                      onClose={() => setIsOpen(false)}
+                    />
                   </div>
                   {/* 다이어리 오른쪽 컴포넌트 */}
                   <div className="CocoWorldPage_diary_Right">

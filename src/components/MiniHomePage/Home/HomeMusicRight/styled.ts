@@ -76,6 +76,7 @@ export const HomeMusicRightStyled = styled.div`
           height: 100%;
           object-fit: cover; /* 이미지가 div 꽉 채우도록 */
           display: block;
+          cursor: pointer;
         }
       }
     }
@@ -118,6 +119,7 @@ export const HomeMusicRightStyled = styled.div`
     justify-content: center;
     background-color: #f7f7f7;
   }
+
   .HomeMusicRight_cd-icon {
     padding-left: 2px;
     z-index: 5;
@@ -235,5 +237,21 @@ export const HomeMusicRightStyled = styled.div`
     background-color: #ffca1d;
     border-radius: 50%;
     cursor: pointer;
+  }
+  @media (max-width: 769px) {
+    .HomeMusicRight_title {
+      height: 28px;
+    }
+    .scroll-text.paused {
+      font-size: 12px;
+    }
+    // 재생버튼
+    button {
+      font-size: 13px;
+    }
+    .control-buttons {
+      gap: 10px;
+      padding-left: 8px;
+    }
   }
 `;
