@@ -51,6 +51,7 @@ const TodayMini = () => {
   };
 
   useEffect(() => {
+    // getuserInfo();
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % userInfo.length);
     }, 1000);
@@ -70,7 +71,7 @@ const TodayMini = () => {
                 active: idx === index,
               })}
               onClick={() => {
-                router.push(`/cocoworld/${user.id}`);
+                router.push(`/cocoworld?id=${user.id}`);
               }}
             >
               <span className="rank_num">{idx + 1}</span>

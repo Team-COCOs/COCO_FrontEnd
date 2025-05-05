@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import CustomAudio from "./CustomAudio";
+import axiosInstance from "@/lib/axios";
 
 interface StoreItem {
   id: number;
@@ -21,8 +22,8 @@ interface StoresProps {
 
 const Stores = ({ currentItems }: StoresProps) => {
   const buyItem = (price: number) => {
-    axios
-      .post(`${process.env.NEXT_PUBLIC_API_URL}/buyItem`, { price })
+    axiosInstance
+      .post("/buyItem", { price })
       .then((res) => {
         console.log(res.data);
       })
@@ -43,7 +44,7 @@ const Stores = ({ currentItems }: StoresProps) => {
       <div className="Stores-grid">
         {currentItems.map((item) => (
           <div key={item.id} className="Stores_card">
-            {item.category === "BGM" ? (
+            {item.category === "bgm" ? (
               <>
                 <div className="Stores_bgmInfo">
                   <div
@@ -78,7 +79,7 @@ const Stores = ({ currentItems }: StoresProps) => {
                 <div
                   className={clsx(
                     "Stores_itemImg",
-                    item.category === "MINIMI" && "Stores_mini"
+                    item.category === "minimi" && "Stores_mini"
                   )}
                 >
                   <Image src={item.file} alt={item.name} fill />

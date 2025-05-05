@@ -2,8 +2,11 @@ import { useRouter } from "next/router";
 import { StoreStyle } from "./styled";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "@/store/store";
 import Stores from "./Stores";
-import axios from "axios";
+import { fetchStoreItems } from "@/store/reducers/storeItemSlice";
+
 interface StoreItem {
   id: number;
   name: string;
@@ -16,9 +19,9 @@ interface StoreItem {
 
 const TABS = [
   { key: "skin", label: "스킨" },
-  { key: "MINIMI", label: "미니미" },
-  { key: "MINIROOM", label: "미니룸" },
-  { key: "BGM", label: "음악" },
+  { key: "minimi", label: "미니미" },
+  { key: "miniroom", label: "미니룸" },
+  { key: "bgm", label: "음악" },
 ];
 
 const StoreContent = () => {
@@ -26,225 +29,37 @@ const StoreContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [storeProduct, setStoreProduct] = useState<StoreItem[]>([]);
 
+  // Redux 상태에서 데이터 가져오기
+  const storeItems = useSelector((state: RootState) => state.storeItems.items);
+
   const ITEMS_PER_PAGE = 8;
 
-  const dummyStoreItems: StoreItem[] = [
-    {
-      id: 1,
-      name: "알록달록 꽃밭",
-      file: "/miniroom/miniroom1.jpg",
-      price: 80,
-      category: "MINIHOMEPIS",
-    },
-    {
-      id: 2,
-      name: "하트쿠션 클럽",
-      file: "/miniroom/miniroom2.jpg",
-      price: 80,
-      category: "MINIHOMEPIS",
-    },
-    {
-      id: 3,
-      name: "찾았다! 네잎클로버!",
-      file: "/miniroom/miniroom3.jpg",
-      price: 80,
-      category: "MINIHOMEPIS",
-    },
-    {
-      id: 4,
-      name: "술이나 한잔",
-      file: "/miniroom/miniroom4.jpg",
-      price: 50,
-      category: "MINIHOMEPIS",
-    },
-    {
-      id: 5,
-      name: "추가 아이템",
-      file: "/miniroom/miniroom5.jpg",
-      price: 100,
-      category: "MINIHOMEPIS",
-    },
-    {
-      id: 6,
-      name: "찾았다! 네잎클로버!",
-      file: "/miniroom/miniroom3.jpg",
-      price: 80,
-      category: "MINIHOMEPIS",
-    },
-    {
-      id: 7,
-      name: "술이나 한잔",
-      file: "/miniroom/miniroom4.jpg",
-      price: 50,
-      category: "MINIHOMEPIS",
-    },
-    {
-      id: 8,
-      name: "추가 아이템",
-      file: "/miniroom/miniroom5.jpg",
-      price: 100,
-      category: "MINIHOMEPIS",
-    },
-    {
-      id: 9,
-      name: "술이나 한자아안",
-      file: "/miniroom/miniroom4.jpg",
-      price: 50,
-      category: "MINIHOMEPIS",
-    },
-    {
-      id: 10,
-      name: "추가 아이템입니다",
-      file: "/miniroom/miniroom5.jpg",
-      price: 100,
-      category: "MINIHOMEPIS",
-    },
-    {
-      id: 11,
-      name: "알록달록 꽃밭",
-      file: "/avatarImg/pay_avatar1.png",
-      price: 80,
-      category: "MINIMI",
-    },
-    {
-      id: 12,
-      name: "하트쿠션 클럽",
-      file: "/avatarImg/pay_avatar2.png",
-      price: 80,
-      category: "MINIMI",
-    },
-    {
-      id: 13,
-      name: "찾았다! 네잎클로버!",
-      file: "/avatarImg/pay_avatar3.png",
-      price: 80,
-      category: "MINIMI",
-    },
-    {
-      id: 14,
-      name: "술이나 한잔",
-      file: "/avatarImg/pay_avatar4.png",
-      price: 50,
-      category: "MINIMI",
-    },
-    {
-      id: 15,
-      name: "추가 아이템",
-      file: "/avatarImg/pay_avatar5.png",
-      price: 100,
-      category: "MINIMI",
-    },
-    {
-      id: 16,
-      name: "찾았다! 네잎클로버!",
-      file: "/avatarImg/pay_avatar6.png",
-      price: 80,
-      category: "MINIMI",
-    },
-    {
-      id: 17,
-      name: "술이나 한잔",
-      file: "/avatarImg/pay_avatar7.png",
-      price: 50,
-      category: "MINIMI",
-    },
-    {
-      id: 18,
-      name: "추가 아이템",
-      file: "/avatarImg/pay_avatar8.png",
-      price: 100,
-      category: "MINIMI",
-    },
-    {
-      id: 19,
-      name: "술이나 한자아안",
-      file: "/avatarImg/pay_avatar9.png",
-      price: 50,
-      category: "MINIMI",
-    },
-    {
-      id: 20,
-      name: "추가 아이템입니다",
-      file: "/avatarImg/pay_avatar10.png",
-      price: 100,
-      category: "MINIMI",
-    },
-    {
-      id: 26,
-      name: "12-32",
-      file: "/bgm/12-32.mp3",
-      price: 15000,
-      category: "BGM",
-      artist: "아티스트 F",
-      duration: 120,
-    },
-    {
-      id: 27,
-      name: "y-freestyle",
-      file: "/bgm/y-freestyle.mp3",
-      price: 15000,
-      category: "BGM",
-      artist: "아티스트 F",
-      duration: 120,
-    },
-  ];
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
+    if (product === "skin") {
+      dispatch(fetchStoreItems());
+    } else {
+      dispatch(fetchStoreItems(product));
+    }
+  }, [product, dispatch]);
+
+  useEffect(() => {
+    // 카테고리 기반으로 필터링
     let categories: string[] = [];
 
     if (product === "skin") {
-      categories = ["MINIHOMEPIS", "DIARY_BG", "TAPCOLOR"];
+      categories = ["tapcolor", "minihomepis", "diary_background"];
     } else {
-      categories = [product.toUpperCase()];
+      categories = [product];
     }
 
-    const filteredItems = dummyStoreItems.filter((item) =>
+    const filteredItems = storeItems.filter((item: StoreItem) =>
       categories.includes(item.category)
     );
 
     setStoreProduct(filteredItems);
-  }, [product]);
-
-  const categoryParam =
-    product === "skin" ? "MINIHOMEPIS,DIARY_BG,TAPCOLOR" : product;
-
-  // useEffect(() => {
-  //   const productData = async () => {
-  //     try {
-  //       // file 음악은 10초로 잘라서 보내주세요!
-  //       const res = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/storeitems`,
-  //         {
-  //           params: {
-  //             category: categoryParam,
-  //           },
-  //         }
-  //       );
-
-  //       let categories: string[] = [];
-
-  //       if (product === "skin") {
-  //         categories = ["MINIHOMEPIS", "DIARY_BG", "TAPCOLOR"];
-  //       } else {
-  //         categories = [product];
-  //       }
-
-  //       console.log("상품 데이터 대답 : ", res.data);
-
-  //       const filteredItems = res.data.filter((item: StoreItem) => {
-  //         console.log("상품 카테고리 : ", item.category);
-  //         return categories.includes(item.category);
-  //       });
-
-  //       console.log("필터링된 상품 : ", filteredItems);
-  //       setStoreProduct(filteredItems);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
-
-  //   productData();
-  // }, [product]);
+  }, [product, storeItems]);
 
   // 총 페이지
   const totalPages = Math.ceil(storeProduct.length / ITEMS_PER_PAGE);
@@ -270,7 +85,7 @@ const StoreContent = () => {
 
         <div className="Store_products">
           {TABS.map((tab, idx) => (
-            <>
+            <div className="Store_tap" key={tab.key}>
               <p
                 className={clsx({ Store_active: product === tab.key })}
                 onClick={() => setProduct(tab.key)}
@@ -278,7 +93,7 @@ const StoreContent = () => {
                 {tab.label}
               </p>
               {idx !== TABS.length - 1 && <span>|</span>}
-            </>
+            </div>
           ))}
 
           <div className="Store_pagination">

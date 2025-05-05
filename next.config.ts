@@ -44,12 +44,12 @@ module.exports = {
     styledComponents: true,
   },
 
-  // images: {
-  //   domains: ["localhost", "13.209.89.42", "15.164.52.122"], // 외부 접속을 위한 IP 추가
-  // },
+  images: {
+    domains: ["localhost"], // 외부 접속을 위한 IP 추가
+  },
 
   // src/pages 디렉토리로 경로 설정
-  webpack(config) {
+  webpack(config: any) {
     config.resolve.modules.push(path.resolve("./src"));
     return config;
   },

@@ -18,6 +18,11 @@ export const StoreStyle = styled.div`
         align-items: center;
         gap: 7px;
 
+        .Store_tap {
+          display: flex;
+          align-items: center;
+        }
+
         p {
           font-size: 13px;
           font-weight: bold;

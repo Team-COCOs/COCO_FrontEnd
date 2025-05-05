@@ -9,20 +9,6 @@ import axiosInstance from "@/lib/axios";
 import ProfileInfo from "./ProfileInfo";
 import Dotori from "./Dotori";
 
-const userData = {
-  name: "이수정",
-  todayVisit: 34,
-  newPost: 1,
-  friendRequest: 2,
-  avatar: "/avatarImg/woman_avatar1.png",
-  dotoris: 200,
-  friends: [
-    { id: 1, name: "김지은" },
-    { id: 2, name: "박민수" },
-    { id: 3, name: "최다혜" },
-  ],
-};
-
 interface Friend {
   id: number;
   name: string;
@@ -57,11 +43,9 @@ const Profile = ({ setHasToken }: profileProps) => {
   // useEffect(() => {
   //   const fetchUserData = async () => {
   //     try {
-  //       const res = await axiosInstance.get(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/user/profile`
-  //       );
+  //       const res = await axiosInstance.get("/user/profile");
 
-  //       setUserData(response.data);
+  //       setUserData(res.data);
 
   //       console.log("유저 정보 대답 : ", res.data);
   //     } catch (err) {
@@ -71,6 +55,22 @@ const Profile = ({ setHasToken }: profileProps) => {
 
   //   fetchUserData();
   // }, []);
+
+  // if (!userData) return null;
+
+  const userData = {
+    name: "이수정",
+    todayVisit: 34,
+    newPost: 1,
+    friendRequest: 2,
+    avatar: "/avatarImg/woman_avatar1.png",
+    dotoris: 200,
+    friends: [
+      { id: 1, name: "김지은" },
+      { id: 2, name: "박민수" },
+      { id: 3, name: "최다혜" },
+    ],
+  };
 
   return (
     <ProfileStyle className={clsx("Profile_wrap")}>
