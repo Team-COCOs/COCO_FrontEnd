@@ -16,8 +16,8 @@ export const DotoriStyle = styled.div`
 
       .Profile_dororiImg {
         position: relative;
-        width: 22px;
-        height: 22px;
+        width: 15px;
+        height: 17px;
         margin-right: 5px;
       }
 
