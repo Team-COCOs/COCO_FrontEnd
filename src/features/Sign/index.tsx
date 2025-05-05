@@ -12,6 +12,7 @@ import {
   validatePhone,
 } from "@/utils/validation";
 import Logo from "@/components/MainPage/Header/Logo";
+import ShadowModal from "@/components/ShadowModal";
 
 const SignPage = () => {
   const router = useRouter();
@@ -54,6 +55,10 @@ const SignPage = () => {
   // 중복 여부 상태 변수
   const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
   const [isPhoneDuplicate, setIsPhoneDuplicate] = useState(false);
+
+  // 커스텀 모달
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handlePasswordChange = (e: any) => {
     const value = e.target.value;
@@ -149,6 +154,8 @@ const SignPage = () => {
 
       const data = type === "email" ? { email } : { phone: cleanedPhone };
 
+      console.log(data);
+
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/check/${type}`,
         data
@@ -167,7 +174,12 @@ const SignPage = () => {
         } else {
           setIsPhoneDuplicate(false);
         }
-        alert(`사용 가능한 ${type === "email" ? "이메일" : "전화번호"}입니다.`);
+
+        setIsOpen(true);
+        setMessage(
+          `사용 가능한 ${type === "email" ? "이메일" : "전화번호"}입니다.`
+        );
+        setEmailError("");
       }
     } catch (error) {
       console.error(`${type} 중복 검사 실패:`, error);
@@ -184,6 +196,7 @@ const SignPage = () => {
 
   useEffect(() => {
     formik.setFieldValue("email", fullEmail);
+    setEmail(fullEmail);
   }, [localPart, domain, customDomain, useCustomDomain]);
 
   // 버튼 활성화 여부 계산
@@ -489,6 +502,13 @@ const SignPage = () => {
           </div>
         </div>
       </form>
+
+      <ShadowModal
+        type="success"
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        message={message}
+      />
     </SignFormStyled>
   );
 };
