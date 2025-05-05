@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import Header from "@/components/MainPage/Header";
 
-const Login = () => {
+const MainPage = () => {
   const router = useRouter();
 
   return (
@@ -28,4 +28,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default MainPage;

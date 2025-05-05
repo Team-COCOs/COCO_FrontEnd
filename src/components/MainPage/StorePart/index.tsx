@@ -4,14 +4,25 @@ import Image from "next/image";
 import Advertising from "../Advertising";
 import TodayMini from "./TodayMini";
 import StoreContent from "./StoreContent";
+import { useSearchParams } from "next/navigation";
+import SearchUser from "../SearchUser";
 
 const StorePart = () => {
+  const searchParams = useSearchParams();
+  const keyword = searchParams.get("keyword");
+
   return (
     <StorePartStyle className={clsx("StorePartStyle_wrap")}>
       <div className="StorePartStyle_left">
-        <Advertising type="Advertising7" />
-        <Advertising type="Advertising1" />
-        <StoreContent />
+        {keyword ? (
+          <SearchUser />
+        ) : (
+          <>
+            <Advertising type="Advertising7" />
+            <Advertising type="Advertising1" />
+            <StoreContent />
+          </>
+        )}
       </div>
       <div className="StorePartStyle_right">
         <TodayMini />
