@@ -20,13 +20,45 @@ export const FindStyle = styled.div`
       width: 100%;
       height: 3px;
       background-color: rgb(130, 130, 130);
-      margin: 5px 0;
+      margin: 10px 0;
+      flex-grow: 0;
+      flex-shrink: 0;
     }
 
     .Find_compros {
       width: 100%;
       display: flex;
       gap: 5px;
+
+      @media (max-width: 768px) {
+        & {
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .Find_centerLine {
+          height: 1.5px !important;
+          width: 100% !important;
+          margin: 30px 0;
+        }
+
+        .InfoFind_wrap {
+          margin-top: 10px !important;
+          width: 100% !important;
+        }
+
+        .InfoFind_div {
+          justify-content: center;
+        }
+
+        button {
+          width: 50% !important;
+        }
+
+        .mainFont {
+          font-size: 13px !important;
+        }
+      }
 
       .Find_centerLine {
         width: 1.5px;
@@ -51,9 +83,16 @@ export const FindStyle = styled.div`
 
         .IdFind_container {
           margin-top: 55px !important;
+
+          @media (max-width: 768px) {
+            & {
+              margin-top: 10px !important;
+            }
+          }
         }
 
         .InfoFind_container {
+          position: relative;
           margin-top: 20px;
           width: 100%;
           display: flex;

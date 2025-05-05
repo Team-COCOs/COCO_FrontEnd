@@ -1,7 +1,7 @@
 // ShadowModal.tsx
 import { useEffect, useRef } from "react";
 import ReactDOM from "react-dom/client";
-import ErrorModal from "./ErrorModal";
+import AlertModal from "./AlertModal";
 import { ModalStyle } from "./styled";
 
 interface ModalProps {
@@ -43,8 +43,10 @@ const ShadowModal = ({ type, isOpen, onClose, message }: ModalProps) => {
     shadowRoot.appendChild(wrapper);
 
     const root = ReactDOM.createRoot(wrapper);
-    if (type === "error") {
-      root.render(<ErrorModal onClose={onClose} message={message} />);
+    if (type === "error" || type === "success") {
+      root.render(
+        <AlertModal type={type} onClose={onClose} message={message} />
+      );
     }
 
     return () => {

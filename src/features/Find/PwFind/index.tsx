@@ -3,10 +3,13 @@ import axios from "axios";
 import { validatePassword } from "@/utils/validation";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import ShadowModal from "@/components/ShadowModal";
 
 const PwFind = () => {
-  const router = useRouter();
   const [userPw, setUserIPw] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
 
   const PwFormik = useFormik({
     initialValues: {
@@ -39,11 +42,15 @@ const PwFind = () => {
       axios
         .patch(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`, data)
         .then(() => {
-          setUserIPw("비밀번호가 변경되었습니다.");
+          setIsOpen(true);
+          setType("success");
+          setMessage("비밀번호가 변경되었습니다. 메인에서 로그인해주세요.");
         })
         .catch((e) => {
           if (e.response.status === 404) {
-            setUserIPw(e.response.data.message);
+            setIsOpen(true);
+            setType("error");
+            setMessage(e.response.data.message);
           }
         });
     },
@@ -96,6 +103,13 @@ const PwFind = () => {
         <button type="submit" disabled={!PwFormik.isValid}>
           비밀번호 변경
         </button>
+
+        <ShadowModal
+          type={type}
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          message={message}
+        />
       </form>
     </div>
   );

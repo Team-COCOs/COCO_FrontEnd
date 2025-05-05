@@ -1,9 +1,12 @@
 import { useFormik } from "formik";
 import axios from "axios";
 import { useState } from "react";
+import ShadowModal from "@/components/ShadowModal";
 
 const IdFind = () => {
   const [userId, setUserId] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -27,7 +30,8 @@ const IdFind = () => {
         })
         .catch((e) => {
           if (e.response.status === 404) {
-            setUserId(e.response.data.message);
+            setIsOpen(true);
+            setMessage(e.response.data.message);
           }
         });
     },
@@ -76,6 +80,13 @@ const IdFind = () => {
         <button className="IdFind_btn" type="submit">
           아이디 찾기
         </button>
+
+        <ShadowModal
+          type="error"
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          message={message}
+        />
       </form>
     </div>
   );
