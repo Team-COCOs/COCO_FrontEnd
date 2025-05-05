@@ -33,7 +33,7 @@ const FriendModal = ({ type, isOpen, onClose }: ModalProps) => {
     // css
     const style = document.createElement("link");
     style.rel = "stylesheet";
-    style.href = "/styles/modalShadow.css";
+    style.href = "/styles/friendShadow.css";
     shadowRoot.appendChild(style);
 
     // React 렌더링 영역
