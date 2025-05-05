@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import ReactDOM from "react-dom/client";
 import AlertModal from "./AlertModal";
 import { ModalStyle } from "./styled";
+import PayModal from "./PayModal";
 
 interface ModalProps {
   type: string;
@@ -47,6 +48,8 @@ const ShadowModal = ({ type, isOpen, onClose, message }: ModalProps) => {
       root.render(
         <AlertModal type={type} onClose={onClose} message={message} />
       );
+    } else if (type === "pay") {
+      root.render(<PayModal onClose={onClose} />);
     }
 
     return () => {
