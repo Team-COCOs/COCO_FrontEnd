@@ -17,7 +17,7 @@ const Dotori = ({ dotori }: DotoriProps) => {
     <DotoriStyle className={clsx("Profile_infos")}>
       <span className="Profile_newText">
         <div className="Profile_dororiImg">
-          <Image src="/dotori.png" alt="dotori" fill />
+          <Image src="/modal/payModal.jpg" alt="dotori" fill />
         </div>
         <span>{dotori}</span>
 
