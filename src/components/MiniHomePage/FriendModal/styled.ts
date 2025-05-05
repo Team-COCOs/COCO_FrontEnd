@@ -9,10 +9,10 @@ export const FriendModalStyle = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
     font-size: 15px;
     top: 120%;
-    right: 10%;
+    right: 5%;
     z-index: 1000;
+    background-color: #e2f0fc;
   }
 `;
