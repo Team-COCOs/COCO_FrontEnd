@@ -150,7 +150,7 @@ const SignPage = () => {
       const data = type === "email" ? { email } : { phone: cleanedPhone };
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_UR}/auth/check/${type}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/check/${type}`,
         data
       );
       if (response.data.exists) {
@@ -167,12 +167,7 @@ const SignPage = () => {
         } else {
           setIsPhoneDuplicate(false);
         }
-        alert({
-          centered: true,
-          content: `사용 가능한 ${
-            type === "email" ? "이메일" : "전화번호"
-          }입니다.`,
-        });
+        alert(`사용 가능한 ${type === "email" ? "이메일" : "전화번호"}입니다.`);
       }
     } catch (error) {
       console.error(`${type} 중복 검사 실패:`, error);
@@ -386,6 +381,7 @@ const SignPage = () => {
                 placeholder="전화번호"
               />
               <button
+                type="button"
                 className="Sign-PhoneCheck"
                 onClick={() => handleDuplicateCheck("phone")}
               >
