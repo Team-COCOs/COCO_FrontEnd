@@ -1,3 +1,9 @@
+/* 전체 폰트 */
+.pixelFont {
+  font-family: "NeoDunggeunmo", sans-serif;
+}
+
+/* alert 모달 */
 .Error_img {
   position: relative;
   width: 200px;
@@ -5,7 +11,26 @@
   margin: 0 auto;
 }
 
-.pixelFont {
-  /* 모달 폰트 */
-  font-family: "NeoDunggeunmo", sans-serif;
+/* pay 모달 */
+.Pay_dotoriImgs {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.Pay_dotori {
+  display: flex;
+  flex-direction: column;
+}
+
+.Pay_img {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.Pay_btn {
+  margin-top: 5px;
+  cursor: pointer;
 }
