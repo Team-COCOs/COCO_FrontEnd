@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import CustomAudio from "./CustomAudio";
 import axiosInstance from "@/lib/axios";
-
+import Cookies from "js-cookie";
+import ShadowModal from "@/components/ShadowModal";
 interface StoreItem {
   id: number;
   name: string;
@@ -21,7 +22,17 @@ interface StoresProps {
 }
 
 const Stores = ({ currentItems }: StoresProps) => {
+  const token = Cookies.get("accessToken");
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+
   const buyItem = (price: number) => {
+    if (!token) {
+      setIsOpen(true);
+      setMessage("로그인 후 구매해주세요.");
+      return;
+    }
+
     axiosInstance
       .post("/buyItem", { price })
       .then((res) => {
@@ -104,6 +115,13 @@ const Stores = ({ currentItems }: StoresProps) => {
           </div>
         ))}
       </div>
+
+      <ShadowModal
+        type="error"
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        message={message}
+      />
     </StoresStyle>
   );
 };

@@ -3,6 +3,24 @@
   font-family: "NeoDunggeunmo", sans-serif;
 }
 
+.title-bar {
+  padding: 5px;
+}
+
+.friend_window {
+  position: fixed;
+  top: 25% !important;
+  border: 2px solid black;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 15px;
+  left: 14%;
+  z-index: 1000;
+}
+
 /* alert 모달 */
 .Error_img {
   position: relative;
@@ -33,4 +51,83 @@
 .Pay_btn {
   margin-top: 5px;
   cursor: pointer;
+}
+
+/* 새게시물 모달 */
+.newPost_div {
+  border-bottom: 1px solid #cbcbcb;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.newPost_texts {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.newPost_title {
+  font-weight: bold;
+  margin-bottom: 4;
+  font-size: 12px;
+}
+
+.newPost_content {
+  font-size: 10px;
+  color: #434343;
+}
+
+.newPost_date {
+  font-size: 10px;
+  color: #8e8e8e;
+  margin-top: 4px;
+}
+
+/* 친구 모달 */
+.Friend_div {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.Friend_header {
+  position: relative;
+  width: 100%;
+  height: 50px;
+}
+
+.Friend_info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.Friend_img {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.Friend_texts {
+  font-size: 12px;
+  text-align: left;
+  margin-top: -10px;
+}
+
+.Friend_btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.Friend_btn {
+  cursor: pointer;
+}
+
+.Friend_btns button {
+  background-color: #ffffff;
+  min-width: 0px;
 }

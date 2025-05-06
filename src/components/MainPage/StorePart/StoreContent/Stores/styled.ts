@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 
 export const StoresStyle = styled.div`
   &.Stores_wrap {
+    position: relative;
     margin-top: 15px;
 
     .Stores-grid {

@@ -4,15 +4,19 @@ import ReactDOM from "react-dom/client";
 import AlertModal from "./AlertModal";
 import { ModalStyle } from "./styled";
 import PayModal from "./PayModal";
+import ProfileModal from "./ProfileModal";
+import FriendModal from "./ProfileModal/FriendModal";
+import clsx from "clsx";
 
 interface ModalProps {
   type: string;
   isOpen: boolean;
   onClose: () => void;
-  message: string;
+  message?: string;
+  data?: any;
 }
 
-const ShadowModal = ({ type, isOpen, onClose, message }: ModalProps) => {
+const ShadowModal = ({ type, isOpen, onClose, message, data }: ModalProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -46,10 +50,14 @@ const ShadowModal = ({ type, isOpen, onClose, message }: ModalProps) => {
     const root = ReactDOM.createRoot(wrapper);
     if (type === "error" || type === "success") {
       root.render(
-        <AlertModal type={type} onClose={onClose} message={message} />
+        <AlertModal type={type} onClose={onClose} message={message!} />
       );
     } else if (type === "pay") {
       root.render(<PayModal onClose={onClose} />);
+    } else if (type === "friendReq") {
+      root.render(<FriendModal onClose={onClose} data={data} />);
+    } else {
+      root.render(<ProfileModal onClose={onClose} data={data} type={type} />);
     }
 
     return () => {
@@ -59,7 +67,12 @@ const ShadowModal = ({ type, isOpen, onClose, message }: ModalProps) => {
 
   if (!isOpen) return null;
 
-  return <ModalStyle className="Modal_window" ref={containerRef} />;
+  return (
+    <ModalStyle
+      className={type === "friendReq" ? "friend_window" : "Modal_window"}
+      ref={containerRef}
+    />
+  );
 };
 
 export default ShadowModal;

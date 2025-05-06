@@ -22,6 +22,7 @@ const Search = () => {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       userSearch();
+      setSearch("");
     }
   };
 

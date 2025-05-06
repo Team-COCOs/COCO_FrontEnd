@@ -35,7 +35,9 @@ const PayModal = ({ onClose }: PayModalProps) => {
   return (
     <>
       <div className="title-bar">
-        <div className="title-bar-text pixelFont">도토리 충전</div>
+        <div className="title-bar-text pixelFont">
+          도토리 충전 - Windows Internet...
+        </div>
         <div className="title-bar-controls">
           <button aria-label="Close" onClick={onClose}>
             X
