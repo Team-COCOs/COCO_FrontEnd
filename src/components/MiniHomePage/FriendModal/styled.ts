@@ -15,4 +15,26 @@ export const FriendModalStyle = styled.div`
     z-index: 1000;
     background-color: #e2f0fc;
   }
+  /* 반응형 */
+  @media (max-width: 1024px) {
+    &.FriendModal_window {
+      right: 5%;
+    }
+  }
+  @media (max-width: 769px) {
+    &.FriendModal_window {
+      right: 3%;
+    }
+  }
+  @media (max-width: 480px) {
+    &.FriendModal_window {
+      right: -2%;
+    }
+  }
+  @media (max-width: 386px) {
+    &.FriendModal_window {
+      right: -15%;
+      font-size: 8px;
+    }
+  }
 `;

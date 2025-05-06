@@ -125,8 +125,9 @@ const AddFriendModal = ({ onClose }: AddFriendModalProps) => {
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="메시지를 입력하세요."
+                placeholder="메시지를 입력하세요. (50자 제한)"
                 className="AddFriendModal_textarea"
+                maxLength={50}
               />
             </div>
 

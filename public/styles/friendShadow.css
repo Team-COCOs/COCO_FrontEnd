@@ -30,7 +30,7 @@
   height: 300px;
   background-color: white;
   margin: 8px 5px;
-  /* padding: 5px 0px; */
+  padding-bottom: 15px;
   font-size: 10px;
 }
 
@@ -69,6 +69,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
 .AddFriendModal_textarea {
   width: 75% !important;
@@ -91,9 +93,39 @@
 button:first-child {
   background-color: #e2f0fc;
 }
-
+/* 반응형 */
+@media (max-width: 1024px) {
+  .friendAdd_Error_wrap {
+    width: 35vw;
+  }
+}
 @media (max-width: 769px) {
   .friendAdd_Error_wrap {
-    width: 45vw;
+    width: 48vw;
+  }
+}
+@media (max-width: 480px) {
+  .friendAdd_Error_wrap {
+    width: 60vw;
+  }
+}
+@media (max-width: 386px) {
+  .friendAdd_Error_wrap {
+    width: 70vw;
+  }
+
+  .friendAdd_Error_img {
+    width: 88%;
+    height: 45px !important;
+  }
+  .friendAdd_Error_wrap {
+    font-size: 8px;
+  }
+  .AddFriendModa_friendname {
+    input,
+    select,
+    textarea {
+      font-size: 8px;
+    }
   }
 }
