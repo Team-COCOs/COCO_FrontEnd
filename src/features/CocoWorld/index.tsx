@@ -92,6 +92,10 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                           ""
                         )}
                         <HomeMusicRight />
+                        <span className="CocoWorldPage_span1"></span>
+                        <span className="CocoWorldPage_span2"></span>
+                        <span className="CocoWorldPage_span3"></span>
+                        <span className="CocoWorldPage_span4"></span>
                       </div>
                     </div>
                   </div>

@@ -160,6 +160,38 @@ export const CocoWorldPageStyled = styled.div`
       display: flex;
       justify-content: flex-start;
       align-items: center;
+      // 다이어리 고리
+      .CocoWorldPage_span1,
+      .CocoWorldPage_span2,
+      .CocoWorldPage_span3,
+      .CocoWorldPage_span4 {
+        z-index: 50;
+        position: absolute;
+        left: -13px;
+        width: 28px;
+        height: 8px;
+        border: 2px solid #bbb;
+        border-radius: 50px;
+        background: linear-gradient(
+          to right,
+          rgb(189, 189, 189),
+          rgb(249, 249, 249)
+        ); /* 진한 → 연한 */
+        margin-bottom: 10px;
+      }
+      /* 위치만 따로 지정 */
+      .CocoWorldPage_span1 {
+        top: 145px;
+      }
+      .CocoWorldPage_span2 {
+        top: 175px;
+      }
+      .CocoWorldPage_span3 {
+        top: 380px;
+      }
+      .CocoWorldPage_span4 {
+        top: 410px;
+      }
       /* 책 오른쪽 점선 */
       .CocoWorldPage_bookRight_line {
         width: 97.5%;
@@ -211,6 +243,117 @@ export const CocoWorldPageStyled = styled.div`
       }
     }
   }
+  @media (max-width: 1440px) {
+    .CocoWorldPage_book_wrap {
+      .CocoWorldPage_book_right {
+        // 다이어리 고리
+        .CocoWorldPage_span1,
+        .CocoWorldPage_span2,
+        .CocoWorldPage_span3,
+        .CocoWorldPage_span4 {
+          left: -13px;
+        }
+        /* 위치만 따로 지정 */
+        .CocoWorldPage_span1 {
+          top: 20%;
+        }
+        .CocoWorldPage_span2 {
+          top: 25%;
+        }
+        .CocoWorldPage_span3 {
+          top: 80%;
+        }
+        .CocoWorldPage_span4 {
+          top: 85%;
+        }
+      }
+    }
+  }
+  @media (max-width: 1280px) {
+    .CocoWorldPage_book_wrap {
+      .CocoWorldPage_book_right {
+        // 다이어리 고리
+        .CocoWorldPage_span1,
+        .CocoWorldPage_span2,
+        .CocoWorldPage_span3,
+        .CocoWorldPage_span4 {
+          left: -12px;
+        }
+        /* 위치만 따로 지정 */
+        .CocoWorldPage_span1 {
+          top: 20%;
+        }
+        .CocoWorldPage_span2 {
+          top: 25%;
+        }
+        .CocoWorldPage_span3 {
+          top: 80%;
+        }
+        .CocoWorldPage_span4 {
+          top: 85%;
+        }
+      }
+    }
+  }
+  @media (max-width: 1024px) {
+    .CocoWorldPage_book_wrap {
+      .CocoWorldPage_book_right {
+        // 다이어리 고리
+        // 다이어리 고리
+        .CocoWorldPage_span1,
+        .CocoWorldPage_span2,
+        .CocoWorldPage_span3,
+        .CocoWorldPage_span4 {
+          left: -12px;
+        }
+        /* 위치만 따로 지정 */
+        .CocoWorldPage_span1 {
+          /* top: 145px; */
+          top: 20%;
+        }
+        .CocoWorldPage_span2 {
+          /* top: 175px; */
+          top: 25%;
+        }
+        .CocoWorldPage_span3 {
+          /* top: 380px; */
+          top: 80%;
+        }
+        .CocoWorldPage_span4 {
+          /* top: 410px; */
+          top: 85%;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .CocoWorldPage_book_wrap {
+      .CocoWorldPage_book_right {
+        // 다이어리 고리
+        .CocoWorldPage_span1,
+        .CocoWorldPage_span2,
+        .CocoWorldPage_span3,
+        .CocoWorldPage_span4 {
+          left: -12px;
+        }
+        /* 위치만 따로 지정 */
+        .CocoWorldPage_span1 {
+          top: 20%;
+        }
+        .CocoWorldPage_span2 {
+          top: 25%;
+        }
+        .CocoWorldPage_span3 {
+          top: 80%;
+        }
+        .CocoWorldPage_span4 {
+          top: 85%;
+        }
+      }
+    }
+  }
+
   @media (max-width: 769px) {
     .CocoWorldPage_book_wrap {
       flex-direction: column;
@@ -243,6 +386,12 @@ export const CocoWorldPageStyled = styled.div`
             align-items: center;
             padding: 12px 15px;
           }
+        }
+        .CocoWorldPage_span1,
+        .CocoWorldPage_span2,
+        .CocoWorldPage_span3,
+        .CocoWorldPage_span4 {
+          display: none;
         }
       }
     }
