@@ -43,7 +43,7 @@ const Profile = ({ setHasToken }: profileProps) => {
   // useEffect(() => {
   //   const fetchUserData = async () => {
   //     try {
-  //       const res = await axiosInstance.get("/user/profile");
+  //       const res = await axiosInstance.get("/user/mainProfile");
 
   //       setUserData(res.data);
 
