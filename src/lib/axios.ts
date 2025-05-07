@@ -10,10 +10,15 @@ const axiosInstance = axios.create({
   },
 });
 
+type RefreshResponse = {
+  access_token: string;
+};
+
 // 요청 인터셉터에서 `access_token`을 동적으로 추가
 axiosInstance.interceptors.request.use((config) => {
   const token = Cookies.get("access_token");
   if (token) {
+    config.headers = config.headers || {};
     config.headers["Authorization"] = `Bearer ${token}`;
   }
   return config;
@@ -42,12 +47,15 @@ axiosInstance.interceptors.response.use(
         }
 
         // refresh_token을 서버로 보내서 access_token을 갱신
-        const response = await axios.get(`${baseURL}/auth/refresh`, {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${refreshToken}`, // refresh_token을 Authorization 헤더에 포함시켜서 요청
-          },
-        });
+        const response = await axios.get<RefreshResponse>(
+          `${baseURL}/auth/refresh`,
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${refreshToken}`, // refresh_token을 Authorization 헤더에 포함시켜서 요청
+            },
+          }
+        );
 
         // 새로 발급받은 access_token을 쿠키에 저장
         const newAccessToken = response.data.access_token;
