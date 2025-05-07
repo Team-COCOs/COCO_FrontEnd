@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
+import axiosInstance from "@/utils/axiosInstance";
 
 interface AddFriendModalProps {
   onClose: () => void;
@@ -54,8 +55,11 @@ const AddFriendModal = ({ onClose }: AddFriendModalProps) => {
 
             {/* 보낸이 */}
             <div className="AddFriendModal_sendtime">
-              보낸이 : <span>김유빈</span>
-              <span>2025.01.01</span>
+              <span>보낸이 : </span>
+              <span className="AddFriendModal_sendtime_bluetext">김유빈</span>
+              <span className="AddFriendModal_sendtime_graytext">
+                (2025.01.01)
+              </span>
             </div>
 
             {/* 신청 대상 */}
