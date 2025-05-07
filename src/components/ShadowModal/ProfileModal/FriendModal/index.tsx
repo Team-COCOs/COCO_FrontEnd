@@ -25,6 +25,7 @@ const FriendModal = ({ onClose, data }: FriendModalProps) => {
           <div className="Friend_header">
             <Image src="/modal/friendadd.jpg" alt="friend image" fill />
           </div>
+
           <div className="Friend_info">
             <div className="Friend_img">
               <Image src={data.profileImg} alt="friend image" fill />
@@ -32,12 +33,14 @@ const FriendModal = ({ onClose, data }: FriendModalProps) => {
             <div className="Friend_texts">
               <p>"{data.requester}"님께서 일촌맺기를 희망합니다.</p>
               <p>일촌을 맺으시겠습니까?</p>
-              <div className="Friend_btns">
-                <button className="Friend_btn">수락</button>
-                <button className="Friend_btn">거절</button>
-              </div>
             </div>
           </div>
+
+          <div className="Friend_btns">
+            <button className="Friend_btn">수락</button>
+            <button className="Friend_btn">거절</button>
+          </div>
+
           <div className="newPost_date">{data.receivedAt}</div>
         </div>
       </div>

@@ -36,7 +36,7 @@ const Stores = ({ currentItems }: StoresProps) => {
     axiosInstance
       .post("/buyItem", { price })
       .then((res) => {
-        console.log(res.data);
+        console.log("구매 대답 : ", res.data);
       })
       .catch((e) => {
         console.log("구매 실패:", e);

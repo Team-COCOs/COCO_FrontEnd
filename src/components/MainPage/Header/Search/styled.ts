@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 
 export const SearchStyle = styled.div`
   &.Search_wrap {
+    position: relative;
     display: flex;
     align-items: center;
     width: 100%;

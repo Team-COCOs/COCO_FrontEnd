@@ -27,15 +27,15 @@ const ProfileInfo = ({ label, value, showBadge = true }: ProfileInfoProps) => {
 
   // 친구는 수락되지 않은 것만 (신청한 사람 prorile_image도), 새게시물을 오늘 내가 게시한 글만
   useEffect(() => {
-    // const profileData = async () => {
-    //   const res = await axiosInstance.get(`/profileData/${type}`);
+    const profileData = async () => {
+      const res = await axiosInstance.get(`/profileData/${type}`);
 
-    //   console.log("프로필 모달 정보 대답 : ", res.data);
+      console.log("프로필 모달 정보 대답 : ", res.data);
 
-    //   setData(res.data);
-    // };
+      setData(res.data);
+    };
 
-    // profileData();
+    profileData();
 
     const fetchData = () => {
       const dummyResponse =
@@ -58,12 +58,16 @@ const ProfileInfo = ({ label, value, showBadge = true }: ProfileInfoProps) => {
               {
                 id: 101,
                 requester: "김도현",
+                coment: "우리 친구해요!",
+                relationship: "friend",
                 profileImg: "/avatarImg/minimi_firework.gif",
                 receivedAt: "2025-05-07 09:15",
               },
               {
                 id: 102,
                 requester: "박지우",
+                coment: "우리 일촌해요!",
+                relationship: "firstCousin",
                 profileImg: "/avatarImg/headphone_girl.png",
                 receivedAt: "2025-05-07 14:22",
               },
