@@ -9,7 +9,11 @@ import HomeTab from "../../components/MiniHomePage/Home/HomeTab";
 import HomeMusicRight from "@/components/MiniHomePage/Home/HomeMusicRight";
 import FriendModal from "@/components/MiniHomePage/FriendModal";
 
-const CocoWorld = () => {
+interface CocoWorldPageProps {
+  id: string;
+}
+
+const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
   // 탭 상태 관리
   const [activeTab, setActiveTab] = useState<string>("Home");
   const router = useRouter();
