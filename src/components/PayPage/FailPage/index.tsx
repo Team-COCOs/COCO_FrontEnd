@@ -19,13 +19,6 @@ const PaymentFail = () => {
           </span>
         }
         extra={[
-          <Button
-            type="primary"
-            key="myPage"
-            onClick={() => router.push("/myPage?menu=myInfo")}
-          >
-            내 계정으로 이동
-          </Button>,
           <Button key="home" onClick={() => router.push("/")}>
             메인으로 이동
           </Button>,

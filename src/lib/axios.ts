@@ -6,17 +6,18 @@ const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL, // 환경변수 사용
   withCredentials: true,
   headers: {
-    Authorization: `Bearer ${Cookies.get("access_token")}`,
+    Authorization: `Bearer ${Cookies.get("accessToken")}`,
   },
 });
 
 type RefreshResponse = {
-  access_token: string;
+  accessToken: string;
 };
 
-// 요청 인터셉터에서 `access_token`을 동적으로 추가
+// 요청 인터셉터에서 `accessToken`을 동적으로 추가
 axiosInstance.interceptors.request.use((config) => {
-  const token = Cookies.get("access_token");
+  const token = Cookies.get("accessToken");
+
   if (token) {
     config.headers = config.headers || {};
     config.headers["Authorization"] = `Bearer ${token}`;
@@ -30,7 +31,7 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // access_token 만료로 401 에러가 발생하고, 아직 재시도 안한 경우
+    // accessToken 만료로 401 에러가 발생하고, 아직 재시도 안한 경우
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
@@ -42,11 +43,11 @@ axiosInstance.interceptors.response.use(
         const refreshToken = Cookies.get("refresh_token");
 
         if (!refreshToken) {
-          Router.push("/login");
+          Router.push("/");
           return Promise.reject(error);
         }
 
-        // refresh_token을 서버로 보내서 access_token을 갱신
+        // refresh_token을 서버로 보내서 accessToken을 갱신
         const response = await axios.get<RefreshResponse>(
           `${baseURL}/auth/refresh`,
           {
@@ -57,17 +58,17 @@ axiosInstance.interceptors.response.use(
           }
         );
 
-        // 새로 발급받은 access_token을 쿠키에 저장
-        const newAccessToken = response.data.access_token;
+        // 새로 발급받은 accessToken을 쿠키에 저장
+        const newAccessToken = response.data.accessToken;
 
         if (!newAccessToken) {
-          Cookies.remove("access_token");
+          Cookies.remove("accessToken");
           Cookies.remove("refresh_token");
-          Router.push("/login");
+          Router.push("/");
           return Promise.reject(error);
         }
 
-        Cookies.set("access_token", newAccessToken, {
+        Cookies.set("accessToken", newAccessToken, {
           expires: 1 / 24,
           path: "/",
           sameSite: "Strict",
@@ -77,15 +78,15 @@ axiosInstance.interceptors.response.use(
         // 원래 요청을 재시도
         return axiosInstance(originalRequest);
       } catch (refreshError) {
-        Cookies.remove("access_token");
+        Cookies.remove("accessToken");
         Cookies.remove("refresh_token");
 
-        const tempToken = Cookies.get("temp_access_token");
+        const tempToken = Cookies.get("temp_accessToken");
 
         if (tempToken) {
           Router.push("/phone");
         } else {
-          Router.push("/login");
+          Router.push("/");
         }
         return Promise.reject(refreshError);
       }
