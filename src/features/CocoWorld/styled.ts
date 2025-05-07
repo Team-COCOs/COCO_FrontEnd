@@ -181,16 +181,16 @@ export const CocoWorldPageStyled = styled.div`
       }
       /* 위치만 따로 지정 */
       .CocoWorldPage_span1 {
-        top: 145px;
+        top: 20%;
       }
       .CocoWorldPage_span2 {
-        top: 175px;
+        top: 25%;
       }
       .CocoWorldPage_span3 {
-        top: 380px;
+        top: 80%;
       }
       .CocoWorldPage_span4 {
-        top: 410px;
+        top: 85%;
       }
       /* 책 오른쪽 점선 */
       .CocoWorldPage_bookRight_line {
