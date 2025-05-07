@@ -26,7 +26,7 @@ const SearchUser = () => {
   //   const fetchSearchResults = async () => {
   //     try {
   //       const res = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/search`,
+  //         `${process.env.NEXT_PUBLIC_API_URL}/users/search`,
   //         {
   //           params: { keyword },
   //         }
