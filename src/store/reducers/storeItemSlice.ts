@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "@/utils/axiosInstance";
+import axios from "axios";
 
 // storeItems를 서버에서 가져오기
 export const fetchStoreItems = createAsyncThunk<
@@ -10,9 +11,12 @@ export const fetchStoreItems = createAsyncThunk<
   }
 >("storeItems/fetchStoreItems", async (category, { rejectWithValue }) => {
   try {
-    const response = await axiosInstance.get("/storeitems", {
-      params: category ? { category } : {},
-    });
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/storeitems`,
+      {
+        params: category ? { category } : {},
+      }
+    );
     return response.data;
   } catch (err: any) {
     console.error("storeItems fetch error:", err);
