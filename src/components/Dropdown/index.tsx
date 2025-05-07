@@ -20,7 +20,7 @@ const Dropdown = ({ label, options }: DropdownProps) => {
   const handleSelect = (friend: any) => {
     setSelectedLabel(friend.name);
     setIsOpen(false);
-    router.push(`/cocoworld?id=${friend.id}`);
+    router.push(`/cocoworld/${friend.id}`);
   };
 
   // select option 열렸을 때 외부 클릭 시 select 닫기

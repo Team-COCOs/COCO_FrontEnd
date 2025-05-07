@@ -71,7 +71,7 @@ const TodayMini = () => {
                 active: idx === index,
               })}
               onClick={() => {
-                router.push(`/cocoworld?id=${user.id}`);
+                router.push(`/cocoworld/${user.id}`);
               }}
             >
               <span className="rank_num">{idx + 1}</span>
