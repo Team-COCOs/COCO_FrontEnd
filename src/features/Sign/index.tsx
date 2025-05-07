@@ -18,7 +18,7 @@ const SignPage = () => {
   const router = useRouter();
   // 이메일
   const [localPart, setLocalPart] = useState("");
-  const [domain, setDomain] = useState("naver.com");
+  const [domain, setDomain] = useState("cocoworld.com");
   const [customDomain, setCustomDomain] = useState("");
   const [useCustomDomain, setUseCustomDomain] = useState(false);
   const [email, setEmail] = useState("");
@@ -287,10 +287,7 @@ const SignPage = () => {
                       }
                     }}
                   >
-                    <option value="naver.com">naver.com</option>
-                    <option value="gmail.com">gmail.com</option>
-                    <option value="hanmail.net">hanmail.net</option>
-                    <option value="custom">직접입력</option>
+                    <option value="cocoworld.com">cocoworld.com</option>
                   </select>
                 </div>
               </div>

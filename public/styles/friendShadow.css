@@ -20,10 +20,20 @@
   height: 100%;
 }
 .AddFriendModal_sendtime {
-  display: flex;
+  display: inline-block;
   justify-content: flex-start;
   align-items: center;
   width: 80%;
+  margin-left: 20px;
+}
+.AddFriendModal_sendtime_bluetext {
+  color: navy;
+}
+.AddFriendModal_sendtime_graytext {
+  color: gray;
+  font-size: 9px;
+  padding-left: 5px;
+  vertical-align: baseline;
 }
 .friendAdd_Error_wrap {
   width: 27vw;
@@ -94,14 +104,40 @@ button:first-child {
   background-color: #e2f0fc;
 }
 /* 반응형 */
+/* 반응형 */
+@media (max-width: 1440px) {
+  .AddFriendModal_sendtime {
+    margin-left: 35px;
+  }
+  .friendAdd_Error_skyblue_wrap {
+    height: auto;
+  }
+}
 @media (max-width: 1024px) {
   .friendAdd_Error_wrap {
     width: 35vw;
+  }
+  .AddFriendModal_sendtime {
+    display: inline-block;
+    justify-content: flex-start;
+    align-items: center;
+    width: 80%;
+    margin-left: 10px;
   }
 }
 @media (max-width: 769px) {
   .friendAdd_Error_wrap {
     width: 48vw;
+  }
+  .AddFriendModal_sendtime {
+    display: inline-block;
+    justify-content: flex-start;
+    align-items: center;
+    width: 80%;
+    margin-left: 10px;
+  }
+  .friendAdd_Error_skyblue_wrap {
+    height: 100%;
   }
 }
 @media (max-width: 480px) {
