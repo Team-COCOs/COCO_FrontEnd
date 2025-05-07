@@ -21,66 +21,76 @@ const SearchUser = () => {
   const [results, setResults] = useState<UserSearch[]>([]);
 
   // 해당 유저 이름, pk, 생일, 프로필 이미지, 성별 필요
-  // useEffect(() => {
-
-  //   const fetchSearchResults = async () => {
-  //     try {
-  //       const res = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/users/search`,
-  //         {
-  //           params: { keyword },
-  //         }
-  //       );
-
-  //       console.log("검색 요청 대답 : ", res.data);
-  //       setResults(res.data);
-  //     } catch (e) {
-  //       console.log("검색 요청 실패:", e);
-  //       setResults([]);
-  //     }
-  //   };
-
-  //   fetchSearchResults();
-  // }, [keyword]);
-
   useEffect(() => {
-    // 더미 데이터
-    const dummyResults: UserSearch[] = [
-      {
-        id: 1,
-        name: "앨리스",
-        profile_image: "/avatarImg/bicycleboy.png",
-        gender: "man",
-        birthday: "1999-01-10",
-      },
-      {
-        id: 2,
-        name: "앨리스",
-        profile_image: "/avatarImg/pay_avatar26.png",
-        gender: "woman",
-        birthday: "2000-01-10",
-      },
-      {
-        id: 3,
-        name: "밥",
-        profile_image: "/avatarImg/man_avatar1.png",
-        gender: "man",
-        birthday: "1999-01-02",
-      },
-      {
-        id: 4,
-        name: "캐롤",
-        profile_image: "/avatarImg/headphone_girl.png",
-        gender: "woman",
-        birthday: "1999-01-11",
-      },
-    ];
+    const fetchSearchResults = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/users/search`,
+          {
+            params: { keyword },
+          }
+        );
 
-    // 검색어 필터링
-    const filtered = dummyResults.filter((item) => item.name.includes(keyword));
+        console.log("검색 요청 대답 : ", res.data);
 
-    setResults(filtered);
+        if (Array.isArray(res.data)) {
+          const modifiedResults = res.data.map((d: any) => ({
+            ...d,
+            profile_image:
+              d.profile_image ??
+              (d.gender === "woman"
+                ? "/avatarImg/woman_avatar1.png"
+                : "/avatarImg/man_avatar1.png"),
+          }));
+          setResults(modifiedResults);
+        }
+      } catch (e) {
+        console.log("검색 요청 실패:", e);
+        setResults([]);
+      }
+    };
+
+    fetchSearchResults();
   }, [keyword]);
+
+  // useEffect(() => {
+  //   // 더미 데이터
+  //   const dummyResults: UserSearch[] = [
+  //     {
+  //       id: 1,
+  //       name: "앨리스",
+  //       profile_image: "/avatarImg/bicycleboy.png",
+  //       gender: "man",
+  //       birthday: "1999-01-10",
+  //     },
+  //     {
+  //       id: 2,
+  //       name: "앨리스",
+  //       profile_image: "/avatarImg/pay_avatar26.png",
+  //       gender: "woman",
+  //       birthday: "2000-01-10",
+  //     },
+  //     {
+  //       id: 3,
+  //       name: "밥",
+  //       profile_image: "/avatarImg/man_avatar1.png",
+  //       gender: "man",
+  //       birthday: "1999-01-02",
+  //     },
+  //     {
+  //       id: 4,
+  //       name: "캐롤",
+  //       profile_image: "/avatarImg/headphone_girl.png",
+  //       gender: "woman",
+  //       birthday: "1999-01-11",
+  //     },
+  //   ];
+
+  //   // 검색어 필터링
+  //   const filtered = dummyResults.filter((item) => item.name.includes(keyword));
+
+  //   setResults(filtered);
+  // }, [keyword]);
 
   return (
     <SearchUserStyle className={clsx("SearchUser_wrap")}>

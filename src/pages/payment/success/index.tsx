@@ -11,14 +11,10 @@ const SuccessPage = () => {
 
     if (typeof queryDotori === "string") {
       setDotori(queryDotori);
-    } else if (Array.isArray(queryDotori)) {
-      setDotori(queryDotori[0]);
-    } else {
-      router.replace("/");
     }
   }, [router.query.dotori]);
 
-  return dotori ? <PaymentSuccess dotori={dotori} /> : null;
+  return <PaymentSuccess dotori={dotori!} />;
 };
 
 export default SuccessPage;

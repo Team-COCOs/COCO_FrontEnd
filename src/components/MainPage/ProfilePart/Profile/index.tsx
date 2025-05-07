@@ -14,11 +14,30 @@ interface Friend {
   name: string;
 }
 
+interface newPost {
+  label: string;
+  value: number;
+  showBadge?: boolean;
+}
+
+interface friendRequest {
+  id: number;
+  title?: string;
+  content?: string;
+  createdAt?: string;
+  requester?: string;
+  profileImg?: string;
+  receivedAt?: string;
+}
+
 interface UserData {
   name: string;
   todayVisit: number;
-  newPost: number;
-  friendRequest: number;
+  profile_image: string;
+  newPost: newPost[];
+  newPostCount: number;
+  friendRequest: friendRequest[];
+  friendRequestCount: number;
   avatar: string;
   dotoris: number;
   friends: Friend[];
@@ -30,7 +49,7 @@ interface profileProps {
 
 const Profile = ({ setHasToken }: profileProps) => {
   const router = useRouter();
-  // const [userData, setUserData] = useState<UserData | null>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
 
   const logout = () => {
     Cookie.remove("accessToken");
@@ -40,37 +59,47 @@ const Profile = ({ setHasToken }: profileProps) => {
     router.push("/");
   };
 
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const res = await axiosInstance.get("/user/mainProfile");
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const res = await axiosInstance.get("/users/mainProfile");
 
-  //       setUserData(res.data);
+        const updatedData = {
+          ...res.data,
+          profile_image:
+            res.data.profile_image === "/avatarImg/default.png"
+              ? res.data.gender === "man"
+                ? "/avatarImg/man_avatar1.png"
+                : "/avatarImg/woman_avatar1.png"
+              : res.data.profile_image,
+        };
 
-  //       console.log("유저 정보 대답 : ", res.data);
-  //     } catch (err) {
-  //       console.error("유저 정보 불러오기 실패", err);
-  //     }
-  //   };
+        setUserData(updatedData);
 
-  //   fetchUserData();
-  // }, []);
+        console.log("유저 정보 대답 : ", res.data);
+      } catch (err) {
+        console.error("유저 정보 불러오기 실패", err);
+      }
+    };
 
-  // if (!userData) return null;
+    fetchUserData();
+  }, []);
 
-  const userData = {
-    name: "이수정",
-    todayVisit: 34,
-    newPost: 1,
-    friendRequest: 2,
-    avatar: "/avatarImg/woman_avatar1.png",
-    dotoris: 200,
-    friends: [
-      { id: 1, name: "김지은" },
-      { id: 2, name: "박민수" },
-      { id: 3, name: "최다혜" },
-    ],
-  };
+  if (!userData) return null;
+
+  // const userData = {
+  //   name: "이수정",
+  //   todayVisit: 34,
+  //   newPost: 1,
+  //   friendRequest: 2,
+  //   avatar: "/avatarImg/woman_avatar1.png",
+  //   dotoris: 200,
+  //   friends: [
+  //     { id: 1, name: "김지은" },
+  //     { id: 2, name: "박민수" },
+  //     { id: 3, name: "최다혜" },
+  //   ],
+  // };
 
   return (
     <ProfileStyle className={clsx("Profile_wrap")}>
@@ -85,7 +114,7 @@ const Profile = ({ setHasToken }: profileProps) => {
       <div className="Profile_userInfos">
         <div className="Profile_userImgBack">
           <div className="Profile_userImg">
-            <Image src={userData.avatar} alt="avatar" fill />
+            <Image src={userData.profile_image} alt="avatar" fill />
           </div>
         </div>
 
@@ -95,8 +124,16 @@ const Profile = ({ setHasToken }: profileProps) => {
             value={userData.todayVisit}
             showBadge={false}
           />
-          <ProfileInfo label="새게시물" value={userData.newPost} />
-          <ProfileInfo label="일촌신청" value={userData.friendRequest} />
+          <ProfileInfo
+            label="새게시물"
+            value={userData.newPostCount}
+            data={userData.newPost}
+          />
+          <ProfileInfo
+            label="일촌신청"
+            value={userData.friendRequestCount}
+            data={userData.friendRequest}
+          />
 
           <Dotori dotori={userData.dotoris} />
         </div>
