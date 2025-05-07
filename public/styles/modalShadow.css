@@ -99,6 +99,20 @@
   height: 50px;
 }
 
+.Friend_send {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding: 0 10px;
+}
+
+.Friend_sendName {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  gap: 10px;
+}
+
 .Friend_info {
   display: flex;
   align-items: center;

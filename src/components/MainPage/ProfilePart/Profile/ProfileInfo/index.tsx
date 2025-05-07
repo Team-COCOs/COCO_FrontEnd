@@ -27,15 +27,15 @@ const ProfileInfo = ({ label, value, showBadge = true }: ProfileInfoProps) => {
 
   // 친구는 수락되지 않은 것만 (신청한 사람 prorile_image도), 새게시물을 오늘 내가 게시한 글만
   useEffect(() => {
-    const profileData = async () => {
-      const res = await axiosInstance.get(`/profileData/${type}`);
+    // const profileData = async () => {
+    //   const res = await axiosInstance.get(`/profileData/${type}`);
 
-      console.log("프로필 모달 정보 대답 : ", res.data);
+    //   console.log("프로필 모달 정보 대답 : ", res.data);
 
-      setData(res.data);
-    };
+    //   setData(res.data);
+    // };
 
-    profileData();
+    // profileData();
 
     const fetchData = () => {
       const dummyResponse =
