@@ -15,7 +15,7 @@ const PaymentSuccess = ({ dotori }: Props) => {
       await axiosInstance.post("/pay/save", { dotori });
       setSuccess(true);
       // 새로고침 시 중복 결제 방지
-      router.replace("/payment/success");
+      // router.replace("/payment/success");
     } catch (error) {
       console.error("결제 정보 저장 실패:", error);
       alert("결제 정보 저장 중 오류가 발생했습니다.");
