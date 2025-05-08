@@ -28,72 +28,14 @@ const ProfileInfo = ({
   label,
   value,
   showBadge = true,
+  data,
 }: // data,
 ProfileInfoProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [data, setData] = useState<data[]>([]);
   const { user } = useAuth();
   const userName = user?.name;
 
   const type = label === "새게시물" ? "newPost" : "newFriend";
-
-  // 친구는 수락되지 않은 것만 (신청한 사람 prorile_image도), 새게시물을 오늘 내가 게시한 글만
-  useEffect(() => {
-    // const profileData = async () => {
-    //   const res = await axiosInstance.get(`/profileData/${type}`);
-
-    //   console.log("프로필 모달 정보 대답 : ", res.data);
-
-    //   setData(res.data);
-    // };
-
-    // profileData();
-
-    const fetchData = () => {
-      const dummyResponse =
-        type === "newPost"
-          ? [
-              {
-                id: 1,
-                title: "오늘의 일기",
-                content: "React 공부 완료!",
-                createdAt: "2025-05-07 10:30",
-              },
-              {
-                id: 2,
-                title: "개발자 포트폴리오 링크 공유",
-                content: "Notion에 정리한 자료입니다.",
-                createdAt: "2025-05-07 13:50",
-              },
-            ]
-          : [
-              {
-                id: 101,
-                requesterId: 11,
-                requester: "김도현",
-                message: "우리 친구해요!",
-                myNickName: "뭘봐",
-                nickName: "나나",
-                profileImg: "/avatarImg/minimi_firework.gif",
-                receivedAt: "2025-05-07 09:15",
-              },
-              {
-                id: 102,
-                requesterId: 11,
-                requester: "박지우",
-                message: "우리 일촌해요!",
-                requester_name: "지우지우",
-                receiver_name: "음음",
-                profileImg: "/avatarImg/headphone_girl.png",
-                receivedAt: "2025-05-07 14:22",
-              },
-            ];
-
-      setData(dummyResponse);
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <ProfileInfoStyle
