@@ -85,11 +85,19 @@ const FriendComment = () => {
         </div>
       </div>
       {friendComment && (
-        <div className="FriendComment_displayWrap">
-          <p>작성자: {friendComment.authorName}</p>
-          <p>별명: {friendComment.hostName}</p>
-          <p>작성일: {friendComment.createdAt}</p>
-          <p>내용: {friendComment.content}</p>
+        <div className="FriendComment_displayWrap dotumFont">
+          <p>
+            •&nbsp;{friendComment.content}&nbsp;({friendComment.authorName}
+            <span className="FriendComment_name_navytext">
+              {" "}
+              {friendComment.hostName}
+            </span>
+            )
+            <span className="FriendComment_datetext">
+              {" "}
+              {friendComment.createdAt}
+            </span>
+          </p>
         </div>
       )}
     </FriendCommentStyled>
