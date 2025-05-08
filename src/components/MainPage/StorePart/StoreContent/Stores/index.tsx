@@ -26,7 +26,7 @@ const Stores = ({ currentItems }: StoresProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
 
-  const buyItem = (price: number) => {
+  const buyItem = (storeItemId: number) => {
     if (!token) {
       setIsOpen(true);
       setMessage("로그인 후 구매해주세요.");
@@ -34,7 +34,7 @@ const Stores = ({ currentItems }: StoresProps) => {
     }
 
     axiosInstance
-      .post("/buyItem", { price })
+      .post("/purchases", { storeItemId })
       .then((res) => {
         console.log("구매 대답 : ", res.data);
       })
@@ -82,7 +82,9 @@ const Stores = ({ currentItems }: StoresProps) => {
                 </div>
                 <div className="Stores_itemPrice">도토리 {item.price}개</div>
                 <div className="Stores_btnWrap">
-                  <button className="mainFont">구입</button>
+                  <button className="mainFont" onClick={() => buyItem(item.id)}>
+                    구입
+                  </button>
                 </div>
               </>
             ) : (
@@ -103,10 +105,7 @@ const Stores = ({ currentItems }: StoresProps) => {
 
                 <div className="Stores_itemPrice">도토리 {item.price}개</div>
                 <div className="Stores_btnWrap">
-                  <button
-                    className="mainFont"
-                    onClick={() => buyItem(item.price)}
-                  >
+                  <button className="mainFont" onClick={() => buyItem(item.id)}>
                     구입
                   </button>
                 </div>
