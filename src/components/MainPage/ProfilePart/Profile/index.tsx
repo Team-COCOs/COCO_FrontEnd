@@ -11,9 +11,9 @@ import Dotori from "./Dotori";
 import { useAuth } from "@/context/AuthContext";
 
 interface Friend {
-  id: number;
-  request: string;
-  requester_name: string;
+  userId: number;
+  friend: string;
+  theirNaming: string;
 }
 
 interface newPost {
@@ -52,7 +52,9 @@ interface profileProps {
 const Profile = ({ setHasToken }: profileProps) => {
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
+  const token = Cookie.get("accessToken");
   const { user } = useAuth();
+  const userRole = user?.role;
 
   const logout = () => {
     Cookie.remove("accessToken");
@@ -84,7 +86,7 @@ const Profile = ({ setHasToken }: profileProps) => {
     };
 
     fetchUserData();
-  }, []);
+  }, [token]);
 
   if (!userData) return null;
 
@@ -126,14 +128,25 @@ const Profile = ({ setHasToken }: profileProps) => {
         </div>
       </div>
 
-      <button
-        className="Profile_btn"
-        onClick={() => {
-          router.push(`/cocoworld/${user?.id}`);
-        }}
-      >
-        <span className="arrow">❯</span> 내 미니홈피 가기
-      </button>
+      {userRole === "admin" ? (
+        <button
+          className="Profile_btn"
+          onClick={() => {
+            router.push(`/admin`);
+          }}
+        >
+          <span className="arrow">❯</span> 관리자로 가기
+        </button>
+      ) : (
+        <button
+          className="Profile_btn"
+          onClick={() => {
+            router.push(`/cocoworld/${user?.id}`);
+          }}
+        >
+          <span className="arrow">❯</span> 내 미니홈피 가기
+        </button>
+      )}
 
       <Dropdown label="바로가기" options={userData.friends} />
     </ProfileStyle>

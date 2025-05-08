@@ -5,13 +5,13 @@ import clsx from "clsx";
 
 interface DropdownProps {
   label: string;
-  options: { id: number; request: string; requester_name: string }[];
+  options: { userId: number; friend: string; theirNaming: string }[];
 }
 
 const Dropdown = ({ label, options }: DropdownProps) => {
   const router = useRouter();
 
-  console.log(options);
+  console.log("dd", options);
 
   // select 여닫기
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +22,7 @@ const Dropdown = ({ label, options }: DropdownProps) => {
   const handleSelect = (friend: any) => {
     setSelectedLabel(friend.name);
     setIsOpen(false);
-    router.push(`/cocoworld/${friend.id}`);
+    router.push(`/cocoworld/${friend.userId}`);
   };
 
   // select option 열렸을 때 외부 클릭 시 select 닫기
@@ -36,6 +36,7 @@ const Dropdown = ({ label, options }: DropdownProps) => {
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
+
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
@@ -49,11 +50,11 @@ const Dropdown = ({ label, options }: DropdownProps) => {
         <ul className="Dropdown_options">
           {options.map((option) => (
             <li
-              key={option.id}
+              key={option.userId}
               className="Dropdown_option"
               onClick={() => handleSelect(option)}
             >
-              {option.request} ({option.requester_name})
+              {option.friend} ({option.theirNaming})
             </li>
           ))}
         </ul>

@@ -47,7 +47,7 @@ const ProfileModal = ({ onClose, data, type, userName }: ProfileModalProps) => {
                   className="newPost_div"
                   onClick={() => newModal(d)}
                 >
-                  <div className="newPost_title">{d.requester.name}</div>
+                  <div className="newPost_title">{d.requester}</div>
                   <div className="newPost_date">{d.receivedAt}</div>
                 </div>
               ))}
