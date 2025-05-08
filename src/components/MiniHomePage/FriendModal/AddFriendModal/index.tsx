@@ -37,8 +37,6 @@ const AddFriendModal = ({
     const payload = {
       receiverId: Number(receiverUserId),
       message,
-      requester: requesterName,
-      receiver: receiverName,
       requester_name: fromLabelType === "직접입력" ? fromInput : fromLabelType,
       receiver_name: toLabelType === "직접입력" ? toInput : toLabelType,
     };
@@ -47,11 +45,9 @@ const AddFriendModal = ({
     try {
       const response = await axiosInstance.post("/friends/request", payload);
 
-      // 서버 응답 처리
-      console.log("응답 데이터:", response.data);
       alert(response.data.message);
-
       onClose();
+      location.reload();
     } catch (error) {
       console.error("서버 요청 오류:", error);
       alert("일촌 신청에 실패했습니다. 다시 시도해주세요.");
