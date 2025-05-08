@@ -19,9 +19,9 @@ interface data {
   requester?: string;
   profileImg?: string;
   receivedAt?: string;
-  coment?: string;
-  nickName?: string;
-  myNickName?: string;
+  message?: string;
+  requester_name?: string;
+  receiver_name?: string;
 }
 
 const ProfileInfo = ({
@@ -71,7 +71,7 @@ ProfileInfoProps) => {
                 id: 101,
                 requesterId: 11,
                 requester: "김도현",
-                coment: "우리 친구해요!",
+                message: "우리 친구해요!",
                 myNickName: "뭘봐",
                 nickName: "나나",
                 profileImg: "/avatarImg/minimi_firework.gif",
@@ -81,9 +81,9 @@ ProfileInfoProps) => {
                 id: 102,
                 requesterId: 11,
                 requester: "박지우",
-                coment: "우리 일촌해요!",
-                myNickName: "지우지우",
-                nickName: "음음",
+                message: "우리 일촌해요!",
+                requester_name: "지우지우",
+                receiver_name: "음음",
                 profileImg: "/avatarImg/headphone_girl.png",
                 receivedAt: "2025-05-07 14:22",
               },

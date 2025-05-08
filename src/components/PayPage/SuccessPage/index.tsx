@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { useRouter } from "next/router";
-
+import Image from "next/image";
+import { PaymentSuccessStyled } from "./styled";
+import clsx from "clsx";
 interface Props {
   dotori: string;
 }
@@ -33,9 +35,21 @@ const PaymentSuccess = ({ dotori }: Props) => {
   }, [dotori, success]);
 
   return (
-    <div>
-      <h1>도토리 충전이 완료되었습니다!</h1>
-    </div>
+    <PaymentSuccessStyled className={clsx("main-wrap-success")}>
+      <div className="Success_img">
+        <Image src="/dotori/payResult.png" alt="pay Image" fill />
+      </div>
+      <div className="Success_box">
+        <div className="Success_text">
+          <h3>도토리 충전 완료!</h3>
+          <p> 충전이 완료되었습니다. </p>
+        </div>
+        <div className="Success_line"></div>
+        <div className="Success_btn" onClick={() => router.push("/")}>
+          코코월드 가기
+        </div>
+      </div>
+    </PaymentSuccessStyled>
   );
 };
 
