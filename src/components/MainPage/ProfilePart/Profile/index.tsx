@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import ProfileInfo from "./ProfileInfo";
 import Dotori from "./Dotori";
+import { useAuth } from "@/context/AuthContext";
 
 interface Friend {
   id: number;
@@ -50,6 +51,7 @@ interface profileProps {
 const Profile = ({ setHasToken }: profileProps) => {
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
+  const { user } = useAuth();
 
   const logout = () => {
     Cookie.remove("accessToken");
@@ -142,7 +144,7 @@ const Profile = ({ setHasToken }: profileProps) => {
       <button
         className="Profile_btn"
         onClick={() => {
-          router.push("/cocoworld");
+          router.push(`/cocoworld/${user?.id}`);
         }}
       >
         <span className="arrow">❯</span> 내 미니홈피 가기
