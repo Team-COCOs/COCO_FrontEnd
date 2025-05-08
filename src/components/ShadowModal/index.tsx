@@ -85,7 +85,13 @@ const ShadowModal = ({
 
   return (
     <ModalStyle
-      className={type === "friendReq" ? "friend_window" : "Modal_window"}
+      className={
+        type === "friendReq"
+          ? "friend_window"
+          : type === "error" || type === "success"
+          ? "Alert_window"
+          : "Modal_window"
+      }
       ref={containerRef}
     />
   );

@@ -60,6 +60,8 @@ const SignPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
 
+  const [type, setType] = useState("");
+
   const handlePasswordChange = (e: any) => {
     const value = e.target.value;
     setPassword(value);
@@ -149,6 +151,20 @@ const SignPage = () => {
 
   // 중복 검사 함수 -> email, phone 중복 확인해서 중복이면 exists = true, 중복이 아니면 exists = false
   const handleDuplicateCheck = async (type: "email" | "phone") => {
+    if (type === "email" && !localPart) {
+      setIsOpen(true);
+      setType("error");
+      setMessage("이메일을 입력해주세요.");
+      return;
+    }
+
+    if (type === "phone" && !phone) {
+      setIsOpen(true);
+      setType("error");
+      setMessage("전화번호를 입력해주세요.");
+      return;
+    }
+
     try {
       const cleanedPhone = phone.replace(/[^\d]/g, "");
 
@@ -161,9 +177,11 @@ const SignPage = () => {
       if (response.data.exists) {
         if (type === "email") {
           setIsEmailDuplicate(true);
+          setType("error");
           setEmailError("이미 사용된 이메일입니다.");
         } else {
           setIsPhoneDuplicate(true);
+          setType("error");
           setPhoneError("이미 사용된 전화번호입니다.");
         }
       } else {
@@ -174,6 +192,7 @@ const SignPage = () => {
         }
 
         setIsOpen(true);
+        setType("success");
         setMessage(
           `사용 가능한 ${type === "email" ? "이메일" : "전화번호"}입니다.`
         );
@@ -499,7 +518,7 @@ const SignPage = () => {
       </form>
 
       <ShadowModal
-        type="success"
+        type={type}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         message={message}

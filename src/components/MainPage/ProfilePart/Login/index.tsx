@@ -57,7 +57,7 @@ const Login = () => {
 
           dispatch(setReduxUser(res.data));
 
-          router.push("/");
+          window.location.href = "/";
         })
         .catch((e) => {
           setMessage(e.response.data.message);

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const ProfileInfoStyle = styled.div`
   &.Profile_infos {
+    position: relative;
     display: flex;
     align-items: center;
     cursor: pointer;

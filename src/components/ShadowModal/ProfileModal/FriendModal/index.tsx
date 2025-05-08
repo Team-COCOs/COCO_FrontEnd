@@ -106,6 +106,7 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
         onClose={() => {
           setIsOpen(false);
           onClose();
+          window.location.href = "/";
         }}
         message={message}
       />

@@ -11,9 +11,9 @@ export const ModalStyle = styled.div`
     align-items: center;
     text-align: center;
     font-size: 15px;
-    top: 40%;
-    left: 15%;
-    /* transform: translate(-50%, -50%); */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 1000;
   }
 `;
