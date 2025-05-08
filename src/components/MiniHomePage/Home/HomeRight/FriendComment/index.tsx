@@ -1,11 +1,14 @@
 import { FriendCommentStyled } from "./styled";
 import { useEffect, useState } from "react";
-import axiosInstance from "@/utils/axiosInstance";
+import axiosInstance from "@/lib/axios";
 import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/router";
 
 const FriendComment = () => {
   const [comment, setComment] = useState("");
   const { user } = useAuth();
+  const router = useRouter();
+  const hostId = Number(router.query.id);
 
   const handleSubmit = async () => {
     if (!comment.trim()) return;
@@ -13,7 +16,7 @@ const FriendComment = () => {
 
     try {
       const response = await axiosInstance.post("/friend-comments", {
-        hostId: user.id,
+        hostId: hostId,
         content: comment,
       });
 
