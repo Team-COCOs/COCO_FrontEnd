@@ -101,7 +101,7 @@ const SearchUser = () => {
             <li
               key={index}
               className="SearchUser_item"
-              onClick={() => router.push(`/cocoworld/id=${item.id}`)}
+              onClick={() => router.push(`/cocoworld/${item.id}`)}
             >
               <div className="SearchUser_userInfo">
                 <div className="SearchUser_image">

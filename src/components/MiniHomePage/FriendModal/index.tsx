@@ -8,11 +8,20 @@ interface ModalProps {
   type: string;
   isOpen: boolean;
   onClose: () => void;
+  requesterName: string;
+  receiverName: string;
 }
 
-const FriendModal = ({ type, isOpen, onClose }: ModalProps) => {
+const FriendModal = ({
+  type,
+  isOpen,
+  onClose,
+  requesterName,
+  receiverName,
+}: ModalProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-
+  console.log(receiverName, "receiverName");
+  console.log(requesterName, "requesterName");
   useEffect(() => {
     if (!isOpen || !containerRef.current) return;
 
@@ -43,7 +52,13 @@ const FriendModal = ({ type, isOpen, onClose }: ModalProps) => {
 
     const root = ReactDOM.createRoot(wrapper);
     if (type === "add") {
-      root.render(<AddFriendModal onClose={onClose} />);
+      root.render(
+        <AddFriendModal
+          onClose={onClose}
+          requesterName={requesterName}
+          receiverName={receiverName}
+        />
+      );
     }
 
     return () => {
