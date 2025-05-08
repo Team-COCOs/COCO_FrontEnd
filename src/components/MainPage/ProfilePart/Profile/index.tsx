@@ -12,7 +12,8 @@ import { useAuth } from "@/context/AuthContext";
 
 interface Friend {
   id: number;
-  name: string;
+  request: string;
+  requester_name: string;
 }
 
 interface newPost {

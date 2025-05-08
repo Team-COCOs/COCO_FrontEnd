@@ -5,7 +5,7 @@ export const ModalStyle = styled.div`
   &.Modal_window {
     border: 2px solid black;
     background-color: white;
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;

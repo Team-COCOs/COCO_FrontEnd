@@ -11,14 +11,14 @@ interface FriendModalProps {
 
 const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [message, serMessage] = useState("");
+  const [message, setMessage] = useState("");
 
   const frienRequest = async (type: string) => {
     try {
       const res = await axiosInstance.post(`/friends/${type}`, {
         requesterId: data.requesterId,
       });
-      serMessage(res.data.message);
+      setMessage(res.data.message);
       setIsOpen(true);
     } catch (e) {
       console.log(e);
@@ -45,18 +45,26 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
 
           <div className="Friend_send">
             <div className="Friend_sendName">
-              보낸이 : <span>{data.requester}</span>
+              보낸이 : <span>{data.requester.name}</span>
             </div>
             <span className="newPost_date">{data.receivedAt}</span>
           </div>
 
           <div className="Friend_info">
             <div className="Friend_img">
-              <Image src={data.profileImg} alt="friend image" fill />
+              <Image
+                src={
+                  data.profileImg === null
+                    ? "/avatarImg/man_avatar1.png"
+                    : data.profileImg
+                }
+                alt="friend image"
+                fill
+              />
             </div>
             <div className="Friend_texts">
               <p>
-                "{data.requester}"님께서 "{data.receiver}"님과 일촌맺기를
+                "{data.requester.name}"님께서 "{userName}"님과 일촌맺기를
                 희망합니다.
               </p>
               <p>일촌을 맺으시겠습니까?</p>
@@ -66,7 +74,7 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
           <div className="Friend_nickName">
             <p> 해당 일촌명으로 신청하셨습니다. </p>
             <p>
-              {data.requester.name}({data.requester_name}) - {data.receiver}(
+              {data.requester.name}({data.requester_name}) - {userName}(
               {data.receiver_name})
             </p>
           </div>

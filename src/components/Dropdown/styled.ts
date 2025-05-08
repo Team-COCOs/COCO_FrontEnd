@@ -40,6 +40,7 @@ export const DropdownStyle = styled.div`
       list-style: none;
       z-index: 10;
       border-radius: 0;
+      z-index: 10;
 
       .Dropdown_option {
         padding: 5px;

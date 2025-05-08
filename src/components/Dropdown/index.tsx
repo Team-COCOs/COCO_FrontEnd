@@ -5,11 +5,13 @@ import clsx from "clsx";
 
 interface DropdownProps {
   label: string;
-  options: { id: number; name: string }[];
+  options: { id: number; request: string; requester_name: string }[];
 }
 
 const Dropdown = ({ label, options }: DropdownProps) => {
   const router = useRouter();
+
+  console.log(options);
 
   // select 여닫기
   const [isOpen, setIsOpen] = useState(false);
@@ -51,7 +53,7 @@ const Dropdown = ({ label, options }: DropdownProps) => {
               className="Dropdown_option"
               onClick={() => handleSelect(option)}
             >
-              {option.name}
+              {option.request} ({option.requester_name})
             </li>
           ))}
         </ul>
