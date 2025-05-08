@@ -74,8 +74,8 @@ export const FriendCommentStyled = styled.div`
     padding: 8px 0px;
   }
   .FriendComment_name_navytext {
-    color: rgb(44, 44, 161);
-    font-size: 12.5px;
+    color: rgb(58, 58, 223);
+    font-size: 12px;
     font-weight: bolder;
   }
   .FriendComment_datetext {
