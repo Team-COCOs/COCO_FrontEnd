@@ -77,8 +77,6 @@ const Profile = ({ setHasToken }: profileProps) => {
         };
 
         setUserData(updatedData);
-
-        console.log("유저 정보 대답 : ", res.data);
       } catch (err) {
         console.error("유저 정보 불러오기 실패", err);
       }
