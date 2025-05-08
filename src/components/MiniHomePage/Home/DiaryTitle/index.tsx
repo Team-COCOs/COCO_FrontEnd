@@ -22,6 +22,7 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    if (!id) return;
     const fetchFriendStatus = async () => {
       try {
         // 현재 로그인된 사용자의 일촌 상태 확인

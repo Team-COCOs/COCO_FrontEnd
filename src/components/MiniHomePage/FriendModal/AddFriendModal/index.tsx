@@ -41,7 +41,6 @@ const AddFriendModal = ({
       receiver_name: toLabelType === "직접입력" ? toInput : toLabelType,
     };
 
-    console.log("전송 데이터:", payload);
     try {
       const response = await axiosInstance.post("/friends/request", payload);
 
