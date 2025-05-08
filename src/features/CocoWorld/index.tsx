@@ -26,7 +26,7 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
   // 일촌신청 이름
   const [requesterName, setRequesterName] = useState("");
   const [receiverName, setReceiverName] = useState("");
-
+  // 로그인 한 사람 ID
   // 탭 클릭 시 상태 변경 함수
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
@@ -36,11 +36,10 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000); // 예시로 2초 후 로딩 종료
-    return () => clearTimeout(timer); // 타이머 정리
+    }, 2000);
+    return () => clearTimeout(timer);
   }, []);
 
-  // 일촌 신청 모달 이름 띄우기
   useEffect(() => {
     const fetchNames = async () => {
       try {
@@ -103,6 +102,7 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                           onClose={() => setIsOpen(false)}
                           requesterName={requesterName}
                           receiverName={receiverName}
+                          receiverUserId={id}
                         />
                       </div>
                       {/* 다이어리 오른쪽 컴포넌트 */}

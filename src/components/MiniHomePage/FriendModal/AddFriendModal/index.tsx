@@ -6,12 +6,14 @@ interface AddFriendModalProps {
   onClose: () => void;
   requesterName: string;
   receiverName: string;
+  receiverUserId: string;
 }
 
 const AddFriendModal = ({
   onClose,
   requesterName,
   receiverName,
+  receiverUserId,
 }: AddFriendModalProps) => {
   const [message, setMessage] = useState("일촌 신청합니다.");
   const [fromLabelType, setFromLabelType] = useState("직접입력");
@@ -21,7 +23,7 @@ const AddFriendModal = ({
 
   const isMessageValid = message.trim() !== "";
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isMessageValid) return;
 
     if (
@@ -33,17 +35,30 @@ const AddFriendModal = ({
     }
 
     const payload = {
-      fromName: requesterName,
-      toName: receiverName,
-      fromLabel: fromLabelType === "직접입력" ? fromInput : fromLabelType,
-      toLabel: toLabelType === "직접입력" ? toInput : toLabelType,
+      receiverId: Number(receiverUserId),
       message,
     };
 
     console.log("전송 데이터:", payload);
-    // TODO: 실제 전송 처리 로직
-    onClose();
+    try {
+      const response = await axiosInstance.post("/friends/request", payload);
+
+      // 서버 응답 처리
+      console.log("응답 데이터:", response.data);
+      alert(response.data.message);
+
+      onClose();
+    } catch (error) {
+      console.error("서버 요청 오류:", error);
+      alert("일촌 신청에 실패했습니다. 다시 시도해주세요.");
+    }
   };
+
+  // 오늘 날짜
+  const today = new Date();
+  const formattedDate = `${today.getFullYear()}.${String(
+    today.getMonth() + 1
+  ).padStart(2, "0")}.${String(today.getDate()).padStart(2, "0")}`;
 
   return (
     <>
@@ -74,7 +89,7 @@ const AddFriendModal = ({
                 {requesterName}
               </span>
               <span className="AddFriendModal_sendtime_graytext">
-                (2025.01.01)
+                ({formattedDate})
               </span>
             </div>
 
@@ -102,9 +117,7 @@ const AddFriendModal = ({
                   value={
                     fromLabelType === "직접입력" ? fromInput : fromLabelType
                   }
-                  onChange={
-                    (e) => setFromInput(e.target.value.slice(0, 5)) // 최대 5글자 제한
-                  }
+                  onChange={(e) => setFromInput(e.target.value.slice(0, 5))}
                   disabled={fromLabelType !== "직접입력"}
                   maxLength={5}
                 />{" "}

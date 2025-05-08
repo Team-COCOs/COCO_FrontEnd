@@ -10,6 +10,7 @@ interface ModalProps {
   onClose: () => void;
   requesterName: string;
   receiverName: string;
+  receiverUserId: string;
 }
 
 const FriendModal = ({
@@ -18,10 +19,10 @@ const FriendModal = ({
   onClose,
   requesterName,
   receiverName,
+  receiverUserId,
 }: ModalProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  console.log(receiverName, "receiverName");
-  console.log(requesterName, "requesterName");
+
   useEffect(() => {
     if (!isOpen || !containerRef.current) return;
 
@@ -57,6 +58,7 @@ const FriendModal = ({
           onClose={onClose}
           requesterName={requesterName}
           receiverName={receiverName}
+          receiverUserId={receiverUserId}
         />
       );
     }

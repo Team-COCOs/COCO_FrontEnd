@@ -1,11 +1,28 @@
 import { FriendCommentStyled } from "./styled";
 import { useEffect, useState } from "react";
+import axiosInstance from "@/utils/axiosInstance";
+import { useAuth } from "@/context/AuthContext";
 
 const FriendComment = () => {
   const [comment, setComment] = useState("");
+  const { user } = useAuth();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!comment.trim()) return;
+    if (!user) return;
+
+    try {
+      const response = await axiosInstance.post("/friend-comments", {
+        hostId: user.id,
+        content: comment,
+      });
+
+      console.log("등록 성공:", response.data);
+      setComment("");
+    } catch (error) {
+      console.error("등록 실패:", error);
+    }
+
     console.log("제출:", comment);
     setComment("");
   };
