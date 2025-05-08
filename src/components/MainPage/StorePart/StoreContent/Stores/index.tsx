@@ -15,6 +15,7 @@ interface StoreItem {
   category: string;
   artist?: string;
   duration?: number;
+  preview_url?: string;
 }
 
 interface StoresProps {
@@ -50,6 +51,9 @@ const Stores = ({ currentItems }: StoresProps) => {
     setPlayingId(status ? id : null);
   };
 
+  console.log(currentItems);
+  console.log(currentItems.map((i) => i.preview_url));
+
   return (
     <StoresStyle className={clsx("Stores_wrap")}>
       <div className="Stores-grid">
@@ -76,7 +80,7 @@ const Stores = ({ currentItems }: StoresProps) => {
                       : item.name}
                   </div>
                   <CustomAudio
-                    src={item.file}
+                    src={item.preview_url!}
                     handlePlay={(status) => handlePlay(status, item.id)}
                   />
                 </div>

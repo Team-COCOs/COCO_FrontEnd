@@ -56,7 +56,8 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
             </div>
             <div className="Friend_texts">
               <p>
-                "{data.requester}"님께서 "{userName}"님과 일촌맺기를 희망합니다.
+                "{data.requester}"님께서 "{data.receiver}"님과 일촌맺기를
+                희망합니다.
               </p>
               <p>일촌을 맺으시겠습니까?</p>
             </div>
@@ -65,7 +66,7 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
           <div className="Friend_nickName">
             <p> 해당 일촌명으로 신청하셨습니다. </p>
             <p>
-              {data.requester}({data.requester_name}) - {userName}(
+              {data.requester}({data.requester_name}) - {data.receiver}(
               {data.receiver_name})
             </p>
           </div>
