@@ -4,9 +4,15 @@ import axiosInstance from "@/utils/axiosInstance";
 
 interface AddFriendModalProps {
   onClose: () => void;
+  requesterName: string;
+  receiverName: string;
 }
 
-const AddFriendModal = ({ onClose }: AddFriendModalProps) => {
+const AddFriendModal = ({
+  onClose,
+  requesterName,
+  receiverName,
+}: AddFriendModalProps) => {
   const [message, setMessage] = useState("일촌 신청합니다.");
   const [fromLabelType, setFromLabelType] = useState("직접입력");
   const [toLabelType, setToLabelType] = useState("직접입력");
@@ -18,9 +24,17 @@ const AddFriendModal = ({ onClose }: AddFriendModalProps) => {
   const handleSubmit = () => {
     if (!isMessageValid) return;
 
+    if (
+      (fromLabelType === "직접입력" && fromInput.trim() === "") ||
+      (toLabelType === "직접입력" && toInput.trim() === "")
+    ) {
+      alert("일촌명을 설정해 주세요.");
+      return;
+    }
+
     const payload = {
-      fromName: "김유빈",
-      toName: "차은우",
+      fromName: requesterName,
+      toName: receiverName,
       fromLabel: fromLabelType === "직접입력" ? fromInput : fromLabelType,
       toLabel: toLabelType === "직접입력" ? toInput : toLabelType,
       message,
@@ -56,7 +70,9 @@ const AddFriendModal = ({ onClose }: AddFriendModalProps) => {
             {/* 보낸이 */}
             <div className="AddFriendModal_sendtime">
               <span>보낸이 : </span>
-              <span className="AddFriendModal_sendtime_bluetext">김유빈</span>
+              <span className="AddFriendModal_sendtime_bluetext">
+                {requesterName}
+              </span>
               <span className="AddFriendModal_sendtime_graytext">
                 (2025.01.01)
               </span>
@@ -71,7 +87,7 @@ const AddFriendModal = ({ onClose }: AddFriendModalProps) => {
                 />
               </div>
               <div>
-                차은우님께
+                {receiverName}님께
                 <br />
                 <b>일촌</b>을 신청합니다.
               </div>
@@ -80,7 +96,7 @@ const AddFriendModal = ({ onClose }: AddFriendModalProps) => {
             {/* 라벨 설정 */}
             <div className="AddFriendModa_friendname_inputWrap">
               <div className="AddFriendModa_friendname">
-                <span>차은우</span>님을 김유빈님의{" "}
+                <span>{receiverName}</span>님을 {requesterName}님의{" "}
                 <input
                   type="text"
                   value={
@@ -104,7 +120,7 @@ const AddFriendModal = ({ onClose }: AddFriendModalProps) => {
               </div>
 
               <div className="AddFriendModa_friendname">
-                <span>김유빈</span>님을 차은우님의{" "}
+                <span>{requesterName}</span>님을 {receiverName}님의{" "}
                 <input
                   type="text"
                   value={toLabelType === "직접입력" ? toInput : toLabelType}
