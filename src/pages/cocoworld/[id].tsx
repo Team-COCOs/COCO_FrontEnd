@@ -1,5 +1,5 @@
+// pages/[id].tsx
 import CocoWorldPage from "@/features/CocoWorld";
-import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import Loading from "@/components/Loading";
 
@@ -7,41 +7,12 @@ const CocoWorld = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  if (!id) {
+  // 아직 id가 없는 경우 (라우터 준비 중)
+  if (!id || Array.isArray(id)) {
     return <Loading />;
   }
 
-  return <CocoWorldPage id={id as string} />;
+  return <CocoWorldPage id={id} />;
 };
 
 export default CocoWorld;
-// pages/[id].tsx
-// import CocoWorldPage from "@/features/CocoWorld";
-// import { GetServerSideProps } from "next";
-
-// interface Props {
-//   id: string;
-// }
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const { id } = context.params!;
-
-//   // id 유효성 검사
-//   if (typeof id !== "string") {
-//     return {
-//       notFound: true,
-//     };
-//   }
-
-//   return {
-//     props: {
-//       id,
-//     },
-//   };
-// };
-
-// const CocoWorld = ({ id }: Props) => {
-//   return <CocoWorldPage id={id} />;
-// };
-
-// export default CocoWorld;
