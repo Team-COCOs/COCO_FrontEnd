@@ -89,7 +89,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    checkLogin();
+    const token = Cookies.get("accessToken");
+    if (token) {
+      checkLogin();
+    }
   }, []);
 
   return (
