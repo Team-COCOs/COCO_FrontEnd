@@ -35,8 +35,6 @@ const Login = () => {
         localStorage.removeItem("saveEmail");
       }
 
-      console.log(data);
-
       axios
         .post(`${process.env.NEXT_PUBLIC_API_URL}/auth/localLogin`, data, {
           withCredentials: true,

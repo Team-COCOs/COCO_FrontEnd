@@ -52,7 +52,6 @@ interface profileProps {
 const Profile = ({ setHasToken }: profileProps) => {
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
-  const token = Cookie.get("accessToken");
   const { user } = useAuth();
   const userRole = user?.role;
 
@@ -86,7 +85,7 @@ const Profile = ({ setHasToken }: profileProps) => {
     };
 
     fetchUserData();
-  }, [token]);
+  }, [userRole]);
 
   if (!userData) return null;
 

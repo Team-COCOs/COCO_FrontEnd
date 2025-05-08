@@ -6,7 +6,6 @@ import { ModalStyle } from "./styled";
 import PayModal from "./PayModal";
 import ProfileModal from "./ProfileModal";
 import FriendModal from "./ProfileModal/FriendModal";
-import clsx from "clsx";
 
 interface ModalProps {
   type: string;
