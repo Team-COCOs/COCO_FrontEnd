@@ -66,7 +66,7 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
           <div className="Friend_nickName">
             <p> 해당 일촌명으로 신청하셨습니다. </p>
             <p>
-              {data.requester}({data.requester_name}) - {data.receiver}(
+              {data.requester.name}({data.requester_name}) - {data.receiver}(
               {data.receiver_name})
             </p>
           </div>
@@ -94,10 +94,11 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
       </div>
 
       <ShadowModal
-        type="error"
+        type="success"
         isOpen={isOpen}
         onClose={() => {
           setIsOpen(false);
+          onClose();
         }}
         message={message}
       />
