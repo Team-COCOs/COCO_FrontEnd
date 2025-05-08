@@ -3,39 +3,46 @@ import { useRouter } from "next/router";
 import { DiaryTitleStyled } from "./styled";
 import axiosInstance from "@/lib/axios";
 import { useAuth } from "@/context/AuthContext";
+import Loading from "@/components/Loading";
 
 interface Props {
   setIsOpen: (value: boolean) => void;
 }
 
-type FriendStatus = "pending" | "accepted" | "rejected" | "none";
-
 const DiaryTitle = ({ setIsOpen }: Props) => {
   const router = useRouter();
   const { id } = router.query;
   const { user } = useAuth();
-  const [friendStatus, setFriendStatus] = useState<FriendStatus>("none");
+  const [friendStatus, setFriendStatus] = useState<{
+    areFriends: boolean;
+    received: boolean;
+    requested: boolean;
+  } | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (!id || !user) return;
-
     const fetchFriendStatus = async () => {
-      // 자기 자신의 페이지면 상태 확인도 안 함
-      if (parseInt(id as string, 10) === user.id) return;
-
       try {
+        // 현재 로그인된 사용자의 일촌 상태 확인
         const response = await axiosInstance.get(`/friends/status/${id}`, {
-          withCredentials: true,
+          withCredentials: true, // 쿠키 포함
         });
-        setFriendStatus(response.data.status || "none");
+
+        setFriendStatus(response.data);
       } catch (error) {
-        console.error("일촌 상태 확인 실패:", error);
-        setFriendStatus("none");
+        console.error("일촌 상태 가져오기 실패:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchFriendStatus();
-  }, [id, user]);
+  }, [id]);
+
+  // 일촌 상태가 로딩 중일 때
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const handleClick = () => {
     setIsOpen(true);
@@ -48,14 +55,18 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
       <div>
         <div className="DiaryTitle_wrap">
           <div className="DiaryTitle_number_title">코코월드님의 미니홈피</div>
-          {!isOwnPage && friendStatus === "none" && (
-            <div
-              className="DiaryTitle_plus_friend dotumFont"
-              onClick={handleClick}
-            >
-              + 일촌맺기
-            </div>
-          )}
+          {!isOwnPage &&
+            friendStatus &&
+            !friendStatus.areFriends &&
+            !friendStatus.received &&
+            !friendStatus.requested && (
+              <div
+                className="DiaryTitle_plus_friend dotumFont"
+                onClick={handleClick}
+              >
+                + 일촌맺기
+              </div>
+            )}
         </div>
       </div>
     </DiaryTitleStyled>
