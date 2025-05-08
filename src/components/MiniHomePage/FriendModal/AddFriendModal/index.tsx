@@ -37,8 +37,10 @@ const AddFriendModal = ({
     const payload = {
       receiverId: Number(receiverUserId),
       message,
-      requester_name: requesterName,
-      receiver_name: receiverName,
+      requester: requesterName,
+      receiver: receiverName,
+      requesterLabel: fromLabelType === "직접입력" ? fromInput : fromLabelType,
+      receiverLabel: toLabelType === "직접입력" ? toInput : toLabelType,
     };
 
     console.log("전송 데이터:", payload);
