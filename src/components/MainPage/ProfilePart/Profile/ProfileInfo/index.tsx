@@ -69,6 +69,7 @@ ProfileInfoProps) => {
           : [
               {
                 id: 101,
+                requesterId: 11,
                 requester: "김도현",
                 coment: "우리 친구해요!",
                 myNickName: "뭘봐",
@@ -78,6 +79,7 @@ ProfileInfoProps) => {
               },
               {
                 id: 102,
+                requesterId: 11,
                 requester: "박지우",
                 coment: "우리 일촌해요!",
                 myNickName: "지우지우",

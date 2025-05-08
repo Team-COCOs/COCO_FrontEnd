@@ -1,5 +1,7 @@
+import axiosInstance from "@/lib/axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import ShadowModal from "../..";
 
 interface FriendModalProps {
   onClose: () => void;
@@ -8,7 +10,20 @@ interface FriendModalProps {
 }
 
 const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
-  console.log(userName);
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, serMessage] = useState("");
+
+  const frienRequest = async (type: string) => {
+    try {
+      const res = await axiosInstance.post(`/friends/${type}`, {
+        requesterId: data.requesterId,
+      });
+      serMessage(res.data.message);
+      setIsOpen(true);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <>
@@ -48,23 +63,42 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
           </div>
 
           <div className="Friend_nickName">
+            <p> 해당 일촌명으로 신청하셨습니다. </p>
             <p>
-              {" "}
-              {data.requester}
-              {data.nickName}{" "}
+              {data.requester}({data.nickName}) - {userName}({data.myNickName})
             </p>
           </div>
+          <b className="Friend_bold">일촌을 맺으시겠습니까?</b>
 
           <div className="Friend_coment">
             <textarea value={data.coment} readOnly></textarea>
           </div>
 
           <div className="Friend_btns">
-            <button className="Friend_btn">수락</button>
-            <button className="Friend_btn">거절</button>
+            <button
+              className="Friend_btn"
+              onClick={() => frienRequest("accept")}
+            >
+              수락
+            </button>
+            <button
+              className="Friend_btn"
+              onClick={() => frienRequest("reject")}
+            >
+              거절
+            </button>
           </div>
         </div>
       </div>
+
+      <ShadowModal
+        type="error"
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+        message={message}
+      />
     </>
   );
 };

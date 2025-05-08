@@ -9,7 +9,7 @@
 
 .friend_window {
   position: fixed;
-  top: 25% !important;
+  top: 15% !important;
   border: 2px solid black;
   background-color: white;
   display: flex;
@@ -154,4 +154,14 @@
   width: 90%;
   height: 70px;
   resize: none;
+}
+
+.Friend_nickName {
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+.Friend_bold {
+  font-size: 13px;
+  margin-bottom: 5px;
 }
