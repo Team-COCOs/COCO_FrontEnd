@@ -37,6 +37,8 @@ const AddFriendModal = ({
     const payload = {
       receiverId: Number(receiverUserId),
       message,
+      requester_name: requesterName,
+      receiver_name: receiverName,
     };
 
     console.log("전송 데이터:", payload);

@@ -4,6 +4,7 @@ import { DiaryTitleStyled } from "./styled";
 import axiosInstance from "@/lib/axios";
 import { useAuth } from "@/context/AuthContext";
 import Loading from "@/components/Loading";
+import axios from "axios";
 
 interface Props {
   setIsOpen: (value: boolean) => void;
@@ -24,9 +25,7 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
     const fetchFriendStatus = async () => {
       try {
         // 현재 로그인된 사용자의 일촌 상태 확인
-        const response = await axiosInstance.get(`/friends/status/${id}`, {
-          withCredentials: true, // 쿠키 포함
-        });
+        const response = await axiosInstance.get(`/friends/status/${id}`);
 
         setFriendStatus(response.data);
       } catch (error) {
@@ -55,7 +54,8 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
       <div>
         <div className="DiaryTitle_wrap">
           <div className="DiaryTitle_number_title">코코월드님의 미니홈피</div>
-          {!isOwnPage &&
+          {user &&
+            !isOwnPage &&
             friendStatus &&
             !friendStatus.areFriends &&
             !friendStatus.received &&
