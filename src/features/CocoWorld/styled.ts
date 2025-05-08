@@ -12,7 +12,7 @@ export const CocoWorldPageStyled = styled.div`
   }
   @media (min-width: 1281px) {
     &.CocoWorldPage_wrap {
-      max-width: 1440px;
+      max-width: 2560px;
     }
   }
   @media (max-width: 769px) {
