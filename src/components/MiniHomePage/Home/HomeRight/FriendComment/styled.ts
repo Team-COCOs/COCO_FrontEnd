@@ -66,6 +66,24 @@ export const FriendCommentStyled = styled.div`
       background-color: #f0f0f0;
     }
   }
+
+  .FriendComment_displayWrap {
+    font-size: 12.5px;
+    color: #4b4b4b;
+    border-bottom: 1px solid #ccc;
+    padding: 8px 0px;
+  }
+  .FriendComment_name_navytext {
+    color: rgb(58, 58, 223);
+    font-size: 12px;
+    font-weight: bolder;
+  }
+  .FriendComment_datetext {
+    font-size: 10px;
+    color: gray;
+    text-align: center;
+  }
+  // 반응형
   @media (max-width: 1024px) {
     .FriendComment_inputWrap {
       span {

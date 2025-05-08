@@ -1,13 +1,36 @@
 import { useState, useEffect } from "react";
 import { CocoWorldPageStyled } from "./styled";
 import { useRouter } from "next/router";
+// 미니홈피 투데이
 import HomeTodayTitle from "../../components/MiniHomePage/Home/HomeTodayTitle";
+// 미니홈피 이름
 import DiaryTitle from "../../components/MiniHomePage/Home/DiaryTitle";
+// 미니홈피 홈 왼쪽 오른쪽 컴포넌트
 import HomeLeft from "../../components/MiniHomePage/Home/HomeLeft";
 import HomeRight from "../../components/MiniHomePage/Home/HomeRight";
+// 미니홈피 탭
 import HomeTab from "../../components/MiniHomePage/Home/HomeTab";
+// 미니홈피 쥬크박스
 import HomeMusicRight from "@/components/MiniHomePage/Home/HomeMusicRight";
+// 미니홈피 프로필 컴포넌트
+import MiniHomeProfileLeft from "@/components/MiniHomePage/MiniHomeProfile/MiniHomeProfileLeft";
+import MiniHomeProfileRight from "@/components/MiniHomePage/MiniHomeProfile/MiniHomeProfileRight";
+// 미니홈피 다이어리 컴포넌트
+import DiaryLeft from "@/components/MiniHomePage/Diary/DiaryLeft";
+import DiaryRight from "@/components/MiniHomePage/Diary/DiaryRight";
+// 미니홈피 사진첩 컴포넌트
+import PhotoLeft from "@/components/MiniHomePage/Photo/PhotoLeft";
+import PhotoRight from "@/components/MiniHomePage/Photo/PhotoRight";
+// 방명록 컴포넌트
+import VisitorRight from "@/components/MiniHomePage/Visitor/VisitorRight";
+// 코코 컴포넌트
+import CocoRight from "@/components/MiniHomePage/Coco/CocoRight";
+// 관리 사진첩 컴포넌트
+import SettingLeft from "@/components/MiniHomePage/Setting/SettingLeft";
+import SettingRight from "@/components/MiniHomePage/Setting/SettingRight";
+// 일촌신청 모달
 import FriendModal from "@/components/MiniHomePage/FriendModal";
+// 로딩 중
 import Loading from "@/components/Loading";
 import axiosInstance from "@/lib/axios";
 
@@ -81,6 +104,14 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                         activeTab === "Coco" ||
                         activeTab === "Visitor" ? (
                           <HomeLeft />
+                        ) : activeTab === "Profile" ? (
+                          <MiniHomeProfileLeft />
+                        ) : activeTab === "Diary" ? (
+                          <DiaryLeft />
+                        ) : activeTab === "Photo" ? (
+                          <PhotoLeft />
+                        ) : activeTab === "Setting" ? (
+                          <SettingLeft />
                         ) : (
                           ""
                         )}
@@ -112,6 +143,18 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                             activeTab={activeTab}
                             onTabClick={handleTabClick}
                           />
+                        ) : activeTab === "Profile" ? (
+                          <MiniHomeProfileRight />
+                        ) : activeTab === "Diary" ? (
+                          <DiaryRight />
+                        ) : activeTab === "Photo" ? (
+                          <PhotoRight />
+                        ) : activeTab === "Visitor" ? (
+                          <VisitorRight />
+                        ) : activeTab === "Coco" ? (
+                          <CocoRight />
+                        ) : activeTab === "Setting" ? (
+                          <SettingRight />
                         ) : (
                           ""
                         )}

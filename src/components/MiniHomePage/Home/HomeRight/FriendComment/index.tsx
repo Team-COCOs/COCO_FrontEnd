@@ -3,9 +3,19 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
+import axios from "axios";
+interface FriendCommentData {
+  content: string;
+  createdAt: string;
+  authorName: string;
+  hostName: string;
+}
 
 const FriendComment = () => {
   const [comment, setComment] = useState("");
+  const [friendComment, setFriendComment] = useState<FriendCommentData | null>(
+    null
+  );
   const { user } = useAuth();
   const router = useRouter();
   const hostId = Number(router.query.id);
@@ -22,6 +32,8 @@ const FriendComment = () => {
 
       console.log("등록 성공:", response.data);
       setComment("");
+
+      fetchFriendComment();
     } catch (error) {
       console.error("등록 실패:", error);
     }
@@ -29,6 +41,25 @@ const FriendComment = () => {
     console.log("제출:", comment);
     setComment("");
   };
+
+  // 일촌평 가져오기
+  const fetchFriendComment = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/friend-comments/${hostId}`,
+        {
+          withCredentials: true,
+        }
+      );
+      setFriendComment(res.data.data);
+    } catch (error) {
+      console.error("일촌평 불러오기 실패", error);
+    }
+  };
+
+  useEffect(() => {
+    if (hostId) fetchFriendComment();
+  }, [hostId]);
 
   return (
     <FriendCommentStyled>
@@ -53,6 +84,22 @@ const FriendComment = () => {
           </div>
         </div>
       </div>
+      {friendComment && (
+        <div className="FriendComment_displayWrap dotumFont">
+          <p>
+            •&nbsp;{friendComment.content}&nbsp;({friendComment.authorName}
+            <span className="FriendComment_name_navytext">
+              {" "}
+              {friendComment.hostName}
+            </span>
+            )
+            <span className="FriendComment_datetext">
+              {" "}
+              {friendComment.createdAt}
+            </span>
+          </p>
+        </div>
+      )}
     </FriendCommentStyled>
   );
 };
