@@ -5,7 +5,7 @@ const CocoRight = () => {
   return (
     <CocoRightStyled>
       <div className="CocoRight_wrap">
-        <div className="CocoRight_componentWrap">코코 오른쪽</div>
+        <div className="CocoRight_component_wrap">코코 오른쪽</div>
       </div>
     </CocoRightStyled>
   );

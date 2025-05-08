@@ -5,7 +5,7 @@ const PhotoRight = () => {
   return (
     <PhotoRightStyled>
       <div className="PhotoRight_wrap">
-        <div className="PhotoRight_componentWrap">사진첩 오른쪽</div>
+        <div className="PhotoRight_component_wrap">사진첩 오른쪽</div>
       </div>
     </PhotoRightStyled>
   );
