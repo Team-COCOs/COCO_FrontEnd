@@ -145,3 +145,13 @@
   background-color: #ffffff;
   min-width: 0px;
 }
+
+.Friend_coment {
+  width: 100%;
+}
+
+.Friend_coment textarea {
+  width: 90%;
+  height: 70px;
+  resize: none;
+}

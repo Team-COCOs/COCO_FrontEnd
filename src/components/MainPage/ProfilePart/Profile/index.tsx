@@ -89,20 +89,6 @@ const Profile = ({ setHasToken }: profileProps) => {
 
   if (!userData) return null;
 
-  // const userData = {
-  //   name: "이수정",
-  //   todayVisit: 34,
-  //   newPost: 1,
-  //   friendRequest: 2,
-  //   avatar: "/avatarImg/woman_avatar1.png",
-  //   dotoris: 200,
-  //   friends: [
-  //     { id: 1, name: "김지은" },
-  //     { id: 2, name: "박민수" },
-  //     { id: 3, name: "최다혜" },
-  //   ],
-  // };
-
   return (
     <ProfileStyle className={clsx("Profile_wrap")}>
       <div className="Profile_header">

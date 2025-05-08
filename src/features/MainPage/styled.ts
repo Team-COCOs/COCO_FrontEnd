@@ -6,7 +6,7 @@ export const MainPageStyled = styled.div`
     flex-direction: column;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 10px 20px 0 20px;
+    padding: 10px 25px 0 25px;
 
     .MainPage_container {
       display: flex;

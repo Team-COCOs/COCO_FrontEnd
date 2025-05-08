@@ -1,13 +1,15 @@
 import Image from "next/image";
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 interface FriendModalProps {
   onClose: () => void;
   data: any;
+  userName: string;
 }
 
-const FriendModal = ({ onClose, data }: FriendModalProps) => {
+const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
+  console.log(userName);
+
   return (
     <>
       <div className="title-bar">
@@ -38,9 +40,23 @@ const FriendModal = ({ onClose, data }: FriendModalProps) => {
               <Image src={data.profileImg} alt="friend image" fill />
             </div>
             <div className="Friend_texts">
-              <p>"{data.requester}"님께서 일촌맺기를 희망합니다.</p>
+              <p>
+                "{data.requester}"님께서 "{userName}"님과 일촌맺기를 희망합니다.
+              </p>
               <p>일촌을 맺으시겠습니까?</p>
             </div>
+          </div>
+
+          <div className="Friend_nickName">
+            <p>
+              {" "}
+              {data.requester}
+              {data.nickName}{" "}
+            </p>
+          </div>
+
+          <div className="Friend_coment">
+            <textarea value={data.coment} readOnly></textarea>
           </div>
 
           <div className="Friend_btns">

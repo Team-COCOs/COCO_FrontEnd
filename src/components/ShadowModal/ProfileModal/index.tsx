@@ -5,9 +5,10 @@ interface ProfileModalProps {
   onClose: () => void;
   data: any;
   type: string;
+  userName: string;
 }
 
-const ProfileModal = ({ onClose, data, type }: ProfileModalProps) => {
+const ProfileModal = ({ onClose, data, type, userName }: ProfileModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [reqData, setReqData] = useState<any>(null);
 
@@ -62,6 +63,7 @@ const ProfileModal = ({ onClose, data, type }: ProfileModalProps) => {
             onClose();
           }}
           data={reqData}
+          userName={userName}
         />
       )}
     </>

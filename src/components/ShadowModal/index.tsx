@@ -14,9 +14,17 @@ interface ModalProps {
   onClose: () => void;
   message?: string;
   data?: any;
+  userName?: string;
 }
 
-const ShadowModal = ({ type, isOpen, onClose, message, data }: ModalProps) => {
+const ShadowModal = ({
+  type,
+  isOpen,
+  onClose,
+  message,
+  data,
+  userName,
+}: ModalProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,9 +63,18 @@ const ShadowModal = ({ type, isOpen, onClose, message, data }: ModalProps) => {
     } else if (type === "pay") {
       root.render(<PayModal onClose={onClose} />);
     } else if (type === "friendReq") {
-      root.render(<FriendModal onClose={onClose} data={data} />);
+      root.render(
+        <FriendModal onClose={onClose} data={data} userName={userName!} />
+      );
     } else {
-      root.render(<ProfileModal onClose={onClose} data={data} type={type} />);
+      root.render(
+        <ProfileModal
+          onClose={onClose}
+          data={data}
+          type={type}
+          userName={userName!}
+        />
+      );
     }
 
     return () => {
