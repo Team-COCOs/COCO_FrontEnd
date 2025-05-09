@@ -1,7 +1,6 @@
 import { HomeFriendsStyled } from "./styled";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
@@ -9,17 +8,17 @@ import Loading from "@/components/Loading";
 const HomeFriends = () => {
   const router = useRouter();
   const { id } = router.query;
-  const user = useSelector((state: RootState) => state?.user.user);
-  console.log(user?.id, "id");
+  const { user } = useAuth();
   const [profile, setProfile] = useState<any>(null);
 
+  console.log(Number(user?.id) === Number(id), "user?");
   useEffect(() => {
     const homepiProfile = async () => {
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/history/${id}`
         );
-        console.log("응답 데이터:", response.data);
+
         setProfile(response.data);
       } catch (err: any) {
         if (err.response?.status === 404) {
@@ -55,7 +54,9 @@ const HomeFriends = () => {
         <div className="HomeFriends_email">{profile.email}</div>
         <select onChange={handleFriendSelect}>
           <option>파도타기</option>
-          <option value={user?.id}>내 홈피 가기</option>
+          {user?.id && Number(user?.id) !== Number(id) && (
+            <option value={user?.id}>내 홈피 가기</option>
+          )}
           {profile.friends?.map((friend: any) => (
             <option key={friend.userId} value={friend.userId}>
               {friend.myNaming} ({friend.friend})
