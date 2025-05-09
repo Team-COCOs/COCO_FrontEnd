@@ -22,7 +22,10 @@ const FriendComment = () => {
 
   const handleSubmit = async () => {
     if (!comment.trim()) return;
-    if (!user) return;
+    if (!user) {
+      alert("로그인 후 일촌평을 작성하실 수 있습니다.");
+      return;
+    }
 
     if (user.id === hostId) {
       alert("자기 자신에게는 일촌평을 남길 수 없습니다.");
