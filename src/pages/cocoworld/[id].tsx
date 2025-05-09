@@ -4,21 +4,38 @@ import { useRouter } from "next/router";
 import Loading from "@/components/Loading";
 import { useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const CocoWorld = () => {
   const router = useRouter();
   const { id } = router.query;
   useEffect(() => {
-    // 방문자 수 카운트 API 요청
     const countVisit = async () => {
+      if (!id || Array.isArray(id)) return;
+
       try {
-        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/visit`, {
-          hostId: Number(id),
-        });
+        const token = Cookies.get("accessToken");
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/visit/${
+          token ? "auth" : "guest"
+        }`;
+
+        await axios.post(
+          url,
+          { hostId: Number(id) },
+          token
+            ? {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true,
+              }
+            : undefined
+        );
       } catch (err) {
         console.error("방문자 수 기록 실패:", err);
       }
     };
+
     countVisit();
   }, [id]);
 
