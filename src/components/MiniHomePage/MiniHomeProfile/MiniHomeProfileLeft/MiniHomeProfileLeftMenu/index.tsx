@@ -5,9 +5,11 @@ import { MiniHomeProfileLeftMenuStyled } from "./styled";
 const MiniHomeProfileLeftMenu = ({
   menuData,
   language = "ko", // 기본값을 "ko"로 설정
+  onMenuSelect,
 }: {
   menuData: any;
   language?: string;
+  onMenuSelect: (menu: { type?: string; title: string }) => void;
 }) => {
   const selectedMenuData = menuData[language] || menuData.ko;
 
@@ -21,7 +23,11 @@ const MiniHomeProfileLeftMenu = ({
         {hasChildren && (
           <ul>
             {menu.children.map((child: any) => (
-              <div className="MiniHomeProfileLeftMenu_dotted_wrap">
+              <div
+                className="MiniHomeProfileLeftMenu_dotted_wrap"
+                key={child.title}
+                onClick={() => onMenuSelect(child)}
+              >
                 <span
                   style={{
                     borderLeft: "2px dotted #bbb",
@@ -29,7 +35,7 @@ const MiniHomeProfileLeftMenu = ({
                     padding: "0 4px",
                   }}
                 ></span>
-                <li key={child.title}>&nbsp;{child.title}</li>
+                <li>&nbsp;{child.title}</li>
               </div>
             ))}
           </ul>
@@ -48,7 +54,7 @@ const MiniHomeProfileLeftMenu = ({
               return renderMenuItem(item);
             }
             return (
-              <li key={item}>
+              <li key={item} onClick={() => onMenuSelect({ title: item })}>
                 <span className="dot-symbol">◉</span>
                 {item}
               </li>

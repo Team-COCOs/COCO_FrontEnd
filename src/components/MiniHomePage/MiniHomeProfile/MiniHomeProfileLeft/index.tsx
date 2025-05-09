@@ -3,7 +3,11 @@ import { useState } from "react";
 import MiniHomeProfileLeftMenu from "./MiniHomeProfileLeftMenu";
 import { profileLeftTabs } from "@/constants/profileLeftTabs";
 
-const MiniHomeProfileLeft = () => {
+const MiniHomeProfileLeft = ({
+  setProfileSelectedMenu,
+}: {
+  setProfileSelectedMenu: (menu: { type?: string; title: string }) => void;
+}) => {
   const [language, setLanguage] = useState("ko");
 
   const toggleLanguage = () => {
@@ -17,6 +21,7 @@ const MiniHomeProfileLeft = () => {
           <MiniHomeProfileLeftMenu
             menuData={profileLeftTabs}
             language={language}
+            onMenuSelect={setProfileSelectedMenu}
           />
         </div>
       </div>

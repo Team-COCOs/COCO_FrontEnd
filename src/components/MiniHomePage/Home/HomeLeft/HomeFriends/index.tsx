@@ -48,7 +48,7 @@ const HomeFriends = () => {
         <div className="HomeFriends_namebox Gulim">
           <div className="HomeFriends_name">{profile.name}</div>
           <div className="HomeFriends_gender">
-            {profile.gender === "man" ? "♂" : "♀"}
+            {profile.gender === "man" ? "(♂)" : "(♀)"}
           </div>
         </div>
         <div className="HomeFriends_email">{profile.email}</div>

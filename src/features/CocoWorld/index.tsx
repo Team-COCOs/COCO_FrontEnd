@@ -54,6 +54,11 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
   const handleTabClick = (tab: string) => {
     setActiveTab(tab);
   };
+  // 프로필 메뉴 탭 관리
+  const [profileSelectedMenu, setProfileSelectedMenu] = useState<{
+    type?: string;
+    title: string;
+  } | null>(null);
 
   // 페이지가 처음 로드될 때 로딩 상태 종료
   useEffect(() => {
@@ -105,7 +110,9 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                         activeTab === "Visitor" ? (
                           <HomeLeft />
                         ) : activeTab === "Profile" ? (
-                          <MiniHomeProfileLeft />
+                          <MiniHomeProfileLeft
+                            setProfileSelectedMenu={setProfileSelectedMenu}
+                          />
                         ) : activeTab === "Diary" ? (
                           <DiaryLeft />
                         ) : activeTab === "Photo" ? (
@@ -144,7 +151,9 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                             onTabClick={handleTabClick}
                           />
                         ) : activeTab === "Profile" ? (
-                          <MiniHomeProfileRight />
+                          <MiniHomeProfileRight
+                            profileSelectedMenu={profileSelectedMenu}
+                          />
                         ) : activeTab === "Diary" ? (
                           <DiaryRight />
                         ) : activeTab === "Photo" ? (
