@@ -22,13 +22,17 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (!id) return;
+    if (!user || !id || isOwnPage) {
+      setIsLoading(false); // 내 페이지거나 로그인 안했으면 굳이 요청 안함
+      return;
+    }
     const fetchFriendStatus = async () => {
       try {
         // 현재 로그인된 사용자의 일촌 상태 확인
         const response = await axiosInstance.get(`/friends/status/${id}`);
 
         setFriendStatus(response.data);
+        console.log(response.data, "머야ㅑㅑ");
       } catch (error: any) {
         if (error.response?.status === 401) {
           setFriendStatus(null);
@@ -60,23 +64,30 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
         <div className="DiaryTitle_wrap">
           <div className="DiaryTitle_number_title">코코월드님의 미니홈피</div>
           {!isOwnPage &&
-            friendStatus &&
-            !friendStatus.areFriends &&
-            !friendStatus.received &&
-            !friendStatus.requested && (
+            (!user ? (
+              // 로그인하지 않은 사용자 → 버튼 보여줌
               <div
                 className="DiaryTitle_plus_friend dotumFont"
                 onClick={() => {
-                  if (!user) {
-                    alert("로그인이 필요합니다.");
-                    return;
-                  }
-                  handleClick();
+                  alert("로그인이 필요합니다.");
                 }}
               >
                 + 일촌맺기
               </div>
-            )}
+            ) : (
+              // 로그인한 사용자이면서 친구 상태 체크
+              friendStatus &&
+              !friendStatus.areFriends &&
+              !friendStatus.received &&
+              !friendStatus.requested && (
+                <div
+                  className="DiaryTitle_plus_friend dotumFont"
+                  onClick={handleClick}
+                >
+                  + 일촌맺기
+                </div>
+              )
+            ))}
         </div>
       </div>
     </DiaryTitleStyled>
