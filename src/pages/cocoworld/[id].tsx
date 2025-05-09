@@ -8,11 +8,6 @@ import axios from "axios";
 const CocoWorld = () => {
   const router = useRouter();
   const { id } = router.query;
-
-  // 아직 id가 없는 경우 (라우터 준비 중)
-  if (!id || Array.isArray(id)) {
-    return <Loading />;
-  }
   useEffect(() => {
     // 방문자 수 카운트 API 요청
     const countVisit = async () => {
@@ -24,11 +19,15 @@ const CocoWorld = () => {
         console.error("방문자 수 기록 실패:", err);
       }
     };
-
     countVisit();
   }, [id]);
 
-  return <CocoWorldPage id={id} />;
+  // 아직 id가 없는 경우 (라우터 준비 중)
+  if (!id || Array.isArray(id)) {
+    return <Loading />;
+  } else {
+    return <CocoWorldPage id={id} />;
+  }
 };
 
 export default CocoWorld;
