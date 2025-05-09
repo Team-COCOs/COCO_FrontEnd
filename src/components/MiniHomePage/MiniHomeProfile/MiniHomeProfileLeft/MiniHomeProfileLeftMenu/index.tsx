@@ -15,15 +15,22 @@ const MiniHomeProfileLeftMenu = ({
     const hasChildren = menu.children && menu.children.length > 0;
 
     return (
-      <li
-        key={menu.title}
-        className={hasChildren ? "has-children" : "none-children"}
-      >
+      <li key={menu.title} className={hasChildren ? "has-children" : ""}>
+        <span className="dot-symbol">◉</span>
         {menu.title}
         {hasChildren && (
           <ul>
             {menu.children.map((child: any) => (
-              <li key={child.title}>{child.title}</li>
+              <div className="MiniHomeProfileLeftMenu_dotted_wrap">
+                <span
+                  style={{
+                    borderLeft: "2px dotted #bbb",
+                    borderBottom: "2px dotted #bbb",
+                    padding: "0 5px",
+                  }}
+                ></span>
+                <li key={child.title}>{child.title}</li>
+              </div>
             ))}
           </ul>
         )}
@@ -40,7 +47,12 @@ const MiniHomeProfileLeftMenu = ({
             if (item.title && item.children) {
               return renderMenuItem(item);
             }
-            return <li key={item}>{item}</li>;
+            return (
+              <li key={item}>
+                <span className="dot-symbol">◉</span>
+                {item}
+              </li>
+            );
           })}
         </ul>
       </div>

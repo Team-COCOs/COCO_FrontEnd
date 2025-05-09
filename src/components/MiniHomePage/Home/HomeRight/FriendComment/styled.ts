@@ -160,4 +160,22 @@ export const FriendCommentStyled = styled.div`
     opacity: 0.5;
     cursor: not-allowed;
   }
+  .FriendComment_displayWrap {
+    padding: 5px 0;
+  }
+
+  .FriendComment_contentRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .FriendComment_delete {
+    color: gray;
+    cursor: pointer;
+    margin-left: 12px;
+    white-space: nowrap;
+    padding-right: 8px;
+    font-size: 10px;
+  }
 `;

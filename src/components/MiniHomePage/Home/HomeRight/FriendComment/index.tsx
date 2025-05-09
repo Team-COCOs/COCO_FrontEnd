@@ -13,9 +13,8 @@ interface FriendCommentData {
 
 const FriendComment = () => {
   const [comment, setComment] = useState("");
-  const [friendComment, setFriendComment] = useState<FriendCommentData | null>(
-    null
-  );
+  const [friendComments, setFriendComments] =
+    useState<FriendCommentData | null>(null);
   const { user } = useAuth();
   const router = useRouter();
   const hostId = Number(router.query.id);
@@ -39,7 +38,7 @@ const FriendComment = () => {
       });
       setComment("");
 
-      fetchFriendComment();
+      fetchFriendComments();
     } catch (error: any) {
       if (axios.isAxiosError(error)) {
         const status = error.response?.status;
@@ -59,7 +58,7 @@ const FriendComment = () => {
   };
 
   // 일촌평 가져오기
-  const fetchFriendComment = async () => {
+  const fetchFriendComments = async () => {
     try {
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/friend-comments/${hostId}`,
@@ -68,7 +67,7 @@ const FriendComment = () => {
         }
       );
       console.log(res.data.data);
-      setFriendComment(res.data.data);
+      setFriendComments(res.data.data);
     } catch (error: any) {
       if (error.response?.status !== 401) {
         console.error("일촌평 불러오기 실패", error);
@@ -76,8 +75,29 @@ const FriendComment = () => {
     }
   };
 
+  // 댓글 삭제
+  const handleDelete = async (commentId: number) => {
+    const confirmed = window.confirm("정말로 이 일촌평을 삭제하시겠습니까?");
+    if (!confirmed) return;
+
+    try {
+      await axiosInstance.delete(`/friend-comments/${hostId}`, {
+        data: { commentId },
+      });
+      alert("일촌평이 삭제되었습니다.");
+      fetchFriendComments(); // 삭제 후 댓글 목록을 갱신
+    } catch (error: any) {
+      if (error.response?.status !== 401) {
+        alert("로그인이 필요합니다.");
+      } else {
+        alert("일촌평 삭제 중 오류가 발생했습니다.");
+      }
+      console.error("삭제 중 오류 발생", error);
+    }
+  };
+
   useEffect(() => {
-    if (hostId) fetchFriendComment();
+    if (hostId) fetchFriendComments();
   }, [hostId]);
 
   return (
@@ -103,20 +123,40 @@ const FriendComment = () => {
           </div>
         </div>
       </div>
-      {friendComment && (
+      {friendComments && (
         <div className="FriendComment_displayWrap dotumFont">
-          <p>
-            •&nbsp;{friendComment.content}&nbsp;({friendComment.authorName}
-            <span className="FriendComment_name_navytext">
-              {" "}
-              {friendComment.authorRealName}
-            </span>
-            )
-            <span className="FriendComment_datetext">
-              {" "}
-              {friendComment.createdAt}
-            </span>
-          </p>
+          {Array.isArray(friendComments) && friendComments.length > 0 ? (
+            <div className="FriendComment_displayWrap dotumFont">
+              {friendComments.map((friendComment) => (
+                <div
+                  key={friendComment.id}
+                  className="FriendComment_contentRow"
+                >
+                  <p>
+                    •&nbsp;{friendComment.content}&nbsp;(
+                    {friendComment.authorName}
+                    <span className="FriendComment_name_navytext">
+                      {" "}
+                      {friendComment.authorRealName}
+                    </span>
+                    )
+                    <span className="FriendComment_datetext">
+                      {" "}
+                      {friendComment.createdAt}
+                    </span>
+                  </p>
+                  <p
+                    className="FriendComment_delete pixelFont"
+                    onClick={() => handleDelete(friendComment.id)}
+                  >
+                    삭제
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>일촌평이 없습니다.</p>
+          )}
         </div>
       )}
     </FriendCommentStyled>

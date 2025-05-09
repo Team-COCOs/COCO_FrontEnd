@@ -12,7 +12,7 @@ const MiniHomeProfileLeft = () => {
 
   return (
     <MiniHomeProfileLeftStyled>
-      <div className="MiniHomeProfileLeft_wrap">
+      <div className="MiniHomeProfileLeft_wrap Gulim">
         <div className="MiniHomeProfileLeft_componentWrap">
           <MiniHomeProfileLeftMenu
             menuData={profileLeftTabs}
