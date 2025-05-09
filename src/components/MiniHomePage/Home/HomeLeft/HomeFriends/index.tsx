@@ -1,10 +1,34 @@
 import { HomeFriendsStyled } from "./styled";
-import { useEffect } from "react";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import axios from "axios";
+import { useEffect } from "react";
 
 const HomeFriends = () => {
+  const router = useRouter();
+  const { id } = router.query;
   const user = useSelector((state: RootState) => state.user.user);
+
+  useEffect(() => {
+    const homepiProfile = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/history`,
+          {
+            params: {
+              hostId: Number(id),
+            },
+          }
+        );
+        console.log("응답 데이터:", response.data);
+      } catch (err) {
+        console.error("방문자 수 기록 실패:", err);
+      }
+    };
+
+    homepiProfile();
+  }, [id]);
 
   return (
     <HomeFriendsStyled>
