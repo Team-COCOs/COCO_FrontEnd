@@ -14,12 +14,7 @@ const HomeFriends = () => {
     const homepiProfile = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/history`,
-          {
-            params: {
-              hostId: Number(id),
-            },
-          }
+          `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/history/${id}`
         );
         console.log("응답 데이터:", response.data);
       } catch (err) {
