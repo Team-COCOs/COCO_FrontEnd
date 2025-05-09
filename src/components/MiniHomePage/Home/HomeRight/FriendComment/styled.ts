@@ -77,6 +77,7 @@ export const FriendCommentStyled = styled.div`
     color: rgb(58, 58, 223);
     font-size: 12px;
     font-weight: bolder;
+    cursor: pointer;
   }
   .FriendComment_datetext {
     font-size: 10px;

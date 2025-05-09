@@ -102,6 +102,9 @@ const FriendComment = () => {
     if (hostId) fetchFriendComments();
   }, [hostId]);
 
+  const gofriendHome = (id: string | number) => {
+    router.push(`/cocoworld/${id}`);
+  };
   return (
     <FriendCommentStyled>
       <div className="FriendComment_wrap">
@@ -137,7 +140,10 @@ const FriendComment = () => {
                   <p>
                     •&nbsp;{friendComment.content}&nbsp;(
                     {friendComment.authorName}
-                    <span className="FriendComment_name_navytext">
+                    <span
+                      className="FriendComment_name_navytext"
+                      onClick={() => gofriendHome(friendComment.authorId)}
+                    >
                       {" "}
                       {friendComment.authorRealName}
                     </span>
