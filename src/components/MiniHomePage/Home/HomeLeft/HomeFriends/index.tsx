@@ -9,7 +9,8 @@ import Loading from "@/components/Loading";
 const HomeFriends = () => {
   const router = useRouter();
   const { id } = router.query;
-  const user = useSelector((state: RootState) => state.user.user);
+  const user = useSelector((state: RootState) => state?.user.user);
+  console.log(user?.id, "id");
   const [profile, setProfile] = useState<any>(null);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const HomeFriends = () => {
         <div className="HomeFriends_email">{profile.email}</div>
         <select onChange={handleFriendSelect}>
           <option>파도타기</option>
-          <option>내 홈피 가기</option>
+          <option value={user?.id}>내 홈피 가기</option>
           {profile.friends?.map((friend: any) => (
             <option key={friend.userId} value={friend.userId}>
               {friend.myNaming} ({friend.friend})
