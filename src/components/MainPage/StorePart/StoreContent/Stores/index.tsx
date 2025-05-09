@@ -56,9 +56,6 @@ const Stores = ({ currentItems }: StoresProps) => {
     setPlayingId(status ? id : null);
   };
 
-  console.log(currentItems);
-  console.log(currentItems.map((i) => i.preview_url));
-
   return (
     <StoresStyle className={clsx("Stores_wrap")}>
       <div className="Stores-grid">

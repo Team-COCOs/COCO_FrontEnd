@@ -188,3 +188,16 @@
   font-size: 13px;
   margin-bottom: 5px;
 }
+
+/* 빈 모달 */
+.newPost_emptyImg {
+  width: 200px;
+  height: 140px;
+}
+
+.Empty_img {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}

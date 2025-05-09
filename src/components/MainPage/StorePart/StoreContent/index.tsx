@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
 import Stores from "./Stores";
 import { fetchStoreItems } from "@/store/reducers/storeItemSlice";
+import EmptyPage from "@/components/EmptyPage";
 
 interface StoreItem {
   id: number;
@@ -110,7 +111,11 @@ const StoreContent = () => {
 
       <div className="Store_line"></div>
 
-      <Stores currentItems={currentItems} />
+      {currentItems.length === 0 ? (
+        <EmptyPage />
+      ) : (
+        <Stores currentItems={currentItems} />
+      )}
     </StoreStyle>
   );
 };

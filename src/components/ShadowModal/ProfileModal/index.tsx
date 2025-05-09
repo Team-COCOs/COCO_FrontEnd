@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ShadowModal from "..";
+import EmptyPage from "@/components/EmptyPage";
 
 interface ProfileModalProps {
   onClose: () => void;
@@ -31,26 +32,32 @@ const ProfileModal = ({ onClose, data, type, userName }: ProfileModalProps) => {
       </div>
       <div className="window-body">
         <div className="pixelFont">
-          {type === "newPost"
-            ? data.map((d: any) => (
-                <div key={d.id} className="newPost_div">
-                  <div className="newPost_texts">
-                    <div className="newPost_title">{d.title}</div>
-                    <div className="newPost_content">{d.content}</div>
-                  </div>
-                  <div className="newPost_date">{d.createdAt}</div>
+          {data.length === 0 ? (
+            <div className="newPost_emptyImg">
+              <EmptyPage />
+            </div>
+          ) : type === "newPost" ? (
+            data.map((d: any) => (
+              <div key={d.id} className="newPost_div">
+                <div className="newPost_texts">
+                  <div className="newPost_title">{d.title}</div>
+                  <div className="newPost_content">{d.content}</div>
                 </div>
-              ))
-            : data.map((d: any) => (
-                <div
-                  key={d.id}
-                  className="newPost_div"
-                  onClick={() => newModal(d)}
-                >
-                  <div className="newPost_title">{d.requester}</div>
-                  <div className="newPost_date">{d.receivedAt}</div>
-                </div>
-              ))}
+                <div className="newPost_date">{d.createdAt}</div>
+              </div>
+            ))
+          ) : (
+            data.map((d: any) => (
+              <div
+                key={d.id}
+                className="newPost_div"
+                onClick={() => newModal(d)}
+              >
+                <div className="newPost_title">{d.requester}</div>
+                <div className="newPost_date">{d.receivedAt}</div>
+              </div>
+            ))
+          )}
         </div>
       </div>
 

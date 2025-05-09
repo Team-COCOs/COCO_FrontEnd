@@ -39,7 +39,7 @@ const ProfileInfo = ({
   return (
     <ProfileInfoStyle
       className={clsx("Profile_infos")}
-      onClick={() => setIsOpen(true)}
+      onClick={label !== "오늘방문자" ? () => setIsOpen(true) : undefined}
     >
       <span className="Profile_infoText">{label}</span>
       <span className={clsx(value > 0 && showBadge && "Profile_newText")}>
