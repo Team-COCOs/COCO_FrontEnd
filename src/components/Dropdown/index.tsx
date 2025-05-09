@@ -11,8 +11,6 @@ interface DropdownProps {
 const Dropdown = ({ label, options }: DropdownProps) => {
   const router = useRouter();
 
-  console.log("dd", options);
-
   // select 여닫기
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLabel, setSelectedLabel] = useState("바로가기");

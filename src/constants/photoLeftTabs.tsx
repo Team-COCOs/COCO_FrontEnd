@@ -1,4 +1,11 @@
-export const treeDatas = [
+interface TreeNode {
+  key: string;
+  title: string;
+  isLeaf: boolean;
+  children?: any;
+}
+
+export const treeDatas: TreeNode[] = [
   {
     key: "0-0-1",
     title: "소설",

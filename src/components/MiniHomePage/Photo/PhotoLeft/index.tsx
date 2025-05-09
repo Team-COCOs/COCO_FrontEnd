@@ -4,9 +4,6 @@ import Tree from "rc-tree";
 import "rc-tree/assets/index.css";
 import axiosInstance from "@/lib/axios";
 
-import { treeDatas } from "@/constants/photoLeftTabs";
-
-// 트리 데이터의 타입을 명확히 정의
 interface TreeNode {
   key: string;
   title: string;
@@ -16,60 +13,73 @@ interface TreeNode {
 
 const PhotoLeft = () => {
   const [treeData, setTreeData] = useState<TreeNode[]>([]);
+  const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
   const [defaultExpandedKeys] = useState<string[]>(["0-0-1"]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState<string>("");
 
-  // 트리 데이터 변환 함수
-  const buildTree = (data: any[]): TreeNode[] => {
-    return data.map((item) => ({
-      key: item.key,
-      title: item.title,
-      isLeaf: item.isLeaf || false,
-      children: item.children ? buildTree(item.children) : [],
-    }));
+  // ✅ 노드 제목 수정 (재귀)
+  const editNodeByKey = (
+    nodes: TreeNode[],
+    key: string,
+    newTitle: string
+  ): TreeNode[] => {
+    return nodes.map((node) => {
+      if (node.key === key) {
+        return { ...node, title: newTitle };
+      }
+      if (node.children) {
+        return {
+          ...node,
+          children: editNodeByKey(node.children, key, newTitle),
+        };
+      }
+      return node;
+    });
   };
 
-  useEffect(() => {
-    axiosInstance
-      .get("/getTree")
-      .then((res) => {
-        console.log("트리 데이터 : ", res.data);
-        const tree = buildTree(res.data); // 받은 데이터를 트리 구조로 변환
-        setTreeData(tree); // 상태 업데이트
-      })
-      .catch((e) => {
-        console.log(e);
+  // ✅ 노드 삭제 (재귀)
+  const deleteNodeByKey = (nodes: TreeNode[], key: string): TreeNode[] => {
+    return nodes
+      .filter((node) => node.key !== key)
+      .map((node) => {
+        if (node.children) {
+          return { ...node, children: deleteNodeByKey(node.children, key) };
+        }
+        return node;
       });
-  }, []);
+  };
 
-  // 트리에서 항목을 추가, 수정, 삭제하는 함수
-  const handleEdit = (action: string, node: TreeNode) => {
-    const updatedTreeData = [...treeData];
+  const handleEdit = (action: string) => {
+    let updatedTreeData = [...treeData];
 
     if (action === "add") {
-      // 새 항목 추가
-      updatedTreeData.push({ key: node.key, title: node.title, isLeaf: false });
-    } else if (action === "edit") {
-      // 항목 수정
-      const nodeIndex = updatedTreeData.findIndex(
-        (item) => item.key === node.key
+      const newKey = `new-${Math.random()}`;
+      const newNode: TreeNode = {
+        key: newKey,
+        title: "새 폴더",
+        isLeaf: false,
+        children: [],
+      };
+      updatedTreeData.push(newNode);
+    } else if (action === "edit" && checkedKeys.length === 1) {
+      updatedTreeData = editNodeByKey(
+        updatedTreeData,
+        checkedKeys[0],
+        editTitle
       );
-      if (nodeIndex > -1) {
-        updatedTreeData[nodeIndex] = { ...updatedTreeData[nodeIndex], ...node };
-      }
     } else if (action === "delete") {
-      // 항목 삭제
-      const nodeIndex = updatedTreeData.findIndex(
-        (item) => item.key === node.key
-      );
-      if (nodeIndex > -1) {
-        updatedTreeData.splice(nodeIndex, 1);
-      }
+      checkedKeys.forEach((key) => {
+        updatedTreeData = deleteNodeByKey(updatedTreeData, key);
+      });
     }
 
     setTreeData(updatedTreeData);
+  };
 
+  const handleSave = () => {
     axiosInstance
-      .post("/updateTree", updatedTreeData)
+      .post("/updateTree", treeData)
       .then((res) => {
         console.log("트리 업데이트 성공:", res.data);
       })
@@ -78,22 +88,115 @@ const PhotoLeft = () => {
       });
   };
 
+  const handleCheck = (checkedKeysValue: any) => {
+    setCheckedKeys(checkedKeysValue.checked || checkedKeysValue); // checkStrictly 대응
+  };
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditTitle(e.target.value);
+  };
+
+  const handleStartEditing = () => {
+    if (checkedKeys.length === 1) {
+      const findTitle = (nodes: TreeNode[]): string | undefined => {
+        for (const node of nodes) {
+          if (node.key === checkedKeys[0]) return node.title;
+          if (node.children) {
+            const title = findTitle(node.children);
+            if (title) return title;
+          }
+        }
+        return undefined;
+      };
+      const title = findTitle(treeData);
+      if (title) {
+        setEditTitle(title);
+        setIsEditing(true);
+      }
+    }
+  };
+
+  const handleFinishEditing = () => {
+    handleEdit("edit");
+    setIsEditing(false);
+  };
+
   return (
     <PhotoLeftStyled className="PhotoLeft_wrap">
       <div className="PhotoLeft_btns">
-        <button>추가</button>
-        <button>수정</button>
-        <button>삭제</button>
+        <button onClick={() => handleEdit("add")}>추가</button>
+        {isEditing ? (
+          <button onClick={handleFinishEditing}>수정 완료</button>
+        ) : (
+          <button onClick={handleStartEditing}>수정</button>
+        )}
+        <button onClick={() => handleEdit("delete")}>삭제</button>
       </div>
+
       <div className="PhotoLeft_componentWrap">
         <Tree
           draggable
-          treeData={treeDatas}
+          treeData={treeData}
           defaultExpandedKeys={defaultExpandedKeys}
           checkable
+          checkStrictly
+          checkedKeys={checkedKeys}
+          onCheck={handleCheck}
+          onDrop={({ dragNode, node, dropPosition }) => {
+            const updateDrop = (nodes: TreeNode[]): TreeNode[] => {
+              let draggedNode: TreeNode | null = null;
+
+              const removeNode = (nodes: TreeNode[]): TreeNode[] =>
+                nodes
+                  .map((n) => {
+                    if (n.key === dragNode.key) {
+                      draggedNode = n;
+                      return null;
+                    }
+                    if (n.children) {
+                      return { ...n, children: removeNode(n.children) };
+                    }
+                    return n;
+                  })
+                  .filter(Boolean) as TreeNode[];
+
+              const insertNode = (nodes: TreeNode[]): TreeNode[] =>
+                nodes.map((n) => {
+                  if (n.key === node.key && dropPosition === 0) {
+                    const children = [...(n.children || []), draggedNode!];
+                    return { ...n, children };
+                  }
+                  if (n.children) {
+                    return { ...n, children: insertNode(n.children) };
+                  }
+                  return n;
+                });
+
+              let updated = removeNode(nodes);
+              updated = insertNode(updated);
+              return updated;
+            };
+
+            const updatedTreeData = updateDrop(treeData);
+            setTreeData(updatedTreeData);
+          }}
         />
       </div>
-      <button className="PhotoLeft_submit">저장</button>
+
+      {isEditing && (
+        <div>
+          <input
+            type="text"
+            value={editTitle}
+            onChange={handleTitleChange}
+            placeholder="새 제목을 입력하세요"
+          />
+        </div>
+      )}
+
+      <button className="PhotoLeft_submit" onClick={handleSave}>
+        저장
+      </button>
     </PhotoLeftStyled>
   );
 };
