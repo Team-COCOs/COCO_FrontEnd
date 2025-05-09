@@ -31,6 +31,7 @@ const Stores = ({ currentItems }: StoresProps) => {
   const buyItem = (storeItemId: number) => {
     if (!token) {
       setIsOpen(true);
+      setType("error");
       setMessage("로그인 후 구매해주세요.");
       return;
     }
