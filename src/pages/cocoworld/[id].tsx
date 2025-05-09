@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 const CocoWorld = () => {
   const router = useRouter();
   const { id } = router.query;
+
   useEffect(() => {
     const countVisit = async () => {
       if (!id || Array.isArray(id)) return;
@@ -31,8 +32,12 @@ const CocoWorld = () => {
               }
             : undefined
         );
-      } catch (err) {
+      } catch (err: any) {
         console.error("방문자 수 기록 실패:", err);
+        if (err.response?.status === 404) {
+          alert("존재하지 않는 페이지입니다.");
+          router.push("/");
+        }
       }
     };
 
