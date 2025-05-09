@@ -178,4 +178,10 @@ export const FriendCommentStyled = styled.div`
     padding-right: 8px;
     font-size: 10px;
   }
+  .FriendComment_noneComment {
+    font-size: 10.5px;
+    margin-left: 10px;
+    padding: 5px 0px;
+    color: ${({ theme }) => theme.colors.mainColor};
+  }
 `;

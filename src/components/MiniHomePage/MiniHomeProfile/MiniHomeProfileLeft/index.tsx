@@ -4,7 +4,7 @@ import MiniHomeProfileLeftMenu from "./MiniHomeProfileLeftMenu";
 import { profileLeftTabs } from "@/constants/profileLeftTabs";
 
 const MiniHomeProfileLeft = () => {
-  const [language, setLanguage] = useState("ko"); // 초기 언어는 "ko"
+  const [language, setLanguage] = useState("ko");
 
   const toggleLanguage = () => {
     setLanguage((prevLang) => (prevLang === "ko" ? "en" : "ko"));

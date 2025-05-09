@@ -5,8 +5,10 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import axios from "axios";
 interface FriendCommentData {
+  id: number;
   content: string;
   createdAt: string;
+  authorId: number;
   authorName: string;
   authorRealName: string;
 }
@@ -145,17 +147,22 @@ const FriendComment = () => {
                       {friendComment.createdAt}
                     </span>
                   </p>
-                  <p
-                    className="FriendComment_delete pixelFont"
-                    onClick={() => handleDelete(friendComment.id)}
-                  >
-                    삭제
-                  </p>
+                  {(user?.id === friendComment.authorId ||
+                    user?.id === hostId) && (
+                    <p
+                      className="FriendComment_delete pixelFont"
+                      onClick={() => handleDelete(friendComment.id)}
+                    >
+                      🗑️
+                    </p>
+                  )}
                 </div>
               ))}
             </div>
           ) : (
-            <p>일촌평이 없습니다.</p>
+            <p className="FriendComment_noneComment pixelFont">
+              소중한 마음을 전해보세요!
+            </p>
           )}
         </div>
       )}

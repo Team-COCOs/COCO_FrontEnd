@@ -26,10 +26,10 @@ const MiniHomeProfileLeftMenu = ({
                   style={{
                     borderLeft: "2px dotted #bbb",
                     borderBottom: "2px dotted #bbb",
-                    padding: "0 5px",
+                    padding: "0 4px",
                   }}
                 ></span>
-                <li key={child.title}>{child.title}</li>
+                <li key={child.title}>&nbsp;{child.title}</li>
               </div>
             ))}
           </ul>
