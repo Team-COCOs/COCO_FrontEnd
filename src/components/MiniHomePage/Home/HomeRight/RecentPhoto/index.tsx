@@ -24,7 +24,7 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab, onTabClick }) => {
             {/* <div>· 오늘의 사진</div> */}
           </div>
           <div className="RecentPhoto_new_alltab Gulim">
-            {(isMobile ? tabKeys : filteredTabKeys).map((key) => (
+            {filteredTabKeys.map((key) => (
               <div
                 key={key}
                 className="RecentPhoto_new_tabs"

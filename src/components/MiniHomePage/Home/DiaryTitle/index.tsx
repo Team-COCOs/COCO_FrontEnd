@@ -29,8 +29,12 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
         const response = await axiosInstance.get(`/friends/status/${id}`);
 
         setFriendStatus(response.data);
-      } catch (error) {
-        console.error("일촌 상태 가져오기 실패:", error);
+      } catch (error: any) {
+        if (error.response?.status === 401) {
+          setFriendStatus(null);
+        } else {
+          console.error("일촌 상태 가져오기 실패:", error);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -63,7 +67,13 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
             !friendStatus.requested && (
               <div
                 className="DiaryTitle_plus_friend dotumFont"
-                onClick={handleClick}
+                onClick={() => {
+                  if (!user) {
+                    alert("로그인이 필요합니다.");
+                    return;
+                  }
+                  handleClick();
+                }}
               >
                 + 일촌맺기
               </div>

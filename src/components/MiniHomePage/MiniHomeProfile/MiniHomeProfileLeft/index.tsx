@@ -1,12 +1,23 @@
 import { MiniHomeProfileLeftStyled } from "./styled";
-import { useEffect } from "react";
+import { useState } from "react";
+import MiniHomeProfileLeftMenu from "./MiniHomeProfileLeftMenu";
+import { profileLeftTabs } from "@/constants/profileLeftTabs";
 
 const MiniHomeProfileLeft = () => {
+  const [language, setLanguage] = useState("ko"); // 초기 언어는 "ko"
+
+  const toggleLanguage = () => {
+    setLanguage((prevLang) => (prevLang === "ko" ? "en" : "ko"));
+  };
+
   return (
     <MiniHomeProfileLeftStyled>
       <div className="MiniHomeProfileLeft_wrap">
         <div className="MiniHomeProfileLeft_componentWrap">
-          미니홈피 프로필 왼쪽
+          <MiniHomeProfileLeftMenu
+            menuData={profileLeftTabs}
+            language={language}
+          />
         </div>
       </div>
     </MiniHomeProfileLeftStyled>

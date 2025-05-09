@@ -43,7 +43,6 @@ axiosInstance.interceptors.response.use(
         const refreshToken = Cookies.get("refresh_token");
 
         if (!refreshToken) {
-          Router.push("/");
           return Promise.reject(error);
         }
 

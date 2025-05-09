@@ -8,7 +8,7 @@ interface FriendCommentData {
   content: string;
   createdAt: string;
   authorName: string;
-  hostName: string;
+  authorRealName: string;
 }
 
 const FriendComment = () => {
@@ -42,6 +42,8 @@ const FriendComment = () => {
         const status = error.response?.status;
         if (status === 403) {
           alert("서로 일촌인 경우에만 일촌평을 남길 수 있습니다.");
+        } else if (status === 401) {
+          alert("로그인 후 일촌평을 작성하실 수 있습니다.");
         } else {
           alert("일촌평 등록 중 오류가 발생했습니다.");
         }
@@ -62,9 +64,12 @@ const FriendComment = () => {
           withCredentials: true,
         }
       );
+      console.log(res.data.data);
       setFriendComment(res.data.data);
-    } catch (error) {
-      console.error("일촌평 불러오기 실패", error);
+    } catch (error: any) {
+      if (error.response?.status !== 401) {
+        console.error("일촌평 불러오기 실패", error);
+      }
     }
   };
 
@@ -101,7 +106,7 @@ const FriendComment = () => {
             •&nbsp;{friendComment.content}&nbsp;({friendComment.authorName}
             <span className="FriendComment_name_navytext">
               {" "}
-              {friendComment.hostName}
+              {friendComment.authorRealName}
             </span>
             )
             <span className="FriendComment_datetext">
