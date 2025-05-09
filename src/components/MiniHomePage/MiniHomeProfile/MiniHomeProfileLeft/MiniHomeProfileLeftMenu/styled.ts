@@ -1,6 +1,17 @@
 import styled from "styled-components";
 
 export const MiniHomeProfileLeftMenuStyled = styled.div`
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 !important;
+  }
+
+  li {
+    list-style: none;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
   padding-top: 20px;
   padding-left: 18px;
   font-size: 12px;
