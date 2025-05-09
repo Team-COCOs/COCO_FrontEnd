@@ -18,8 +18,11 @@ const HomeTodayTitle = () => {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/count/${hostId}`
         );
+        setTotal(response.data.today);
+        setTodayCount(response.data.total);
 
         console.log(response.data, "투데이수 데이터??");
+        console.log(response.data.total, "/??");
       } catch (e) {
         console.log(e, "투데이수 오류 응답");
       }
@@ -32,7 +35,8 @@ const HomeTodayTitle = () => {
       <div>
         <div className="HomeTodayTitle_wrap">
           <div className="HomeTodayTitle_number_title dotumFont">
-            TODAY &nbsp;<span>0</span> &nbsp;&nbsp;|&nbsp;&nbsp;TOTAL &nbsp;0
+            TODAY &nbsp;<span>{total}</span> &nbsp;&nbsp;|&nbsp;&nbsp;TOTAL
+            &nbsp;{todayCount}
           </div>
         </div>
       </div>
