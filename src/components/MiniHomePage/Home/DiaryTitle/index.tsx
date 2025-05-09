@@ -22,7 +22,7 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (!user || !id || isOwnPage) {
+    if (!user || !id) {
       setIsLoading(false); // 내 페이지거나 로그인 안했으면 굳이 요청 안함
       return;
     }
