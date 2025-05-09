@@ -24,21 +24,32 @@ const FriendComment = () => {
     if (!comment.trim()) return;
     if (!user) return;
 
+    if (user.id === hostId) {
+      alert("자기 자신에게는 일촌평을 남길 수 없습니다.");
+      return;
+    }
+
     try {
       const response = await axiosInstance.post("/friend-comments", {
         hostId: hostId,
         content: comment,
       });
-
-      console.log("등록 성공:", response.data);
       setComment("");
 
       fetchFriendComment();
-    } catch (error) {
-      console.error("등록 실패:", error);
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status;
+        if (status === 403) {
+          alert("서로 일촌인 경우에만 일촌평을 남길 수 있습니다.");
+        } else {
+          alert("일촌평 등록 중 오류가 발생했습니다.");
+        }
+      } else {
+        console.error("예상치 못한 에러:", error);
+      }
     }
 
-    console.log("제출:", comment);
     setComment("");
   };
 
