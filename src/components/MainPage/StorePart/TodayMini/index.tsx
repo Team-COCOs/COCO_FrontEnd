@@ -40,7 +40,7 @@ const TodayMini = () => {
   const getuserInfo = async () => {
     try {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/getPopularUser`
+        `${process.env.NEXT_PUBLIC_API_URL}/users/getPopularUser`
       );
       const userInfo = res.data;
 
