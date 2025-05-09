@@ -26,6 +26,7 @@ const Stores = ({ currentItems }: StoresProps) => {
   const token = Cookies.get("accessToken");
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
 
   const buyItem = (storeItemId: number) => {
     if (!token) {
@@ -37,10 +38,14 @@ const Stores = ({ currentItems }: StoresProps) => {
     axiosInstance
       .post("/purchases", { storeItemId })
       .then((res) => {
-        console.log("구매 대답 : ", res.data);
+        setIsOpen(true);
+        setType("success");
+        setMessage("구매를 성공했습니다!");
       })
       .catch((e) => {
-        console.log("구매 실패:", e);
+        setIsOpen(true);
+        setType("error");
+        setMessage(e.response.data.message);
       });
   };
 
@@ -120,9 +125,14 @@ const Stores = ({ currentItems }: StoresProps) => {
       </div>
 
       <ShadowModal
-        type="error"
+        type={type}
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={() => {
+          setIsOpen(false);
+          if (type === "success") {
+            window.location.href = "/";
+          }
+        }}
         message={message}
       />
     </StoresStyle>
