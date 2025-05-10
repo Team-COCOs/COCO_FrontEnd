@@ -26,7 +26,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
   const dropRef = useRef<HTMLDivElement>(null);
 
   const [{ isOver }, drop] = useDrop({
-    accept: "minimi",
+    accept: ["minimi", "speechBubble"],
     drop: (item: any, monitor) => {
       const offset = monitor.getClientOffset();
       if (offset) {
@@ -64,21 +64,27 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
   });
 
   useEffect(() => {
-    // selectedMinimi에서 아직 추가되지 않은 항목만 필터링
-    const newItems = selectedMinimi.filter(
-      (minimi) => !items.some((item) => item.id === minimi.id)
-    );
+    setItems((prevItems) => {
+      // selectedMinimi에 포함되지 않은 minimi는 제거 (말풍선은 유지)
+      const updatedItems = prevItems.filter(
+        (item) =>
+          item.type === "speechBubble" ||
+          selectedMinimi.some((minimi) => minimi.id === item.id)
+      );
 
-    if (newItems.length > 0) {
-      setItems((prev) => [
-        ...prev,
-        ...newItems.map((minimi, idx) => ({
-          ...minimi,
-          left: 200 + idx * 30,
-          top: 150,
-        })),
-      ]);
-    }
+      // 새로 추가된 미니미를 찾아서 중앙에 배치
+      const newMinimis = selectedMinimi.filter(
+        (minimi) => !updatedItems.some((item) => item.id === minimi.id)
+      );
+
+      const newlyAdded = newMinimis.map((minimi, idx) => ({
+        ...minimi,
+        left: 200 + idx * 30,
+        top: 150,
+      }));
+
+      return [...updatedItems, ...newlyAdded];
+    });
   }, [selectedMinimi]);
 
   // 말풍선
@@ -88,8 +94,8 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
       {
         id: Date.now(), // uuid 또는 Date.now() 사용
         type: "speechBubble",
-        text: "말풍선", // 기본 텍스트
-        left: 100,
+        text: "",
+        left: "40%",
         top: 100,
       },
     ]);

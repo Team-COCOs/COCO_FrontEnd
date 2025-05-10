@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useDrag } from "react-dnd";
+import { SpeechBubbleStyled } from "./styled";
 
 export interface SpeechBubbleItem {
   id: string;
@@ -35,29 +36,22 @@ const SpeechBubble: React.FC<SpeechBubbleItemProps> = ({
         position: "absolute",
         top: item.top,
         left: item.left,
-        background: "#fff",
-        border: "1px solid #ccc",
-        borderRadius: 10,
-        padding: "5px 10px",
-        fontSize: 14,
-        maxWidth: 150,
-        cursor: "move",
         opacity: isDragging ? 0.5 : 1,
+        cursor: "move",
+        zIndex: 100,
       }}
     >
-      <input
-        type="text"
-        value={item.text}
-        onChange={(e) =>
-          e.target.value.length <= 15 && onTextChange(item.id, e.target.value)
-        }
-        style={{
-          border: "none",
-          background: "transparent",
-          outline: "none",
-          width: "100%",
-        }}
-      />
+      <SpeechBubbleStyled>
+        <div className="speech-bubble Gulim">
+          <textarea
+            value={item.text}
+            onChange={(e) => onTextChange(item.id, e.target.value.slice(0, 15))}
+            maxLength={15}
+            rows={2}
+          />
+          <div className="bubble-tail" />
+        </div>
+      </SpeechBubbleStyled>
     </div>
   );
 };
