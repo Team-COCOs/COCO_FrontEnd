@@ -12,9 +12,16 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     <MakeMiniroomStyled>
       <div className="MinimiSet_wrap">
         <div className="MakeMiniroom_titleWrap">
-          <div className="MakeMiniroom_wrap_title Gulim">미니룸 수정</div>
-          <button>저장</button>
-          <button onClick={() => setfixMiniroom(false)}>취소</button>
+          <div className="MakeMiniroom_wrap_title Gulim">미니룸 수정하기</div>
+          <div className="MakeMiniroom_saveBtn_wrap">
+            <button className="MakeMiniroom_saveBtn Gulim">저장</button>
+            <button
+              className="MakeMiniroom_deleteBtn Gulim"
+              onClick={() => setfixMiniroom(false)}
+            >
+              취소
+            </button>
+          </div>
         </div>
       </div>
     </MakeMiniroomStyled>

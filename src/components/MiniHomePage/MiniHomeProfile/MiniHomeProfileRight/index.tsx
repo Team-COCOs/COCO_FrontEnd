@@ -19,7 +19,7 @@ const MiniHomeProfileRight = ({
 }) => {
   const renderContent = () => {
     if (!profileSelectedMenu) {
-      return <div>기본 내용</div>;
+      return <div>내 상태 관리 내용</div>;
     }
 
     switch (profileSelectedMenu.title) {

@@ -70,6 +70,13 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
     return () => clearTimeout(timer);
   }, []);
 
+  // 탭 바뀔때 프로필 내부 초기화
+  useEffect(() => {
+    if (activeTab !== "Profile") {
+      setProfileSelectedMenu(null);
+    }
+  }, [activeTab]);
+
   useEffect(() => {
     const fetchNames = async () => {
       try {
