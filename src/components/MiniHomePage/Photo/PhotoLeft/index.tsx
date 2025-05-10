@@ -10,6 +10,7 @@ interface TreeNode {
   isLeaf: boolean;
   isEditing?: boolean;
   children?: TreeNode[];
+  parent_id?: string | null;
 }
 
 const PhotoLeft = () => {
@@ -97,6 +98,7 @@ const PhotoLeft = () => {
     });
   };
 
+  // 추가, 수정, 삭제
   const handleEdit = (action: string) => {
     let updatedTreeData = [...treeData];
 
@@ -124,14 +126,38 @@ const PhotoLeft = () => {
     setTreeData(updatedTreeData);
   };
 
+  // 트리 구조를 평평하게 만드는 함수
+  const flattenTreeData = (treeData: any) => {
+    const flatten = (nodes: any, parentId = null) => {
+      return nodes.flatMap((node: any) => {
+        const { children, ...rest } = node;
+        const currentNode = {
+          ...rest,
+          parent_id: parentId, // 부모 ID를 추가
+        };
+        return [
+          currentNode,
+          ...(children ? flatten(children, currentNode.key) : []),
+        ];
+      });
+    };
+
+    return flatten(treeData); // 평평하게 만든 데이터를 반환
+  };
+
   const handleSave = () => {
+    // 트리 구조를 평평하게 변환
+    const flattenedData = flattenTreeData(treeData);
+
+    console.log(flattenedData);
+
     axiosInstance
-      .post("/updateTree", treeData)
+      .post("/saveTree", { folders: flattenedData })
       .then((res) => {
-        console.log("트리 업데이트 성공:", res.data);
+        console.log("트리 저장 성공 : ", res.data);
       })
       .catch((e) => {
-        console.log("트리 업데이트 실패:", e);
+        console.log("트리 저장 실패 : ", e);
       });
   };
 
@@ -139,10 +165,12 @@ const PhotoLeft = () => {
     setCheckedKeys(checkedKeysValue.checked || checkedKeysValue); // checkStrictly 대응
   };
 
+  // 수정된 title 넣기
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditTitle(e.target.value);
   };
 
+  // 수정 시작
   const handleStartEditing = () => {
     if (checkedKeys.length === 1) {
       const findTitle = (nodes: TreeNode[]): string | undefined => {
@@ -163,6 +191,7 @@ const PhotoLeft = () => {
     }
   };
 
+  // 수정 완료
   const handleFinishEditing = () => {
     console.log("완료");
     // 새로운 제목으로 노드를 수정하고 treeData를 업데이트
