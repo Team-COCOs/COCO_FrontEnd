@@ -6,6 +6,7 @@ import axiosInstance from "@/lib/axios";
 
 const MinimiSet = () => {
   const [minimiData, setMinimiData] = useState<any[]>([]);
+  const [selectedMinimiId, setSelectedMinimiId] = useState<string>("default");
 
   useEffect(() => {
     const fetchMinimiData = async () => {
@@ -23,21 +24,63 @@ const MinimiSet = () => {
   const onlyMinimi = minimiData.filter(
     (x) => x.storeItems.category === "minimi"
   );
-  console.log(onlyMinimi, "only");
+
+  const handleChange = (id: string) => {
+    setSelectedMinimiId(id);
+    // 필요 시 서버에 PATCH 요청
+    // await axiosInstance.patch('/users/minimi', { minimiId: id });
+  };
+
   return (
     <MinimiSetStyled>
       <div className="MinimiSet_wrap">
-        <span>대표 미니미 설정하기</span>
+        <div className="MinimiSet_titleWrap">
+          <span className="MinimiSet_wrap_title Gulim">미니미 설정하기</span>
+          <span className="MinimiSet_wrap_title2 Gulim">
+            대표 미니미를 설정해보세요~!
+          </span>
+        </div>
+        <div className="MinimiSet_now_minimi">
+          {/* axios로 데이터 수정 예정 */}
+          <span className="MinimiSet_blue_title Gulim">현재 대표 미니미</span>
+          <div>
+            <div className="MinimiSet_minimi_imgWrap nowminimi">
+              <img src={"/avatarImg/woman_avatar1.png"} alt={"first_minimi"} />
+            </div>
+          </div>
+        </div>
+        {/* 대표 이미지 선택 */}{" "}
+        <span className="MinimiSet_blue_title Gulim">대표 미니미 선택하기</span>
         <div className="MinimiSet_purchase">
+          <div className="MinimiSet_choice_wrap">
+            <input
+              type="radio"
+              name="minimi"
+              checked={selectedMinimiId === "default"}
+              onChange={() => handleChange("default")}
+            />
+            <div className="MinimiSet_minimi_imgWrap">
+              <img src={"/avatarImg/woman_avatar1.png"} alt={"first_minimi"} />
+            </div>
+            <div className="MinimiSet_minimi_name">기본 아바타</div>
+          </div>
           {onlyMinimi.map((minimi, index) => (
-            <div key={minimi.id}>
+            <div key={minimi.id} className="MinimiSet_choice_wrap">
+              <input
+                type="radio"
+                name="minimi"
+                checked={selectedMinimiId === minimi.id}
+                onChange={() => handleChange(minimi.id)}
+              />
               <div className="MinimiSet_minimi_imgWrap">
                 <img
                   src={minimi.storeItems.file}
                   alt={`미니미 ID: ${minimi.id}`}
                 />
               </div>
-              <div>{minimi.storeItems.name}</div>
+              <div className="MinimiSet_minimi_name">
+                {minimi.storeItems.name}
+              </div>
             </div>
           ))}
         </div>

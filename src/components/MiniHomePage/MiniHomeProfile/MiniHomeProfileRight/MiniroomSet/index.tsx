@@ -4,7 +4,9 @@ import { MiniroomSetStyled } from "./styled";
 const MiniroomSet = () => {
   return (
     <MiniroomSetStyled>
-      <div className="MiniroomSet_wrap">미니룸</div>
+      <div className="MiniroomSet_titleWrap">
+        <div className="MiniroomSet_wrap_title Gulim">미니룸 설정하기</div>
+      </div>
     </MiniroomSetStyled>
   );
 };
