@@ -14,8 +14,12 @@ const MinimiSet = () => {
         const response = await axiosInstance.get(`/purchases`);
         console.log(response.data, "구매 목록?");
         setMinimiData(response.data);
-      } catch (e) {
-        console.log(e, "구매 목록 불러오기 실패");
+      } catch (e: any) {
+        if (e.response && e.response.status === 401) {
+          alert("로그인이 필요합니다.");
+        } else {
+          console.log(e, "구매 목록 불러오기 실패");
+        }
       }
     };
     fetchMinimiData();
