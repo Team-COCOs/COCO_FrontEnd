@@ -51,6 +51,53 @@ const PhotoLeft = () => {
       });
   };
 
+  // ✅ 폴더의 중첩 깊이를 확인
+  // 노드의 깊이를 root부터 계산
+  const getNodeDepth = (
+    nodes: TreeNode[],
+    key: string,
+    currentDepth: number = 1
+  ): number | null => {
+    for (const node of nodes) {
+      if (node.key === key) return currentDepth;
+      if (node.children) {
+        const depth = getNodeDepth(node.children, key, currentDepth + 1);
+        if (depth !== null) return depth;
+      }
+    }
+    return null;
+  };
+
+  // ✅ 노드를 3단계 이상 중첩할 수 없도록 제한
+  const insertNodeInside = (
+    nodes: TreeNode[],
+    parentKey: string,
+    newNode: TreeNode
+  ): TreeNode[] => {
+    const parentDepth = getNodeDepth(nodes, parentKey);
+
+    if (parentDepth && parentDepth >= 2) {
+      alert("2단계 이상 중첩할 수 없습니다.");
+      return nodes;
+    }
+
+    return nodes.map((n) => {
+      if (n.key === parentKey) {
+        return {
+          ...n,
+          children: [...(n.children || []), newNode],
+        };
+      }
+      if (n.children) {
+        return {
+          ...n,
+          children: insertNodeInside(n.children, parentKey, newNode),
+        };
+      }
+      return n;
+    });
+  };
+
   const handleEdit = (action: string) => {
     let updatedTreeData = [...treeData];
 
@@ -158,11 +205,6 @@ const PhotoLeft = () => {
               return null;
             };
 
-            const getNodeDepth = (node: TreeNode): number => {
-              if (!node.children || node.children.length === 0) return 1;
-              return 1 + Math.max(...node.children.map(getNodeDepth));
-            };
-
             const removeNode = (nodes: TreeNode[], key: string): TreeNode[] => {
               return nodes
                 .map((n) => {
@@ -173,35 +215,6 @@ const PhotoLeft = () => {
                   return n;
                 })
                 .filter(Boolean) as TreeNode[];
-            };
-
-            const insertNodeInside = (
-              nodes: TreeNode[],
-              parentKey: string,
-              newNode: TreeNode
-            ): TreeNode[] => {
-              return nodes.map((n) => {
-                if (n.key === parentKey) {
-                  // 현재 폴더 깊이 + 드래그한 노드 깊이가 3 이상이면 거부
-                  const currentDepth = getNodeDepth(n);
-                  const newNodeDepth = getNodeDepth(newNode);
-                  if (currentDepth + newNodeDepth > 2) {
-                    alert("폴더 안에 폴더 안에 폴더는 허용되지 않습니다.");
-                    throw new Error("중첩 제한");
-                  }
-                  return {
-                    ...n,
-                    children: [...(n.children || []), newNode],
-                  };
-                }
-                if (n.children) {
-                  return {
-                    ...n,
-                    children: insertNodeInside(n.children, parentKey, newNode),
-                  };
-                }
-                return n;
-              });
             };
 
             const insertBeforeAfter = (
@@ -233,30 +246,33 @@ const PhotoLeft = () => {
               return result;
             };
 
-            try {
-              const dragItem = findNodeByKey(treeData, dragNode.key);
-              if (!dragItem) return;
+            const dragItem = findNodeByKey(treeData, dragNode.key);
+            if (!dragItem) return;
 
-              let updatedTree = removeNode(treeData, dragNode.key);
+            let updatedTree = removeNode(treeData, dragNode.key);
 
-              if (!dropToGap) {
-                // 노드 내부에 드롭
-                updatedTree = insertNodeInside(updatedTree, node.key, dragItem);
-              } else {
-                // 노드 위/아래에 드롭
-                const before = dropPosition === -1;
-                updatedTree = insertBeforeAfter(
-                  updatedTree,
-                  node.key,
-                  dragItem,
-                  before
-                );
-              }
+            let resultTree: TreeNode[] = [];
 
-              setTreeData(updatedTree);
-            } catch (e) {
-              console.warn("드롭 실패:", e);
+            if (!dropToGap) {
+              const tempTree = insertNodeInside(
+                updatedTree,
+                node.key,
+                dragItem
+              );
+              // ✅ 중첩 제한에 걸리면 alert만 띄우고 기존 트리 유지
+              if (tempTree === updatedTree) return;
+              resultTree = tempTree;
+            } else {
+              const before = dropPosition === -1;
+              resultTree = insertBeforeAfter(
+                updatedTree,
+                node.key,
+                dragItem,
+                before
+              );
             }
+
+            setTreeData(resultTree);
           }}
         />
       </div>
