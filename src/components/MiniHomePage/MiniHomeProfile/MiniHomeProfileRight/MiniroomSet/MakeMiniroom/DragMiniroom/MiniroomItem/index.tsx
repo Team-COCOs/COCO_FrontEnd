@@ -26,10 +26,11 @@ const MiniroomItem: React.FC<MiniroomItemProps> = ({ item }) => {
       isDragging: !!monitor.isDragging(),
     }),
   });
+  drag(ref);
 
   return (
     <img
-      ref={ref} // drag ref로 HTMLImageElement 타입 지정
+      ref={ref}
       src={item.storeItems.file}
       alt="minimi"
       style={{

@@ -20,14 +20,33 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
     drop: (item: any, monitor) => {
       const offset = monitor.getClientOffset();
       if (offset) {
-        setItems((prev) => [
-          ...prev,
-          {
-            ...item,
-            left: offset.x - 100, // 위치 조정
-            top: offset.y - 100,
-          },
-        ]);
+        // 아이템의 ID로 기존 아이템을 찾고 위치를 업데이트
+        const existingItemIndex = items.findIndex(
+          (existingItem) => existingItem.id === item.id
+        );
+
+        if (existingItemIndex !== -1) {
+          // 이미 존재하는 아이템이라면, 위치만 업데이트
+          setItems((prevItems) => {
+            const updatedItems = [...prevItems];
+            updatedItems[existingItemIndex] = {
+              ...updatedItems[existingItemIndex],
+              left: offset.x - dropRef.current!.getBoundingClientRect().left,
+              top: offset.y - dropRef.current!.getBoundingClientRect().top,
+            };
+            return updatedItems;
+          });
+        } else {
+          // 새로운 아이템이라면, 아이템을 추가
+          setItems((prev) => [
+            ...prev,
+            {
+              ...item,
+              left: offset.x - dropRef.current!.getBoundingClientRect().left,
+              top: offset.y - dropRef.current!.getBoundingClientRect().top,
+            },
+          ]);
+        }
       }
     },
     collect: (monitor) => ({
@@ -37,10 +56,13 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
 
   return (
     <div
-      ref={dropRef}
+      ref={(node) => {
+        drop(node);
+        dropRef.current = node;
+      }}
       style={{
-        width: 500,
-        height: 400,
+        width: "100%",
+        minHeight: 300,
         border: "2px solid #ccc",
         position: "relative",
         overflow: "hidden",
