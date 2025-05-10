@@ -66,4 +66,26 @@ export const MinimiSetStyled = styled.div`
     margin-top: 10px;
     background-color: rgb(233, 233, 233);
   }
+
+  // 버튼 css
+  .MinimiSet_saveBtn_wrap {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .MinimiSet_saveBtn {
+    margin-top: 10px;
+    padding: 4px 5px;
+    background-color: rgb(248, 248, 248);
+    color: #4b4b4b;
+    font-size: 11px;
+    border: 1px solid #4b4b4b;
+    border-radius: 2px;
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+      background-color: rgb(230, 230, 230);
+    }
+  }
 `;

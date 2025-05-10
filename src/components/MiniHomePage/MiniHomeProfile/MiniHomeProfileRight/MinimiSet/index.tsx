@@ -25,10 +25,21 @@ const MinimiSet = () => {
     (x) => x.storeItems.category === "minimi"
   );
 
-  const handleChange = (id: string) => {
+  const handleChange = async (id: string) => {
     setSelectedMinimiId(id);
-    // 필요 시 서버에 PATCH 요청
-    // await axiosInstance.patch('/users/minimi', { minimiId: id });
+  };
+
+  const handleSave = async () => {
+    console.log(selectedMinimiId, "selectedMinimiId?");
+    // try {
+    //   await axiosInstance.patch("/users/minimi", {
+    //     minimiId: selectedMinimiId,
+    //   });
+    //   alert("대표 미니미가 저장되었습니다!");
+    // } catch (error) {
+    //   console.error("대표 미니미 저장 실패", error);
+    //   alert("대표 미니미 저장에 실패했습니다.");
+    // }
   };
 
   return (
@@ -83,6 +94,11 @@ const MinimiSet = () => {
               </div>
             </div>
           ))}
+        </div>
+        <div className="MinimiSet_saveBtn_wrap">
+          <button onClick={handleSave} className="MinimiSet_saveBtn Gulim">
+            저장
+          </button>
         </div>
       </div>
     </MinimiSetStyled>
