@@ -5,8 +5,12 @@ import { profileLeftTabs } from "@/constants/profileLeftTabs";
 
 const MiniHomeProfileLeft = ({
   setProfileSelectedMenu,
+  fixMiniroom,
+  setfixMiniroom,
 }: {
   setProfileSelectedMenu: (menu: { type?: string; title: string }) => void;
+  fixMiniroom: boolean;
+  setfixMiniroom: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [language, setLanguage] = useState("ko");
 
@@ -22,6 +26,7 @@ const MiniHomeProfileLeft = ({
             menuData={profileLeftTabs}
             language={language}
             onMenuSelect={setProfileSelectedMenu}
+            setfixMiniroom={setfixMiniroom}
           />
         </div>
       </div>

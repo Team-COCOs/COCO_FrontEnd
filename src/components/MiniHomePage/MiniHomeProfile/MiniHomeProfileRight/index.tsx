@@ -1,5 +1,5 @@
 import { MiniHomeProfileRightStyled } from "./styled";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import MiniroomSet from "./MiniroomSet";
 import MinimiSet from "./MinimiSet";
 
@@ -10,8 +10,12 @@ interface ProfileSelectedMenu {
 
 const MiniHomeProfileRight = ({
   profileSelectedMenu,
+  fixMiniroom,
+  setfixMiniroom,
 }: {
   profileSelectedMenu: ProfileSelectedMenu | null;
+  fixMiniroom: boolean;
+  setfixMiniroom: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const renderContent = () => {
     if (!profileSelectedMenu) {
@@ -26,7 +30,12 @@ const MiniHomeProfileRight = ({
       case "미니미":
         return <MinimiSet />;
       case "미니룸":
-        return <MiniroomSet />;
+        return (
+          <MiniroomSet
+            fixMiniroom={fixMiniroom}
+            setfixMiniroom={setfixMiniroom}
+          />
+        );
       default:
         return <div>기본 프로필 내용</div>;
     }

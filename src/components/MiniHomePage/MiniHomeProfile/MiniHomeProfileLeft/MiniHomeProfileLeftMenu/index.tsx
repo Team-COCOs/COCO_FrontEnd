@@ -6,10 +6,12 @@ const MiniHomeProfileLeftMenu = ({
   menuData,
   language = "ko", // 기본값을 "ko"로 설정
   onMenuSelect,
+  setfixMiniroom,
 }: {
   menuData: any;
   language?: string;
   onMenuSelect: (menu: { type?: string; title: string }) => void;
+  setfixMiniroom: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const selectedMenuData = menuData[language] || menuData.ko;
 
@@ -26,7 +28,10 @@ const MiniHomeProfileLeftMenu = ({
               <div
                 className="MiniHomeProfileLeftMenu_dotted_wrap"
                 key={child.title}
-                onClick={() => onMenuSelect(child)}
+                onClick={() => {
+                  onMenuSelect(child);
+                  setfixMiniroom(false);
+                }}
               >
                 <span
                   style={{

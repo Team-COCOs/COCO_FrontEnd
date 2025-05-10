@@ -59,6 +59,8 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
     type?: string;
     title: string;
   } | null>(null);
+  // 프로필 미니룸 꾸미기 탭 관리
+  const [fixMiniroom, setfixMiniroom] = useState<boolean>(false);
 
   // 페이지가 처음 로드될 때 로딩 상태 종료
   useEffect(() => {
@@ -112,6 +114,8 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                         ) : activeTab === "Profile" ? (
                           <MiniHomeProfileLeft
                             setProfileSelectedMenu={setProfileSelectedMenu}
+                            fixMiniroom={fixMiniroom}
+                            setfixMiniroom={setfixMiniroom}
                           />
                         ) : activeTab === "Diary" ? (
                           <DiaryLeft />
@@ -153,6 +157,8 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                         ) : activeTab === "Profile" ? (
                           <MiniHomeProfileRight
                             profileSelectedMenu={profileSelectedMenu}
+                            fixMiniroom={fixMiniroom}
+                            setfixMiniroom={setfixMiniroom}
                           />
                         ) : activeTab === "Diary" ? (
                           <DiaryRight />
