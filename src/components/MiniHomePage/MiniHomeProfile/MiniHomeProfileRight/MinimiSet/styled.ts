@@ -4,8 +4,8 @@ export const MinimiSetStyled = styled.div`
   width: 100%;
   .MinimiSet_purchase {
     width: 100%;
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
   }
   .MinimiSet_titleWrap {
@@ -86,6 +86,18 @@ export const MinimiSetStyled = styled.div`
 
     &:hover {
       background-color: rgb(230, 230, 230);
+    }
+  }
+
+  /* 반응형 */
+  @media (max-width: 1024px) {
+    .MinimiSet_purchase {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .MinimiSet_purchase {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 `;
