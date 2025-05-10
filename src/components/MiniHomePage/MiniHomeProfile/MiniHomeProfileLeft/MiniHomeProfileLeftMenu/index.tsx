@@ -35,7 +35,9 @@ const MiniHomeProfileLeftMenu = ({
                     padding: "0 4px",
                   }}
                 ></span>
-                <li>&nbsp;{child.title}</li>
+                <li className="MiniHomeProfileLeftMenu_menu_cursor">
+                  &nbsp;{child.title}
+                </li>
               </div>
             ))}
           </ul>
@@ -56,7 +58,9 @@ const MiniHomeProfileLeftMenu = ({
             return (
               <li key={item} onClick={() => onMenuSelect({ title: item })}>
                 <span className="dot-symbol">◉</span>
-                {item}
+                <span className="MiniHomeProfileLeftMenu_menu_cursor">
+                  {item}
+                </span>
               </li>
             );
           })}

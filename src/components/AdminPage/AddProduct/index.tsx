@@ -71,8 +71,6 @@ const AddProduct: React.FC<AddProductProps> = ({
         formData.append("duration", values.duration);
       }
 
-      console.log("폼 제출", values);
-
       try {
         await axiosInstance.post("/storeitems", formData, {
           headers: {
@@ -93,6 +91,7 @@ const AddProduct: React.FC<AddProductProps> = ({
         formik.setFieldValue("duration", "");
 
         alert("상품이 성공적으로 등록되었습니다!");
+        window.location.reload();
       } catch (err) {
         // 에러 로그 찍기
         console.error(err);

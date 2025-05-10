@@ -48,4 +48,7 @@ export const MiniHomeProfileLeftMenuStyled = styled.div`
     font-size: 8px;
     padding-right: 5px;
   }
+  .MiniHomeProfileLeftMenu_menu_cursor {
+    cursor: pointer;
+  }
 `;
