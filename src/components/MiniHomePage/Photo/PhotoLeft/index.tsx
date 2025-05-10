@@ -39,7 +39,7 @@ const PhotoLeft = () => {
     });
   };
 
-  // ✅ 노드 삭제 (재귀)
+  // 노드 삭제
   const deleteNodeByKey = (nodes: TreeNode[], key: string): TreeNode[] => {
     return nodes
       .filter((node) => node.key !== key)
@@ -51,8 +51,7 @@ const PhotoLeft = () => {
       });
   };
 
-  // ✅ 폴더의 중첩 깊이를 확인
-  // 노드의 깊이를 root부터 계산
+  // 폴더의 중첩 깊이를 확인 - 노드의 깊이를 root부터 계산
   const getNodeDepth = (
     nodes: TreeNode[],
     key: string,
@@ -68,7 +67,7 @@ const PhotoLeft = () => {
     return null;
   };
 
-  // ✅ 노드를 3단계 이상 중첩할 수 없도록 제한
+  // 노드를 2단계 이상 중첩할 수 없도록 제한
   const insertNodeInside = (
     nodes: TreeNode[],
     parentKey: string,
@@ -77,7 +76,7 @@ const PhotoLeft = () => {
     const parentDepth = getNodeDepth(nodes, parentKey);
 
     if (parentDepth && parentDepth >= 2) {
-      alert("2단계 이상 중첩할 수 없습니다.");
+      alert("중첩할 수 없습니다.");
       return nodes;
     }
 
@@ -165,8 +164,12 @@ const PhotoLeft = () => {
   };
 
   const handleFinishEditing = () => {
-    handleEdit("edit");
-    setIsEditing(false);
+    console.log("완료");
+    // 새로운 제목으로 노드를 수정하고 treeData를 업데이트
+    let updatedTreeData = editNodeByKey(treeData, checkedKeys[0], editTitle);
+    setTreeData(updatedTreeData); // 트리 데이터를 업데이트
+
+    setIsEditing(false); // 편집 상태 종료
   };
 
   return (
@@ -190,6 +193,22 @@ const PhotoLeft = () => {
           checkStrictly
           checkedKeys={checkedKeys}
           onCheck={handleCheck}
+          titleRender={(node: TreeNode) => {
+            return (
+              <span>
+                {node.key === checkedKeys[0] && isEditing ? (
+                  <input
+                    type="text"
+                    value={editTitle}
+                    onChange={handleTitleChange}
+                    onBlur={handleFinishEditing}
+                  />
+                ) : (
+                  node.title
+                )}
+              </span>
+            );
+          }}
           onDrop={({ dragNode, node, dropPosition, dropToGap }) => {
             const findNodeByKey = (
               nodes: TreeNode[],
@@ -276,17 +295,6 @@ const PhotoLeft = () => {
           }}
         />
       </div>
-
-      {isEditing && (
-        <div>
-          <input
-            type="text"
-            value={editTitle}
-            onChange={handleTitleChange}
-            placeholder="새 제목을 입력하세요"
-          />
-        </div>
-      )}
 
       <button className="PhotoLeft_submit" onClick={handleSave}>
         저장
