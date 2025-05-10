@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDrop } from "react-dnd";
 import MiniroomItem from "./MiniroomItem";
 import { useRef } from "react";
@@ -20,13 +20,12 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
     drop: (item: any, monitor) => {
       const offset = monitor.getClientOffset();
       if (offset) {
-        // 아이템의 ID로 기존 아이템을 찾고 위치를 업데이트
+        // 기존 아이템이 이미 있으면 위치만 업데이트, 없으면 새로 추가
         const existingItemIndex = items.findIndex(
           (existingItem) => existingItem.id === item.id
         );
-
         if (existingItemIndex !== -1) {
-          // 이미 존재하는 아이템이라면, 위치만 업데이트
+          // 기존 아이템 위치 업데이트
           setItems((prevItems) => {
             const updatedItems = [...prevItems];
             updatedItems[existingItemIndex] = {
@@ -37,7 +36,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
             return updatedItems;
           });
         } else {
-          // 새로운 아이템이라면, 아이템을 추가
+          // 새 아이템 추가
           setItems((prev) => [
             ...prev,
             {
@@ -53,6 +52,23 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
       isOver: !!monitor.isOver(),
     }),
   });
+  useEffect(() => {
+    // selectedMinimi에서 아직 추가되지 않은 항목만 필터링
+    const newItems = selectedMinimi.filter(
+      (minimi) => !items.some((item) => item.id === minimi.id)
+    );
+
+    if (newItems.length > 0) {
+      setItems((prev) => [
+        ...prev,
+        ...newItems.map((minimi, idx) => ({
+          ...minimi,
+          left: 200 + idx * 30,
+          top: 150,
+        })),
+      ]);
+    }
+  }, [selectedMinimi]);
 
   return (
     <div

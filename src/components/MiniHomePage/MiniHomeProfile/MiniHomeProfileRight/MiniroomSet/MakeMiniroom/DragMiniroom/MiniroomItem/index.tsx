@@ -21,7 +21,10 @@ const MiniroomItem: React.FC<MiniroomItemProps> = ({ item }) => {
   const ref = useRef<HTMLImageElement>(null);
   const [{ isDragging }, drag] = useDrag({
     type: "minimi", // 타입 설정
-    item: () => item, // 드래그 아이템 설정
+    item: () => ({
+      id: item.id, // 고유 식별자 반드시 포함
+      storeItems: item.storeItems,
+    }),
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
