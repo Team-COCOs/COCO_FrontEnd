@@ -18,6 +18,7 @@ export const SettingRightStyled = styled.div`
     overflow-wrap: break-word;
     white-space: normal;
     overflow-y: auto;
+    overflow-x: hidden;
 
     /* 스크롤바 커스텀 */
     &::-webkit-scrollbar {

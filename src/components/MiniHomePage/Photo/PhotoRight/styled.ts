@@ -18,7 +18,7 @@ export const PhotoRightStyled = styled.div`
     overflow-wrap: break-word;
     white-space: normal;
     overflow-y: auto;
-
+    overflow-x: hidden;
     /* 스크롤바 커스텀 */
     &::-webkit-scrollbar {
       width: 16px;

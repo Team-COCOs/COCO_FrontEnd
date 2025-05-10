@@ -20,9 +20,6 @@ const HomeTodayTitle = () => {
         );
         setTotal(response.data.today);
         setTodayCount(response.data.total);
-
-        console.log(response.data, "투데이수 데이터??");
-        console.log(response.data.total, "/??");
       } catch (e) {
         console.log(e, "투데이수 오류 응답");
       }
