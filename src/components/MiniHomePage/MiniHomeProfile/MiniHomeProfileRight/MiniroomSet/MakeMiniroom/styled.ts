@@ -18,6 +18,11 @@ export const MakeMiniroomStyled = styled.div`
     gap: 5px;
     justify-content: center;
     align-items: center;
+    h3 {
+      font-size: 11px;
+      color: rgb(128, 128, 128);
+      padding-top: 5px;
+    }
   }
   .MakeMiniroom_product-minimiitem img {
     width: 80%;
@@ -48,6 +53,11 @@ export const MakeMiniroomStyled = styled.div`
     gap: 5px;
     justify-content: center;
     align-items: center;
+    h3 {
+      font-size: 11px;
+      color: rgb(128, 128, 128);
+      padding-top: 5px;
+    }
   }
   .MakeMiniroom_product-item img {
     width: 100%;
@@ -58,7 +68,23 @@ export const MakeMiniroomStyled = styled.div`
   .MakeMiniroom_buyItems_tabs {
     display: flex;
     justify-content: flex-end;
-    gap: 5px;
+    align-items: center;
+    padding-top: 10px;
+    .MakeMiniroom_buyItems_miniroomtab {
+      padding: 5px;
+      /* border-top: 1.5px solid #ddd; */
+
+      /* border-left: 1.5px solid #ddd;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px; */
+    }
+    .MakeMiniroom_buyItems_minimitab {
+      padding: 5px;
+    }
+    p {
+      border-right: 1.5px solid #ddd;
+      height: 15px;
+    }
   }
 
   /* 버튼 */
@@ -109,5 +135,9 @@ export const MakeMiniroomStyled = styled.div`
     font-size: 11.5px;
     font-weight: bold;
     color: #4b4b4b;
+  }
+  /* 미니룸 미리보기 */
+  .MakeMiniroom_fixbox_wrap {
+    padding: 10px 0px;
   }
 `;

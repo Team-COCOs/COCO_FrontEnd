@@ -79,7 +79,8 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
                   onClick={() => setBuyItemTabs("미니룸")}
                 >
                   미니룸
-                </div>{" "}
+                </div>
+                <p></p>
                 <div
                   className={`MakeMiniroom_buyItems_minimitab ${
                     buyItemTabs === "미니미" ? "active" : ""
@@ -100,7 +101,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
                       key={product.id}
                       className="MakeMiniroom_productWrap_miniroom"
                     >
-                      <div className="MakeMiniroom_product-item">
+                      <div className="MakeMiniroom_product-item pixelFont">
                         <input
                           type="radio"
                           name="miniroom"
@@ -122,7 +123,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
                       key={product.id}
                       className="MakeMiniroom_productWrap_minimi"
                     >
-                      <div className="MakeMiniroom_product-minimiitem">
+                      <div className="MakeMiniroom_product-minimiitem pixelFont">
                         <input
                           type="checkbox"
                           checked={selectedMinimi.includes(product)}
