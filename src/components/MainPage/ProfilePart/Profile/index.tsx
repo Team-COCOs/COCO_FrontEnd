@@ -72,7 +72,7 @@ const Profile = ({ setHasToken }: profileProps) => {
           ...res.data,
           profile_image:
             res.data.profile_image === "/avatarImg/default.png"
-              ? res.data.gender === "man"
+              ? user?.gender === "man"
                 ? "/avatarImg/man_avatar1.png"
                 : "/avatarImg/woman_avatar1.png"
               : res.data.profile_image,

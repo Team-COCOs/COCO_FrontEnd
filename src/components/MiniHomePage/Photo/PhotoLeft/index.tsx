@@ -8,6 +8,7 @@ interface TreeNode {
   key: string;
   title: string;
   isLeaf: boolean;
+  isEditing?: boolean;
   children?: TreeNode[];
 }
 
@@ -142,111 +143,119 @@ const PhotoLeft = () => {
           checkStrictly
           checkedKeys={checkedKeys}
           onCheck={handleCheck}
-          onDrop={({ dragNode, node, dropPosition }) => {
-            const getDepth = (
+          onDrop={({ dragNode, node, dropPosition, dropToGap }) => {
+            const findNodeByKey = (
               nodes: TreeNode[],
-              key: string,
-              depth = 0
-            ): number => {
+              key: string
+            ): TreeNode | null => {
               for (const n of nodes) {
-                if (n.key === key) return depth;
+                if (n.key === key) return n;
                 if (n.children) {
-                  const d = getDepth(n.children, key, depth + 1);
-                  if (d !== -1) return d;
+                  const found = findNodeByKey(n.children, key);
+                  if (found) return found;
                 }
               }
-              return -1;
+              return null;
             };
 
-            const copyTree = (nodes: TreeNode[]): TreeNode[] =>
-              nodes.map((n) => ({
-                ...n,
-                children: n.children ? copyTree(n.children) : undefined,
-              }));
+            const getNodeDepth = (node: TreeNode): number => {
+              if (!node.children || node.children.length === 0) return 1;
+              return 1 + Math.max(...node.children.map(getNodeDepth));
+            };
 
-            const newTree = copyTree(treeData);
-            let draggedNode: TreeNode | null = null;
-
-            const removeNode = (nodes: TreeNode[]): TreeNode[] =>
-              nodes
+            const removeNode = (nodes: TreeNode[], key: string): TreeNode[] => {
+              return nodes
                 .map((n) => {
-                  if (n.key === dragNode.key) {
-                    draggedNode = n;
-                    return null;
-                  }
+                  if (n.key === key) return null;
                   if (n.children) {
-                    return { ...n, children: removeNode(n.children) };
+                    return { ...n, children: removeNode(n.children, key) };
                   }
                   return n;
                 })
                 .filter(Boolean) as TreeNode[];
+            };
 
-            const insertNode = (
+            const insertNodeInside = (
               nodes: TreeNode[],
-              targetKey: string,
-              mode: "inside" | "before" | "after"
+              parentKey: string,
+              newNode: TreeNode
             ): TreeNode[] => {
               return nodes.map((n) => {
-                if (n.key === targetKey) {
-                  if (mode === "inside") {
-                    const depth = getDepth(newTree, targetKey);
-                    if (depth >= 1) {
-                      alert("폴더 안에 폴더 안에 폴더는 허용되지 않습니다.");
-                      throw new Error("중첩 제한");
-                    }
-                    return {
-                      ...n,
-                      children: [...(n.children || []), draggedNode!],
-                    };
+                if (n.key === parentKey) {
+                  // 현재 폴더 깊이 + 드래그한 노드 깊이가 3 이상이면 거부
+                  const currentDepth = getNodeDepth(n);
+                  const newNodeDepth = getNodeDepth(newNode);
+                  if (currentDepth + newNodeDepth > 2) {
+                    alert("폴더 안에 폴더 안에 폴더는 허용되지 않습니다.");
+                    throw new Error("중첩 제한");
                   }
+                  return {
+                    ...n,
+                    children: [...(n.children || []), newNode],
+                  };
                 }
-
                 if (n.children) {
                   return {
                     ...n,
-                    children: insertNode(n.children, targetKey, mode),
+                    children: insertNodeInside(n.children, parentKey, newNode),
                   };
                 }
-
                 return n;
               });
             };
 
-            const insertBeforeAfter = (nodes: TreeNode[]): TreeNode[] => {
+            const insertBeforeAfter = (
+              nodes: TreeNode[],
+              targetKey: string,
+              newNode: TreeNode,
+              before: boolean
+            ): TreeNode[] => {
               const result: TreeNode[] = [];
-
               for (const n of nodes) {
-                if (n.key === node.key) {
-                  if (dropPosition === -1) result.push(draggedNode!);
+                if (n.key === targetKey) {
+                  if (before) result.push(newNode);
                   result.push(n);
-                  if (dropPosition === 1) result.push(draggedNode!);
+                  if (!before) result.push(newNode);
                 } else if (n.children) {
                   result.push({
                     ...n,
-                    children: insertBeforeAfter(n.children),
+                    children: insertBeforeAfter(
+                      n.children,
+                      targetKey,
+                      newNode,
+                      before
+                    ),
                   });
                 } else {
                   result.push(n);
                 }
               }
-
               return result;
             };
 
             try {
-              let updated = removeNode(newTree);
+              const dragItem = findNodeByKey(treeData, dragNode.key);
+              if (!dragItem) return;
 
-              if (dropPosition === 0) {
-                // 폴더 안에 넣는 경우
-                updated = insertNode(updated, node.key, "inside");
+              let updatedTree = removeNode(treeData, dragNode.key);
+
+              if (!dropToGap) {
+                // 노드 내부에 드롭
+                updatedTree = insertNodeInside(updatedTree, node.key, dragItem);
               } else {
-                // 위/아래에 넣는 경우
-                updated = insertBeforeAfter(updated);
+                // 노드 위/아래에 드롭
+                const before = dropPosition === -1;
+                updatedTree = insertBeforeAfter(
+                  updatedTree,
+                  node.key,
+                  dragItem,
+                  before
+                );
               }
 
-              setTreeData(updated);
+              setTreeData(updatedTree);
             } catch (e) {
-              // 오류 무시
+              console.warn("드롭 실패:", e);
             }
           }}
         />
