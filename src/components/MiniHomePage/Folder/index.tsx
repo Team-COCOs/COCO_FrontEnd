@@ -114,6 +114,18 @@ const Folder = ({ type, onSave }: FolderProps) => {
     }));
   };
 
+  // 키를 모으는 함수 -> 모두 열리게 하려고
+  const collectAllKeys = (nodes: TreeNode[]): string[] => {
+    let keys: string[] = [];
+    for (const node of nodes) {
+      keys.push(node.key);
+      if (node.children && node.children.length > 0) {
+        keys = [...keys, ...collectAllKeys(node.children)];
+      }
+    }
+    return keys;
+  };
+
   // 현 폴더 구조
   useEffect(() => {
     axios
@@ -143,6 +155,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
         }));
 
         setTreeData(nestedTreeData);
+        setExpandedKeys(collectAllKeys(nestedTreeData));
       })
       .catch((err) => {
         console.error("폴더 데이터 로딩 실패:", err);
@@ -155,6 +168,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
             children: [],
           },
         ]);
+        setExpandedKeys(["0"]);
       });
   }, [type]);
 
