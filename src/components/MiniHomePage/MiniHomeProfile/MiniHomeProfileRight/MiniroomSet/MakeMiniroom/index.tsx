@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import axiosInstance from "@/lib/axios";
 import DragMiniroom from "./DragMiniroom";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { useAuth } from "@/context/AuthContext";
 
 interface MakeMiniroomProps {
   setfixMiniroom: (value: boolean) => void;
@@ -15,6 +16,8 @@ interface MakeMiniroomProps {
 const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   const [allProduct, setAllProduct] = useState<any[]>([]);
   const [buyItemTabs, setBuyItemTabs] = useState<string>("미니룸");
+
+  const { user } = useAuth();
 
   // 선택된 제품 상태 관리
   const [selectedMiniroom, setSelectedMiniroom] = useState<any | null>(null);
@@ -25,6 +28,26 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   const DND_BACKEND = isMobile ? TouchBackend : HTML5Backend;
 
   if (typeof window === "undefined") return null;
+
+  // 기본 미니미 미니룸
+  const defaultMiniroom = {
+    id: "default-miniroom",
+    storeItems: {
+      file: "/miniroom/miniroom17.png",
+      name: "기본 미니룸",
+    },
+  };
+
+  const defaultMinimi = {
+    id: "default-minimi",
+    storeItems: {
+      file:
+        user?.gender === "woman"
+          ? "/avatarImg/woman_avatar1.png"
+          : "/avatarImg/man_avatar1.png",
+      name: "기본 미니미",
+    },
+  };
 
   useEffect(() => {
     const fetchMinimiData = async () => {
@@ -105,29 +128,31 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
                 }`}
               >
                 {buyItemTabs === "미니룸" &&
-                  miniroomProduct.map((product, index) => (
-                    <div
-                      key={product.id}
-                      className="MakeMiniroom_productWrap_miniroom"
-                    >
-                      <div className="MakeMiniroom_product-item pixelFont">
-                        <input
-                          type="radio"
-                          name="miniroom"
-                          checked={selectedMiniroom === product}
-                          onChange={() => handleMiniroomSelect(product)}
-                        />
-                        <img
-                          src={product.storeItems.file}
-                          alt={`miniroom ${index}`}
-                        />
-                        <h3>{product.storeItems.name}</h3>
+                  [defaultMiniroom, ...miniroomProduct].map(
+                    (product, index) => (
+                      <div
+                        key={product.id}
+                        className="MakeMiniroom_productWrap_miniroom"
+                      >
+                        <div className="MakeMiniroom_product-item pixelFont">
+                          <input
+                            type="radio"
+                            name="miniroom"
+                            checked={selectedMiniroom === product}
+                            onChange={() => handleMiniroomSelect(product)}
+                          />
+                          <img
+                            src={product.storeItems.file}
+                            alt={`miniroom ${index}`}
+                          />
+                          <h3>{product.storeItems.name}</h3>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
 
                 {buyItemTabs === "미니미" &&
-                  minimiProduct.map((product, index) => (
+                  [defaultMinimi, ...minimiProduct].map((product, index) => (
                     <div
                       key={product.id}
                       className="MakeMiniroom_productWrap_minimi"

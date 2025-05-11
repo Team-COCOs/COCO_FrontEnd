@@ -64,8 +64,10 @@ export const MakeMiniroomStyled = styled.div`
   }
   .MakeMiniroom_product-item img {
     width: 100%;
+    max-height: 120px;
+    min-width: 243px;
     height: auto;
-    object-fit: contain;
+    object-fit: cover;
   }
   /* 구매 상품 탭 */
   .MakeMiniroom_buyItems_tabs {
