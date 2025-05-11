@@ -36,15 +36,15 @@ const MinimiSet = () => {
 
   const handleSave = async () => {
     console.log(selectedMinimiId, "selectedMinimiId?");
-    // try {
-    //   await axiosInstance.patch("/users/minimi", {
-    //     minimiId: selectedMinimiId,
-    //   });
-    //   alert("대표 미니미가 저장되었습니다!");
-    // } catch (error) {
-    //   console.error("대표 미니미 저장 실패", error);
-    //   alert("대표 미니미 저장에 실패했습니다.");
-    // }
+    try {
+      await axiosInstance.patch("/useritems/set-minimi", {
+        minimiId: selectedMinimiId,
+      });
+      alert("대표 미니미가 저장되었습니다!");
+    } catch (error) {
+      console.error("대표 미니미 저장 실패", error);
+      alert("대표 미니미 저장에 실패했습니다.");
+    }
   };
 
   return (

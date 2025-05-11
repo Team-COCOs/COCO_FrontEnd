@@ -140,8 +140,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
           }}
           style={{
             width: "100%",
-            // height: windowWidth <= 480 ? "30vh" : "50vh",
-            border: "2px solid #ccc",
+            border: "1px solid #ddd",
             position: "relative",
             overflow: "hidden",
           }}
