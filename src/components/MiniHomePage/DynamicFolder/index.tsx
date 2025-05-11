@@ -12,10 +12,15 @@ interface FolderItem {
 
 interface DynamicFolderProps {
   onMenuSelect: (menu: { id: number; title: string }) => void;
+  selectedMenu?: { id: number; title: string } | null;
   type: string;
 }
 
-const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
+const DynamicFolder = ({
+  onMenuSelect,
+  selectedMenu,
+  type,
+}: DynamicFolderProps) => {
   const [folderTree, setFolderTree] = useState<FolderItem[]>([]);
   const router = useRouter();
   const userId = router.query.id;
@@ -82,6 +87,12 @@ const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
       });
   }, [type]);
 
+  useEffect(() => {
+    if (folderTree.length > 0 && !selectedMenu) {
+      onMenuSelect({ id: folderTree[0].id, title: folderTree[0].title });
+    }
+  }, [folderTree, selectedMenu]);
+
   const renderMenuItem = (menu: FolderItem): JSX.Element => {
     const hasChildren = menu.children && menu.children.length > 0;
 
@@ -109,7 +120,7 @@ const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
                 >
                   <span className="DynamicFolder_menu"></span>
                   <span className="DynamicFolder_menu_cursor">
-                    &nbsp;{child.title}
+                    &nbsp;📁 {child.title}
                   </span>
                 </div>
                 {child.children && child.children.length > 0 && (

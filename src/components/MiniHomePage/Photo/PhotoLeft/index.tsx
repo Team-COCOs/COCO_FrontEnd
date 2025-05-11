@@ -5,20 +5,22 @@ import DynamicFolder from "../../DynamicFolder";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 
-const PhotoLeft = () => {
+interface PhotoProps {
+  selectedMenu: { id: number; title: string } | null;
+  setSelectedMenu: React.Dispatch<
+    React.SetStateAction<{ id: number; title: string } | null>
+  >;
+}
+
+const PhotoLeft = ({ selectedMenu, setSelectedMenu }: PhotoProps) => {
   // Folder 또는 DynamicFolder 전환용
   const [editMode, setEditMode] = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState<{
-    id: number;
-    title: string;
-  } | null>(null);
+
   const router = useRouter();
   const { user } = useAuth();
   const { id } = router.query;
 
   const isMyHomepage = user?.id?.toString() === id?.toString();
-
-  console.log("내 계정", isMyHomepage);
 
   const handleSave = () => {
     // Folder에서 저장 완료 → DynamicFolder로 전환
@@ -31,21 +33,25 @@ const PhotoLeft = () => {
 
   return (
     <PhotoLeftStyled className="PhotoLeft_wrap">
-      <div className="PhotoLeft_title">Photo Album</div>
+      <div className="PhotoLeft_title pixelFont">Photo Album</div>
+      <div className="PhotoLeft_line"></div>
       {editMode ? (
         <Folder type="photos" onSave={handleSave} />
       ) : (
         <DynamicFolder
           type="photos"
+          selectedMenu={selectedMenu}
           onMenuSelect={(menu) => setSelectedMenu(menu)}
         />
       )}
 
       {!editMode && isMyHomepage && (
-        <button onClick={handleEditModeToggle} className="PhotoLeft_btn">
-          <span>⚙</span>
-          <span className="pixelFont"> 폴더관리하기 </span>
-        </button>
+        <div className="PhotoLeft_footer">
+          <button onClick={handleEditModeToggle} className="PhotoLeft_btn">
+            <span>⚙</span>
+            <span className="pixelFont"> 폴더관리하기 </span>
+          </button>
+        </div>
       )}
     </PhotoLeftStyled>
   );

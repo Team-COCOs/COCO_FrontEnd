@@ -121,7 +121,21 @@ const Folder = ({ type, onSave }: FolderProps) => {
         params: { userId },
       })
       .then((res) => {
-        const nestedTreeData = res.data.map((item: any) => ({
+        const fetchedData = res.data;
+
+        // 폴더 데이터가 비어있으면 기본 새 폴더 하나 생성
+        const dataToUse =
+          fetchedData.length === 0
+            ? [
+                {
+                  id: 0,
+                  title: "새 폴더",
+                  children: [],
+                },
+              ]
+            : fetchedData;
+
+        const nestedTreeData = dataToUse.map((item: any) => ({
           key: String(item.id),
           title: item.title,
           isLeaf: false,
@@ -132,6 +146,15 @@ const Folder = ({ type, onSave }: FolderProps) => {
       })
       .catch((err) => {
         console.error("폴더 데이터 로딩 실패:", err);
+        // 에러 발생 시에도 새 폴더 하나는 보장
+        setTreeData([
+          {
+            key: "0",
+            title: "새 폴더",
+            isLeaf: false,
+            children: [],
+          },
+        ]);
       });
   }, [type]);
 
