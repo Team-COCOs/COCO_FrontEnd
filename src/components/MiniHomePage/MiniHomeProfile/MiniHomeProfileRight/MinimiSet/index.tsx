@@ -3,8 +3,10 @@ import React from "react";
 import { MinimiSetStyled } from "./styled";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
+import { useAuth } from "@/context/AuthContext";
 
 const MinimiSet = () => {
+  const { user } = useAuth();
   const [minimiData, setMinimiData] = useState<any[]>([]);
   const [selectedMinimiId, setSelectedMinimiId] = useState<string>("default");
 
@@ -12,7 +14,6 @@ const MinimiSet = () => {
     const fetchMinimiData = async () => {
       try {
         const response = await axiosInstance.get(`/purchases`);
-        console.log(response.data, "구매 목록?");
         setMinimiData(response.data);
       } catch (e: any) {
         if (e.response && e.response.status === 401) {
@@ -65,7 +66,14 @@ const MinimiSet = () => {
           <span className="MinimiSet_blue_title Gulim">현재 대표 미니미</span>
           <div>
             <div className="MinimiSet_minimi_imgWrap nowminimi">
-              <img src={"/avatarImg/woman_avatar1.png"} alt={"first_minimi"} />
+              <img
+                src={
+                  user?.gender === "woman"
+                    ? "/avatarImg/woman_avatar1.png"
+                    : "/avatarImg/man_avatar1.png"
+                }
+                alt={"first_minimi"}
+              />
             </div>
           </div>
         </div>
@@ -80,9 +88,16 @@ const MinimiSet = () => {
               onChange={() => handleChange("default")}
             />
             <div className="MinimiSet_minimi_imgWrap">
-              <img src={"/avatarImg/woman_avatar1.png"} alt={"first_minimi"} />
+              <img
+                src={
+                  user?.gender === "woman"
+                    ? "/avatarImg/woman_avatar1.png"
+                    : "/avatarImg/man_avatar1.png"
+                }
+                alt={"first_minimi"}
+              />
             </div>
-            <div className="MinimiSet_minimi_name">기본 아바타</div>
+            <div className="MinimiSet_minimi_name">기본 미니미</div>
           </div>
           {onlyMinimi.map((minimi, index) => (
             <div key={minimi.id} className="MinimiSet_choice_wrap">
