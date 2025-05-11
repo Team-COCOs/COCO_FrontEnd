@@ -29,35 +29,42 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
     accept: ["minimi", "speechBubble"],
     drop: (item: any, monitor) => {
       const offset = monitor.getClientOffset();
-      if (offset) {
-        // 기존 아이템이 이미 있으면 위치만 업데이트, 없으면 새로 추가
-        const existingItemIndex = items.findIndex(
-          (existingItem) => existingItem.id === item.id
-        );
-        if (existingItemIndex !== -1) {
-          // 기존 아이템 위치 업데이트
-          setItems((prevItems) => {
-            const updatedItems = [...prevItems];
-            updatedItems[existingItemIndex] = {
-              ...updatedItems[existingItemIndex],
-              left: offset.x - dropRef.current!.getBoundingClientRect().left,
-              top: offset.y - dropRef.current!.getBoundingClientRect().top,
-            };
-            return updatedItems;
-          });
-        } else {
-          // 새 아이템 추가
-          setItems((prev) => [
-            ...prev,
-            {
-              ...item,
-              left: offset.x - dropRef.current!.getBoundingClientRect().left,
-              top: offset.y - dropRef.current!.getBoundingClientRect().top,
-            },
-          ]);
-        }
+      if (!offset) return;
+
+      const containerRect = dropRef.current!.getBoundingClientRect();
+
+      const offsetX = item.offsetX || 25; // fallback: 가운데 정렬
+      const offsetY = item.offsetY || 25;
+
+      const newLeft = offset.x - containerRect.left - offsetX;
+      const newTop = offset.y - containerRect.top - offsetY;
+
+      const existingItemIndex = items.findIndex(
+        (existingItem) => existingItem.id === item.id
+      );
+
+      if (existingItemIndex !== -1) {
+        setItems((prevItems) => {
+          const updatedItems = [...prevItems];
+          updatedItems[existingItemIndex] = {
+            ...updatedItems[existingItemIndex],
+            left: newLeft,
+            top: newTop,
+          };
+          return updatedItems;
+        });
+      } else {
+        setItems((prev) => [
+          ...prev,
+          {
+            ...item,
+            left: newLeft,
+            top: newTop,
+          },
+        ]);
       }
     },
+
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
