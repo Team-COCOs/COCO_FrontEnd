@@ -40,12 +40,21 @@ export const MakeMiniroomStyled = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+    @media (max-width: 480px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 
   .grid-minimi {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
+    @media (max-width: 769px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 480px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
   /* 미니룸 */
   .MakeMiniroom_productWrap_miniroom {
@@ -65,7 +74,6 @@ export const MakeMiniroomStyled = styled.div`
   .MakeMiniroom_product-item img {
     width: 100%;
     max-height: 120px;
-    min-width: 243px;
     height: auto;
     object-fit: cover;
   }
