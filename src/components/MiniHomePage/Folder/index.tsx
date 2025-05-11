@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Tree from "rc-tree";
 import "rc-tree/assets/index.css";
 import { FolderStyle } from "./styled";
@@ -6,6 +6,7 @@ import { TreeNode } from "./types";
 import { useTreeData } from "./useTreeData";
 import { useDragDrop } from "./useDragDrop";
 import { saveTreeData } from "./useFlattenTree";
+import axiosInstance from "@/lib/axios";
 
 interface FolderProps {
   type: string;
@@ -96,6 +97,37 @@ const Folder = ({ type, onSave }: FolderProps) => {
   const handleExpand = (expandedKeysValue: any) => {
     setExpandedKeys(expandedKeysValue);
   };
+
+  // 자식 폴더
+  const mapChildrenRecursive = (children: any[] | undefined): TreeNode[] => {
+    if (!children || children.length === 0) return [];
+
+    return children.map((child) => ({
+      key: String(child.id),
+      title: child.title,
+      isLeaf: false,
+      children: mapChildrenRecursive(child.children),
+    }));
+  };
+
+  // 현 폴더 구조
+  useEffect(() => {
+    axiosInstance
+      .get(`/${type}/folderList`)
+      .then((res) => {
+        const nestedTreeData = res.data.map((item: any) => ({
+          key: String(item.id),
+          title: item.title,
+          isLeaf: false,
+          children: mapChildrenRecursive(item.children),
+        }));
+
+        setTreeData(nestedTreeData);
+      })
+      .catch((err) => {
+        console.error("폴더 데이터 로딩 실패:", err);
+      });
+  }, [type]);
 
   return (
     <FolderStyle className="Folder_wrap">
