@@ -161,6 +161,22 @@ a {
   z-index: 200;
 }
 
+.rc-tree-node-selected {
+  width: 80%;
+  background-color: #f86f135d !important;
+  box-shadow: #f87013 !important;
+}
+
+.rc-tree .rc-tree-treenode {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.rc-tree .rc-tree-treenode.drop-target {
+  background-color: #e3e3e393 !important;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

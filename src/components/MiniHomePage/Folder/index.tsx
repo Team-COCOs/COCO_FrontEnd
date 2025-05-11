@@ -161,13 +161,24 @@ const Folder = ({ type, onSave }: FolderProps) => {
   return (
     <FolderStyle className="Folder_wrap">
       <div className="Folder_btns">
-        <button onClick={() => handleEdit("add")}>추가</button>
+        <button className="pixelFont" onClick={() => handleEdit("add")}>
+          추가
+        </button>
         {isEditing ? (
-          <button onClick={handleFinishEditing}>수정 완료</button>
+          <button
+            onClick={handleFinishEditing}
+            className="Folder_editingBtn pixelFont"
+          >
+            수정 완료
+          </button>
         ) : (
-          <button onClick={handleStartEditing}>수정</button>
+          <button onClick={handleStartEditing} className="pixelFont">
+            수정
+          </button>
         )}
-        <button onClick={() => handleEdit("delete")}>삭제</button>
+        <button onClick={() => handleEdit("delete")} className="pixelFont">
+          삭제
+        </button>
       </div>
 
       <div className="Folder_componentWrap">
@@ -181,7 +192,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
           expandedKeys={expandedKeys}
           onExpand={handleExpand}
           titleRender={(node: TreeNode) => (
-            <span>
+            <span className="Folder_text pixelFont">
               {node.key === checkedKeys[0] && isEditing ? (
                 <input
                   type="text"
@@ -198,9 +209,12 @@ const Folder = ({ type, onSave }: FolderProps) => {
         />
       </div>
 
-      <button className="Folder_submit" onClick={handleSave}>
-        저장
-      </button>
+      <div className="Folder_footer" onClick={handleSave}>
+        <button className="Folder_submit">
+          <span>⚙</span>
+          <span className="pixelFont"> 폴더저장하기 </span>
+        </button>
+      </div>
     </FolderStyle>
   );
 };
