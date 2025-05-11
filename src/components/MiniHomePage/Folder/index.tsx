@@ -6,10 +6,8 @@ import { TreeNode } from "./types";
 import { useTreeData } from "./useTreeData";
 import { useDragDrop } from "./useDragDrop";
 import { saveTreeData } from "./useFlattenTree";
-import axiosInstance from "@/lib/axios";
-import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 interface FolderProps {
   type: string;
@@ -119,7 +117,9 @@ const Folder = ({ type, onSave }: FolderProps) => {
   // 현 폴더 구조
   useEffect(() => {
     axios
-      .get(`/${type}/folderList`, { params: { userId } })
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/${type}/folderList`, {
+        params: { userId },
+      })
       .then((res) => {
         const nestedTreeData = res.data.map((item: any) => ({
           key: String(item.id),
@@ -155,8 +155,8 @@ const Folder = ({ type, onSave }: FolderProps) => {
           checkStrictly
           checkedKeys={checkedKeys}
           onCheck={handleCheck}
-          expandedKeys={expandedKeys} // expandedKeys 추가
-          onExpand={handleExpand} // onExpand 이벤트 추가
+          expandedKeys={expandedKeys}
+          onExpand={handleExpand}
           titleRender={(node: TreeNode) => (
             <span>
               {node.key === checkedKeys[0] && isEditing ? (

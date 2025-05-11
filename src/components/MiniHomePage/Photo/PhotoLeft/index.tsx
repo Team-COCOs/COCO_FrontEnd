@@ -43,7 +43,8 @@ const PhotoLeft = () => {
 
       {!editMode && isMyHomepage && (
         <button onClick={handleEditModeToggle} className="PhotoLeft_btn">
-          ⚙ 폴더관리하기
+          <span>⚙</span>
+          <span className="pixelFont"> 폴더관리하기 </span>
         </button>
       )}
     </PhotoLeftStyled>
