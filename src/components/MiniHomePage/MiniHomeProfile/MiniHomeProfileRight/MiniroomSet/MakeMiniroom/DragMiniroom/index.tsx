@@ -124,8 +124,8 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
         id: Date.now(), // uuid 또는 Date.now() 사용
         type: "speechBubble",
         text: "",
-        left: 40, // % 단위
-        top: 10, // % 단위
+        left: "40%", // % 단위
+        top: "40%", // % 단위
       },
     ]);
   };
