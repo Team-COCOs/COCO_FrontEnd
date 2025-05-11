@@ -67,26 +67,39 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     fetchMinimiData();
   }, []);
 
-  const miniroomProduct = allProduct.filter((product) => {
-    return product.storeItems.category === "miniroom";
-  });
+  // const miniroomProduct = allProduct.filter((product) => {
+  //   return product.storeItems.category === "miniroom";
+  // });
 
-  const minimiProduct = allProduct.filter((product) => {
-    return product.storeItems.category === "minimi";
-  });
+  // const minimiProduct = allProduct.filter((product) => {
+  //   return product.storeItems.category === "minimi";
+  // });
+  const miniroomProduct = [
+    defaultMiniroom,
+    ...allProduct.filter(
+      (product) => product.storeItems.category === "miniroom"
+    ),
+  ];
+
+  const minimiProduct = [
+    defaultMinimi,
+    ...allProduct.filter((product) => product.storeItems.category === "minimi"),
+  ];
 
   const handleMiniroomSelect = (product: any) => {
     setSelectedMiniroom(product);
   };
 
   const handleMinimiSelect = (product: any) => {
-    setSelectedMinimi((prev) =>
-      prev.includes(product)
-        ? prev.filter((item) => item !== product)
-        : [...prev, product]
-    );
+    setSelectedMinimi((prev) => {
+      const exists = prev.some((item) => item.id === product.id);
+      if (exists) {
+        return prev.filter((item) => item.id !== product.id);
+      } else {
+        return [...prev, product];
+      }
+    });
   };
-
   return (
     <DndProvider backend={DND_BACKEND} options={{ enableMouseEvents: true }}>
       <MakeMiniroomStyled>
@@ -128,31 +141,29 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
                 }`}
               >
                 {buyItemTabs === "미니룸" &&
-                  [defaultMiniroom, ...miniroomProduct].map(
-                    (product, index) => (
-                      <div
-                        key={product.id}
-                        className="MakeMiniroom_productWrap_miniroom"
-                      >
-                        <div className="MakeMiniroom_product-item pixelFont">
-                          <input
-                            type="radio"
-                            name="miniroom"
-                            checked={selectedMiniroom === product}
-                            onChange={() => handleMiniroomSelect(product)}
-                          />
-                          <img
-                            src={product.storeItems.file}
-                            alt={`miniroom ${index}`}
-                          />
-                          <h3>{product.storeItems.name}</h3>
-                        </div>
+                  miniroomProduct.map((product, index) => (
+                    <div
+                      key={product.id}
+                      className="MakeMiniroom_productWrap_miniroom"
+                    >
+                      <div className="MakeMiniroom_product-item pixelFont">
+                        <input
+                          type="radio"
+                          name="miniroom"
+                          checked={selectedMiniroom?.id === product.id}
+                          onChange={() => handleMiniroomSelect(product)}
+                        />
+                        <img
+                          src={product.storeItems.file}
+                          alt={`miniroom ${index}`}
+                        />
+                        <h3>{product.storeItems.name}</h3>
                       </div>
-                    )
-                  )}
+                    </div>
+                  ))}
 
                 {buyItemTabs === "미니미" &&
-                  [defaultMinimi, ...minimiProduct].map((product, index) => (
+                  minimiProduct.map((product, index) => (
                     <div
                       key={product.id}
                       className="MakeMiniroom_productWrap_minimi"
@@ -160,7 +171,9 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
                       <div className="MakeMiniroom_product-minimiitem pixelFont">
                         <input
                           type="checkbox"
-                          checked={selectedMinimi.includes(product)}
+                          checked={selectedMinimi.some(
+                            (item) => item.id === product.id
+                          )}
                           onChange={() => handleMinimiSelect(product)}
                         />
                         <img
