@@ -13,16 +13,22 @@ export const DynamicFolderStyled = styled.div`
     padding-left: 0 !important;
   }
 
-  padding-top: 20px;
-  padding-left: 18px;
+  padding-top: 10px;
+  padding-left: 7px;
   font-size: 12px;
 
-  .MiniHomeProfileLeftMenu_dotted_wrap {
+  .DynamicFolder_dotted_wrap {
     display: flex;
     height: 13px;
     margin-bottom: 10px;
     margin-top: 5px;
     padding-left: 5px;
+
+    .DynamicFolder_menu {
+      border-left: 2px dotted #bbb;
+      border-bottom: 2px dotted #bbb;
+      padding: 0 4px;
+    }
 
     li {
       padding-left: 5px;
@@ -47,13 +53,19 @@ export const DynamicFolderStyled = styled.div`
     content: "";
   }
 
+  .DynamicFolder_texts {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
   .dot-symbol {
     color: orange;
-    font-size: 8px;
+    font-size: 12px;
     padding-right: 5px;
   }
 
-  .MiniHomeProfileLeftMenu_menu_cursor {
+  .DynamicFolder_menu_cursor {
     cursor: pointer;
   }
 `;

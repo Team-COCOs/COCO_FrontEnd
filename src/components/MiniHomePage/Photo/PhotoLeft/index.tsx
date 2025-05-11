@@ -2,6 +2,8 @@ import { useState } from "react";
 import { PhotoLeftStyled } from "./styled";
 import Folder from "../../Folder";
 import DynamicFolder from "../../DynamicFolder";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/router";
 
 const PhotoLeft = () => {
   // Folder 또는 DynamicFolder 전환용
@@ -10,6 +12,13 @@ const PhotoLeft = () => {
     id: number;
     title: string;
   } | null>(null);
+  const router = useRouter();
+  const { user } = useAuth();
+  const { id } = router.query;
+
+  const isMyHomepage = user?.id?.toString() === id?.toString();
+
+  console.log("내 계정", isMyHomepage);
 
   const handleSave = () => {
     // Folder에서 저장 완료 → DynamicFolder로 전환
@@ -22,9 +31,7 @@ const PhotoLeft = () => {
 
   return (
     <PhotoLeftStyled className="PhotoLeft_wrap">
-      {/* 수정하기 버튼 추가 */}
-      {!editMode && <button onClick={handleEditModeToggle}>수정하기</button>}
-
+      <div className="PhotoLeft_title">Photo Album</div>
       {editMode ? (
         <Folder type="photos" onSave={handleSave} />
       ) : (
@@ -32,6 +39,12 @@ const PhotoLeft = () => {
           type="photos"
           onMenuSelect={(menu) => setSelectedMenu(menu)}
         />
+      )}
+
+      {!editMode && isMyHomepage && (
+        <button onClick={handleEditModeToggle} className="PhotoLeft_btn">
+          ⚙ 폴더관리하기
+        </button>
       )}
     </PhotoLeftStyled>
   );

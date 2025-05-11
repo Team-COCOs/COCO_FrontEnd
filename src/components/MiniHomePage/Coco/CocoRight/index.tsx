@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { CocoRightStyled } from "./styled";
 import { useEffect } from "react";
 

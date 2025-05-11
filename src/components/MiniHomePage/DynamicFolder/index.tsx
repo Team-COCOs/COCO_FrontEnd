@@ -1,6 +1,8 @@
 import React, { JSX, useEffect, useState } from "react";
-import axiosInstance from "@/lib/axios";
+import { useAuth } from "@/context/AuthContext";
 import { DynamicFolderStyled } from "./styled";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 interface FolderItem {
   id: number;
@@ -16,6 +18,8 @@ interface DynamicFolderProps {
 
 const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
   const [folderTree, setFolderTree] = useState<FolderItem[]>([]);
+  const router = useRouter();
+  const userId = router.query.id;
 
   const getDefaultFolder = (): FolderItem[] => [
     {
@@ -57,8 +61,8 @@ const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
   };
 
   useEffect(() => {
-    axiosInstance
-      .get(`/${type}/folderList`)
+    axios
+      .get(`/${type}/folderList`, { params: { userId } })
       .then((res) => {
         const normalizedData: FolderItem[] = res.data.map((item: any) => ({
           id: item.id,
@@ -81,32 +85,28 @@ const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
 
     return (
       <li key={menu.id} className={hasChildren ? "has-children" : ""}>
-        <span className="dot-symbol">◉</span>
-        <span
-          className="MiniHomeProfileLeftMenu_menu_cursor"
-          onClick={() => onMenuSelect({ id: menu.id, title: menu.title })}
-        >
-          {menu.title}
-        </span>
+        <div className="DynamicFolder_texts">
+          <span className="dot-symbol">📁</span>
+          <span
+            className="DynamicFolder_menu_cursor"
+            onClick={() => onMenuSelect({ id: menu.id, title: menu.title })}
+          >
+            {menu.title}
+          </span>
+        </div>
 
         {hasChildren && (
           <ul>
             {menu.children!.map((child) => (
               <li key={child.id}>
                 <div
-                  className="MiniHomeProfileLeftMenu_dotted_wrap"
+                  className="DynamicFolder_dotted_wrap"
                   onClick={() =>
                     onMenuSelect({ id: child.id, title: child.title })
                   }
                 >
-                  <span
-                    style={{
-                      borderLeft: "2px dotted #bbb",
-                      borderBottom: "2px dotted #bbb",
-                      padding: "0 4px",
-                    }}
-                  ></span>
-                  <span className="MiniHomeProfileLeftMenu_menu_cursor">
+                  <span className="DynamicFolder_menu"></span>
+                  <span className="DynamicFolder_menu_cursor">
                     &nbsp;{child.title}
                   </span>
                 </div>
@@ -125,7 +125,7 @@ const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
 
   return (
     <DynamicFolderStyled>
-      <div className="MiniHomeProfileLeftMenu">
+      <div className="DynamicForder">
         <ul>{folderTree.map((folder) => renderMenuItem(folder))}</ul>
       </div>
     </DynamicFolderStyled>
