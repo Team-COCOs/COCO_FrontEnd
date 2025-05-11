@@ -71,24 +71,35 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
   });
 
   useEffect(() => {
+    if (!dropRef.current) return;
+
+    const container = dropRef.current;
+    const { width, height } = container.getBoundingClientRect();
+
     setItems((prevItems) => {
-      // selectedMinimi에 포함되지 않은 minimi는 제거 (말풍선은 유지)
       const updatedItems = prevItems.filter(
         (item) =>
           item.type === "speechBubble" ||
           selectedMinimi.some((minimi) => minimi.id === item.id)
       );
 
-      // 새로 추가된 미니미를 찾아서 중앙에 배치
       const newMinimis = selectedMinimi.filter(
         (minimi) => !updatedItems.some((item) => item.id === minimi.id)
       );
 
-      const newlyAdded = newMinimis.map((minimi, idx) => ({
-        ...minimi,
-        left: 200 + idx * 30,
-        top: 150,
-      }));
+      const newlyAdded = newMinimis.map((minimi, idx) => {
+        const itemWidth = 50; // 미니미 가로 크기 (정확한 값으로 교체 가능)
+        const itemHeight = 50; // 미니미 세로 크기
+
+        const centerX = width / 2 - itemWidth / 2 + idx * 30;
+        const centerY = height / 2 - itemHeight / 2;
+
+        return {
+          ...minimi,
+          left: centerX,
+          top: centerY,
+        };
+      });
 
       return [...updatedItems, ...newlyAdded];
     });

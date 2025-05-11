@@ -1,10 +1,12 @@
 import React from "react";
 import { MakeMiniroomStyled } from "./styled";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { TouchBackend } from "react-dnd-touch-backend";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/lib/axios";
 import DragMiniroom from "./DragMiniroom";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 interface MakeMiniroomProps {
   setfixMiniroom: (value: boolean) => void;
@@ -17,6 +19,12 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   // 선택된 제품 상태 관리
   const [selectedMiniroom, setSelectedMiniroom] = useState<any | null>(null);
   const [selectedMinimi, setSelectedMinimi] = useState<any[]>([]);
+
+  // 모바일 여부 확인
+  const isMobile = useIsMobile();
+  const DND_BACKEND = isMobile ? TouchBackend : HTML5Backend;
+
+  if (typeof window === "undefined") return null;
 
   useEffect(() => {
     const fetchMinimiData = async () => {
@@ -56,7 +64,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={DND_BACKEND} options={{ enableMouseEvents: true }}>
       <MakeMiniroomStyled>
         <div className="MinimiSet_wrap">
           <div className="MakeMiniroom_titleWrap">
