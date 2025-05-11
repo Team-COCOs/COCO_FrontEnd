@@ -10,8 +10,19 @@ export const PhotoLeftStyled = styled.div`
     overflow-y: scroll;
 
     .PhotoLeft_btn {
-      width: 80%;
+      text-align: left;
+      font-size: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      position: relative;
+      bottom: 5px;
+      width: 95%;
       margin: 0 auto;
+      padding: 3px 10px;
+      background-color: white;
+      border: 1px solid rgb(174, 174, 174);
+      cursor: pointer;
     }
 
     @media (max-width: 768px) {
