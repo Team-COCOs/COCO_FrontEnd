@@ -11,7 +11,7 @@ const MiniHomeProfileLeftMenu = ({
   menuData: any;
   language?: string;
   onMenuSelect: (menu: { type?: string; title: string }) => void;
-  setfixMiniroom: React.Dispatch<React.SetStateAction<boolean>>;
+  setfixMiniroom?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const selectedMenuData = menuData[language] || menuData.ko;
 
@@ -30,7 +30,7 @@ const MiniHomeProfileLeftMenu = ({
                 key={child.title}
                 onClick={() => {
                   onMenuSelect(child);
-                  setfixMiniroom(false);
+                  setfixMiniroom?.(false);
                 }}
               >
                 <span

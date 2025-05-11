@@ -1,9 +1,13 @@
 import { SettingLeftStyled } from "./styled";
 import { useState } from "react";
-import { settingLeftTabs } from "@/constants/SettingLeftTabs";
+import { settingLeftTabs } from "@/constants/settingLeftTabs";
 import MiniHomeProfileLeftMenu from "@/components/MiniHomePage/MiniHomeProfile/MiniHomeProfileLeft/MiniHomeProfileLeftMenu";
 
-const SettingLeft = () => {
+const SettingLeft = ({
+  setSettingSelectedMenu,
+}: {
+  setSettingSelectedMenu: (menu: { type?: string; title: string }) => void;
+}) => {
   const [language, setLanguage] = useState("ko"); // 초기 언어는 "ko"
 
   const toggleLanguage = () => {
@@ -15,6 +19,7 @@ const SettingLeft = () => {
       <div className="SettingLeft_wrap Gulim">
         <div className="SettingLeft_componentWrap">
           <MiniHomeProfileLeftMenu
+            onMenuSelect={setSettingSelectedMenu}
             menuData={settingLeftTabs}
             language={language}
           />

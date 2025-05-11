@@ -66,6 +66,12 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
   // 프로필 미니룸 꾸미기 탭 관리
   const [fixMiniroom, setfixMiniroom] = useState<boolean>(false);
 
+  // 관리 메뉴 탭 관리
+  const [settingSelectedMenu, setSettingSelectedMenu] = useState<{
+    type?: string;
+    title: string;
+  } | null>(null);
+
   // 페이지가 처음 로드될 때 로딩 상태 종료
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -78,6 +84,13 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
   useEffect(() => {
     if (activeTab !== "Profile") {
       setProfileSelectedMenu(null);
+    }
+  }, [activeTab]);
+
+  // 탭 바뀔때 관리 내부 초기화
+  useEffect(() => {
+    if (activeTab !== "Setting") {
+      setSettingSelectedMenu(null);
     }
   }, [activeTab]);
 
@@ -133,7 +146,9 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                         ) : activeTab === "Photo" ? (
                           <PhotoLeft />
                         ) : activeTab === "Setting" ? (
-                          <SettingLeft />
+                          <SettingLeft
+                            setSettingSelectedMenu={setSettingSelectedMenu}
+                          />
                         ) : (
                           ""
                         )}
@@ -180,7 +195,9 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                         ) : activeTab === "Coco" ? (
                           <CocoRight />
                         ) : activeTab === "Setting" ? (
-                          <SettingRight />
+                          <SettingRight
+                            settingSelectedMenu={settingSelectedMenu}
+                          />
                         ) : (
                           ""
                         )}

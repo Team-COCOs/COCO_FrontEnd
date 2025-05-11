@@ -41,7 +41,11 @@ const MinimiSet = () => {
         purchaseId: selectedMinimiId,
       });
       alert("대표 미니미가 저장되었습니다!");
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.response?.status === 401) {
+        alert("로그인이 필요합니다.");
+        window.location.reload();
+      }
       console.error("대표 미니미 저장 실패", error);
       alert("대표 미니미 저장에 실패했습니다.");
     }
