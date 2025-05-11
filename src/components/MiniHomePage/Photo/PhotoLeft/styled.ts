@@ -16,23 +16,5 @@ export const PhotoLeftStyled = styled.div`
     &::-webkit-scrollbar {
       width: 0px;
     }
-
-    .PhotoLeft_btns {
-      width: 100%;
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-      margin-bottom: 20px;
-    }
-
-    .PhotoLeft_submit {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-
-    button {
-      width: 50px;
-    }
   }
 `;

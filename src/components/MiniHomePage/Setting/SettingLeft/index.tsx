@@ -14,7 +14,6 @@ const SettingLeft = () => {
     <SettingLeftStyled>
       <div className="SettingLeft_wrap Gulim">
         <div className="SettingLeft_componentWrap">
-          {" "}
           <MiniHomeProfileLeftMenu
             menuData={settingLeftTabs}
             language={language}
