@@ -2,6 +2,7 @@ import { HomeLeftStyled } from "./styled";
 import { useEffect } from "react";
 import HomeFriends from "./HomeFriends";
 import HomeProfile from "../../Home/HomeLeft/HomeProfile";
+import { useRouter } from "next/router";
 
 const HomeLeft = () => {
   return (

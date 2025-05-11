@@ -2,6 +2,7 @@ import React, { JSX, useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { DynamicFolderStyled } from "./styled";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 interface FolderItem {
   id: number;
@@ -17,8 +18,8 @@ interface DynamicFolderProps {
 
 const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
   const [folderTree, setFolderTree] = useState<FolderItem[]>([]);
-  const { user } = useAuth();
-  const userId = user?.id;
+  const router = useRouter();
+  const userId = router.query.id;
 
   const getDefaultFolder = (): FolderItem[] => [
     {

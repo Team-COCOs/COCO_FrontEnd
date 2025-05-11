@@ -9,6 +9,7 @@ import { saveTreeData } from "./useFlattenTree";
 import axiosInstance from "@/lib/axios";
 import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
+import { Router, useRouter } from "next/router";
 
 interface FolderProps {
   type: string;
@@ -16,8 +17,8 @@ interface FolderProps {
 }
 
 const Folder = ({ type, onSave }: FolderProps) => {
-  const { user } = useAuth();
-  const userId = user?.id;
+  const router = useRouter();
+  const userId = router.query.id;
 
   const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
   // 폴더 축소, 확대
