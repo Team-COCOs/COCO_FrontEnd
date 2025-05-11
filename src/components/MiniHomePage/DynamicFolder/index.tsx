@@ -62,7 +62,9 @@ const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
 
   useEffect(() => {
     axios
-      .get(`/${type}/folderList`, { params: { userId } })
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/${type}/folderList`, {
+        params: { userId },
+      })
       .then((res) => {
         const normalizedData: FolderItem[] = res.data.map((item: any) => ({
           id: item.id,
@@ -75,6 +77,7 @@ const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
         setFolderTree(treeData);
       })
       .catch((err) => {
+        console.log(type);
         console.error("폴더 데이터 로딩 실패:", err);
         setFolderTree(getDefaultFolder());
       });
