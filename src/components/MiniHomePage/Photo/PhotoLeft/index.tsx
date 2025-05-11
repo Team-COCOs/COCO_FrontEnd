@@ -1,22 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PhotoLeftStyled } from "./styled";
-import Tree from "rc-tree";
-import "rc-tree/assets/index.css";
-import axiosInstance from "@/lib/axios";
 import Folder from "../../Folder";
 import DynamicFolder from "../../DynamicFolder";
 
-interface TreeNode {
-  key: string;
-  title: string;
-  isLeaf: boolean;
-  isEditing?: boolean;
-  children?: TreeNode[];
-  parent_id?: string | null;
-}
-
 const PhotoLeft = () => {
-  const [editMode, setEditMode] = useState(false); // Folder 또는 DynamicFolder 전환용
+  // Folder 또는 DynamicFolder 전환용
+  const [editMode, setEditMode] = useState(false);
   const [selectedMenu, setSelectedMenu] = useState<{
     id: number;
     title: string;
@@ -27,8 +16,15 @@ const PhotoLeft = () => {
     setEditMode(false);
   };
 
+  const handleEditModeToggle = () => {
+    setEditMode(true); // 수정하기 버튼 눌렀을 때 Folder 컴포넌트 보이도록
+  };
+
   return (
     <PhotoLeftStyled className="PhotoLeft_wrap">
+      {/* 수정하기 버튼 추가 */}
+      {!editMode && <button onClick={handleEditModeToggle}>수정하기</button>}
+
       {editMode ? (
         <Folder type="photos" onSave={handleSave} />
       ) : (

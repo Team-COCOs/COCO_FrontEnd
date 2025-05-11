@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { DynamicFolderStyled } from "./styled";
 
@@ -17,22 +17,38 @@ interface DynamicFolderProps {
 const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
   const [folderTree, setFolderTree] = useState<FolderItem[]>([]);
 
+  const getDefaultFolder = (): FolderItem[] => [
+    {
+      id: 0,
+      title: "새 폴더",
+      parent_id: null,
+      children: [],
+    },
+  ];
+
   const buildTree = (data: FolderItem[]): FolderItem[] => {
+    if (!data || data.length === 0) return getDefaultFolder();
+
     const idMap = new Map<number, FolderItem>();
     const tree: FolderItem[] = [];
 
     data.forEach((item) => {
-      idMap.set(item.id, { ...item, children: [] });
+      idMap.set(item.id, {
+        ...item,
+        children: item.children ?? [],
+      });
     });
 
     data.forEach((item) => {
-      const current = idMap.get(item.id)!;
-      if (item.parent_id !== null) {
-        const parent = idMap.get(item.parent_id);
+      const current = idMap.get(item.id);
+      const parentId = item.parent_id;
+
+      if (current && parentId !== null) {
+        const parent = idMap.get(parentId);
         if (parent) {
           parent.children!.push(current);
         }
-      } else {
+      } else if (current) {
         tree.push(current);
       }
     });
@@ -44,16 +60,23 @@ const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
     axiosInstance
       .get(`/${type}/folderList`)
       .then((res) => {
-        console.log("폴더 데이터 : ", res.data);
-        const treeData = buildTree(res.data.folders);
+        const normalizedData: FolderItem[] = res.data.map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          parent_id: item.parent?.id ?? null,
+          children: item.children ?? [],
+        }));
+
+        const treeData = buildTree(normalizedData);
         setFolderTree(treeData);
       })
       .catch((err) => {
         console.error("폴더 데이터 로딩 실패:", err);
+        setFolderTree(getDefaultFolder());
       });
-  }, []);
+  }, [type]);
 
-  const renderMenuItem = (menu: FolderItem) => {
+  const renderMenuItem = (menu: FolderItem): JSX.Element => {
     const hasChildren = menu.children && menu.children.length > 0;
 
     return (
@@ -65,27 +88,34 @@ const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
         >
           {menu.title}
         </span>
+
         {hasChildren && (
           <ul>
             {menu.children!.map((child) => (
-              <div
-                className="MiniHomeProfileLeftMenu_dotted_wrap"
-                key={child.id}
-                onClick={() =>
-                  onMenuSelect({ id: child.id, title: child.title })
-                }
-              >
-                <span
-                  style={{
-                    borderLeft: "2px dotted #bbb",
-                    borderBottom: "2px dotted #bbb",
-                    padding: "0 4px",
-                  }}
-                ></span>
-                <li className="MiniHomeProfileLeftMenu_menu_cursor">
-                  &nbsp;{child.title}
-                </li>
-              </div>
+              <li key={child.id}>
+                <div
+                  className="MiniHomeProfileLeftMenu_dotted_wrap"
+                  onClick={() =>
+                    onMenuSelect({ id: child.id, title: child.title })
+                  }
+                >
+                  <span
+                    style={{
+                      borderLeft: "2px dotted #bbb",
+                      borderBottom: "2px dotted #bbb",
+                      padding: "0 4px",
+                    }}
+                  ></span>
+                  <span className="MiniHomeProfileLeftMenu_menu_cursor">
+                    &nbsp;{child.title}
+                  </span>
+                </div>
+                {child.children && child.children.length > 0 && (
+                  <ul>
+                    {child.children.map((grand) => renderMenuItem(grand))}
+                  </ul>
+                )}
+              </li>
             ))}
           </ul>
         )}
