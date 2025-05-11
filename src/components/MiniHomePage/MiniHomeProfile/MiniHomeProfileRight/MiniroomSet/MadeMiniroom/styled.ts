@@ -23,7 +23,7 @@ export const MadeMiniroomStyled = styled.div`
   }
   .MadeMiniroom_imgWrap {
     width: 100%;
-    height: 260px;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -140,7 +140,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
           }}
           style={{
             width: "100%",
-            height: windowWidth <= 480 ? "30vh" : "50vh",
+            // height: windowWidth <= 480 ? "30vh" : "50vh",
             border: "2px solid #ccc",
             position: "relative",
             overflow: "hidden",
@@ -151,7 +151,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
             <img
               src={selectedMiniroom.storeItems.file}
               alt="miniroom background"
-              style={{ width: "100%", height: "100%", position: "absolute" }}
+              style={{ width: "100%", height: "auto", display: "block" }}
             />
           )}
 
