@@ -45,7 +45,8 @@ const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
       .get(`/${type}/folderList`)
       .then((res) => {
         console.log("폴더 데이터 : ", res.data);
-        const treeData = buildTree(res.data.folders);
+        const folders = res.data.folders || [];
+        const treeData = buildTree(folders);
         setFolderTree(treeData);
       })
       .catch((err) => {
