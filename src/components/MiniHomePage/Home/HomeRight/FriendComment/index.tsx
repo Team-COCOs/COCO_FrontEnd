@@ -91,6 +91,7 @@ const FriendComment = () => {
     } catch (error: any) {
       if (error.response?.status !== 401) {
         alert("로그인이 필요합니다.");
+        window.location.reload();
       } else {
         alert("일촌평 삭제 중 오류가 발생했습니다.");
       }

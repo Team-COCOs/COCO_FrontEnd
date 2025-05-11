@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { CocoWorldPageStyled } from "./styled";
 import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
+
 // 미니홈피 투데이
 import HomeTodayTitle from "../../components/MiniHomePage/Home/HomeTodayTitle";
 // 미니홈피 이름
@@ -39,6 +41,8 @@ interface CocoWorldPageProps {
 }
 
 const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
+  const { user } = useAuth();
+  const isOwner = String(user?.id) === id;
   // 탭 상태 관리
   const [activeTab, setActiveTab] = useState<string>("Home");
   const router = useRouter();
@@ -191,7 +195,11 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                 </div>
                 {/* 미니홈피 탭 */}
                 <div className="CocoWorldPage_Tab_Wrap">
-                  <HomeTab activeTab={activeTab} onTabClick={handleTabClick} />
+                  <HomeTab
+                    activeTab={activeTab}
+                    onTabClick={handleTabClick}
+                    isOwner={isOwner}
+                  />
                 </div>
               </div>
             </div>

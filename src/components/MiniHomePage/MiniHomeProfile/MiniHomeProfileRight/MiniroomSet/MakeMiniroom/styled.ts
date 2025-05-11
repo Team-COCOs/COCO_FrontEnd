@@ -2,7 +2,10 @@ import styled from "styled-components";
 
 export const MakeMiniroomStyled = styled.div`
   width: 100%;
+  height: 100%;
   .MakeMiniroom_titleWrap {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     padding-top: 10px;
@@ -139,5 +142,7 @@ export const MakeMiniroomStyled = styled.div`
   /* 미니룸 미리보기 */
   .MakeMiniroom_fixbox_wrap {
     padding: 10px 0px;
+    width: 100%;
+    height: 100%;
   }
 `;

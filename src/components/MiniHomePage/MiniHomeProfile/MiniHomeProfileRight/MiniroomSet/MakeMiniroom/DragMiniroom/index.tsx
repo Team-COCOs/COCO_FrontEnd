@@ -3,6 +3,7 @@ import { useDrop } from "react-dnd";
 import MiniroomItem from "./MiniroomItem";
 import { useRef } from "react";
 import SpeechBubble from "./SpeechBubble";
+import { DragMiniroomStyled } from "./styled";
 
 interface DragMiniroomProps {
   selectedMiniroom: any | null;
@@ -24,6 +25,16 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
 }) => {
   const [items, setItems] = useState<any[]>([]);
   const dropRef = useRef<HTMLDivElement>(null);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const [{ isOver }, drop] = useDrop({
     accept: ["minimi", "speechBubble"],
@@ -113,70 +124,72 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
         id: Date.now(), // uuid 또는 Date.now() 사용
         type: "speechBubble",
         text: "",
-        left: "40%",
-        top: 100,
+        left: 40, // % 단위
+        top: 10, // % 단위
       },
     ]);
   };
 
   return (
-    <>
-      <div
-        ref={(node) => {
-          drop(node);
-          dropRef.current = node;
-        }}
-        style={{
-          width: "100%",
-          minHeight: 300,
-          border: "2px solid #ccc",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        {/* 미니룸 배경 */}
-        {selectedMiniroom && (
-          <img
-            src={selectedMiniroom.storeItems.file}
-            alt="miniroom background"
-            style={{ width: "100%", height: "100%", position: "absolute" }}
-          />
-        )}
+    <DragMiniroomStyled>
+      <div className="DragMiniroom_allWrap">
+        <div
+          ref={(node) => {
+            drop(node);
+            dropRef.current = node;
+          }}
+          style={{
+            width: "100%",
+            height: windowWidth <= 480 ? "30vh" : "50vh",
+            border: "2px solid #ccc",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          {/* 미니룸 배경 */}
+          {selectedMiniroom && (
+            <img
+              src={selectedMiniroom.storeItems.file}
+              alt="miniroom background"
+              style={{ width: "100%", height: "100%", position: "absolute" }}
+            />
+          )}
 
-        {/* 드래그된 미니미 아이템 */}
-        {items.map((item) => {
-          if (item.type === "speechBubble") {
-            return (
-              <SpeechBubble
-                key={item.id}
-                item={item}
-                onTextChange={(id, text) => {
-                  setItems((prev) =>
-                    prev.map((el) => (el.id === id ? { ...el, text } : el))
-                  );
+          {/* 드래그된 미니미 아이템 */}
+          {items.map((item) => {
+            if (item.type === "speechBubble") {
+              return (
+                <SpeechBubble
+                  key={item.id}
+                  item={item}
+                  onTextChange={(id, text) => {
+                    setItems((prev) =>
+                      prev.map((el) => (el.id === id ? { ...el, text } : el))
+                    );
+                  }}
+                />
+              );
+            } else {
+              return <MiniroomItem key={item.id} item={item} />;
+            }
+          })}
+
+          {/* 최초 선택된 미니미들을 화면 중앙에 배치 */}
+          {items.length === 0 &&
+            selectedMinimi.map((minimi, idx) => (
+              <MiniroomItem
+                key={idx}
+                item={{
+                  ...minimi,
+                  left: 50, // % 단위
+                  top: 50, // % 단위
                 }}
               />
-            );
-          } else {
-            return <MiniroomItem key={item.id} item={item} />;
-          }
-        })}
-
-        {/* 최초 선택된 미니미들을 화면 중앙에 배치 */}
-        {items.length === 0 &&
-          selectedMinimi.map((minimi, idx) => (
-            <MiniroomItem
-              key={idx}
-              item={{
-                ...minimi,
-                left: 200 + idx * 30,
-                top: 150,
-              }}
-            />
-          ))}
+            ))}
+        </div>
+        <button onClick={addSpeechBubble}>말풍선 추가</button>
       </div>
-      <button onClick={addSpeechBubble}>말풍선 추가</button>
-    </>
+    </DragMiniroomStyled>
   );
 };
 

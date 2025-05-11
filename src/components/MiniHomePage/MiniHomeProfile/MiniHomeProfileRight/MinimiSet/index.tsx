@@ -17,6 +17,7 @@ const MinimiSet = () => {
       } catch (e: any) {
         if (e.response && e.response.status === 401) {
           alert("로그인이 필요합니다.");
+          window.location.reload();
         } else {
           console.log(e, "구매 목록 불러오기 실패");
         }
