@@ -38,7 +38,7 @@ const MinimiSet = () => {
     console.log(selectedMinimiId, "selectedMinimiId?");
     try {
       await axiosInstance.patch("/useritems/set-minimi", {
-        minimiId: selectedMinimiId,
+        purchaseId: selectedMinimiId,
       });
       alert("대표 미니미가 저장되었습니다!");
     } catch (error) {
