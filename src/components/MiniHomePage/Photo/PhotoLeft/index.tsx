@@ -152,7 +152,7 @@ const PhotoLeft = () => {
     console.log(flattenedData);
 
     axiosInstance
-      .post("/saveTree", { folders: flattenedData })
+      .post("/photos/saveTree", { folders: flattenedData })
       .then((res) => {
         console.log("트리 저장 성공 : ", res.data);
       })

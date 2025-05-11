@@ -79,7 +79,7 @@ const DiaryLeft = () => {
 
   const handleSave = () => {
     axiosInstance
-      .post("/updateTree", treeData)
+      .post("/diary/saveTree", { folders: treeData })
       .then((res) => {
         console.log("트리 업데이트 성공:", res.data);
       })
