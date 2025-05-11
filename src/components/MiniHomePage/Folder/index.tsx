@@ -7,6 +7,8 @@ import { useTreeData } from "./useTreeData";
 import { useDragDrop } from "./useDragDrop";
 import { saveTreeData } from "./useFlattenTree";
 import axiosInstance from "@/lib/axios";
+import { useAuth } from "@/context/AuthContext";
+import axios from "axios";
 
 interface FolderProps {
   type: string;
@@ -14,6 +16,9 @@ interface FolderProps {
 }
 
 const Folder = ({ type, onSave }: FolderProps) => {
+  const { user } = useAuth();
+  const userId = user?.id;
+
   const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
   // 폴더 축소, 확대
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
@@ -112,8 +117,8 @@ const Folder = ({ type, onSave }: FolderProps) => {
 
   // 현 폴더 구조
   useEffect(() => {
-    axiosInstance
-      .get(`/${type}/folderList`)
+    axios
+      .get(`/${type}/folderList`, { params: { userId } })
       .then((res) => {
         const nestedTreeData = res.data.map((item: any) => ({
           key: String(item.id),
