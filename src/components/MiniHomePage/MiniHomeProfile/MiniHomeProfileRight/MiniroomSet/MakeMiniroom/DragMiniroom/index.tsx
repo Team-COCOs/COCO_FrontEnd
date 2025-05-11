@@ -167,6 +167,9 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
                       prev.map((el) => (el.id === id ? { ...el, text } : el))
                     );
                   }}
+                  onDelete={(id) => {
+                    setItems((prev) => prev.filter((el) => el.id !== id));
+                  }}
                 />
               );
             } else {
