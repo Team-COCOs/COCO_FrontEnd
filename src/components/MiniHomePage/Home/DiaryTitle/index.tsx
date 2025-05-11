@@ -32,7 +32,6 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
         const response = await axiosInstance.get(`/friends/status/${id}`);
 
         setFriendStatus(response.data);
-        console.log(response.data, "머야ㅑㅑ");
       } catch (error: any) {
         if (error.response?.status === 401) {
           setFriendStatus(null);
