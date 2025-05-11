@@ -28,10 +28,10 @@ const DiaryLeft = () => {
   return (
     <DiaryLeftStyled className="PhotoLeft_wrap">
       {editMode ? (
-        <Folder type="photos" onSave={handleSave} />
+        <Folder type="diary" onSave={handleSave} />
       ) : (
         <DynamicFolder
-          type="photos"
+          type="diary"
           onMenuSelect={(menu) => setSelectedMenu(menu)}
         />
       )}

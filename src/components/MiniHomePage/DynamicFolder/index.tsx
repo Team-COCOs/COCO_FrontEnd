@@ -44,6 +44,7 @@ const DynamicFolder = ({ onMenuSelect, type }: DynamicFolderProps) => {
     axiosInstance
       .get(`/${type}/folderList`)
       .then((res) => {
+        console.log("폴더 데이터 : ", res.data);
         const treeData = buildTree(res.data.folders);
         setFolderTree(treeData);
       })
