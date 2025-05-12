@@ -5,6 +5,21 @@ import Bgm from "./Bgm";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
 
+interface BgmInfo {
+  id: number;
+  acquired_at: string;
+  storeItems: {
+    id: number;
+    name: string;
+    artist: string | null;
+    category: string;
+    created_at: string;
+    duration: number | null;
+    file: string;
+    price: number;
+  };
+}
+
 const MiniBgm = () => {
   const { user } = useAuth();
   const [bgm, setBgm] = useState([]);
@@ -12,17 +27,19 @@ const MiniBgm = () => {
   useEffect(() => {
     const bgm = async () => {
       try {
-        const res = await axiosInstance.get("/bgm/getMyBgm");
+        const res = await axiosInstance.get("/purchases");
 
-        setBgm(res.data);
+        const bgmItems = res.data.filter(
+          (item: any) => item.storeItems.category === "bgm"
+        );
 
-        console.log(res.data);
+        setBgm(bgmItems);
       } catch (e) {
         console.log(e);
       }
     };
 
-    // bgm();
+    bgm();
   }, []);
 
   const searchBgm = () => {};
