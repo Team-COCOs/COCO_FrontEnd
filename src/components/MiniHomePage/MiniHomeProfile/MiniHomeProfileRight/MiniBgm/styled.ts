@@ -45,6 +45,11 @@ export const MiniBgmStyle = styled.div`
         select {
           width: 60px;
           height: 25px;
+
+          &:active,
+          &:focus {
+            outline: none;
+          }
         }
 
         input {

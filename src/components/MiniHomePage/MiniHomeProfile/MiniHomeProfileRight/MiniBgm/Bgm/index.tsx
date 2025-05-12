@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BgmStyle } from "./styeld";
+import EmptyPage from "@/components/EmptyPage";
 
 interface BgmInfo {
   id: number;
@@ -20,10 +21,17 @@ interface BgmProps {
   bgm: BgmInfo[];
   selectedBgm: BgmInfo | null;
   onSelectBgm: (bgm: BgmInfo | null) => void;
+  setCurrentPage: any;
+  currentPage: number;
 }
 
-const Bgm = ({ bgm, selectedBgm, onSelectBgm }: BgmProps) => {
-  const [currentPage, setCurrentPage] = useState(1);
+const Bgm = ({
+  bgm,
+  selectedBgm,
+  onSelectBgm,
+  setCurrentPage,
+  currentPage,
+}: BgmProps) => {
   const itemsPerPage = 8;
 
   const totalPages = Math.ceil(bgm.length / itemsPerPage);
@@ -43,36 +51,46 @@ const Bgm = ({ bgm, selectedBgm, onSelectBgm }: BgmProps) => {
           <div className="Bgm_column artist">아티스트</div>
         </div>
 
-        {currentItems.map((item, idx) => {
-          const isSelected = selectedBgm?.id === item.id;
-          return (
-            <div key={item.id} className="Bgm_item">
-              <label className="Bgm_column checkbox">
-                <input
-                  type="checkbox"
-                  checked={isSelected}
-                  onChange={() => onSelectBgm(isSelected ? null : item)}
-                />
-                <span className="custom-checkbox">✔</span>
-              </label>
-              <div className="Bgm_column">{startIdx + idx + 1}</div>
-              <div className="Bgm_column title">{item.storeItems.name}</div>
-              <div className="Bgm_column artist">{item.storeItems.artist}</div>
-            </div>
-          );
-        })}
+        {currentItems.length === 0 ? (
+          <EmptyPage type="Bgm_img" />
+        ) : (
+          currentItems.map((item, idx) => {
+            const isSelected = selectedBgm?.id === item.id;
+            return (
+              <div key={item.id} className="Bgm_item">
+                <label className="Bgm_column checkbox">
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => onSelectBgm(isSelected ? null : item)}
+                  />
+                  <span className="custom-checkbox">✔</span>
+                </label>
+                <div className="Bgm_column">{startIdx + idx + 1}</div>
+                <div className="Bgm_column title">{item.storeItems.name}</div>
+                <div className="Bgm_column artist">
+                  {item.storeItems.artist}
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
 
-      {/* 페이지 번호 나열 */}
-      <div
-        className="pagination-controls"
-        style={{ marginTop: "1rem", textAlign: "center" }}
-      >
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-          <button key={pageNum} onClick={() => setCurrentPage(pageNum)}>
-            {pageNum}
-          </button>
-        ))}
+      <div className="Bgm_footer">
+        <div className="Bgm_pageNation">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+            (pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => setCurrentPage(pageNum)}
+                className={currentPage === pageNum ? "active" : ""}
+              >
+                {pageNum}
+              </button>
+            )
+          )}
+        </div>
       </div>
     </BgmStyle>
   );
