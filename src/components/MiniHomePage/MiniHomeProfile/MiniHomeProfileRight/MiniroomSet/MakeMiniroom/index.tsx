@@ -101,8 +101,9 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     try {
       const layoutData = draggedData.map((item) => ({
         id: item.id,
-        minimi_position_left: item.left,
-        minimi_position_top: item.top,
+        text: item.text,
+        left: item.left,
+        top: item.top,
         created_at: new Date().toISOString(),
         store_item_id: selectedMiniroom?.id,
       }));

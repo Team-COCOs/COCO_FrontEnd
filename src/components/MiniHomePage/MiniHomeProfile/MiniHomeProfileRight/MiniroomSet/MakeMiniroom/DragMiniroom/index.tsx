@@ -99,7 +99,25 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
         });
       }
 
-      onDragComplete(items);
+      onDragComplete(
+        items.map((item) => {
+          const base = {
+            id: item.id,
+            type: item.type,
+            x: item.left,
+            y: item.top,
+          };
+
+          if (item.type === "speechBubble") {
+            return {
+              ...base,
+              text: item.text || "",
+            };
+          }
+
+          return base;
+        })
+      );
     },
 
     collect: (monitor) => ({
