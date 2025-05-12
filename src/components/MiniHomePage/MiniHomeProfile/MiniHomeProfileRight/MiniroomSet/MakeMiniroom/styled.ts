@@ -183,4 +183,12 @@ export const MakeMiniroomStyled = styled.div`
     font-weight: bold;
     width: 38px;
   }
+  .MakeMiniroom_wrap_title {
+    p {
+      span {
+        font-size: 9px;
+        color: #aaa;
+      }
+    }
+  }
 `;

@@ -29,6 +29,9 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     number | null
   >(null);
 
+  // 미니룸 이름 관리
+  const [name, setName] = useState("");
+
   // 모바일 여부 확인
   const isMobile = useIsMobile();
 
@@ -187,6 +190,21 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     }
   };
 
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length <= 10) {
+      setName(e.target.value);
+    }
+  };
+
+  const handleSave = () => {
+    if (name.length === 0) {
+      alert("이름을 입력해주세요.");
+    } else {
+      // 저장 로직 처리
+      alert(`이름이 ${name}으로 저장되었습니다.`);
+    }
+  };
+
   return (
     <DndProvider backend={DND_BACKEND} options={backendOptions}>
       <MakeMiniroomStyled>
@@ -194,10 +212,17 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
           <div className="MakeMiniroom_titleWrap">
             <div className="MakeMiniroom_wrap_title_fix">
               <div className="MakeMiniroom_wrap_title Gulim">
-                미니룸 이름 수정하기
+                <p>
+                  미니룸 이름 수정하기 <span>(10자 이내)</span>
+                </p>
               </div>
               <div className="MakeMiniroom_namefix_box">
-                <input className="MakeMiniroom_namefix_input"></input>
+                <input
+                  className="MakeMiniroom_namefix_input"
+                  value={name}
+                  onChange={handleNameChange}
+                  maxLength={10}
+                ></input>
                 <button className="MakeMiniroom_name_saveBtn Gulim">
                   저장
                 </button>
