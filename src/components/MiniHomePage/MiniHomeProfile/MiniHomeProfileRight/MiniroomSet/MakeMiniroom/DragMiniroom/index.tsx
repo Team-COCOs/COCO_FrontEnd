@@ -187,6 +187,42 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
       },
     ]);
   };
+
+  // 말풍선 텍스트 변경 시 처리
+  const handleTextChange = (id: string, text: string) => {
+    setItems((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, text } : item))
+    );
+
+    // 텍스트 변경 시 부모에게 데이터 전달
+    const updatedLayout = items.map((item) => ({
+      id: item.id,
+      type: item.type,
+      x: item.left,
+      y: item.top,
+      text: item.text || "", // 텍스트도 함께 전달
+    }));
+
+    onDragComplete(updatedLayout);
+  };
+
+  // 말풍선 삭제 시 처리
+  const handleDelete = (id: string) => {
+    const updatedItems = items.filter((item) => item.id !== id);
+    setItems(updatedItems);
+
+    // 말풍선 삭제 시 부모에게 데이터 전달
+    const updatedLayout = updatedItems.map((item) => ({
+      id: item.id,
+      type: item.type,
+      x: item.left,
+      y: item.top,
+      text: item.text || "",
+    }));
+
+    onDragComplete(updatedLayout);
+  };
+
   useEffect(() => {
     if (!dropRef.current) return;
 
@@ -241,34 +277,8 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
                 <SpeechBubble
                   key={item.id}
                   item={item}
-                  onTextChange={(id, text) => {
-                    setItems((prev) =>
-                      prev.map((el) => (el.id === id ? { ...el, text } : el))
-                    );
-                  }}
-                  onDelete={(id) => {
-                    const updatedItems = items.filter((el) => el.id !== id);
-                    setItems(updatedItems);
-
-                    // 말풍선이 삭제된 이후의 상태를 부모에게 전달
-                    const layoutData = updatedItems.map((item) => {
-                      const base = {
-                        id: item.id,
-                        type: item.type,
-                        x: item.left,
-                        y: item.top,
-                      };
-                      if (item.type === "speechBubble") {
-                        return {
-                          ...base,
-                          text: item.text || "",
-                        };
-                      }
-                      return base;
-                    });
-
-                    onDragComplete(layoutData);
-                  }}
+                  onTextChange={handleTextChange}
+                  onDelete={handleDelete}
                 />
               );
             } else {
