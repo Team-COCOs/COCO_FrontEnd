@@ -5,6 +5,7 @@ export const MiniBgmStyle = styled.div`
     display: flex;
     flex-direction: column;
     padding-top: 10px;
+    height: 100%;
 
     button {
       padding: 0 5px;
@@ -32,30 +33,34 @@ export const MiniBgmStyle = styled.div`
       padding: 10px;
     }
 
-    .MiniBgm_footer {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      justify-content: center;
+    .MiniBgm_footDiv {
+      margin-top: auto;
 
-      select {
-        width: 60px;
-        height: 25px;
-      }
+      .MiniBgm_footer {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
 
-      input {
-        width: 150px;
-        height: 25px;
-        padding: 5px;
-
-        &:active,
-        &:focus {
-          outline: none;
+        select {
+          width: 60px;
+          height: 25px;
         }
-      }
 
-      button {
-        height: 25px;
+        input {
+          width: 150px;
+          height: 25px;
+          padding: 5px;
+
+          &:active,
+          &:focus {
+            outline: none;
+          }
+        }
+
+        button {
+          height: 25px;
+        }
       }
     }
   }
