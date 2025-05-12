@@ -59,6 +59,8 @@ const StoreContent = () => {
       categories.includes(item.category)
     );
 
+    console.log(filteredItems);
+
     setStoreProduct(filteredItems);
   }, [product, storeItems]);
 
