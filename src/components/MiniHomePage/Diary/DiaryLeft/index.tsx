@@ -78,7 +78,7 @@ const DiaryLeft = ({ selectedDiaryMenu, setSelectedDiaryMenu }: DiaryProps) => {
           </button>
         </div>
       </div>
-      <div className="DiaryLeft_folder_wrap">
+      <div className="DiaryLeft_folder_wrap Gulim">
         {editMode ? (
           <Folder type="diary" onSave={handleSave} />
         ) : (

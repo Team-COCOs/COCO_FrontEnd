@@ -40,7 +40,6 @@ export const DynamicFolderStyled = styled.div`
     padding-left: 0px;
     position: relative;
     padding-top: 3px;
-    padding-bottom: 5px;
     font-weight: bold;
     color: #4b4b4b;
   }
@@ -67,5 +66,6 @@ export const DynamicFolderStyled = styled.div`
 
   .DynamicFolder_menu_cursor {
     cursor: pointer;
+    font-size: 11px;
   }
 `;

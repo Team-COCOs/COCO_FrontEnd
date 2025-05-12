@@ -34,9 +34,10 @@ export const DiaryLeftStyled = styled.div`
     .Diary_footer {
       margin-top: auto;
       padding-top: 10px;
+
       .Diary_btn {
         text-align: left;
-        font-size: 12px;
+        font-size: 11px;
         display: flex;
         gap: 10px;
         align-items: center;

@@ -8,7 +8,7 @@ export const FolderStyle = styled.div`
     height: 100%;
 
     .Folder_text {
-      font-size: 13px;
+      font-size: 12px;
       margin-left: 7px;
     }
 
