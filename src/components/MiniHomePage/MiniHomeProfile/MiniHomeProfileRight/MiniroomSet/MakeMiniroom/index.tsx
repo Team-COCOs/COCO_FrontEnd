@@ -26,6 +26,12 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   const [selectedMiniroom, setSelectedMiniroom] = useState<any | null>(null);
   const [selectedMinimi, setSelectedMinimi] = useState<any[]>([]);
 
+  useEffect(() => {
+    console.log(selectedMiniroom, "selectedMiniroom");
+    console.log(selectedMinimi, "selectedMinimi");
+    console.log(draggedData, "draggedData");
+  }, []);
+
   // 모바일 여부 확인
   const isMobile = useIsMobile();
   const DND_BACKEND = isMobile ? TouchBackend : HTML5Backend;
@@ -84,8 +90,18 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
 
   const handleMiniroomSelect = (product: any) => {
     setSelectedMiniroom(product);
+    // 미니룸이 선택될 때 draggedData에 추가
+    setDraggedData((prev) => [
+      ...prev,
+      {
+        id: product.id,
+        text: product.storeItems.name,
+        x: 0, // 초기 위치 (적절히 수정)
+        y: 0, // 초기 위치 (적절히 수정)
+        store_item_id: product.id,
+      },
+    ]);
   };
-
   const handleMinimiSelect = (product: any) => {
     setSelectedMinimi((prev) => {
       const exists = prev.some((item) => item.id === product.id);
@@ -95,19 +111,39 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
         return [...prev, product];
       }
     });
+
+    // 미니미 선택 시 draggedData에 추가
+    setDraggedData((prev) => [
+      ...prev,
+      {
+        id: product.id,
+        text: product.storeItems.name,
+        x: 0, // 초기 위치 (적절히 수정)
+        y: 0, // 초기 위치 (적절히 수정)
+        store_item_id: product.id,
+      },
+    ]);
   };
 
   const handleSave = async () => {
+    if (!selectedMiniroom) {
+      alert("미니룸을 선택해주세요.");
+      return;
+    }
+
+    if (draggedData.length === 0) {
+      alert("드래그한 아이템이 없습니다.");
+      return;
+    }
     try {
+      // 미니룸이 선택된 상태에서, draggedData에 미니룸 정보를 추가
       const layoutData = draggedData.map((item) => ({
         id: item.id,
         text: item.text || null,
         left: item.x,
         top: item.y,
         created_at: new Date().toISOString(),
-        store_item_id: selectedMiniroom?.id,
       }));
-
       // 서버에 저장
       await axiosInstance.patch("/minirooms/save-layout", {
         items: layoutData,
