@@ -173,7 +173,7 @@ export const MakeMiniroomStyled = styled.div`
   }
   /* 버튼 */
   .MakeMiniroom_name_saveBtn {
-    margin-left: 10px;
+    margin-left: 8px;
     padding: 4px 5px;
     background-color: rgb(212, 238, 255);
     color: #4b4b4b;

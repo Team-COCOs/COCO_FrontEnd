@@ -206,13 +206,12 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
       .map((item) => ({
         id: item.id,
         type: item.type,
-        x: (item.left / width) * 100,
-        y: (item.top / height) * 100,
+        x: item.left,
+        y: item.top,
       }));
 
     setLayoutItems(layoutData);
   }, [items]);
-
   return (
     <DragMiniroomStyled>
       <div className="DragMiniroom_allWrap">
