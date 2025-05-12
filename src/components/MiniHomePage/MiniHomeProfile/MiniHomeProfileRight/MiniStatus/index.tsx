@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { Field, Form, Formik } from "formik";
 import axios from "axios";
-import ShadowModal from "@/components/ShadowModal";
 
 interface UserData {
   title: string;
@@ -22,7 +21,7 @@ const MiniStatus = () => {
   const { user } = useAuth();
   const userId = user?.id;
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -55,6 +54,7 @@ const MiniStatus = () => {
     if (file) {
       const fileUrl = URL.createObjectURL(file);
       setMinihompi_image(fileUrl);
+      setSelectedFile(file);
     }
   };
 
@@ -62,14 +62,19 @@ const MiniStatus = () => {
   const saveData = async (values: UserData) => {
     const formData = new FormData();
     formData.append("name", values.title);
-    formData.append("minihompi_image", minihompi_image);
+    if (selectedFile !== null) {
+      formData.append("minihompi_image", selectedFile);
+    }
     formData.append("status", values.mood);
     formData.append("introduction", values.introduction);
 
     try {
       const res = await axiosInstance.post("/minihomepis/info", formData);
 
-      if (res.data.message === "저장 완료") setIsOpen(true);
+      if (res.data.message === "저장 완료") {
+        alert("저장 완료!");
+        window.location.reload();
+      }
     } catch (e) {
       console.log(e);
     }
@@ -164,16 +169,6 @@ const MiniStatus = () => {
           </Form>
         )}
       </Formik>
-
-      <ShadowModal
-        type="success"
-        isOpen={isOpen}
-        onClose={() => {
-          setIsOpen(false);
-          window.location.href = `/cocoworld/${user?.id}`;
-        }}
-        message="저장 성공!"
-      />
     </MiniStatusStyle>
   );
 };
