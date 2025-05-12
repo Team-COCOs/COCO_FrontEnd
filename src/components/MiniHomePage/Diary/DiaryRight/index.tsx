@@ -1,5 +1,6 @@
 import { DiaryRightStyled } from "./styled";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
 interface DiaryProps {
   selectedDiaryMenu: { id: number; title: string } | null;
 }
