@@ -68,6 +68,11 @@ export const MiniHomeProfileRightStyled = styled.div`
     &::-webkit-scrollbar-button:vertical:end:decrement {
       display: none;
     }
+
+    /* 버튼 수정 중 */
+    &::-webkit-scrollbar-button:horizontal {
+      display: none;
+    }
     .MiniHomeProfileRight_component_wrap {
       width: 92%;
       height: 100%;
