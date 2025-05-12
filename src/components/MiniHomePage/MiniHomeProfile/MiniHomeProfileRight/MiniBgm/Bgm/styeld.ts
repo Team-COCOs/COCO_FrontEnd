@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const BgmStyle = styled.div`
   width: 100%;
   border-radius: 12px;
-  font-family: "Gulim", sans-serif;
   color: #333;
 
   .Bgm_table {
@@ -29,7 +28,6 @@ export const BgmStyle = styled.div`
 
     .Bgm_item {
       background-color: rgb(255, 255, 255);
-      transition: background 0.2s;
 
       &:hover {
         background-color: rgb(245, 245, 245);
@@ -37,12 +35,37 @@ export const BgmStyle = styled.div`
     }
 
     .Bgm_column {
-      flex: 1;
+      flex: 0.7;
       text-align: center;
-    }
 
-    .Bgm_column.checkbox {
-      flex: 0.5;
+      &.checkbox {
+        flex: 0.3;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+
+        input {
+          display: none;
+        }
+
+        .custom-checkbox {
+          width: 16px;
+          height: 16px;
+          border: 2px solid #ccc;
+          border-radius: 3px;
+          font-size: 17px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: white;
+          color: transparent;
+        }
+
+        input:checked + .custom-checkbox {
+          background-color: rgb(242, 242, 242);
+          color: #00c853;
+        }
+      }
     }
 
     .Bgm_column.title {
@@ -53,12 +76,7 @@ export const BgmStyle = styled.div`
 
     .Bgm_column.artist {
       flex: 1.5;
-    }
-
-    input[type="checkbox"] {
-      transform: scale(1.1);
-      accent-color: rgb(227, 227, 227);
-      cursor: pointer;
+      text-align: left;
     }
   }
 `;
