@@ -36,11 +36,11 @@ const SearchUser = () => {
         if (Array.isArray(res.data)) {
           const modifiedResults = res.data.map((d: any) => ({
             ...d,
-            profile_image: d.profile_image
-              ? `http://localhost:5000/uploads/${d.profile_image}`
-              : d.gender === "woman"
-              ? "/avatarImg/woman_avatar1.png"
-              : "/avatarImg/man_avatar1.png",
+            profile_image:
+              d.profile_image ??
+              (d.gender === "woman"
+                ? "/avatarImg/woman_avatar1.png"
+                : "/avatarImg/man_avatar1.png"),
           }));
           setResults(modifiedResults);
         }

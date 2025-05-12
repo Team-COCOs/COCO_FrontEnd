@@ -59,10 +59,6 @@ const MiniStatus = () => {
     formData.append("status", values.status);
     formData.append("introduction", values.introduction);
 
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-
     try {
       const res = await axiosInstance.post("/minihomepis/info", formData);
       console.log(res.data);
