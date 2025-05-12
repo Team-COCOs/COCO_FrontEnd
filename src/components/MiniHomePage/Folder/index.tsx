@@ -25,12 +25,12 @@ const Folder = ({ type, onSave }: FolderProps) => {
   const [editTitle, setEditTitle] = useState<string>("");
 
   const {
-    treeData, // useTreeData.ts 에서 저장된 treeData
-    setTreeData, // useTreeData.ts 에서 저장할 treeData
-    editNodeByKey, // useTreeData.ts 에서 수정 후 데이터 업데이트
-    deleteNodeByKey, // useTreeData.ts 에서 노드 삭제
-    insertNodeInside, // useTreeData.ts 에서 중첩 막기
-    addNewNode, // useTreeData.ts 에서 노드 추가
+    treeData, // 저장된 treeData
+    setTreeData, // 저장할 treeData
+    editNodeByKey, // 수정 후 데이터 업데이트
+    deleteNodeByKey, // 노드 삭제
+    insertNodeInside, // 중첩 막기
+    addNewNode, // 노드 추가
   } = useTreeData();
 
   const { handleDrop } = useDragDrop(treeData, setTreeData, insertNodeInside);
@@ -39,6 +39,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
     setCheckedKeys(checkedKeysValue.checked || checkedKeysValue);
   };
 
+  // 수정, 추가, 삭제
   const handleEdit = (action: string) => {
     let updatedTreeData = [...treeData];
 
@@ -66,6 +67,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
     setEditTitle(e.target.value);
   };
 
+  // 수정 시작 -> 노드 제목 input으로
   const handleStartEditing = () => {
     if (checkedKeys.length === 1) {
       const findTitle = (nodes: TreeNode[]): string | undefined => {
@@ -86,13 +88,14 @@ const Folder = ({ type, onSave }: FolderProps) => {
     }
   };
 
+  // 수정 끝 -> 제목 적용
   const handleFinishEditing = () => {
     const updatedTree = editNodeByKey(treeData, checkedKeys[0], editTitle);
     setTreeData(updatedTree);
     setIsEditing(false);
   };
 
-  // 저장 (useFlattenTree.ts 에서 저장)
+  // 트리 구조 저장 (useFlattenTree.ts 에서 저장)
   const handleSave = () => {
     saveTreeData(type, treeData, onSave);
   };
@@ -102,7 +105,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
     setExpandedKeys(expandedKeysValue);
   };
 
-  // 자식 폴더
+  // 자식 폴더 노드로 매핑
   const mapChildrenRecursive = (children: any[] | undefined): TreeNode[] => {
     if (!children || children.length === 0) return [];
 
@@ -114,7 +117,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
     }));
   };
 
-  // 키를 모으는 함수 -> 모두 열리게 하려고
+  // 키를 모으는 함수 -> 모두 확장시키려고
   const collectAllKeys = (nodes: TreeNode[]): string[] => {
     let keys: string[] = [];
     for (const node of nodes) {

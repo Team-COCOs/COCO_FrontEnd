@@ -96,6 +96,7 @@ export const MiniStatusStyle = styled.div`
             height: 138px;
             border: 1px solid rgb(201, 201, 201);
             padding: 10px;
+            resize: none;
 
             &:active,
             &:focus {
