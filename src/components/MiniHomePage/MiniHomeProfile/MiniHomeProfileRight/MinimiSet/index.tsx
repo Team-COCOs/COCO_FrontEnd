@@ -55,12 +55,11 @@ const MinimiSet = () => {
 
   const fetchMyMinimi = async () => {
     try {
-      const { data } = await axiosInstance.get(
-        "/useritems/minimi/profile-image"
+      const { data } = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/useritems/minimi/profile-image/${user?.id}`
       );
       console.log(data, "data?");
-      setMyMinimi(data.file || ""); // `file`이 없으면 빈 문자열로 처리
-      console.log(myMinimi, "?");
+      setMyMinimi(data.file || "");
     } catch (e: any) {
       console.log(e, "대표미니미 e");
       setMyMinimi("default");

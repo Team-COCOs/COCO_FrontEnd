@@ -90,6 +90,8 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
           y: item.top,
         })),
       ];
+
+      console.log(layoutData, "lay??");
       if (selectedMiniroom) {
         layoutData.push({
           id: selectedMiniroom.id,
