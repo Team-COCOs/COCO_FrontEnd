@@ -247,7 +247,27 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
                     );
                   }}
                   onDelete={(id) => {
-                    setItems((prev) => prev.filter((el) => el.id !== id));
+                    const updatedItems = items.filter((el) => el.id !== id);
+                    setItems(updatedItems);
+
+                    // 말풍선이 삭제된 이후의 상태를 부모에게 전달
+                    const layoutData = updatedItems.map((item) => {
+                      const base = {
+                        id: item.id,
+                        type: item.type,
+                        x: item.left,
+                        y: item.top,
+                      };
+                      if (item.type === "speechBubble") {
+                        return {
+                          ...base,
+                          text: item.text || "",
+                        };
+                      }
+                      return base;
+                    });
+
+                    onDragComplete(layoutData);
                   }}
                 />
               );
