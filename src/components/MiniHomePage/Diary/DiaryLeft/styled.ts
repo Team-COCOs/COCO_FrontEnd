@@ -8,11 +8,14 @@ export const DiaryLeftStyled = styled.div`
     width: 100%;
     height: 100%;
     padding: 20px 10px;
-    overflow-y: scroll;
+    overflow: hidden;
+
     .DiaryLeft_folder_wrap {
       display: flex;
       flex-direction: column;
       width: 100%;
+      overflow-y: auto;
+      flex: 1;
     }
     .Diary_title {
       width: 100%;
