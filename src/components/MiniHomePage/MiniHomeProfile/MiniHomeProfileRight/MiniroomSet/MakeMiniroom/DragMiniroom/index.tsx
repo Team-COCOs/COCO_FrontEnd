@@ -210,17 +210,8 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
         y: (item.top / height) * 100,
       }));
 
-    if (selectedMiniroom) {
-      layoutData.push({
-        id: selectedMiniroom.id,
-        type: "miniroom",
-        x: 0,
-        y: 0,
-      });
-    }
-
     setLayoutItems(layoutData);
-  }, [items, selectedMiniroom]);
+  }, [items]);
 
   return (
     <DragMiniroomStyled>
