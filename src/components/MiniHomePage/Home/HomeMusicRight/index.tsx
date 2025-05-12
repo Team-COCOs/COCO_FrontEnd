@@ -86,6 +86,10 @@ const HomeMusicRight = () => {
     return `linear-gradient(to right, #ee6700 0%, #ee6700 ${percentage}%, #ececec ${percentage}%, #ececec 100%)`;
   };
 
+  const handleHomeClick = () => {
+    router.push("/");
+  };
+
   return (
     <HomeMusicRightStyled>
       <div className="HomeMusicRight_wrap">
@@ -107,6 +111,17 @@ const HomeMusicRight = () => {
                     onClick={clickShop}
                     alt="click minimishop"
                   ></img>
+                </div>
+              </div>
+              <div
+                className="HomeMusicRight_homebtn_wrap"
+                onClick={handleHomeClick}
+              >
+                <div className="HomeMusicRight_homebtn_white_wrap">
+                  <div className="HomeMusicRight_homebtn_imgwrap">
+                    <img src="/cocoworld.png"></img>
+                  </div>
+                  &nbsp;홈으로 가기
                 </div>
               </div>
             </div>

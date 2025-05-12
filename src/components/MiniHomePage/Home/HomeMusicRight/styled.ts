@@ -254,4 +254,27 @@ export const HomeMusicRightStyled = styled.div`
       padding-left: 8px;
     }
   }
+  /* 홈으로 가기 버튼 */
+  .HomeMusicRight_homebtn_wrap {
+    width: 100%;
+    padding: 10px 10px 0px 10px;
+    cursor: pointer;
+  }
+  .HomeMusicRight_homebtn_white_wrap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 1.5px dashed ${({ theme }) => theme.colors.mainColor};
+    padding: 5px;
+    border-radius: 5px;
+  }
+  .HomeMusicRight_homebtn_imgwrap {
+    width: 35px;
+    height: 35px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
 `;
