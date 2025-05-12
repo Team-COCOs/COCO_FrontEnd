@@ -30,23 +30,14 @@ const MiniStatus = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/${userId}/my-status`
         );
 
-        console.log(res.data);
         setUserData(res.data);
+        setMinihompi_image(res.data.minihompi_image);
       } catch (e) {
         console.error("에러 발생:", e);
       }
     };
     fetchUserInfo();
-  }, []);
-
-  // Formik의 초기 값 설정
-  const initialValues: UserData = {
-    title: userData?.title || "",
-    minihompi_image:
-      userData?.minihompi_image || "/avatarImg/defaultProfile.png",
-    mood: userData?.mood || "happy",
-    introduction: userData?.introduction || "",
-  };
+  }, [userId]);
 
   // 이미지 url로 변환 후 업데이트
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,6 +71,21 @@ const MiniStatus = () => {
     }
   };
 
+  // 초기 데이터
+  const initialValues: UserData = userData
+    ? {
+        title: userData.title,
+        minihompi_image: userData.minihompi_image,
+        mood: userData.mood,
+        introduction: userData.introduction,
+      }
+    : {
+        title: "",
+        minihompi_image: "/avatarImg/defaultProfile.png",
+        mood: "happy",
+        introduction: "",
+      };
+
   return (
     <MiniStatusStyle className="MiniStatus_wrap">
       <span className="MiniStatus_title Gulim">내 상태 관리하기</span>
@@ -87,7 +93,7 @@ const MiniStatus = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={saveData}
-        enableReinitialize
+        enableReinitialize={true}
       >
         {({ setFieldValue, values }) => (
           <Form>
