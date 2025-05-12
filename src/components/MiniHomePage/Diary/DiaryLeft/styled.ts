@@ -151,8 +151,9 @@ export const DiaryLeftStyled = styled.div`
   .react-calendar__navigation__label__labelText.react-calendar__navigation__label__labelText--from {
     color: white;
     background-color: #62bfe1;
-    font-size: 12px;
+    font-size: 11px;
   }
+
   /* 달력 버튼 */
   .react-calendar__month-view__days {
     font-size: 10px;
@@ -179,6 +180,38 @@ export const DiaryLeftStyled = styled.div`
   .react-calendar__month-view__weekdays__weekday abbr {
     /* text-decoration: none; */
     display: none;
+  }
+  .react-calendar__viewContainer {
+    background-color: white;
+    border-radius: 5px;
+    color: #4b4b4b;
+  }
+  .react-calendar__century-view {
+    font-size: 12px;
+    border-radius: 5px;
+    padding-bottom: 25px;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+  }
+  .react-calendar__decade-view {
+    border-radius: 5px;
+    padding-bottom: 25px;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 9px;
+    text-align: center;
+  }
+  .react-calendar__year-view__months {
+    border-radius: 5px;
+    padding-bottom: 25px;
+    padding-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 12px;
+    text-align: center;
   }
   /* 반응형 */
   @media (max-width: 1024px) {
@@ -235,6 +268,12 @@ export const DiaryLeftStyled = styled.div`
     .react-calendar__tile.react-calendar__month-view__days__day {
       font-size: 14px;
     }
+    .react-calendar__decade-view {
+      font-size: 15px;
+    }
+    .react-calendar__year-view__months {
+      font-size: 20px;
+    }
   }
 
   @media (max-width: 480px) {
@@ -245,7 +284,7 @@ export const DiaryLeftStyled = styled.div`
       width: 100%;
     }
     .react-calendar__navigation__label__labelText.react-calendar__navigation__label__labelText--from {
-      font-size: 13px;
+      font-size: 10px;
     }
     .react-calendar__navigation__arrow.react-calendar__navigation__next2-button,
     .react-calendar__navigation__arrow.react-calendar__navigation__next-button {
@@ -257,6 +296,12 @@ export const DiaryLeftStyled = styled.div`
     }
     .react-calendar__tile.react-calendar__month-view__days__day {
       font-size: 12px;
+    }
+    .react-calendar__decade-view {
+      font-size: 13px;
+    }
+    .react-calendar__year-view__months {
+      font-size: 15px;
     }
   }
 `;
