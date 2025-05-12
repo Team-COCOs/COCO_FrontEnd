@@ -9,20 +9,38 @@ export const PhotoLeftStyled = styled.div`
     padding: 20px 10px;
     overflow-y: scroll;
 
-    .PhotoLeft_btn {
-      text-align: left;
-      font-size: 12px;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      position: relative;
-      bottom: 5px;
+    .PhotoLeft_title {
+      margin-left: 10px;
+      color: rgb(120, 184, 183);
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .PhotoLeft_line {
       width: 95%;
-      margin: 0 auto;
-      padding: 3px 10px;
-      background-color: white;
-      border: 1px solid rgb(174, 174, 174);
-      cursor: pointer;
+      height: 2px;
+      margin: 7px auto 0px auto;
+      background-color: rgb(221, 221, 221);
+    }
+
+    .PhotoLeft_footer {
+      margin-top: auto;
+
+      .PhotoLeft_btn {
+        text-align: left;
+        font-size: 12px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        position: relative;
+        bottom: 5px;
+        width: 95%;
+        margin: 0 auto;
+        padding: 3px 10px;
+        background-color: white;
+        border: 1px solid rgb(174, 174, 174);
+        cursor: pointer;
+      }
     }
 
     @media (max-width: 768px) {

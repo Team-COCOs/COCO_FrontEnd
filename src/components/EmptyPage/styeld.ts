@@ -14,5 +14,12 @@ export const EmptyPageStyle = styled.div`
       width: 300px;
       height: 300px;
     }
+
+    .todayMiniImg {
+      margin-top: -10px;
+      position: relative;
+      width: 130px;
+      height: 130px;
+    }
   }
 `;

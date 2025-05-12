@@ -2,6 +2,7 @@ import { MiniHomeProfileRightStyled } from "./styled";
 import { useEffect, useState } from "react";
 import MiniroomSet from "./MiniroomSet";
 import MinimiSet from "./MinimiSet";
+import MiniStatus from "./MiniStatus";
 
 interface ProfileSelectedMenu {
   type?: string;
@@ -19,12 +20,12 @@ const MiniHomeProfileRight = ({
 }) => {
   const renderContent = () => {
     if (!profileSelectedMenu) {
-      return <div>내 상태 관리 내용</div>;
+      return <MiniStatus />;
     }
 
     switch (profileSelectedMenu.title) {
       case "내 상태 관리":
-        return <div>내 상태 관리 내용</div>;
+        return <MiniStatus />;
       case "BGM":
         return <div>BGM 관련 내용</div>;
       case "미니미":

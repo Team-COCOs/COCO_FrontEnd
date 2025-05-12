@@ -1,11 +1,16 @@
 import { DiaryRightStyled } from "./styled";
 import { useEffect } from "react";
+interface DiaryProps {
+  selectedDiaryMenu: { id: number; title: string } | null;
+}
 
-const DiaryRight = () => {
+const DiaryRight = ({ selectedDiaryMenu }: DiaryProps) => {
   return (
     <DiaryRightStyled>
       <div className="DiaryRight_wrap">
-        <div className="DiaryRight_component_wrap">다이어리 오른쪽</div>
+        <div className="DiaryRight_component_wrap">
+          {selectedDiaryMenu?.title}
+        </div>
       </div>
     </DiaryRightStyled>
   );

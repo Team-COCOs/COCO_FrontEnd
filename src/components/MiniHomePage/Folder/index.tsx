@@ -114,6 +114,18 @@ const Folder = ({ type, onSave }: FolderProps) => {
     }));
   };
 
+  // 키를 모으는 함수 -> 모두 열리게 하려고
+  const collectAllKeys = (nodes: TreeNode[]): string[] => {
+    let keys: string[] = [];
+    for (const node of nodes) {
+      keys.push(node.key);
+      if (node.children && node.children.length > 0) {
+        keys = [...keys, ...collectAllKeys(node.children)];
+      }
+    }
+    return keys;
+  };
+
   // 현 폴더 구조
   useEffect(() => {
     axios
@@ -121,7 +133,21 @@ const Folder = ({ type, onSave }: FolderProps) => {
         params: { userId },
       })
       .then((res) => {
-        const nestedTreeData = res.data.map((item: any) => ({
+        const fetchedData = res.data;
+
+        // 폴더 데이터가 비어있으면 기본 새 폴더 하나 생성
+        const dataToUse =
+          fetchedData.length === 0
+            ? [
+                {
+                  id: 0,
+                  title: "새 폴더",
+                  children: [],
+                },
+              ]
+            : fetchedData;
+
+        const nestedTreeData = dataToUse.map((item: any) => ({
           key: String(item.id),
           title: item.title,
           isLeaf: false,
@@ -129,22 +155,44 @@ const Folder = ({ type, onSave }: FolderProps) => {
         }));
 
         setTreeData(nestedTreeData);
+        setExpandedKeys(collectAllKeys(nestedTreeData));
       })
       .catch((err) => {
         console.error("폴더 데이터 로딩 실패:", err);
+        // 에러 발생 시에도 새 폴더 하나는 보장
+        setTreeData([
+          {
+            key: "0",
+            title: "새 폴더",
+            isLeaf: false,
+            children: [],
+          },
+        ]);
+        setExpandedKeys(["0"]);
       });
   }, [type]);
 
   return (
     <FolderStyle className="Folder_wrap">
       <div className="Folder_btns">
-        <button onClick={() => handleEdit("add")}>추가</button>
+        <button className="pixelFont" onClick={() => handleEdit("add")}>
+          추가
+        </button>
         {isEditing ? (
-          <button onClick={handleFinishEditing}>수정 완료</button>
+          <button
+            onClick={handleFinishEditing}
+            className="Folder_editingBtn pixelFont"
+          >
+            수정 완료
+          </button>
         ) : (
-          <button onClick={handleStartEditing}>수정</button>
+          <button onClick={handleStartEditing} className="pixelFont">
+            수정
+          </button>
         )}
-        <button onClick={() => handleEdit("delete")}>삭제</button>
+        <button onClick={() => handleEdit("delete")} className="pixelFont">
+          삭제
+        </button>
       </div>
 
       <div className="Folder_componentWrap">
@@ -158,7 +206,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
           expandedKeys={expandedKeys}
           onExpand={handleExpand}
           titleRender={(node: TreeNode) => (
-            <span>
+            <span className="Folder_text pixelFont">
               {node.key === checkedKeys[0] && isEditing ? (
                 <input
                   type="text"
@@ -175,9 +223,12 @@ const Folder = ({ type, onSave }: FolderProps) => {
         />
       </div>
 
-      <button className="Folder_submit" onClick={handleSave}>
-        저장
-      </button>
+      <div className="Folder_footer" onClick={handleSave}>
+        <button className="Folder_submit">
+          <span>⚙</span>
+          <span className="pixelFont"> 폴더저장하기 </span>
+        </button>
+      </div>
     </FolderStyle>
   );
 };

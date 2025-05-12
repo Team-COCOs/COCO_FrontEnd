@@ -72,6 +72,17 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
     title: string;
   } | null>(null);
 
+  // 공통 폴더/카테고리 선택 상태
+  const [selectedMenu, setSelectedMenu] = useState<{
+    id: number;
+    title: string;
+  } | null>(null);
+
+  const [selectedDiaryMenu, setSelectediaryMenu] = useState<{
+    id: number;
+    title: string;
+  } | null>(null);
+
   // 페이지가 처음 로드될 때 로딩 상태 종료
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -142,9 +153,15 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                             setfixMiniroom={setfixMiniroom}
                           />
                         ) : activeTab === "Diary" ? (
-                          <DiaryLeft />
+                          <DiaryLeft
+                            selectedDiaryMenu={selectedDiaryMenu}
+                            setSelectedDiaryMenu={setSelectediaryMenu}
+                          />
                         ) : activeTab === "Photo" ? (
-                          <PhotoLeft />
+                          <PhotoLeft
+                            selectedMenu={selectedMenu}
+                            setSelectedMenu={setSelectedMenu}
+                          />
                         ) : activeTab === "Setting" ? (
                           <SettingLeft
                             setSettingSelectedMenu={setSettingSelectedMenu}
@@ -187,9 +204,9 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                             setfixMiniroom={setfixMiniroom}
                           />
                         ) : activeTab === "Diary" ? (
-                          <DiaryRight />
+                          <DiaryRight selectedDiaryMenu={selectedDiaryMenu} />
                         ) : activeTab === "Photo" ? (
-                          <PhotoRight />
+                          <PhotoRight selectedMenu={selectedMenu} />
                         ) : activeTab === "Visitor" ? (
                           <VisitorRight />
                         ) : activeTab === "Coco" ? (
