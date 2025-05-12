@@ -28,7 +28,6 @@ const HomeProfile = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {
-    console.log(userId, "userId");
     const fetchUserInfo = async () => {
       try {
         const res = await axios.get(
@@ -44,6 +43,7 @@ const HomeProfile = () => {
     };
     fetchUserInfo();
   }, [userId]);
+
   const moodValue = userData?.mood ?? "happy";
   const moodText =
     moods.find((m) => m.value === moodValue)?.text || "기분을 선택해보세요.";

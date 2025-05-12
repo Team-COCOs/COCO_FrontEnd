@@ -20,10 +20,28 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
     requested: boolean;
   } | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [userTitle, setUserTitle] = useState(null);
+  const [profile, setProfile] = useState<any>(null);
+
+  useEffect(() => {
+    console.log(id, "id");
+    const fetchUserInfo = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/${id}/my-status`
+        );
+
+        setUserTitle(res.data.title);
+      } catch (e) {
+        console.error("에러 발생:", e);
+      }
+    };
+    fetchUserInfo();
+  }, [id]);
 
   useEffect(() => {
     if (!user || !id) {
-      setIsLoading(false); // 내 페이지거나 로그인 안했으면 굳이 요청 안함
+      setIsLoading(false);
       return;
     }
     const fetchFriendStatus = async () => {
@@ -46,6 +64,29 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
     fetchFriendStatus();
   }, [id]);
 
+  useEffect(() => {
+    const homepiProfile = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/history/${id}`
+        );
+
+        setProfile(response.data);
+      } catch (err: any) {
+        if (err.response?.status === 404) {
+          alert("존재하지 않는 페이지입니다.");
+          router.push("/");
+        }
+      }
+    };
+
+    if (id) homepiProfile();
+  }, [id]);
+
+  if (!profile) {
+    return <Loading />;
+  }
+
   // 일촌 상태가 로딩 중일 때
   if (isLoading) {
     return <Loading />;
@@ -61,7 +102,9 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
     <DiaryTitleStyled>
       <div>
         <div className="DiaryTitle_wrap">
-          <div className="DiaryTitle_number_title">코코월드님의 미니홈피</div>
+          <div className="DiaryTitle_number_title">
+            {userTitle ? userTitle : `${profile?.name}님의 미니홈피`}
+          </div>
           {!isOwnPage &&
             (!user ? (
               // 로그인하지 않은 사용자 → 버튼 보여줌

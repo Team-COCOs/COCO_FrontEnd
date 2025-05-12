@@ -11,7 +11,6 @@ const HomeFriends = () => {
   const { user } = useAuth();
   const [profile, setProfile] = useState<any>(null);
 
-  console.log(Number(user?.id) === Number(id), "user?");
   useEffect(() => {
     const homepiProfile = async () => {
       try {
