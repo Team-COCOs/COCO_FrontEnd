@@ -37,7 +37,7 @@ const SearchUser = () => {
           const modifiedResults = res.data.map((d: any) => ({
             ...d,
             profile_image:
-              d.profile_image ??
+              d.minimi_image ??
               (d.gender === "woman"
                 ? "/avatarImg/woman_avatar1.png"
                 : "/avatarImg/man_avatar1.png"),
