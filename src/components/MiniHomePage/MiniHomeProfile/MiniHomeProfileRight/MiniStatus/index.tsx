@@ -4,6 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useEffect, useRef, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { Field, Form, Formik } from "formik";
+import axios from "axios";
 
 interface UserData {
   name: string;
@@ -18,24 +19,24 @@ const MiniStatus = () => {
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { user } = useAuth();
+  const userId = user?.id;
   const [userData, setUserData] = useState<UserData | null>(null);
 
-  // useEffect(() => {
-  //   const fetchUserInfo = async () => {
-  //     try {
-  //       const res = await axiosInstance.get("/getUserInfo");
-  //       setUserData(res.data);
-  //     } catch (e) {
-  //       console.error("에러 발생:", e);
-  //     }
-  //   };
-
-  //   fetchUserInfo();
-  // }, []);
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        // const res = await axios.get(`minihomepis/${userId}/my-status`);
+        // setUserData(res.data);
+      } catch (e) {
+        console.error("에러 발생:", e);
+      }
+    };
+    fetchUserInfo();
+  }, []);
 
   // Formik의 초기 값 설정
   const initialValues: UserData = {
-    name: userData?.name || user?.name || "",
+    name: userData?.name || "",
     profileImage: userData?.profileImage || "/avatarImg/defaultProfile.png",
     status: userData?.status || "happy",
     introduction: userData?.introduction || "",
@@ -62,12 +63,12 @@ const MiniStatus = () => {
       console.log(key, value);
     }
 
-    // try {
-    //   const res = await axiosInstance.post("/setUserData", formData);
-    //   console.log(res.data);
-    // } catch (e) {
-    //   console.log(e);
-    // }
+    try {
+      const res = await axiosInstance.post("/minihomepis/info", formData);
+      console.log(res.data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -100,22 +101,29 @@ const MiniStatus = () => {
               </div>
 
               <div className="MiniStatus_right">
-                <div className="MiniStatus_state">
-                  <span className="pixelFont">Today is...</span>
-                  <Field
-                    as="select"
-                    name="status"
-                    className="MiniStatus_select pixelFont"
-                  >
-                    <option value="happy">😊 행복</option>
-                    <option value="joy">🎵 즐거움</option>
-                    <option value="busy">💼 바쁨</option>
-                    <option value="sad">🌧️ 슬픔</option>
-                    <option value="angry">💢 화남</option>
-                  </Field>
+                <div className="MiniStatus_introduce">
+                  <span className="pixelFont MiniStatus_subTitle">
+                    <span className="MiniStatus_icon">🟧</span>내 상태
+                  </span>
+                  <div className="MiniStatus_state">
+                    <span className="pixelFont">Today is...</span>
+                    <Field
+                      as="select"
+                      name="status"
+                      className="MiniStatus_select pixelFont"
+                    >
+                      <option value="happy">😊 행복</option>
+                      <option value="joy">🎵 즐거움</option>
+                      <option value="busy">💼 바쁨</option>
+                      <option value="sad">🌧️ 슬픔</option>
+                      <option value="angry">💢 화남</option>
+                    </Field>
+                  </div>
                 </div>
                 <div className="MiniStatus_introduce">
-                  <span className="pixelFont">소개글</span>
+                  <span className="pixelFont MiniStatus_subTitle">
+                    <span className="MiniStatus_icon">🟧</span>소개글
+                  </span>
                   <Field
                     as="textarea"
                     name="introduction"
@@ -128,7 +136,9 @@ const MiniStatus = () => {
 
             <div className="MiniStatus_bottom">
               <div className="MiniStatus_name">
-                <span className="pixelFont">미니홈피 이름</span>
+                <span className="pixelFont MiniStatus_subTitle">
+                  <span className="MiniStatus_icon">🟧</span>미니홈피 이름
+                </span>
                 <Field
                   className="Gulim"
                   type="text"

@@ -29,6 +29,16 @@ export const MiniStatusStyle = styled.div`
         gap: 15px;
         width: 50%;
 
+        .MiniStatus_subTitle {
+          display: flex;
+          gap: 5px;
+          align-items: center;
+
+          .MiniStatus_icon {
+            font-size: 5px;
+          }
+        }
+
         .MiniStatus_img {
           position: relative;
           width: 200px;
@@ -67,12 +77,15 @@ export const MiniStatusStyle = styled.div`
           display: flex;
           align-items: center;
           gap: 25px;
-          border: 1px solid rgb(201, 201, 201);
+          border-top: 1px solid rgb(201, 201, 201);
+          border-bottom: 1px solid rgb(201, 201, 201);
           padding: 10px;
-          margin-top: 10px;
+          margin: 10px 0;
+          background-color: rgb(246, 246, 246);
+          justify-content: center;
 
           .MiniStatus_select {
-            width: 150px;
+            width: 160px;
             padding: 5px;
 
             &:active,
@@ -93,8 +106,12 @@ export const MiniStatusStyle = styled.div`
           textarea {
             margin-top: 5px;
             width: 100%;
-            height: 138px;
-            border: 1px solid rgb(201, 201, 201);
+            height: 130px;
+            border-top: 1px solid rgb(201, 201, 201);
+            border-bottom: 1px solid rgb(201, 201, 201);
+            border-left: none;
+            border-right: none;
+            background-color: rgb(246, 246, 246);
             padding: 10px;
             resize: none;
 
@@ -122,6 +139,16 @@ export const MiniStatusStyle = styled.div`
       width: 100%;
       padding: 10px;
 
+      .MiniStatus_subTitle {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+
+        .MiniStatus_icon {
+          font-size: 5px;
+        }
+      }
+
       .MiniStatus_name {
         display: flex;
         flex-direction: column;
@@ -136,6 +163,7 @@ export const MiniStatusStyle = styled.div`
           height: 30px;
           padding: 10px;
           border: 1px solid rgb(201, 201, 201);
+          background-color: rgb(246, 246, 246);
 
           &:active,
           &:focus {

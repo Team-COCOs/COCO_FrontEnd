@@ -53,45 +53,6 @@ const SearchUser = () => {
     fetchSearchResults();
   }, [keyword]);
 
-  // useEffect(() => {
-  //   // 더미 데이터
-  //   const dummyResults: UserSearch[] = [
-  //     {
-  //       id: 1,
-  //       name: "앨리스",
-  //       profile_image: "/avatarImg/bicycleboy.png",
-  //       gender: "man",
-  //       birthday: "1999-01-10",
-  //     },
-  //     {
-  //       id: 2,
-  //       name: "앨리스",
-  //       profile_image: "/avatarImg/pay_avatar26.png",
-  //       gender: "woman",
-  //       birthday: "2000-01-10",
-  //     },
-  //     {
-  //       id: 3,
-  //       name: "밥",
-  //       profile_image: "/avatarImg/man_avatar1.png",
-  //       gender: "man",
-  //       birthday: "1999-01-02",
-  //     },
-  //     {
-  //       id: 4,
-  //       name: "캐롤",
-  //       profile_image: "/avatarImg/headphone_girl.png",
-  //       gender: "woman",
-  //       birthday: "1999-01-11",
-  //     },
-  //   ];
-
-  //   // 검색어 필터링
-  //   const filtered = dummyResults.filter((item) => item.name.includes(keyword));
-
-  //   setResults(filtered);
-  // }, [keyword]);
-
   return (
     <SearchUserStyle className={clsx("SearchUser_wrap")}>
       <p className="SearchUser_result">🔍 "{keyword}" 검색 결과</p>
