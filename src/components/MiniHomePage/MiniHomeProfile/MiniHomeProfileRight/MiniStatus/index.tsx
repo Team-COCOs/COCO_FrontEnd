@@ -5,28 +5,34 @@ import { useEffect, useRef, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { Field, Form, Formik } from "formik";
 import axios from "axios";
+import ShadowModal from "@/components/ShadowModal";
 
 interface UserData {
-  name: string;
-  profileImage: string;
-  status: string;
+  title: string;
+  minihompi_image: string;
+  mood: string;
   introduction: string;
 }
 
 const MiniStatus = () => {
-  const [profileImage, setProfileImage] = useState<string>(
+  const [minihompi_image, setMinihompi_image] = useState<string>(
     "/avatarImg/defaultProfile.png"
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { user } = useAuth();
   const userId = user?.id;
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        // const res = await axios.get(`minihomepis/${userId}/my-status`);
-        // setUserData(res.data);
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/${userId}/my-status`
+        );
+
+        console.log(res.data);
+        setUserData(res.data);
       } catch (e) {
         console.error("에러 발생:", e);
       }
@@ -36,9 +42,10 @@ const MiniStatus = () => {
 
   // Formik의 초기 값 설정
   const initialValues: UserData = {
-    name: userData?.name || "",
-    profileImage: userData?.profileImage || "/avatarImg/defaultProfile.png",
-    status: userData?.status || "happy",
+    title: userData?.title || "",
+    minihompi_image:
+      userData?.minihompi_image || "/avatarImg/defaultProfile.png",
+    mood: userData?.mood || "happy",
     introduction: userData?.introduction || "",
   };
 
@@ -47,21 +54,22 @@ const MiniStatus = () => {
     const file = e.target.files?.[0];
     if (file) {
       const fileUrl = URL.createObjectURL(file);
-      setProfileImage(fileUrl);
+      setMinihompi_image(fileUrl);
     }
   };
 
   // 데이터 저장 함수
   const saveData = async (values: UserData) => {
     const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("profileImage", profileImage);
-    formData.append("status", values.status);
+    formData.append("name", values.title);
+    formData.append("minihompi_image", minihompi_image);
+    formData.append("status", values.mood);
     formData.append("introduction", values.introduction);
 
     try {
       const res = await axiosInstance.post("/minihomepis/info", formData);
-      console.log(res.data);
+
+      if (res.data.message === "저장 완료") setIsOpen(true);
     } catch (e) {
       console.log(e);
     }
@@ -71,13 +79,17 @@ const MiniStatus = () => {
     <MiniStatusStyle className="MiniStatus_wrap">
       <span className="MiniStatus_title Gulim">내 상태 관리하기</span>
 
-      <Formik initialValues={initialValues} onSubmit={saveData}>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={saveData}
+        enableReinitialize
+      >
         {({ setFieldValue, values }) => (
           <Form>
             <div className="MiniStatus_top">
               <div className="MiniStatus_left">
                 <div className="MiniStatus_img">
-                  <Image src={profileImage} alt="profile" fill />
+                  <Image src={minihompi_image} alt="profile" fill />
                 </div>
 
                 <div
@@ -105,7 +117,7 @@ const MiniStatus = () => {
                     <span className="pixelFont">Today is...</span>
                     <Field
                       as="select"
-                      name="status"
+                      name="mood"
                       className="MiniStatus_select pixelFont"
                     >
                       <option value="happy">😊 행복</option>
@@ -138,7 +150,7 @@ const MiniStatus = () => {
                 <Field
                   className="Gulim"
                   type="text"
-                  name="name"
+                  name="title"
                   placeholder={`${user?.name}님의 미니홈피`}
                 />
               </div>
@@ -152,6 +164,16 @@ const MiniStatus = () => {
           </Form>
         )}
       </Formik>
+
+      <ShadowModal
+        type="success"
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          window.location.href = `/cocoworld/${user?.id}`;
+        }}
+        message="저장 성공!"
+      />
     </MiniStatusStyle>
   );
 };

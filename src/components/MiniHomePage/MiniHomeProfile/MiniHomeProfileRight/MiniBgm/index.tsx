@@ -22,7 +22,7 @@ interface BgmInfo {
 
 const MiniBgm = () => {
   const { user } = useAuth();
-  const [bgm, setBgm] = useState([]);
+  const [bgm, setBgm] = useState<BgmInfo[]>([]);
 
   useEffect(() => {
     const bgm = async () => {
@@ -52,7 +52,7 @@ const MiniBgm = () => {
         <button>배경음악 등록</button>
       </div>
 
-      <Bgm />
+      <Bgm bgm={bgm} />
 
       <div className="MiniBgm_btn">
         <button>듣기</button>
