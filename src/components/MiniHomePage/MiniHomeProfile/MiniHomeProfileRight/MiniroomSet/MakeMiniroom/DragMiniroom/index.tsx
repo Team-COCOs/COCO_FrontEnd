@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDrop } from "react-dnd";
-import { TouchBackend } from "react-dnd-touch-backend";
 import MiniroomItem from "./MiniroomItem";
 import { useRef } from "react";
 import SpeechBubble from "./SpeechBubble";
@@ -97,20 +96,12 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
           layoutData.push({
             id: minimi.id,
             type: "minimi",
-            x: 0, // 기본 위치 (필요시 수정)
+            x: 0,
             y: 0,
           });
         }
       });
 
-      if (selectedMiniroom) {
-        layoutData.push({
-          id: selectedMiniroom.id,
-          type: "miniroom",
-          x: 0, // 미니룸의 초기 x 좌표
-          y: 0, // 미니룸의 초기 y 좌표
-        });
-      }
       console.log(layoutData, "lay??");
       onDragComplete(
         items.map((item) => {
@@ -212,6 +203,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
 
     setLayoutItems(layoutData);
   }, [items]);
+
   return (
     <DragMiniroomStyled>
       <div className="DragMiniroom_allWrap">
