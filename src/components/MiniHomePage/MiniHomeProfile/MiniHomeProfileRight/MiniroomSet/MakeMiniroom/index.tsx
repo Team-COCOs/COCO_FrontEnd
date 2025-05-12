@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { MakeMiniroomStyled } from "./styled";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { TouchBackend } from "react-dnd-touch-backend";
@@ -18,7 +18,8 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   const [buyItemTabs, setBuyItemTabs] = useState<string>("미니룸");
 
   const { user } = useAuth();
-
+  const dropRef = useRef<HTMLDivElement | null>(null);
+  const [items, setItems] = useState<any[]>([]);
   // 선택된 제품 상태 관리
   const [selectedMiniroom, setSelectedMiniroom] = useState<any | null>(null);
   const [selectedMinimi, setSelectedMinimi] = useState<any[]>([]);
@@ -100,6 +101,50 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
       }
     });
   };
+  const handleSave = async () => {
+    try {
+      if (!dropRef.current) return;
+
+      const { width, height } = dropRef.current.getBoundingClientRect();
+
+      const fullLayoutData = items.map((item) => {
+        const common = {
+          id: item.id,
+          type: item.type,
+          x: (item.left / width) * 100,
+          y: (item.top / height) * 100,
+        };
+
+        if (item.type === "speechBubble") {
+          return {
+            ...common,
+            text: item.text,
+          };
+        }
+
+        return common;
+      });
+
+      if (selectedMiniroom) {
+        fullLayoutData.push({
+          id: selectedMiniroom.id,
+          type: "miniroom",
+          x: 0,
+          y: 0,
+        });
+      }
+
+      await axiosInstance.patch("/minirooms/save-layout", {
+        items: fullLayoutData,
+      });
+
+      alert("미니룸이 저장되었습니다!");
+    } catch (error) {
+      console.error("미니룸 저장 실패:", error);
+      alert("저장에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
   return (
     <DndProvider backend={DND_BACKEND} options={{ enableMouseEvents: true }}>
       <MakeMiniroomStyled>
@@ -195,7 +240,12 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
               >
                 취소
               </button>
-              <button className="MakeMiniroom_saveBtn Gulim">저장</button>
+              <button
+                className="MakeMiniroom_saveBtn Gulim"
+                onClick={handleSave}
+              >
+                저장
+              </button>
             </div>
           </div>
         </div>

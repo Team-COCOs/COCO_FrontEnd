@@ -4,11 +4,13 @@ import { MinimiSetStyled } from "./styled";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { useAuth } from "@/context/AuthContext";
+import axios from "axios";
 
 const MinimiSet = () => {
   const { user } = useAuth();
   const [minimiData, setMinimiData] = useState<any[]>([]);
   const [selectedMinimiId, setSelectedMinimiId] = useState<string>("default");
+  const [myMinimi, setMyMinimi] = useState<string>("");
 
   useEffect(() => {
     const fetchMinimiData = async () => {
@@ -36,7 +38,6 @@ const MinimiSet = () => {
   };
 
   const handleSave = async () => {
-    console.log(selectedMinimiId, "selectedMinimiId?");
     try {
       await axiosInstance.patch("/useritems/set-minimi", {
         purchaseId: selectedMinimiId,
@@ -51,6 +52,24 @@ const MinimiSet = () => {
       alert("대표 미니미 저장에 실패했습니다.");
     }
   };
+
+  const fetchMyMinimi = async () => {
+    try {
+      const { data } = await axiosInstance.get(
+        "/useritems/minimi/profile-image"
+      );
+      console.log(data, "data?");
+      setMyMinimi(data.file || ""); // `file`이 없으면 빈 문자열로 처리
+      console.log(myMinimi, "?");
+    } catch (e: any) {
+      console.log(e, "대표미니미 e");
+      setMyMinimi("default");
+    }
+  };
+
+  useEffect(() => {
+    fetchMyMinimi();
+  }, []);
 
   return (
     <MinimiSetStyled>
@@ -84,7 +103,7 @@ const MinimiSet = () => {
             <input
               type="radio"
               name="minimi"
-              checked={selectedMinimiId === "default"}
+              checked={selectedMinimiId === "default" || myMinimi === "default"}
               onChange={() => handleChange("default")}
             />
             <div className="MinimiSet_minimi_imgWrap">

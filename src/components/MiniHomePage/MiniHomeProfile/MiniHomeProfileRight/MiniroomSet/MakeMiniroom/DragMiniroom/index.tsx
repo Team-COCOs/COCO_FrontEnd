@@ -4,6 +4,7 @@ import MiniroomItem from "./MiniroomItem";
 import { useRef } from "react";
 import SpeechBubble from "./SpeechBubble";
 import { DragMiniroomStyled } from "./styled";
+import axiosInstance from "@/lib/axios";
 
 interface DragMiniroomProps {
   selectedMiniroom: any | null;
@@ -26,6 +27,9 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
   const [items, setItems] = useState<any[]>([]);
   const dropRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [layoutItems, setLayoutItems] = useState<
+    { id: string; type: "minimi" | "miniroom"; x: number; y: number }[]
+  >([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -118,17 +122,52 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
 
   // 말풍선
   const addSpeechBubble = () => {
+    if (!dropRef.current) return;
+
+    const { width, height } = dropRef.current.getBoundingClientRect();
+
+    const speechBubbleWidth = 100;
+    const speechBubbleHeight = 50;
+
+    const centerX = width / 2 - speechBubbleWidth / 2;
+    const centerY = height / 2 - speechBubbleHeight / 2;
+
     setItems((prev) => [
       ...prev,
       {
-        id: Date.now(), // uuid 또는 Date.now() 사용
+        id: Date.now(),
         type: "speechBubble",
         text: "",
-        left: "40%", // % 단위
-        top: "40%", // % 단위
+        left: centerX,
+        top: centerY,
       },
     ]);
   };
+  useEffect(() => {
+    if (!dropRef.current) return;
+
+    const { width, height } = dropRef.current.getBoundingClientRect();
+
+    const layoutData = items
+      .filter((item) => item.type !== "speechBubble")
+      .map((item) => ({
+        id: item.id,
+        type: item.type,
+        x: (item.left / width) * 100,
+        y: (item.top / height) * 100,
+      }));
+
+    if (selectedMiniroom) {
+      layoutData.push({
+        id: selectedMiniroom.id,
+        type: "miniroom",
+        x: 0,
+        y: 0,
+      });
+    }
+
+    setLayoutItems(layoutData);
+  }, [items, selectedMiniroom]);
 
   return (
     <DragMiniroomStyled>
