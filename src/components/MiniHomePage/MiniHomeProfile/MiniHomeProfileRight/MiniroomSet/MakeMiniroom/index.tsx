@@ -117,18 +117,36 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
       ]);
     }
   };
-
   const handleLayoutSave = async () => {
     try {
       // 기본 미니룸인 경우 null로 처리
       const isDefaultMiniroom = selectedMiniroom?.id === defaultMiniroom.id;
       const backgroundPayload = isDefaultMiniroom ? null : selectedBackgroundId;
-      // 1. 배경 구매 ID 전송
-      await axiosInstance.post("/minirooms/background", {
-        purchaseId: backgroundPayload,
-      });
-      console.log(selectedBackgroundId, "lselectedBackgroundId?");
-      // 2. 레이아웃 저장 요청을 위한 데이터 포맷팅
+
+      // 배경이 null인 경우에도 비교해서 저장되지 않도록 처리
+      const isBackgroundChanged =
+        backgroundPayload !== selectedMiniroom?.backgroundId &&
+        backgroundPayload !== null;
+
+      // 레이아웃 저장 여부 체크
+      const hasLayoutChanged = draggedData.some(
+        (item) =>
+          item.x !== item.originalX ||
+          item.y !== item.originalY ||
+          item.text !== item.originalText
+      );
+
+      // 배경만 변경된 경우
+      if (isBackgroundChanged && !hasLayoutChanged) {
+        await axiosInstance.post("/minirooms/background", {
+          purchaseId: backgroundPayload,
+        });
+        console.log(selectedBackgroundId, "selectedBackgroundId?");
+        alert("배경이 변경되었습니다.");
+        return; // 레이아웃은 변경되지 않아서 저장할 필요 없음
+      }
+
+      // 레이아웃이 변경된 경우
       const layoutData = draggedData.map((item) => ({
         id: item.id,
         text: item.text || null,
@@ -137,12 +155,27 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
         created_at: new Date().toISOString(),
       }));
 
-      // 3. 레이아웃 저장 요청
-      await axiosInstance.post("/minirooms/save-layout", {
-        items: layoutData,
-      });
-      console.log(layoutData, "layoutData?");
-      alert("미니룸 레이아웃이 저장되었습니다!");
+      // 배경 변경과 레이아웃 변경 둘 다 있을 경우
+      if (isBackgroundChanged) {
+        await axiosInstance.post("/minirooms/background", {
+          purchaseId: backgroundPayload,
+        });
+        console.log(selectedBackgroundId, "selectedBackgroundId?");
+      }
+
+      // 레이아웃 저장 요청
+      if (hasLayoutChanged) {
+        await axiosInstance.post("/minirooms/save-layout", {
+          items: layoutData,
+        });
+        console.log(layoutData, "layoutData?");
+      }
+
+      if (!isBackgroundChanged && !hasLayoutChanged) {
+        alert("변경된 내용이 없습니다.");
+      } else {
+        alert("미니룸 레이아웃이 저장되었습니다!");
+      }
     } catch (error: any) {
       if (error.response?.status === 401) {
         alert("로그인이 필요합니다.");
