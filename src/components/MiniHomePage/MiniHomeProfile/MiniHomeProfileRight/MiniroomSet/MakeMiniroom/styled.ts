@@ -155,4 +155,33 @@ export const MakeMiniroomStyled = styled.div`
     width: 100%;
     height: 100%;
   }
+  /* 미니룸 이름 수정 */
+  .MakeMiniroom_namefix_input {
+    height: 22px;
+    padding: 2px 5px;
+    font-size: 10px;
+    border: 1px solid #4b4b4b;
+    border-radius: 2px;
+    outline: none;
+    width: 160px;
+    font-family: Gulim, sans-serif;
+    box-sizing: border-box;
+    vertical-align: middle;
+  }
+  .MakeMiniroom_namefix_box {
+    margin: 10px 0px;
+  }
+  /* 버튼 */
+  .MakeMiniroom_name_saveBtn {
+    margin-left: 10px;
+    padding: 4px 5px;
+    background-color: rgb(212, 238, 255);
+    color: #4b4b4b;
+    font-size: 11px;
+    border: 1px solid #4b4b4b;
+    border-radius: 2px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 38px;
+  }
 `;

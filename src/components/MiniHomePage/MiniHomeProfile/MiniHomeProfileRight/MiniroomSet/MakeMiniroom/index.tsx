@@ -167,7 +167,19 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
       <MakeMiniroomStyled>
         <div className="MinimiSet_wrap">
           <div className="MakeMiniroom_titleWrap">
+            <div className="MakeMiniroom_wrap_title_fix">
+              <div className="MakeMiniroom_wrap_title Gulim">
+                미니룸 이름 수정하기
+              </div>
+              <div className="MakeMiniroom_namefix_box">
+                <input className="MakeMiniroom_namefix_input"></input>
+                <button className="MakeMiniroom_name_saveBtn Gulim">
+                  저장
+                </button>
+              </div>
+            </div>
             <div className="MakeMiniroom_wrap_title Gulim">미니룸 수정하기</div>
+
             {/* 수정 미니룸 미리보기 */}
             <div className="MakeMiniroom_fixbox_wrap">
               <DragMiniroom
