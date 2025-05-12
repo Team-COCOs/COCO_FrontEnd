@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import MiniroomSet from "./MiniroomSet";
 import MinimiSet from "./MinimiSet";
 import MiniStatus from "./MiniStatus";
+import MiniBgm from "./MiniBgm";
 
 interface ProfileSelectedMenu {
   type?: string;
@@ -27,7 +28,7 @@ const MiniHomeProfileRight = ({
       case "내 상태 관리":
         return <MiniStatus />;
       case "BGM":
-        return <div>BGM 관련 내용</div>;
+        return <MiniBgm />;
       case "미니미":
         return <MinimiSet />;
       case "미니룸":
