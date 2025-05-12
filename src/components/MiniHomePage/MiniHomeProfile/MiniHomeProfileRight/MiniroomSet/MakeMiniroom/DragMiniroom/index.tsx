@@ -91,7 +91,18 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
         })),
       ];
 
-      console.log(layoutData, "lay??");
+      selectedMinimi.forEach((minimi) => {
+        const alreadyExists = items.some((item) => item.id === minimi.id);
+        if (!alreadyExists) {
+          layoutData.push({
+            id: minimi.id,
+            type: "minimi",
+            x: 0, // 기본 위치 (필요시 수정)
+            y: 0,
+          });
+        }
+      });
+
       if (selectedMiniroom) {
         layoutData.push({
           id: selectedMiniroom.id,
@@ -100,7 +111,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
           y: 0, // 미니룸의 초기 y 좌표
         });
       }
-
+      console.log(layoutData, "lay??");
       onDragComplete(
         items.map((item) => {
           const base = {
@@ -199,17 +210,8 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
         y: (item.top / height) * 100,
       }));
 
-    if (selectedMiniroom) {
-      layoutData.push({
-        id: selectedMiniroom.id,
-        type: "miniroom",
-        x: 0,
-        y: 0,
-      });
-    }
-
     setLayoutItems(layoutData);
-  }, [items, selectedMiniroom]);
+  }, [items]);
 
   return (
     <DragMiniroomStyled>

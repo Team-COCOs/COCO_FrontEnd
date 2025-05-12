@@ -5,12 +5,15 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const MinimiSet = () => {
   const { user } = useAuth();
   const [minimiData, setMinimiData] = useState<any[]>([]);
   const [selectedMinimiId, setSelectedMinimiId] = useState<string>("default");
   const [myMinimi, setMyMinimi] = useState<string>("");
+  const { query } = useRouter();
+  const { id } = query;
 
   useEffect(() => {
     const fetchMinimiData = async () => {
@@ -38,11 +41,13 @@ const MinimiSet = () => {
   };
 
   const handleSave = async () => {
+    const purchaseId = selectedMinimiId === "default" ? null : selectedMinimiId;
     try {
       await axiosInstance.patch("/useritems/set-minimi", {
-        purchaseId: selectedMinimiId,
+        purchaseId,
       });
       alert("대표 미니미가 저장되었습니다!");
+      window.location.reload();
     } catch (error: any) {
       if (error?.response?.status === 401) {
         alert("로그인이 필요합니다.");
@@ -56,9 +61,8 @@ const MinimiSet = () => {
   const fetchMyMinimi = async () => {
     try {
       const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/useritems/minimi/profile-image/${user?.id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/useritems/minimi/profile-image/${id}`
       );
-      console.log(data, "data?");
       setMyMinimi(data.file || "");
     } catch (e: any) {
       console.log(e, "대표미니미 e");
@@ -86,7 +90,9 @@ const MinimiSet = () => {
             <div className="MinimiSet_minimi_imgWrap nowminimi">
               <img
                 src={
-                  user?.gender === "woman"
+                  myMinimi
+                    ? myMinimi
+                    : user?.gender === "woman"
                     ? "/avatarImg/woman_avatar1.png"
                     : "/avatarImg/man_avatar1.png"
                 }
