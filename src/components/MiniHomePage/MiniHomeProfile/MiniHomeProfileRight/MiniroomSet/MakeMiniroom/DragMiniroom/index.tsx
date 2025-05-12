@@ -139,7 +139,8 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
             dropRef.current = node;
           }}
           style={{
-            width: "100%",
+            width: 500,
+            height: 250,
             border: "1px solid #ddd",
             position: "relative",
             overflow: "hidden",
@@ -194,7 +195,11 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
               />
             ))}
         </div>
-        <button onClick={addSpeechBubble}>말풍선 추가</button>
+        <div className="DragMiniroom_speechbubble_btnwrap Gulim">
+          <button className="pixelFont" onClick={addSpeechBubble}>
+            말풍선 추가
+          </button>
+        </div>
       </div>
     </DragMiniroomStyled>
   );
