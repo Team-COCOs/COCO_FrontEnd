@@ -64,16 +64,14 @@ export const HomeProfileStyled = styled.div`
     .HomeProfile_imgWrap {
       box-sizing: border-box;
       width: 100%;
-      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      background-color: ${({ theme }) => theme.colors.bookPageColor};
       img {
         width: 100%;
         aspect-ratio: 1/1;
-        object-fit: cover; // 꽉 차게, 비율 유지하면서 넘치는 부분 잘림
+        object-fit: contain; // 꽉 차게, 비율 유지하면서 넘치는 부분 잘림
       }
     }
     .HomeProfile_textarea {

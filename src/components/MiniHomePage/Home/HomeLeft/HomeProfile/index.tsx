@@ -28,7 +28,6 @@ const HomeProfile = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
 
   useEffect(() => {
-    console.log(userId, "userId");
     const fetchUserInfo = async () => {
       try {
         const res = await axios.get(
@@ -44,6 +43,7 @@ const HomeProfile = () => {
     };
     fetchUserInfo();
   }, [userId]);
+
   const moodValue = userData?.mood ?? "happy";
   const moodText =
     moods.find((m) => m.value === moodValue)?.text || "기분을 선택해보세요.";
@@ -54,10 +54,15 @@ const HomeProfile = () => {
           <span className="pixelFont">TODAY IS...</span> {moodText}
         </div>
         <div className="HomeProfile_imgWrap">
-          <img src={userData?.minihompi_image} alt="Profile img" />
+          <img
+            src={userData?.minihompi_image || "/avatarImg/defaultProfile.png"}
+            alt="Profile img"
+          />
         </div>
         <div className="HomeProfile_textarea Gulim">
-          {userData?.introduction}
+          {userData?.introduction
+            ? userData?.introduction
+            : "자기소개가 아직 없어요!"}
         </div>
         <span className="HomeProfile_history">
           <span>▶</span> HISTORY

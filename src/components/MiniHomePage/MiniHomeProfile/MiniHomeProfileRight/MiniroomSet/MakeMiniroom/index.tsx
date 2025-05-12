@@ -25,16 +25,16 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   // 선택된 제품 상태 관리
   const [selectedMiniroom, setSelectedMiniroom] = useState<any | null>(null);
   const [selectedMinimi, setSelectedMinimi] = useState<any[]>([]);
-
-  useEffect(() => {
-    console.log(selectedMiniroom, "selectedMiniroom");
-    console.log(selectedMinimi, "selectedMinimi");
-    console.log(draggedData, "draggedData");
-  }, []);
+  const [selectedBackgroundId, setSelectedBackgroundId] = useState<
+    number | null
+  >(null);
 
   // 모바일 여부 확인
   const isMobile = useIsMobile();
+
   const DND_BACKEND = isMobile ? TouchBackend : HTML5Backend;
+
+  const backendOptions = isMobile ? { enableMouseEvents: true } : undefined;
 
   if (typeof window === "undefined") return null;
 
@@ -90,53 +90,45 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
 
   const handleMiniroomSelect = (product: any) => {
     setSelectedMiniroom(product);
-    // 미니룸이 선택될 때 draggedData에 추가
-    setDraggedData((prev) => [
-      ...prev,
-      {
-        id: product.id,
-        text: product.storeItems.name,
-        x: 0, // 초기 위치 (적절히 수정)
-        y: 0, // 초기 위치 (적절히 수정)
-        store_item_id: product.id,
-      },
-    ]);
+    setSelectedBackgroundId(product.id);
   };
+
   const handleMinimiSelect = (product: any) => {
-    setSelectedMinimi((prev) => {
-      const exists = prev.some((item) => item.id === product.id);
-      if (exists) {
-        return prev.filter((item) => item.id !== product.id);
-      } else {
-        return [...prev, product];
-      }
-    });
+    const isSelected = selectedMinimi.some((item) => item.id === product.id);
 
-    // 미니미 선택 시 draggedData에 추가
-    setDraggedData((prev) => [
-      ...prev,
-      {
-        id: product.id,
-        text: product.storeItems.name,
-        x: 0, // 초기 위치 (적절히 수정)
-        y: 0, // 초기 위치 (적절히 수정)
-        store_item_id: product.id,
-      },
-    ]);
+    if (isSelected) {
+      // 선택 해제: selectedMinimi와 draggedData에서 제거
+      setSelectedMinimi((prev) =>
+        prev.filter((item) => item.id !== product.id)
+      );
+      setDraggedData((prev) => prev.filter((item) => item.id !== product.id));
+    } else {
+      // 선택: selectedMinimi와 draggedData에 추가
+      setSelectedMinimi((prev) => [...prev, product]);
+      setDraggedData((prev) => [
+        ...prev,
+        {
+          id: product.id,
+          text: product.storeItems.name,
+          x: 0,
+          y: 0,
+          store_item_id: product.id,
+        },
+      ]);
+    }
   };
 
-  const handleSave = async () => {
-    if (!selectedMiniroom) {
-      alert("미니룸을 선택해주세요.");
-      return;
-    }
-
-    if (draggedData.length === 0) {
-      alert("드래그한 아이템이 없습니다.");
-      return;
-    }
+  const handleLayoutSave = async () => {
     try {
-      // 미니룸이 선택된 상태에서, draggedData에 미니룸 정보를 추가
+      // 기본 미니룸인 경우 null로 처리
+      const isDefaultMiniroom = selectedMiniroom?.id === defaultMiniroom.id;
+      const backgroundPayload = isDefaultMiniroom ? null : selectedBackgroundId;
+      // 1. 배경 구매 ID 전송
+      await axiosInstance.post("/minirooms/background", {
+        purchaseId: backgroundPayload,
+      });
+      console.log(selectedBackgroundId, "lselectedBackgroundId?");
+      // 2. 레이아웃 저장 요청을 위한 데이터 포맷팅
       const layoutData = draggedData.map((item) => ({
         id: item.id,
         text: item.text || null,
@@ -144,30 +136,42 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
         top: item.y,
         created_at: new Date().toISOString(),
       }));
-      // 서버에 저장
-      await axiosInstance.patch("/minirooms/save-layout", {
+
+      // 3. 레이아웃 저장 요청
+      await axiosInstance.post("/minirooms/save-layout", {
         items: layoutData,
       });
-
-      alert("미니룸이 저장되었습니다!");
-      console.log(layoutData, "items?");
+      console.log(layoutData, "layoutData?");
+      alert("미니룸 레이아웃이 저장되었습니다!");
     } catch (error: any) {
-      if (error.response.status === 401) {
+      if (error.response?.status === 401) {
         alert("로그인이 필요합니다.");
         window.location.reload();
       } else {
-        console.error("미니룸 저장 실패:", error.message || error);
+        console.error("미니룸 레이아웃 저장 실패:", error.message || error);
         alert("서버와의 연결에 문제가 발생했습니다. 다시 시도해주세요.");
       }
     }
   };
 
   return (
-    <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
+    <DndProvider backend={DND_BACKEND} options={backendOptions}>
       <MakeMiniroomStyled>
         <div className="MinimiSet_wrap">
           <div className="MakeMiniroom_titleWrap">
+            <div className="MakeMiniroom_wrap_title_fix">
+              <div className="MakeMiniroom_wrap_title Gulim">
+                미니룸 이름 수정하기
+              </div>
+              <div className="MakeMiniroom_namefix_box">
+                <input className="MakeMiniroom_namefix_input"></input>
+                <button className="MakeMiniroom_name_saveBtn Gulim">
+                  저장
+                </button>
+              </div>
+            </div>
             <div className="MakeMiniroom_wrap_title Gulim">미니룸 수정하기</div>
+
             {/* 수정 미니룸 미리보기 */}
             <div className="MakeMiniroom_fixbox_wrap">
               <DragMiniroom
@@ -260,7 +264,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
               </button>
               <button
                 className="MakeMiniroom_saveBtn Gulim"
-                onClick={handleSave}
+                onClick={handleLayoutSave}
               >
                 저장
               </button>
