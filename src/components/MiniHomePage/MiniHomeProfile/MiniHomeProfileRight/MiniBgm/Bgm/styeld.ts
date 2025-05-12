@@ -57,7 +57,7 @@ export const BgmStyle = styled.div`
 
     input[type="checkbox"] {
       transform: scale(1.1);
-      accent-color: #f5a623;
+      accent-color: rgb(227, 227, 227);
       cursor: pointer;
     }
   }
