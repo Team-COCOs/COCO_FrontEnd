@@ -1,19 +1,63 @@
 import { HomeProfileStyled } from "./styled";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
+
+interface UserData {
+  title: string;
+  minihompi_image: string;
+  mood: string;
+  introduction: string;
+}
+
+const moods = [
+  { value: "happy", text: "😊 행복" },
+  { value: "joy", text: "🎵 즐거움" },
+  { value: "busy", text: "💼 바쁨" },
+  { value: "sad", text: "🌧️ 슬픔" },
+  { value: "angry", text: "💢 화남" },
+];
 
 const HomeProfile = () => {
+  const [minihompi_image, setMinihompi_image] = useState<string>(
+    "/avatarImg/defaultProfile.png"
+  );
+  const router = useRouter();
+  const userId = router.query.id;
+
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  useEffect(() => {
+    console.log(userId, "userId");
+    const fetchUserInfo = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/${userId}/my-status`
+        );
+
+        setUserData(res.data);
+        setMinihompi_image(res.data.minihompi_image);
+        console.log(res.data, "res.data??");
+      } catch (e) {
+        console.error("에러 발생:", e);
+      }
+    };
+    fetchUserInfo();
+  }, [userId]);
+  const moodValue = userData?.mood ?? "happy";
+  const moodText =
+    moods.find((m) => m.value === moodValue)?.text || "기분을 선택해보세요.";
   return (
     <HomeProfileStyled>
       <div className="HomeProfile_wrap">
         <div className="HomeProfile_todayis Gulim">
-          <span className="pixelFont">TODAY IS...</span> 🌧️ 슬픔
+          <span className="pixelFont">TODAY IS...</span> {moodText}
         </div>
         <div className="HomeProfile_imgWrap">
-          <img src="/sad.jpg" alt="Profile img" />
+          <img src={userData?.minihompi_image} alt="Profile img" />
         </div>
         <div className="HomeProfile_textarea Gulim">
-          난... ㄱ ㅏ끔... 눈물을 흘린 ㄷ r ....
-          <br /> ㄱ r끔은 눈물을 참을 수 없는 내가 별루ㄷ ㅏ...
+          {userData?.introduction}
         </div>
         <span className="HomeProfile_history">
           <span>▶</span> HISTORY
