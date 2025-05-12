@@ -21,5 +21,12 @@ export const EmptyPageStyle = styled.div`
       width: 130px;
       height: 130px;
     }
+
+    .Bgm_img {
+      margin-top: -35px;
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
   }
 `;

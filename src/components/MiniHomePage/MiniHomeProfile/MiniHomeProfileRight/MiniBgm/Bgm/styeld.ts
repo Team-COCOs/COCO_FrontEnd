@@ -1,12 +1,15 @@
 import styled from "styled-components";
 
 export const BgmStyle = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  height: 100%;
   border-radius: 12px;
-  color: #333;
 
   .Bgm_table {
     width: 100%;
+    flex-grow: 1;
 
     .Bgm_tableHeader,
     .Bgm_item {
@@ -77,6 +80,35 @@ export const BgmStyle = styled.div`
     .Bgm_column.artist {
       flex: 1.5;
       text-align: left;
+    }
+  }
+
+  .Bgm_footer {
+    width: 100%;
+
+    .Bgm_pageNation {
+      display: flex;
+      gap: 7px;
+      justify-content: center;
+      align-items: center;
+
+      button {
+        all: unset;
+        background-color: white;
+        border-top: none;
+        border-bottom: none;
+        border-left: 2px solid rgb(231, 231, 231);
+        border-right: 2px solid rgb(231, 231, 231);
+        padding: 0 5px;
+        color: rgb(157, 157, 157);
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+
+        &.active {
+          color: ${({ theme }) => theme.colors.mainColor};
+        }
+      }
     }
   }
 `;
