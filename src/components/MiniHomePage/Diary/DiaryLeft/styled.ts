@@ -176,4 +176,83 @@ export const DiaryLeftStyled = styled.div`
     /* text-decoration: none; */
     display: none;
   }
+  /* 반응형 */
+  @media (max-width: 1024px) {
+    .react-calendar {
+      width: 100%;
+    }
+    .DiaryLeft_Calendar_wrap {
+      width: 100%;
+    }
+    /* 달력 네비게이션 버튼 스타일 통일 */
+    .react-calendar__navigation__arrow.react-calendar__navigation__prev2-button,
+    .react-calendar__navigation__arrow.react-calendar__navigation__prev-button {
+      border: none;
+      color: white;
+      font-size: 6px;
+      background-color: #62bfe1;
+      padding-left: 3px;
+    }
+
+    .react-calendar__navigation__arrow.react-calendar__navigation__next2-button,
+    .react-calendar__navigation__arrow.react-calendar__navigation__next-button {
+      border: none;
+      color: white;
+      font-size: 6px;
+      background-color: #62bfe1;
+      padding-right: 3%;
+    }
+    .DiaryLeft_Calendar_wrap .DiaryLeft_Calendar_alldatebtn {
+      font-size: 6px;
+    }
+  }
+
+  @media (max-width: 769px) {
+    .react-calendar {
+      width: 100%;
+    }
+    .DiaryLeft_Calendar_wrap {
+      width: 100%;
+    }
+    .DiaryLeft_Calendar_wrap .DiaryLeft_Calendar_alldatebtn {
+      font-size: 10px;
+    }
+    .react-calendar__navigation__label__labelText.react-calendar__navigation__label__labelText--from {
+      font-size: 15px;
+    }
+    .react-calendar__navigation__arrow.react-calendar__navigation__next2-button,
+    .react-calendar__navigation__arrow.react-calendar__navigation__next-button {
+      font-size: 12px;
+    }
+    .react-calendar__navigation__arrow.react-calendar__navigation__prev2-button,
+    .react-calendar__navigation__arrow.react-calendar__navigation__prev-button {
+      font-size: 12px;
+    }
+    .react-calendar__tile.react-calendar__month-view__days__day {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .react-calendar {
+      width: 100%;
+    }
+    .DiaryLeft_Calendar_wrap {
+      width: 100%;
+    }
+    .react-calendar__navigation__label__labelText.react-calendar__navigation__label__labelText--from {
+      font-size: 13px;
+    }
+    .react-calendar__navigation__arrow.react-calendar__navigation__next2-button,
+    .react-calendar__navigation__arrow.react-calendar__navigation__next-button {
+      font-size: 10px;
+    }
+    .react-calendar__navigation__arrow.react-calendar__navigation__prev2-button,
+    .react-calendar__navigation__arrow.react-calendar__navigation__prev-button {
+      font-size: 10px;
+    }
+    .react-calendar__tile.react-calendar__month-view__days__day {
+      font-size: 12px;
+    }
+  }
 `;
