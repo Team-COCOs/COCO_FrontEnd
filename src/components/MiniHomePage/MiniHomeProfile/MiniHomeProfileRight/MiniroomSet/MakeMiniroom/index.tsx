@@ -16,10 +16,12 @@ interface MakeMiniroomProps {
 const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   const [allProduct, setAllProduct] = useState<any[]>([]);
   const [buyItemTabs, setBuyItemTabs] = useState<string>("미니룸");
-
+  // 드래그 완료된 위치
+  const [draggedData, setDraggedData] = useState<any[]>([]);
   const { user } = useAuth();
   const dropRef = useRef<HTMLDivElement | null>(null);
-  const [items, setItems] = useState<any[]>([]);
+  const [minirooms, setMinirooms] = useState<any[]>([]);
+  const [minimis, setMinimis] = useState<any[]>([]);
   // 선택된 제품 상태 관리
   const [selectedMiniroom, setSelectedMiniroom] = useState<any | null>(null);
   const [selectedMinimi, setSelectedMinimi] = useState<any[]>([]);
@@ -68,13 +70,6 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     fetchMinimiData();
   }, []);
 
-  // const miniroomProduct = allProduct.filter((product) => {
-  //   return product.storeItems.category === "miniroom";
-  // });
-
-  // const minimiProduct = allProduct.filter((product) => {
-  //   return product.storeItems.category === "minimi";
-  // });
   const miniroomProduct = [
     defaultMiniroom,
     ...allProduct.filter(
@@ -101,52 +96,37 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
       }
     });
   };
+
   const handleSave = async () => {
     try {
-      if (!dropRef.current) return;
+      const layoutData = draggedData.map((item) => ({
+        id: item.id,
+        minimi_position_left: item.left,
+        minimi_position_top: item.top,
+        created_at: new Date().toISOString(),
+        store_item_id: selectedMiniroom?.id,
+      }));
 
-      const { width, height } = dropRef.current.getBoundingClientRect();
-
-      const fullLayoutData = items.map((item) => {
-        const common = {
-          id: item.id,
-          type: item.type,
-          x: (item.left / width) * 100,
-          y: (item.top / height) * 100,
-        };
-
-        if (item.type === "speechBubble") {
-          return {
-            ...common,
-            text: item.text,
-          };
-        }
-
-        return common;
-      });
-
-      if (selectedMiniroom) {
-        fullLayoutData.push({
-          id: selectedMiniroom.id,
-          type: "miniroom",
-          x: 0,
-          y: 0,
-        });
-      }
-
+      // 서버에 저장
       await axiosInstance.patch("/minirooms/save-layout", {
-        items: fullLayoutData,
+        items: layoutData,
       });
 
       alert("미니룸이 저장되었습니다!");
-    } catch (error) {
-      console.error("미니룸 저장 실패:", error);
-      alert("저장에 실패했습니다. 다시 시도해주세요.");
+      console.log(layoutData, "items?");
+    } catch (error: any) {
+      if (error.response.status === 401) {
+        alert("로그인이 필요합니다.");
+        window.location.reload();
+      } else {
+        console.error("미니룸 저장 실패:", error.message || error);
+        alert("서버와의 연결에 문제가 발생했습니다. 다시 시도해주세요.");
+      }
     }
   };
 
   return (
-    <DndProvider backend={DND_BACKEND} options={{ enableMouseEvents: true }}>
+    <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
       <MakeMiniroomStyled>
         <div className="MinimiSet_wrap">
           <div className="MakeMiniroom_titleWrap">
@@ -156,6 +136,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
               <DragMiniroom
                 selectedMiniroom={selectedMiniroom}
                 selectedMinimi={selectedMinimi}
+                onDragComplete={(draggedItems) => setDraggedData(draggedItems)}
               />
             </div>
 

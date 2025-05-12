@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDrop } from "react-dnd";
+import { TouchBackend } from "react-dnd-touch-backend";
 import MiniroomItem from "./MiniroomItem";
 import { useRef } from "react";
 import SpeechBubble from "./SpeechBubble";
@@ -9,6 +10,7 @@ import axiosInstance from "@/lib/axios";
 interface DragMiniroomProps {
   selectedMiniroom: any | null;
   selectedMinimi: any[];
+  onDragComplete: (draggedItems: any[]) => void;
 }
 
 // 말풍선
@@ -23,6 +25,7 @@ interface SpeechBubbleItem {
 const DragMiniroom: React.FC<DragMiniroomProps> = ({
   selectedMiniroom,
   selectedMinimi,
+  onDragComplete,
 }) => {
   const [items, setItems] = useState<any[]>([]);
   const dropRef = useRef<HTMLDivElement>(null);
@@ -78,6 +81,25 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
           },
         ]);
       }
+      // 선택된 미니룸 정보도 포함하여 부모에게 전달
+      const layoutData = [
+        ...items.map((item) => ({
+          id: item.id,
+          type: item.type,
+          x: item.left,
+          y: item.top,
+        })),
+      ];
+      if (selectedMiniroom) {
+        layoutData.push({
+          id: selectedMiniroom.id,
+          type: "miniroom",
+          x: 0, // 미니룸의 초기 x 좌표
+          y: 0, // 미니룸의 초기 y 좌표
+        });
+      }
+
+      onDragComplete(items);
     },
 
     collect: (monitor) => ({
