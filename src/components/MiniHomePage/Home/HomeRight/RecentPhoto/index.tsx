@@ -12,7 +12,7 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab, onTabClick }) => {
   const isMobile = useIsMobile();
   const tabKeys = Object.keys(TAB_LABELS) as TabKey[];
   const filteredTabKeys = tabKeys.filter(
-    (key) => key !== "Home" && key !== "Profile" && key !== "Setting"
+    (key) => key !== "home" && key !== "profile" && key !== "setting"
   );
 
   return (

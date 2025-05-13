@@ -16,7 +16,7 @@ const HomeTab: React.FC<HomeTabProps> = ({
   const router = useRouter();
   const { id } = router.query;
   const filteredTabs = Object.entries(TAB_LABELS).filter(([key]) => {
-    return !(key === "Setting" || key === "Profile") || isOwner;
+    return !(key === "setting" || key === "profile") || isOwner;
   });
 
   console.log(filteredTabs, "filteredTabs?");
