@@ -6,58 +6,29 @@ import axios from "axios";
 import Loading from "@/components/Loading";
 
 import MinihomeLayout from "@/features/Minihome";
-import HomeLeft from "@/components/MiniHomePage/Home/HomeLeft";
-import HomeRight from "@/components/MiniHomePage/Home/HomeRight";
-
+import SettingLeft from "@/components/MiniHomePage/Setting/SettingLeft";
+import SettingRight from "@/components/MiniHomePage/Setting/SettingRight";
 import { useAuth } from "@/context/AuthContext";
 import axiosInstance from "@/lib/axios";
 
 const MinihomePage = () => {
-  // 탭 상태 관리
-  const [activeTab, setActiveTab] = useState<string>("Home");
   const router = useRouter();
   const { id } = router.query;
 
   const { user } = useAuth();
   const isOwner = String(user?.id) === id;
-  // 모달
-  const [isOpen, setIsOpen] = useState(false);
-  // 로딩
+
   const [isLoading, setIsLoading] = useState(false);
-  // 일촌신청 이름
+  const [isOpen, setIsOpen] = useState(false);
   const [requesterName, setRequesterName] = useState("");
   const [receiverName, setReceiverName] = useState("");
-  // 로그인 한 사람 ID
-  // 탭 클릭 시 상태 변경 함수
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab);
-  };
-  // 프로필 메뉴 탭 관리
-  const [profileSelectedMenu, setProfileSelectedMenu] = useState<{
-    type?: string;
-    title: string;
-  } | null>(null);
-  // 프로필 미니룸 꾸미기 탭 관리
-  const [fixMiniroom, setfixMiniroom] = useState<boolean>(false);
 
-  // 관리 메뉴 탭 관리
   const [settingSelectedMenu, setSettingSelectedMenu] = useState<{
     type?: string;
     title: string;
   } | null>(null);
 
-  // 공통 폴더/카테고리 선택 상태
-  const [selectedMenu, setSelectedMenu] = useState<{
-    id: number;
-    title: string;
-  } | null>(null);
-
-  const [selectedDiaryMenu, setSelectediaryMenu] = useState<{
-    id: number;
-    title: string;
-  } | null>(null);
-
-  // 페이지가 처음 로드될 때 로딩 상태 종료
+  // 로딩 타이머 (초기 화면용)
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -65,20 +36,7 @@ const MinihomePage = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // 탭 바뀔때 프로필 내부 초기화
-  useEffect(() => {
-    if (activeTab !== "Profile") {
-      setProfileSelectedMenu(null);
-    }
-  }, [activeTab]);
-
-  // 탭 바뀔때 관리 내부 초기화
-  useEffect(() => {
-    if (activeTab !== "Setting") {
-      setSettingSelectedMenu(null);
-    }
-  }, [activeTab]);
-
+  // 모달 열릴 때 이름 가져오기
   useEffect(() => {
     const fetchNames = async () => {
       try {
@@ -97,6 +55,7 @@ const MinihomePage = () => {
     }
   }, [isOpen, id]);
 
+  // 방문자 기록
   useEffect(() => {
     const countVisit = async () => {
       if (!id || Array.isArray(id)) return;
@@ -112,9 +71,7 @@ const MinihomePage = () => {
           { hostId: Number(id) },
           token
             ? {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
                 withCredentials: true,
               }
             : undefined
@@ -136,8 +93,10 @@ const MinihomePage = () => {
   return (
     <MinihomeLayout
       id={id as string}
-      tapChildren={<HomeLeft />}
-      children={<HomeRight activeTab={activeTab} onTabClick={handleTabClick} />}
+      tapChildren={
+        <SettingLeft setSettingSelectedMenu={setSettingSelectedMenu} />
+      }
+      children={<SettingRight settingSelectedMenu={settingSelectedMenu} />}
     />
   );
 };
