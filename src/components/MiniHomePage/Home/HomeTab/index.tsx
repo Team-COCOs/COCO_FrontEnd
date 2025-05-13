@@ -18,7 +18,6 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
     return !(key === "setting" || key === "profile") || isOwner;
   });
 
-  console.log(filteredTabs, "filteredTabs?");
   return (
     <HomeTabStyled>
       <div className="HomeTab_wrap">

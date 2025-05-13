@@ -1,20 +1,24 @@
 import { HomeMusicRightStyled } from "./styled";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-
-const playlist = [
-  { title: "Y - 프리스타일", url: "/bgm/y-freestyle.mp3" },
-  { title: "12월 32일 - 별", url: "/bgm/12-32.mp3" },
-];
-
+import axios from "axios";
+// const playlist = [
+//   { title: "Y - 프리스타일", url: "/bgm/y-freestyle.mp3" },
+//   { title: "12월 32일 - 별", url: "/bgm/12-32.mp3" },
+// ];
+interface Track {
+  title: string;
+  url: string;
+}
 const HomeMusicRight = () => {
   const router = useRouter();
-
+  const { id } = router.query;
   const audioRef = useRef<HTMLAudioElement>(null);
   const [currentTrack, setCurrentTrack] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const [volume, setVolume] = useState(1);
+  const [playlist, setPlaylist] = useState<any[]>([]);
 
   const clickShop = () => {
     router.push("/");
@@ -90,6 +94,22 @@ const HomeMusicRight = () => {
     router.push("/");
   };
 
+  // 구매한 음악 불러오기
+  useEffect(() => {
+    const fetchBuyBgm = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/useritems/bgm/${id}`
+        );
+        console.log(res.data, "bgm buy?");
+        setPlaylist(res.data);
+      } catch (e: any) {
+        console.error("BGM 가져오기 오류:", e);
+      }
+    };
+    fetchBuyBgm();
+  }, [id]);
+
   return (
     <HomeMusicRightStyled>
       <div className="HomeMusicRight_wrap">
@@ -129,7 +149,7 @@ const HomeMusicRight = () => {
           <div className="HomeMusicRight_player">
             <audio
               ref={audioRef}
-              src={playlist[currentTrack].url}
+              src={playlist[currentTrack]?.url || ""}
               onEnded={nextTrack}
             />
             <div className="HomeMusicRight_title">
