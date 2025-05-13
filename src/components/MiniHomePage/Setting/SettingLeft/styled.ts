@@ -9,7 +9,7 @@ export const SettingLeftStyled = styled.div`
   }
   .SettingLeft_title {
     width: 100%;
-    margin-left: 18px;
+    margin-left: 10px;
     color: rgb(120, 184, 183);
     font-size: 15px;
     font-weight: bold;

@@ -9,6 +9,8 @@ const HomeMiniroom = () => {
 
   // 미니룸 이름 관리
   const [miniroomName, setMiniroomName] = useState("");
+  // 미니룸 배경 관리
+  const [miniroomBackground, setMiniroomBackground] = useState("");
 
   // 미니룸 이름 불러오기
   useEffect(() => {
@@ -25,6 +27,21 @@ const HomeMiniroom = () => {
     fetchMiniroomName();
   }, [id]);
 
+  // 미니룸 배경 불러오기
+  useEffect(() => {
+    const fetchMiniroomBackground = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/background`
+        );
+        setMiniroomBackground(response.data.file);
+      } catch (e: any) {
+        console.log(e, "미니룸 이미지 e");
+      }
+    };
+    fetchMiniroomBackground();
+  }, [id]);
+
   return (
     <HomeMiniroomStyled>
       <div className="HomeMiniroom_wrap">
@@ -37,7 +54,14 @@ const HomeMiniroom = () => {
           </span>
         </div>
         <div className="HomeMiniroom_imgWrap">
-          <img src="/miniroom/miniroom17.png" alt="miniroom img" />
+          <img
+            src={
+              miniroomBackground === null || miniroomBackground === undefined
+                ? "/miniroom/miniroom17.png"
+                : miniroomBackground
+            }
+            alt={"myminiroom"}
+          />
         </div>
       </div>
     </HomeMiniroomStyled>
