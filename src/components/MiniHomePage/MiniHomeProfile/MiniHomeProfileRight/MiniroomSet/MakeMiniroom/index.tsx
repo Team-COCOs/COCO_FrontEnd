@@ -8,12 +8,16 @@ import axiosInstance from "@/lib/axios";
 import DragMiniroom from "./DragMiniroom";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useAuth } from "@/context/AuthContext";
+import axios from "axios";
+import { Router, useRouter } from "next/router";
 
 interface MakeMiniroomProps {
   setfixMiniroom: (value: boolean) => void;
 }
 
 const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
+  const { query } = useRouter();
+  const { id } = query;
   const [allProduct, setAllProduct] = useState<any[]>([]);
   const [buyItemTabs, setBuyItemTabs] = useState<string>("미니룸");
   // 드래그 완료된 위치
@@ -191,18 +195,36 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     }
   };
 
+  // 미니룸 이름 불러오기
+  useEffect(() => {
+    const fetchMiniroomName = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/title`
+        );
+        setName(response.data);
+      } catch (e: any) {
+        console.log(e, "미니룸 이름 e");
+      }
+    };
+    fetchMiniroomName();
+  }, [id]);
+
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 10) {
-      setName(e.target.value);
+    const value = e.target.value;
+
+    if (value.length <= 10) {
+      setName(value);
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (name.length === 0) {
       alert("이름을 입력해주세요.");
     } else {
-      // 저장 로직 처리
-      alert(`이름이 ${name}으로 저장되었습니다.`);
+      const res = await axiosInstance.patch(`/minirooms/title`, { name });
+      console.log(res.data, "이름 변경 성공 여부?");
+      alert(`미니룸 이름이 변경되었습니다.`);
     }
   };
 
@@ -220,11 +242,14 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
               <div className="MakeMiniroom_namefix_box">
                 <input
                   className="MakeMiniroom_namefix_input"
-                  value={name}
+                  value={name ? name : "미니룸"}
                   onChange={handleNameChange}
                   maxLength={10}
                 ></input>
-                <button className="MakeMiniroom_name_saveBtn Gulim">
+                <button
+                  className="MakeMiniroom_name_saveBtn Gulim"
+                  onClick={handleSave}
+                >
                   저장
                 </button>
               </div>
