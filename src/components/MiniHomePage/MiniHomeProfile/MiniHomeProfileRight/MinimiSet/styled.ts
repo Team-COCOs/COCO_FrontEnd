@@ -22,13 +22,15 @@ export const MinimiSetStyled = styled.div`
     margin-bottom: 7px;
   }
   .MinimiSet_blue_title {
-    color: #2686a3;
+    /* color: #2686a3; */
+    color: black;
     font-size: 12px;
     font-weight: bolder;
     padding-bottom: 7px;
   }
   .MinimiSet_wrap_title2 {
-    color: rgb(129, 129, 129);
+    color: #2686a3;
+    /* color: rgb(129, 129, 129); */
     font-size: 11px;
     font-weight: bolder;
     padding-bottom: 15px;
