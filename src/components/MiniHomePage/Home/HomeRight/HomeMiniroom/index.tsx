@@ -56,7 +56,7 @@ const HomeMiniroom = () => {
         <div className="HomeMiniroom_imgWrap">
           <img
             src={
-              miniroomBackground === null || miniroomBackground === undefined
+              !miniroomBackground
                 ? "/miniroom/miniroom17.png"
                 : miniroomBackground
             }

@@ -33,6 +33,11 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     number | null
   >(null);
 
+  // 미니룸 id 불러오기
+  const [miniroomBackgroundId, setMiniroomBackgroundId] = useState<
+    number | null
+  >(null);
+
   // 미니룸 이름 관리
   const [name, setName] = useState("");
 
@@ -210,6 +215,53 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     fetchMiniroomName();
   }, [id]);
 
+  // 저장된 미니룸 배경 id 불러오기
+  // useEffect(() => {
+  //   const fetchMiniroomBackground = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/background`
+  //       );
+  //       setMiniroomBackgroundId(response.data.id);
+  //       setSelectedBackgroundId(response.data.id);
+  //     } catch (e: any) {
+  //       console.log(e, "미니룸 이미지 e");
+  //     }
+  //   };
+  //   fetchMiniroomBackground();
+  // }, [id]);
+
+  useEffect(() => {
+    const fetchMiniroomBackground = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/background`
+        );
+
+        if (response.data?.id) {
+          setMiniroomBackgroundId(response.data.id);
+          setSelectedMiniroom({
+            id: response.data.id,
+            storeItems: {
+              file: response.data.file,
+              name: response.data.name,
+            },
+          });
+        } else {
+          // 배경 없을 경우 기본 미니룸 선택
+          setMiniroomBackgroundId(null);
+          setSelectedMiniroom(defaultMiniroom);
+        }
+      } catch (e) {
+        console.log(e, "미니룸 이미지 e");
+        setMiniroomBackgroundId(null);
+        setSelectedMiniroom(defaultMiniroom);
+      }
+    };
+
+    fetchMiniroomBackground();
+  }, [id]);
+
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
@@ -299,6 +351,16 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
                       className="MakeMiniroom_productWrap_miniroom"
                     >
                       <div className="MakeMiniroom_product-item pixelFont">
+                        {/* <input
+                          type="radio"
+                          name="miniroom"
+                          checked={
+                            miniroomBackgroundId
+                              ? selectedMiniroom?.id === product.id
+                              : product.id === defaultMiniroom.id
+                          }
+                          onChange={() => handleMiniroomSelect(product)}
+                        /> */}
                         <input
                           type="radio"
                           name="miniroom"
@@ -306,7 +368,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
                           onChange={() => handleMiniroomSelect(product)}
                         />
                         <img
-                          src={product.storeItems.file}
+                          src={product.storeItems.file || null}
                           alt={`miniroom ${index}`}
                         />
                         <h3>{product.storeItems.name}</h3>
@@ -329,7 +391,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
                           onChange={() => handleMinimiSelect(product)}
                         />
                         <img
-                          src={product.storeItems.file}
+                          src={product.storeItems.file || null}
                           alt={`minimi ${index}`}
                         />
                         <h3>{product.storeItems.name}</h3>

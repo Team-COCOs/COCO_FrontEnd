@@ -60,7 +60,7 @@ const MadeMiniroom: React.FC<MadeMiniroomProps> = ({ setfixMiniroom }) => {
           <div className="MadeMiniroom_imgWrap">
             <img
               src={
-                miniroomBackground === null || miniroomBackground === undefined
+                !miniroomBackground
                   ? "/miniroom/miniroom17.png"
                   : miniroomBackground
               }

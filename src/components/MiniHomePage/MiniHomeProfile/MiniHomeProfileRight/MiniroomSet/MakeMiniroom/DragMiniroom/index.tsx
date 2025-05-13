@@ -5,6 +5,8 @@ import { useRef } from "react";
 import SpeechBubble from "./SpeechBubble";
 import { DragMiniroomStyled } from "./styled";
 import axiosInstance from "@/lib/axios";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 interface DragMiniroomProps {
   selectedMiniroom: any | null;
@@ -26,6 +28,9 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
   selectedMinimi,
   onDragComplete,
 }) => {
+  const { query } = useRouter();
+  const { id } = query;
+
   const [items, setItems] = useState<any[]>([]);
   const dropRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -223,7 +228,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
 
     onDragComplete(updatedLayout);
   };
-
+  // 말풍선
   useEffect(() => {
     if (!dropRef.current) return;
 
@@ -260,7 +265,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
           {/* 미니룸 배경 */}
           {selectedMiniroom && (
             <img
-              src={selectedMiniroom.storeItems.file}
+              src={selectedMiniroom.storeItems.file || null}
               alt="miniroom background"
               style={{
                 width: "100%",
