@@ -147,8 +147,6 @@ const MinihomePage = () => {
     countVisit();
   }, [id]);
 
-  if (!id || Array.isArray(id)) return <Loading />;
-
   return (
     <MinihomeLayout
       id={id as string}

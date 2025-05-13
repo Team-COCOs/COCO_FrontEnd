@@ -141,7 +141,7 @@ const Profile = ({ setHasToken }: profileProps) => {
         <button
           className="Profile_btn"
           onClick={() => {
-            router.push(`/cocoworld/${user?.id}`);
+            router.push(`/minihome/${user?.id}`);
           }}
         >
           <span className="arrow">❯</span> 내 미니홈피 가기
