@@ -44,7 +44,7 @@ const MadeMiniroom: React.FC<MadeMiniroomProps> = ({ setfixMiniroom }) => {
             <img alt={"miniroom img"} src={"/miniroom/miniroom17.png"} />
           </div>
           <div className="MadeMiniroom_ex_text pixelFont">
-            미니룸을 꾸며보세요~!
+            연필 아이콘을 눌러 꾸며보세요~!
           </div>
         </div>
       </div>

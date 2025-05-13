@@ -28,7 +28,7 @@ export const HomeMiniroomStyled = styled.div`
 
     .HomeMiniroom_imgWrap {
       width: 100%;
-      height: 260px;
+      aspect-ratio: 2/1;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -38,6 +38,11 @@ export const HomeMiniroomStyled = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover; // 꽉 차게, 비율 유지하면서 넘치는 부분 잘림
+      }
+      .balloon,
+      .minimi {
+        position: absolute;
+        transform: translate(-50%, -50%);
       }
     }
     @media (max-width: 480px) {

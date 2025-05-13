@@ -23,7 +23,7 @@ export const MadeMiniroomStyled = styled.div`
   }
   .MadeMiniroom_imgWrap {
     width: 100%;
-    height: auto;
+    aspect-ratio: 2/1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,6 +32,11 @@ export const MadeMiniroomStyled = styled.div`
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+    .balloon,
+    .minimi {
+      position: absolute;
+      transform: translate(-50%, -50%);
     }
   }
   .MadeMiniroom_ex_text {
