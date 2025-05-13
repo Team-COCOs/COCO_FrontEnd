@@ -14,7 +14,6 @@ export const LoadingStyle = styled.div`
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #fff0f5;
   }
 
   .Loading_imgContainer img {

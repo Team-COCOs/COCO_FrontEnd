@@ -87,11 +87,6 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
     return <Loading />;
   }
 
-  // 일촌 상태가 로딩 중일 때
-  if (isLoading) {
-    return <Loading />;
-  }
-
   const handleClick = () => {
     setIsOpen(true);
   };

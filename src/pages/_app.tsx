@@ -16,35 +16,34 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     let startTime = 0;
-    let timeout: NodeJS.Timeout | null = null;
+    let delayTimeout: NodeJS.Timeout | null = null;
 
-    const start = () => {
+    const handleStart = () => {
       startTime = Date.now();
-      setLoading(true);
+      // 300ms 후에 로딩을 보여주도록 지연 설정
+      delayTimeout = setTimeout(() => {
+        setLoading(true);
+      }, 300);
     };
 
-    const end = () => {
-      const elapsed = Date.now() - startTime;
-      const remaining = 100 - elapsed;
-
-      if (remaining > 0) {
-        timeout = setTimeout(() => {
-          setLoading(false);
-        }, remaining);
-      } else {
-        setLoading(false);
+    const handleComplete = () => {
+      const loadTime = Date.now() - startTime;
+      if (delayTimeout) {
+        clearTimeout(delayTimeout);
       }
+      // 로딩이 표시되었으면 끄기
+      setLoading(false);
     };
 
-    router.events.on("routeChangeStart", start);
-    router.events.on("routeChangeComplete", end);
-    router.events.on("routeChangeError", end);
+    router.events.on("routeChangeStart", handleStart);
+    router.events.on("routeChangeComplete", handleComplete);
+    router.events.on("routeChangeError", handleComplete);
 
     return () => {
-      if (timeout) clearTimeout(timeout);
-      router.events.off("routeChangeStart", start);
-      router.events.off("routeChangeComplete", end);
-      router.events.off("routeChangeError", end);
+      if (delayTimeout) clearTimeout(delayTimeout);
+      router.events.off("routeChangeStart", handleStart);
+      router.events.off("routeChangeComplete", handleComplete);
+      router.events.off("routeChangeError", handleComplete);
     };
   }, []);
 
