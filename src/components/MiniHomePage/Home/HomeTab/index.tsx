@@ -4,17 +4,16 @@ import { useRouter } from "next/router";
 
 interface HomeTabProps {
   activeTab: string;
-  onTabClick: (tab: string) => void;
   isOwner: boolean;
 }
 
-const HomeTab: React.FC<HomeTabProps> = ({
-  activeTab,
-  onTabClick,
-  isOwner,
-}) => {
+const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
   const router = useRouter();
+
+  // 쿼리 값으로 현재 페이지 탭 구분
   const { id } = router.query;
+  const currentTab = router.pathname.split("/")[1];
+
   const filteredTabs = Object.entries(TAB_LABELS).filter(([key]) => {
     return !(key === "setting" || key === "profile") || isOwner;
   });
@@ -27,11 +26,10 @@ const HomeTab: React.FC<HomeTabProps> = ({
           <div
             key={key}
             className={`HomeTab_item ${
-              activeTab === key ? "active" : ""
+              currentTab === key ? "active" : ""
             } dotumFont HomeTab_number_title`}
             onClick={() => {
-              onTabClick(key); // 탭 상태 변경
-              router.push(`/${key}/${id}`); // 페이지 이동
+              router.push(`/${key}/${id}`);
             }}
           >
             {label}

@@ -125,11 +125,7 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
                 </div>
               </div>
               <div className="Minihome_Tab_Wrap">
-                <HomeTab
-                  activeTab={activeTab}
-                  onTabClick={handleTabClick}
-                  isOwner={isOwner}
-                />
+                <HomeTab activeTab={activeTab} isOwner={isOwner} />
               </div>
             </div>
           </div>

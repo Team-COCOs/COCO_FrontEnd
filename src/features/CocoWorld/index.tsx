@@ -195,7 +195,7 @@ const CocoWorld: React.FC<CocoWorldPageProps> = ({ id }) => {
                         {activeTab === "Home" ? (
                           <HomeRight
                             activeTab={activeTab}
-                            onTabClick={handleTabClick}
+                            // onTabClick={handleTabClick}
                           />
                         ) : activeTab === "Profile" ? (
                           <MiniHomeProfileRight

@@ -9,7 +9,7 @@ interface HomeTabProps {
   onTabClick: (tab: string) => void;
 }
 
-const HomeRight: React.FC<HomeTabProps> = ({ activeTab, onTabClick }) => {
+const HomeRight: React.FC<HomeTabProps> = ({ activeTab }) => {
   return (
     <HomeRightStyled>
       <div className="HomeRight_wrap">
@@ -17,7 +17,7 @@ const HomeRight: React.FC<HomeTabProps> = ({ activeTab, onTabClick }) => {
           <HomeRightComponentStyled>
             {/* 최근 게시물 컴포넌트 */}
             <div className="HomeRight_RecentPhoto_component">
-              <RecentPhoto activeTab={activeTab} onTabClick={onTabClick} />
+              <RecentPhoto activeTab={activeTab} />
             </div>
             <div className="HomeRight_HomeMiniroom_component">
               {/* 미니룸 컴포넌트 */}
