@@ -18,6 +18,26 @@ export const PhotoRightStyled = styled.div`
     overflow-y: auto;
     overflow-x: hidden;
 
+    .PhotoRight_header {
+      width: 100%;
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .PhotoRight_component_wrap {
+      width: 92%;
+      height: 100%;
+      padding-left: 10px;
+
+      @media (max-width: 1024px) {
+        & {
+          padding-left: 0px;
+        }
+      }
+    }
+
     /* 스크롤바 커스텀 */
     &::-webkit-scrollbar {
       width: 16px;
@@ -66,25 +86,6 @@ export const PhotoRightStyled = styled.div`
     &::-webkit-scrollbar-button:vertical:start:increment,
     &::-webkit-scrollbar-button:vertical:end:decrement {
       display: none;
-    }
-
-    .photoRight_header {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-    }
-
-    .PhotoRight_component_wrap {
-      width: 92%;
-      height: 100%;
-      padding-left: 10px;
-    }
-
-    @media (max-width: 1024px) {
-      .PhotoRight_component_wrap {
-        padding-left: 0px;
-      }
     }
   }
 `;

@@ -85,12 +85,8 @@ const MiniBgm = () => {
       return;
     }
 
-    // 스토어에 저장된 아이디를 보내야 하나?
-    console.log(selectedBgm.storeItems.id);
-
     const bgmFile = selectedBgm.storeItems.file;
 
-    // 내 bgm에 있는 bgm id 보냄
     try {
       await axiosInstance.post("/bgm/saveBgm", {
         bgmId: selectedBgm.storeItems.id,
