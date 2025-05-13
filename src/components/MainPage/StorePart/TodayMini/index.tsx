@@ -34,6 +34,7 @@ const TodayMini = () => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % userInfo.length);
     }, 1000);
+
     return () => clearInterval(interval);
   }, [userInfo.length]);
 
@@ -48,12 +49,12 @@ const TodayMini = () => {
           <ul className="Today_rank">
             {userInfo.map((user, idx) => (
               <li
-                key={user.id}
+                key={user.userId}
                 className={clsx("rank_item", {
                   active: idx === index,
                 })}
                 onClick={() => {
-                  router.push(`/cocoworld/${user.id}`);
+                  router.push(`/cocoworld/${user.userId}`);
                 }}
               >
                 <span className="rank_num">{idx + 1}</span>
