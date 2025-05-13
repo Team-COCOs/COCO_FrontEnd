@@ -216,22 +216,6 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     fetchMiniroomName();
   }, [id]);
 
-  // 저장된 미니룸 배경 id 불러오기
-  // useEffect(() => {
-  //   const fetchMiniroomBackground = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/background`
-  //       );
-  //       setMiniroomBackgroundId(response.data.id);
-  //       setSelectedBackgroundId(response.data.id);
-  //     } catch (e: any) {
-  //       console.log(e, "미니룸 이미지 e");
-  //     }
-  //   };
-  //   fetchMiniroomBackground();
-  // }, [id]);
-
   useEffect(() => {
     if (!id) return;
     const fetchMiniroomBackground = async () => {
