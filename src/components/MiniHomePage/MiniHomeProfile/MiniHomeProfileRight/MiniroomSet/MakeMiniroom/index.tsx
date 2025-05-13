@@ -202,7 +202,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/title`
         );
-        setName(response.data);
+        setName(response.data.title);
       } catch (e: any) {
         console.log(e, "미니룸 이름 e");
       }
@@ -223,8 +223,9 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
       alert("이름을 입력해주세요.");
     } else {
       const res = await axiosInstance.patch(`/minirooms/title`, { name });
-      console.log(res.data, "이름 변경 성공 여부?");
+
       alert(`미니룸 이름이 변경되었습니다.`);
+      window.location.reload();
     }
   };
 
@@ -242,7 +243,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
               <div className="MakeMiniroom_namefix_box">
                 <input
                   className="MakeMiniroom_namefix_input"
-                  value={name ? name : "미니룸"}
+                  value={name === null || name === undefined ? "미니룸" : name}
                   onChange={handleNameChange}
                   maxLength={10}
                 ></input>
