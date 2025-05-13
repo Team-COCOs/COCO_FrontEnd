@@ -155,6 +155,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
 
         return {
           ...minimi,
+          type: "minimi",
           left: centerX,
           top: centerY,
         };

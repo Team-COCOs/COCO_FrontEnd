@@ -155,6 +155,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
         text: item.text || null,
         left: item.x,
         top: item.y,
+        type: item.type,
         created_at: new Date().toISOString(),
       }));
 
