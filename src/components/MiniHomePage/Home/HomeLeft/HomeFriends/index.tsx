@@ -37,7 +37,7 @@ const HomeFriends = () => {
   const handleFriendSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const friendId = Number(event.target.value);
     if (friendId) {
-      router.push(`/cocoworld/${friendId}`);
+      router.push(`/home/${friendId}`);
     }
   };
 

@@ -104,7 +104,7 @@ const FriendComment = () => {
   }, [hostId]);
 
   const gofriendHome = (id: string | number) => {
-    router.push(`/cocoworld/${id}`);
+    router.push(`/home/${id}`);
   };
   return (
     <FriendCommentStyled>
