@@ -1,8 +1,8 @@
 import React from "react";
 
 export type TabKey =
-  | "minihome"
-  | "miniprofile"
+  | "home"
+  | "profile"
   | "diary"
   | "photo"
   | "visitor"
@@ -10,8 +10,8 @@ export type TabKey =
   | "setting";
 
 export const TAB_LABELS: Record<TabKey, string> = {
-  minihome: "홈",
-  miniprofile: "프로필",
+  home: "홈",
+  profile: "프로필",
   diary: "다이어리",
   photo: "사진첩",
   visitor: "방명록",
