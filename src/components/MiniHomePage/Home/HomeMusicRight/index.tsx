@@ -7,8 +7,9 @@ import axios from "axios";
 //   { title: "12월 32일 - 별", url: "/bgm/12-32.mp3" },
 // ];
 interface Track {
-  title: string;
+  name: string;
   url: string;
+  artist: string;
 }
 const HomeMusicRight = () => {
   const router = useRouter();
@@ -162,7 +163,8 @@ const HomeMusicRight = () => {
                 <div
                   className={`scroll-text ${isPlaying ? "playing" : "paused"}`}
                 >
-                  🎵 {playlist[currentTrack].title}
+                  🎵{" "}
+                  {playlist[currentTrack].name - playlist[currentTrack].artist}
                 </div>
               )}
             </div>

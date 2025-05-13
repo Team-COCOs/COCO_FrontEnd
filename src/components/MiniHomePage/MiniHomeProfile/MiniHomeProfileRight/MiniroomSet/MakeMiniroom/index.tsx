@@ -24,8 +24,6 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   const [draggedData, setDraggedData] = useState<any[]>([]);
   const { user } = useAuth();
   const dropRef = useRef<HTMLDivElement | null>(null);
-  const [minirooms, setMinirooms] = useState<any[]>([]);
-  const [minimis, setMinimis] = useState<any[]>([]);
   // 선택된 제품 상태 관리
   const [selectedMiniroom, setSelectedMiniroom] = useState<any | null>(null);
   const [selectedMinimi, setSelectedMinimi] = useState<any[]>([]);
@@ -138,7 +136,8 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
 
       // 배경이 null인 경우에도 비교해서 저장되지 않도록 처리
       const isBackgroundChanged =
-        backgroundPayload !== selectedMiniroom?.backgroundId;
+        backgroundPayload !== miniroomBackgroundId &&
+        backgroundPayload !== "default-miniroom";
 
       // 레이아웃 저장 여부 체크
       const hasLayoutChanged = draggedData.some(
@@ -337,16 +336,6 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
                       className="MakeMiniroom_productWrap_miniroom"
                     >
                       <div className="MakeMiniroom_product-item pixelFont">
-                        {/* <input
-                          type="radio"
-                          name="miniroom"
-                          checked={
-                            miniroomBackgroundId
-                              ? selectedMiniroom?.id === product.id
-                              : product.id === defaultMiniroom.id
-                          }
-                          onChange={() => handleMiniroomSelect(product)}
-                        /> */}
                         <input
                           type="radio"
                           name="miniroom"

@@ -85,7 +85,6 @@ const MinimiSet = () => {
           </span>
         </div>
         <div className="MinimiSet_now_minimi">
-          {/* axios로 데이터 수정 예정 */}
           <span className="MinimiSet_blue_title Gulim">🔸현재 대표 미니미</span>
           <div>
             <div className="MinimiSet_minimi_imgWrap nowminimi">
