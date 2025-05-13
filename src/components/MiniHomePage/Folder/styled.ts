@@ -1,11 +1,25 @@
 import styled from "styled-components";
 
 export const FolderStyle = styled.div`
+  &.Folder_diaryWrap {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    height: 100% !important;
+
+    @media (max-width: 768px) {
+      height: 43vh !important;
+    }
+  }
   &.Folder_wrap {
     display: flex;
     flex-direction: column;
     padding-top: 10px;
     height: 100%;
+
+    @media (max-width: 768px) {
+      height: 80vh;
+    }
 
     .Folder_text {
       font-size: 12px;
@@ -21,7 +35,7 @@ export const FolderStyle = styled.div`
       padding-right: 5px;
 
       .Folder_editingBtn {
-        width: 60px;
+        width: 70px;
       }
 
       button {

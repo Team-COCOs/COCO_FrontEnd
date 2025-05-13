@@ -45,7 +45,7 @@ export const PhotoLeftStyled = styled.div`
 
     @media (max-width: 768px) {
       & {
-        min-height: 80vh;
+        height: 80vh;
       }
     }
 

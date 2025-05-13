@@ -176,7 +176,9 @@ const Folder = ({ type, onSave }: FolderProps) => {
   }, [type]);
 
   return (
-    <FolderStyle className="Folder_wrap">
+    <FolderStyle
+      className={`Folder_wrap ${type === "diary" ? "Folder_diaryWrap" : ""}`}
+    >
       <div className="Folder_btns">
         <button className="pixelFont" onClick={() => handleEdit("add")}>
           추가
