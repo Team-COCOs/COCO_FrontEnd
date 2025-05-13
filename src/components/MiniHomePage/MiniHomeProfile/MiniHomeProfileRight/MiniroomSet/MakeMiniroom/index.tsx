@@ -202,6 +202,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
 
   // 미니룸 이름 불러오기
   useEffect(() => {
+    if (!id) return;
     const fetchMiniroomName = async () => {
       try {
         const response = await axios.get(
@@ -232,6 +233,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   // }, [id]);
 
   useEffect(() => {
+    if (!id) return;
     const fetchMiniroomBackground = async () => {
       try {
         const response = await axios.get(

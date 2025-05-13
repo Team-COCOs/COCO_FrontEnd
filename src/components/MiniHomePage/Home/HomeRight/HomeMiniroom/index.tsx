@@ -14,6 +14,8 @@ const HomeMiniroom = () => {
 
   // 미니룸 이름 불러오기
   useEffect(() => {
+    if (!id) return;
+
     const fetchMiniroomName = async () => {
       try {
         const response = await axios.get(
@@ -29,6 +31,8 @@ const HomeMiniroom = () => {
 
   // 미니룸 배경 불러오기
   useEffect(() => {
+    if (!id) return;
+
     const fetchMiniroomBackground = async () => {
       try {
         const response = await axios.get(

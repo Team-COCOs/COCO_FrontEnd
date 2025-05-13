@@ -19,6 +19,7 @@ const MadeMiniroom: React.FC<MadeMiniroomProps> = ({ setfixMiniroom }) => {
 
   // 미니룸 이름 불러오기
   useEffect(() => {
+    if (!id) return;
     const fetchMiniroomName = async () => {
       try {
         const response = await axios.get(
@@ -34,6 +35,7 @@ const MadeMiniroom: React.FC<MadeMiniroomProps> = ({ setfixMiniroom }) => {
 
   // 미니룸 배경 불러오기
   useEffect(() => {
+    if (!id) return;
     const fetchMiniroomBackground = async () => {
       try {
         const response = await axios.get(
@@ -52,9 +54,7 @@ const MadeMiniroom: React.FC<MadeMiniroomProps> = ({ setfixMiniroom }) => {
       <div className="MinimiSet_wrap">
         <div className="MadeMiniroom_titleWrap">
           <div className="MadeMiniroom_wrap_title Gulim">
-            {miniroomName === null || miniroomName === undefined
-              ? "미니룸"
-              : miniroomName}
+            {!miniroomName ? "미니룸" : miniroomName}
             <span onClick={() => setfixMiniroom(true)}>✏️</span>
           </div>
           <div className="MadeMiniroom_imgWrap">
