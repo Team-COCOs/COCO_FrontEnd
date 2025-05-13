@@ -1,5 +1,6 @@
 import { SettingRightStyled } from "./styled";
 import { useEffect } from "react";
+import SettingTabs from "./SettingTabs";
 
 interface SettingSelectedMenu {
   type?: string;
@@ -22,7 +23,11 @@ const SettingRight = ({
       case "미니홈피 효과":
         return <div>미니홈피 효과</div>;
       case "메뉴":
-        return <div>메뉴</div>;
+        return (
+          <div>
+            <SettingTabs />
+          </div>
+        );
       case "내 정보 수정":
         return <div>내 정보 수정</div>;
       default:

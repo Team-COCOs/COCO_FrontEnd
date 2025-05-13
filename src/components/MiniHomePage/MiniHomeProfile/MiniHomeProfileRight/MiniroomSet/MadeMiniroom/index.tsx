@@ -14,6 +14,8 @@ const MadeMiniroom: React.FC<MadeMiniroomProps> = ({ setfixMiniroom }) => {
 
   // 미니룸 이름 관리
   const [miniroomName, setMiniroomName] = useState("");
+  // 미니룸 배경 관리
+  const [miniroomBackground, setMiniroomBackground] = useState("");
 
   // 미니룸 이름 불러오기
   useEffect(() => {
@@ -30,6 +32,21 @@ const MadeMiniroom: React.FC<MadeMiniroomProps> = ({ setfixMiniroom }) => {
     fetchMiniroomName();
   }, [id]);
 
+  // 미니룸 배경 불러오기
+  useEffect(() => {
+    const fetchMiniroomBackground = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/background`
+        );
+        setMiniroomBackground(response.data.file);
+      } catch (e: any) {
+        console.log(e, "미니룸 이미지 e");
+      }
+    };
+    fetchMiniroomBackground();
+  }, [id]);
+
   return (
     <MadeMiniroomStyled>
       <div className="MinimiSet_wrap">
@@ -41,7 +58,14 @@ const MadeMiniroom: React.FC<MadeMiniroomProps> = ({ setfixMiniroom }) => {
             <span onClick={() => setfixMiniroom(true)}>✏️</span>
           </div>
           <div className="MadeMiniroom_imgWrap">
-            <img alt={"miniroom img"} src={"/miniroom/miniroom17.png"} />
+            <img
+              src={
+                miniroomBackground === null || miniroomBackground === undefined
+                  ? "/miniroom/miniroom17.png"
+                  : miniroomBackground
+              }
+              alt={"myminiroom"}
+            />
           </div>
           <div className="MadeMiniroom_ex_text pixelFont">
             연필 아이콘을 눌러 꾸며보세요~!
