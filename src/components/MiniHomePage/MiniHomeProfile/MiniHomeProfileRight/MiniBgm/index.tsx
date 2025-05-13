@@ -91,16 +91,16 @@ const MiniBgm = () => {
     const bgmFile = selectedBgm.storeItems.file;
 
     // 내 bgm에 있는 bgm id 보냄
-    // try {
-    //   await axiosInstance.post("/bgm/saveBgm", {
-    //     bgmId: selectedBgm.storeItems.id,
-    //     file: bgmFile,
-    //   });
-    //   alert("배경음악이 등록되었습니다.");
-    // } catch (e) {
-    //   console.error(e);
-    //   alert("등록 중 오류가 발생했습니다.");
-    // }
+    try {
+      await axiosInstance.post("/bgm/saveBgm", {
+        bgmId: selectedBgm.storeItems.id,
+        file: bgmFile,
+      });
+      alert("배경음악이 등록되었습니다.");
+    } catch (e) {
+      console.error(e);
+      alert("등록 중 오류가 발생했습니다.");
+    }
   };
 
   const handleSearch = () => {
