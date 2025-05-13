@@ -7,18 +7,17 @@ export const PhotoRightStyled = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+
   .PhotoRight_wrap {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    padding: 10px;
     width: 98%;
     height: 95%;
-    word-wrap: break-word;
-    word-break: break-word;
-    overflow-wrap: break-word;
     white-space: normal;
     overflow-y: auto;
     overflow-x: hidden;
+
     /* 스크롤바 커스텀 */
     &::-webkit-scrollbar {
       width: 16px;
@@ -68,11 +67,20 @@ export const PhotoRightStyled = styled.div`
     &::-webkit-scrollbar-button:vertical:end:decrement {
       display: none;
     }
+
+    .photoRight_header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
     .PhotoRight_component_wrap {
       width: 92%;
       height: 100%;
       padding-left: 10px;
     }
+
     @media (max-width: 1024px) {
       .PhotoRight_component_wrap {
         padding-left: 0px;

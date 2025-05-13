@@ -93,7 +93,7 @@ const MiniBgm = () => {
     // 내 bgm에 있는 bgm id 보냄
     // try {
     //   await axiosInstance.post("/bgm/saveBgm", {
-    //     bgmId: selectedBgm.id,
+    //     bgmId: selectedBgm.storeItems.id,
     //     file: bgmFile,
     //   });
     //   alert("배경음악이 등록되었습니다.");
