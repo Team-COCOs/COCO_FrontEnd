@@ -88,11 +88,12 @@ const MiniBgm = () => {
     const bgmFile = selectedBgm.storeItems.file;
 
     try {
-      await axiosInstance.post("/bgm/saveBgm", {
+      await axiosInstance.patch("/useritems/set-bgm", {
         bgmId: selectedBgm.storeItems.id,
         file: bgmFile,
       });
       alert("배경음악이 등록되었습니다.");
+      window.location.reload();
     } catch (e) {
       console.error(e);
       alert("등록 중 오류가 발생했습니다.");
