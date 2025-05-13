@@ -161,10 +161,10 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
       // 레이아웃이 변경된 경우
       const layoutData = draggedData.map((item) => ({
         id: item.id,
-        text: item.text || null,
+        text: item.type !== "speechBubble" ? null : item.text,
         left: item.x,
         top: item.y,
-        type: item.type,
+        type: item.type === "speechBubble" ? "speechBubble" : "minimi",
         created_at: new Date().toISOString(),
       }));
 
