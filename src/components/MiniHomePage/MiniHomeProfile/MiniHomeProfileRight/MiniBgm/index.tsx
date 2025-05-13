@@ -22,7 +22,9 @@ interface BgmInfo {
 
 const MiniBgm = () => {
   const { user } = useAuth();
+
   // 전체 내 bgm 넣기
+  const [allBgm, setAllBgm] = useState<BgmInfo[]>([]);
   const [bgm, setBgm] = useState<BgmInfo[]>([]);
 
   // 재생 중인 bgm
@@ -46,6 +48,7 @@ const MiniBgm = () => {
           (item: any) => item.storeItems.category === "bgm"
         );
 
+        setAllBgm(bgmItems);
         setBgm(bgmItems);
       } catch (e) {
         console.log(e);
@@ -85,10 +88,13 @@ const MiniBgm = () => {
     // 스토어에 저장된 아이디를 보내야 하나?
     console.log(selectedBgm.storeItems.id);
 
+    const bgmFile = selectedBgm.storeItems.file;
+
     // 내 bgm에 있는 bgm id 보냄
     // try {
     //   await axiosInstance.post("/bgm/saveBgm", {
     //     bgmId: selectedBgm.id,
+    //     file: bgmFile,
     //   });
     //   alert("배경음악이 등록되었습니다.");
     // } catch (e) {
@@ -97,33 +103,25 @@ const MiniBgm = () => {
     // }
   };
 
-  const handleSearch = async () => {
-    try {
-      const res = await axiosInstance.get("/purchases");
-      const bgmItems = res.data.filter(
-        (item: any) => item.storeItems.category === "bgm"
-      );
+  const handleSearch = () => {
+    const term = searchTerm.toLowerCase();
 
-      const filtered = bgmItems.filter((item: any) => {
-        const name = item.storeItems.name.toLowerCase();
-        const artist = item.storeItems.artist?.toLowerCase() || "";
-        const term = searchTerm.toLowerCase();
+    const filtered = allBgm.filter((item) => {
+      const name = item.storeItems.name.toLowerCase();
+      const artist = item.storeItems.artist?.toLowerCase() || "";
 
-        if (searchType === "all") {
-          return name.includes(term) || artist.includes(term);
-        } else if (searchType === "artist") {
-          return artist.includes(term);
-        } else if (searchType === "title") {
-          return name.includes(term);
-        }
-        return true;
-      });
+      if (searchType === "all") {
+        return name.includes(term) || artist.includes(term);
+      } else if (searchType === "artist") {
+        return artist.includes(term);
+      } else if (searchType === "title") {
+        return name.includes(term);
+      }
+      return true;
+    });
 
-      setBgm(filtered);
-      setCurrentPage(1);
-    } catch (e) {
-      console.error(e);
-    }
+    setBgm(filtered);
+    setCurrentPage(1);
   };
 
   return (

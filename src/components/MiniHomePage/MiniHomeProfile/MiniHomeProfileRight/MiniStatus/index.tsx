@@ -100,7 +100,11 @@ const MiniStatus = () => {
             <div className="MiniStatus_top">
               <div className="MiniStatus_left">
                 <div className="MiniStatus_img">
-                  <Image src={minihompi_image} alt="profile" fill />
+                  <Image
+                    src={minihompi_image || "/avatarImg/defaultProfile.png"}
+                    alt="profile"
+                    fill
+                  />
                 </div>
 
                 <div
