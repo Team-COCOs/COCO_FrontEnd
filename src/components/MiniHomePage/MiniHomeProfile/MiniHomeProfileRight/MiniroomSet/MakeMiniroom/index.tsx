@@ -131,14 +131,14 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   };
   const handleLayoutSave = async () => {
     try {
-      // 기본 미니룸인 경우 null로 처리
       const isDefaultMiniroom = selectedMiniroom?.id === defaultMiniroom.id;
-      const backgroundPayload = isDefaultMiniroom ? null : selectedBackgroundId;
+      const backgroundPayload = isDefaultMiniroom
+        ? "default-miniroom"
+        : selectedBackgroundId;
 
       // 배경이 null인 경우에도 비교해서 저장되지 않도록 처리
       const isBackgroundChanged =
-        backgroundPayload !== selectedMiniroom?.backgroundId &&
-        backgroundPayload !== null;
+        backgroundPayload !== selectedMiniroom?.backgroundId;
 
       // 레이아웃 저장 여부 체크
       const hasLayoutChanged = draggedData.some(
