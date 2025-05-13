@@ -71,10 +71,11 @@ const Profile = ({ setHasToken }: profileProps) => {
         const updatedData = {
           ...res.data,
           profile_image:
-            res.data.profile_image ??
-            (user?.gender === "man"
+            res.data.profile_image && res.data.profile_image.trim() !== ""
+              ? res.data.profile_image
+              : user?.gender === "man"
               ? "/avatarImg/man_avatar1.png"
-              : "/avatarImg/woman_avatar1.png"),
+              : "/avatarImg/woman_avatar1.png",
         };
 
         console.log("유저 이미지 찾기 : ", res.data);
