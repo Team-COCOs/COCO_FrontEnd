@@ -12,7 +12,7 @@ export const MiniHomeProfileLeftMenuStyled = styled.div`
     margin-left: 0 !important;
     padding-left: 0 !important;
   }
-  padding-top: 20px;
+
   padding-left: 18px;
   font-size: 12px;
 

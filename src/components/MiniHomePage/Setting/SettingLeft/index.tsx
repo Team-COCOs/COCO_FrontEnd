@@ -18,6 +18,10 @@ const SettingLeft = ({
     <SettingLeftStyled>
       <div className="SettingLeft_wrap Gulim">
         <div className="SettingLeft_componentWrap">
+          <div className="SettingLeft_titleWrap">
+            <div className="SettingLeft_title pixelFont">SETTING</div>
+            <div className="SettingLeft_line"></div>
+          </div>
           <MiniHomeProfileLeftMenu
             onMenuSelect={setSettingSelectedMenu}
             menuData={settingLeftTabs}

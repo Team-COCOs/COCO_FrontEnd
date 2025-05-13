@@ -16,4 +16,22 @@ export const MiniHomeProfileLeftStyled = styled.div`
       min-height: 80vh;
     }
   }
+  .MiniHomeProfileLeft_titleWrap {
+    padding: 20px 10px 10px 10px;
+  }
+  .MiniHomeProfileLeft_title {
+    width: 100%;
+    margin-left: 18px;
+    color: rgb(120, 184, 183);
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  .MiniHomeProfileLeft_line {
+    width: 93%;
+    height: 1px;
+    margin: 7px auto 0px auto;
+    margin-bottom: 10px;
+    background-color: rgb(221, 221, 221);
+  }
 `;

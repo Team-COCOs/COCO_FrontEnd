@@ -22,6 +22,10 @@ const MiniHomeProfileLeft = ({
     <MiniHomeProfileLeftStyled>
       <div className="MiniHomeProfileLeft_wrap Gulim">
         <div className="MiniHomeProfileLeft_componentWrap">
+          <div className="MiniHomeProfileLeft_titleWrap">
+            <div className="MiniHomeProfileLeft_title pixelFont">PROFILE</div>
+            <div className="MiniHomeProfileLeft_line"></div>
+          </div>
           <MiniHomeProfileLeftMenu
             menuData={profileLeftTabs}
             language={language}
