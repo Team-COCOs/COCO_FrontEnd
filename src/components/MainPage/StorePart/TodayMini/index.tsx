@@ -57,8 +57,8 @@ const TodayMini = () => {
                 }}
               >
                 <span className="rank_num">{idx + 1}</span>
-                <span className="rank_name">{user.username}</span>
-                <span className="rank_count">+{user.visitCountToday}</span>
+                <span className="rank_name">{user.name}</span>
+                <span className="rank_count">+{user.visit_count}</span>
               </li>
             ))}
           </ul>

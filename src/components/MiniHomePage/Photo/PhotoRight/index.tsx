@@ -9,6 +9,9 @@ const PhotoRight = ({ selectedMenu }: PhotoProps) => {
   return (
     <PhotoRightStyled>
       <div className="PhotoRight_wrap">
+        <div className="PhotoRight_header">
+          <button>글 작성하기</button>
+        </div>
         <div className="PhotoRight_component_wrap">{selectedMenu?.title}</div>
       </div>
     </PhotoRightStyled>
