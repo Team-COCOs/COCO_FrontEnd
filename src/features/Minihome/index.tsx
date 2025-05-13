@@ -158,8 +158,7 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
                   </div>
                 </div>
               </div>
-
-              <div className="CocoWorldPage_Tab_Wrap">
+              <div className="Minihome_Tab_Wrap">
                 <HomeTab
                   activeTab={activeTab}
                   onTabClick={handleTabClick}
