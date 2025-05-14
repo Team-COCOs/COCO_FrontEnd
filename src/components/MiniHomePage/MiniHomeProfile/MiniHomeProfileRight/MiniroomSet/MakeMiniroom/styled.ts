@@ -84,11 +84,6 @@ export const MakeMiniroomStyled = styled.div`
     padding-top: 10px;
     .MakeMiniroom_buyItems_miniroomtab {
       padding: 5px;
-      /* border-top: 1.5px solid #ddd; */
-
-      /* border-left: 1.5px solid #ddd;
-      border-top-right-radius: 5px;
-      border-top-left-radius: 5px; */
     }
     .MakeMiniroom_buyItems_minimitab {
       padding: 5px;

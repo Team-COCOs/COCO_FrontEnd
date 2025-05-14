@@ -232,7 +232,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
   useEffect(() => {
     if (!dropRef.current) return;
 
-    const { width, height } = dropRef.current.getBoundingClientRect();
+    // const { width, height } = dropRef.current.getBoundingClientRect();
 
     const layoutData = items
       .filter((item) => item.type !== "speechBubble")

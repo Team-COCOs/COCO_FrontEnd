@@ -28,16 +28,6 @@ export const MadeMiniroomStyled = styled.div`
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .balloon,
-    .minimi {
-      position: absolute;
-      transform: translate(-50%, -50%);
-    }
   }
   .MadeMiniroom_ex_text {
     display: flex;
