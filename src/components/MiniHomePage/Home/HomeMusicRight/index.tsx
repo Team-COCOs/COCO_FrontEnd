@@ -155,7 +155,7 @@ const HomeMusicRight = () => {
           <div className="HomeMusicRight_player">
             <audio
               ref={audioRef}
-              src={playlist[currentTrack]?.url || ""}
+              src={playlist[currentTrack]?.file || null}
               onEnded={nextTrack}
             />
             <div className="HomeMusicRight_title">
