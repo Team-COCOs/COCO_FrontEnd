@@ -47,6 +47,96 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // const [{ isOver }, drop] = useDrop({
+  //   accept: ["minimi", "speechBubble"],
+  //   drop: (item: any, monitor) => {
+  //     const offset = monitor.getClientOffset();
+  //     if (!offset) return;
+
+  //     const containerRect = dropRef.current!.getBoundingClientRect();
+
+  //     const offsetX = item.offsetX || 25; // fallback: 가운데 정렬
+  //     const offsetY = item.offsetY || 25;
+
+  //     const newLeft = offset.x - containerRect.left - offsetX;
+  //     const newTop = offset.y - containerRect.top - offsetY;
+
+  //     const existingItemIndex = items.findIndex(
+  //       (existingItem) => existingItem.id === item.id
+  //     );
+
+  //     if (existingItemIndex !== -1) {
+  //       setItems((prevItems) => {
+  //         const updatedItems = [...prevItems];
+  //         updatedItems[existingItemIndex] = {
+  //           ...updatedItems[existingItemIndex],
+  //           left: newLeft,
+  //           top: newTop,
+  //         };
+  //         return updatedItems;
+  //       });
+  //     } else {
+  //       setItems((prevItems) => [
+  //         ...prevItems,
+  //         {
+  //           id: item.id,
+  //           text: item.text,
+  //           left: newLeft,
+  //           top: newTop,
+  //           store_item_id: item.store_item_id,
+  //         },
+  //       ]);
+  //     }
+  //     console.log(items, "items??");
+  //     //선택된 미니룸 정보도 포함하여 부모에게 전달
+  //     const layoutData = [
+  //       ...items.map((item) => ({
+  //         id: item.id,
+  //         type: item.type,
+  //         x: item.left,
+  //         y: item.top,
+  //       })),
+  //     ];
+  //     console.log(layoutData, "lay1111??");
+  //     selectedMinimi.forEach((minimi) => {
+  //       const alreadyExists = items.some((item) => item.id === minimi.id);
+  //       if (!alreadyExists) {
+  //         layoutData.push({
+  //           id: minimi.id,
+  //           type: "minimi",
+  //           x: 0,
+  //           y: 0,
+  //         });
+  //       }
+  //     });
+
+  //     console.log(layoutData, "lay222??");
+  //     onDragComplete(
+  //       items.map((item) => {
+  //         const base = {
+  //           id: item.id,
+  //           type: item.type,
+  //           x: item.left,
+  //           y: item.top,
+  //         };
+
+  //         if (item.type === "speechBubble") {
+  //           return {
+  //             ...base,
+  //             text: item.text || "",
+  //           };
+  //         }
+
+  //         return base;
+  //       })
+  //     );
+  //   },
+
+  //   collect: (monitor) => ({
+  //     isOver: !!monitor.isOver(),
+  //   }),
+  // });
+
   const [{ isOver }, drop] = useDrop({
     accept: ["minimi", "speechBubble"],
     drop: (item: any, monitor) => {
@@ -54,8 +144,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
       if (!offset) return;
 
       const containerRect = dropRef.current!.getBoundingClientRect();
-
-      const offsetX = item.offsetX || 25; // fallback: 가운데 정렬
+      const offsetX = item.offsetX || 25;
       const offsetY = item.offsetY || 25;
 
       const newLeft = offset.x - containerRect.left - offsetX;
@@ -73,69 +162,79 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
             left: newLeft,
             top: newTop,
           };
+
+          handleLayoutUpdate(updatedItems);
           return updatedItems;
         });
       } else {
-        setItems((prevItems) => [
-          ...prevItems,
-          {
-            id: item.id,
-            text: item.text,
-            left: newLeft,
-            top: newTop,
-            store_item_id: item.store_item_id,
-          },
-        ]);
+        setItems((prevItems) => {
+          const newItems = [
+            ...prevItems,
+            {
+              id: item.id,
+              text: item.text,
+              left: newLeft,
+              top: newTop,
+              store_item_id: item.store_item_id,
+              type: item.type || "minimi", // 필요시 기본값
+            },
+          ];
+
+          handleLayoutUpdate(newItems);
+          return newItems;
+        });
       }
-      console.log(items, "items??");
-      //선택된 미니룸 정보도 포함하여 부모에게 전달
-      const layoutData = [
-        ...items.map((item) => ({
-          id: item.id,
-          type: item.type,
-          x: item.left,
-          y: item.top,
-        })),
-      ];
-      console.log(layoutData, "lay1111??");
-      selectedMinimi.forEach((minimi) => {
-        const alreadyExists = items.some((item) => item.id === minimi.id);
-        if (!alreadyExists) {
-          layoutData.push({
-            id: minimi.id,
-            type: "minimi",
-            x: 0,
-            y: 0,
-          });
-        }
-      });
-
-      console.log(layoutData, "lay222??");
-      onDragComplete(
-        items.map((item) => {
-          const base = {
-            id: item.id,
-            type: item.type,
-            x: item.left,
-            y: item.top,
-          };
-
-          if (item.type === "speechBubble") {
-            return {
-              ...base,
-              text: item.text || "",
-            };
-          }
-
-          return base;
-        })
-      );
     },
 
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
   });
+  const handleLayoutUpdate = (updatedItems: any[]) => {
+    // selectedMinimi 중 아직 없는 것 추가
+    const layoutData = [
+      ...updatedItems.map((item) => ({
+        id: item.id,
+        type: item.type,
+        x: item.left,
+        y: item.top,
+      })),
+    ];
+
+    selectedMinimi.forEach((minimi) => {
+      const alreadyExists = updatedItems.some((item) => item.id === minimi.id);
+      if (!alreadyExists) {
+        layoutData.push({
+          id: minimi.id,
+          type: "minimi",
+          x: 0,
+          y: 0,
+        });
+      }
+    });
+
+    console.log(layoutData, "최종 layoutData");
+    onDragComplete(
+      layoutData.map((item) => {
+        const base = {
+          id: item.id,
+          type: item.type,
+          x: item.x,
+          y: item.y,
+        };
+
+        const found = updatedItems.find((i) => i.id === item.id);
+        if (item.type === "speechBubble") {
+          return {
+            ...base,
+            text: found?.text || "",
+          };
+        }
+
+        return base;
+      })
+    );
+  };
 
   useEffect(() => {
     if (!dropRef.current) return;
