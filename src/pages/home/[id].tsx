@@ -1,7 +1,7 @@
 // pages/minihome/[id].tsx
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
+import Head from "next/head";
 import MinihomeLayout from "@/features/Minihome";
 import HomeLeft from "@/components/MiniHomePage/Home/HomeLeft";
 import HomeRight from "@/components/MiniHomePage/Home/HomeRight";
@@ -44,11 +44,18 @@ const MinihomePage = () => {
   }, [activeTab]);
 
   return (
-    <MinihomeLayout
-      id={id as string}
-      tapChildren={<HomeLeft />}
-      children={<HomeRight activeTab={activeTab} onTabClick={handleTabClick} />}
-    />
+    <>
+      <Head>
+        <title>미니홈피 - COCOWORLD</title>
+      </Head>
+      <MinihomeLayout
+        id={id as string}
+        tapChildren={<HomeLeft />}
+        children={
+          <HomeRight activeTab={activeTab} onTabClick={handleTabClick} />
+        }
+      />
+    </>
   );
 };
 

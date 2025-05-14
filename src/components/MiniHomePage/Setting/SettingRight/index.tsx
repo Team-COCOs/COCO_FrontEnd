@@ -1,7 +1,7 @@
 import { SettingRightStyled } from "./styled";
 import { useEffect } from "react";
 import SettingTabs from "./SettingTabs";
-import SettingBK from "./SettingTabs copy";
+import SettingBK from "./SettingBK";
 
 interface SettingSelectedMenu {
   type?: string;

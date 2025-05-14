@@ -3,6 +3,7 @@ import NotPcPage from "@/features/NotPcPage";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
+import Head from "next/head";
 
 const Admin = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -31,15 +32,36 @@ const Admin = () => {
   }, []);
 
   if (isLoading) {
-    return <Loading />; // 로딩 중일 때 로딩 컴포넌트 표시
+    return (
+      <>
+        <Head>
+          <title>관리자 페이지 - COCOWORLD</title>
+        </Head>
+        <Loading />
+      </>
+    ); // 로딩 중일 때 로딩 컴포넌트 표시
   }
 
   if (isMobile) {
-    return <NotPcPage />; // 모바일 화면일 때 렌더링
+    return (
+      <>
+        <Head>
+          <title>관리자 페이지 - COCOWORLD</title>
+        </Head>
+        <NotPcPage />
+      </>
+    ); // 모바일 화면일 때 렌더링
   }
 
   // 모바일 아닐 때만 Admin 페이지 보이게 하기
-  return <AdminPage />;
+  return (
+    <>
+      <Head>
+        <title>관리자 페이지 - COCOWORLD</title>
+      </Head>
+      <AdminPage />
+    </>
+  );
 };
 
 export default Admin;

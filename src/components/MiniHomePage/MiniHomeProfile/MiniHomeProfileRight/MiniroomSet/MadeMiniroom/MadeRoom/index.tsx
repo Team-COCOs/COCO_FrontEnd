@@ -87,7 +87,6 @@ const MadeRoom = () => {
         );
 
         setProfileGender(response.data.gender);
-        console.log(response.data, " da?");
       } catch (err: any) {
         if (err.response?.status === 404) {
           alert("존재하지 않는 페이지입니다.");
