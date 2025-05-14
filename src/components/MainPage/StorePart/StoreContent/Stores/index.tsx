@@ -61,7 +61,12 @@ const Stores = ({ currentItems }: StoresProps) => {
     <StoresStyle className={clsx("Stores_wrap")}>
       <div className="Stores-grid">
         {currentItems.map((item) => (
-          <div key={item.id} className="Stores_card">
+          <div
+            key={item.id}
+            className={clsx("Stores_card", {
+              Store_bgmCard: item.category === "bgm",
+            })}
+          >
             {item.category === "bgm" ? (
               <>
                 <div className="Stores_bgmInfo">
@@ -99,7 +104,10 @@ const Stores = ({ currentItems }: StoresProps) => {
                 <div
                   className={clsx(
                     "Stores_itemImg",
-                    item.category === "minimi" && "Stores_mini"
+                    item.category === "minimi" && "Stores_mini",
+                    item.category === "minimi" &&
+                      item.file.endsWith(".gif") &&
+                      "Stores_gif"
                   )}
                 >
                   <Image src={item.file} alt={item.name} fill />

@@ -72,19 +72,13 @@ const MiniStatus = () => {
   };
 
   // 초기 데이터
-  const initialValues: UserData = userData
-    ? {
-        title: userData.title,
-        minihompi_image: userData.minihompi_image,
-        mood: userData.mood,
-        introduction: userData.introduction,
-      }
-    : {
-        title: "",
-        minihompi_image: "/avatarImg/defaultProfile.png",
-        mood: "happy",
-        introduction: "",
-      };
+  const initialValues: UserData = {
+    title: userData?.title || "",
+    minihompi_image:
+      userData?.minihompi_image || "/avatarImg/defaultProfile.png",
+    mood: userData?.mood || "happy",
+    introduction: userData?.introduction || "",
+  };
 
   return (
     <MiniStatusStyle className="MiniStatus_wrap">

@@ -59,9 +59,8 @@ const StoreContent = () => {
       categories.includes(item.category)
     );
 
-    console.log(filteredItems);
-
     setStoreProduct(filteredItems);
+    setCurrentPage(1);
   }, [product, storeItems]);
 
   // 총 페이지
