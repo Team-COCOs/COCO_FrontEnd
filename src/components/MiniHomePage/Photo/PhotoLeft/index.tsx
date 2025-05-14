@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 
 interface PhotoProps {
   selectedMenu: { id: number; title: string } | null;
+  // React.Dispatch: 상태 업데이트, SetStateAction: 타입 정의
+  // 폴더 카테고리 선택해 상태 업데이트 시킴
   setSelectedMenu: React.Dispatch<
     React.SetStateAction<{ id: number; title: string } | null>
   >;
@@ -28,7 +30,8 @@ const PhotoLeft = ({ selectedMenu, setSelectedMenu }: PhotoProps) => {
   };
 
   const handleEditModeToggle = () => {
-    setEditMode(true); // 수정하기 버튼 눌렀을 때 Folder 컴포넌트 보이도록
+    // 수정하기 버튼 눌렀을 때 Folder 컴포넌트 보이도록
+    setEditMode(true);
   };
 
   return (

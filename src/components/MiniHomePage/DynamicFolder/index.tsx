@@ -34,6 +34,7 @@ const DynamicFolder = ({
     },
   ];
 
+  // 부모, 자식 폴더 구분해서 build
   const buildTree = (data: FolderItem[]): FolderItem[] => {
     if (!data || data.length === 0) return getDefaultFolder();
 
@@ -64,7 +65,12 @@ const DynamicFolder = ({
     return tree;
   };
 
+  // 기존 트리 구조 요청
   useEffect(() => {
+    if (!userId) {
+      return;
+    }
+
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/${type}/folderList`, {
         params: { userId },
@@ -82,11 +88,12 @@ const DynamicFolder = ({
       })
       .catch((err) => {
         console.log(type);
-        console.error("폴더 데이터 로딩 실패:", err);
+        console.log("폴더 데이터 로딩 실패:", err);
         setFolderTree(getDefaultFolder());
       });
-  }, [type]);
+  }, [type, userId]);
 
+  // 요청한 거 받으면 바로
   useEffect(() => {
     if (folderTree.length > 0 && !selectedMenu) {
       onMenuSelect({ id: folderTree[0].id, title: folderTree[0].title });
