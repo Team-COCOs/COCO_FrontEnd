@@ -28,4 +28,12 @@ export const DragMiniroomStyled = styled.div`
       margin-top: 5px;
     }
   }
+  .DragMiniroom_miniroomtext {
+    padding-top: 5px;
+    display: flex;
+    width: 90%;
+    justify-content: flex-start;
+    font-size: 8px;
+    color: gray;
+  }
 `;

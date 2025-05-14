@@ -2,7 +2,8 @@ import { useState, useEffect, ReactNode } from "react";
 import { MinihomeStyle } from "./styled";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
-
+import Cookies from "js-cookie";
+import axios from "axios";
 // 미니홈피 투데이
 import HomeTodayTitle from "@/components/MiniHomePage/Home/HomeTodayTitle";
 // 미니홈피 이름
@@ -30,13 +31,12 @@ interface MinihomeLayoutProps {
 const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
   const { user } = useAuth();
   const isOwner = String(user?.id) === id;
+  const router = useRouter();
 
   // 탭 상태 관리
   const [activeTab, setActiveTab] = useState<string>("home");
-
   // 모달
   const [isOpen, setIsOpen] = useState(false);
-
   // 로딩
   const [isLoading, setIsLoading] = useState(false);
 
@@ -75,6 +75,40 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
       fetchNames();
     }
   }, [isOpen, id]);
+
+  useEffect(() => {
+    const countVisit = async () => {
+      if (!id || Array.isArray(id)) return;
+
+      try {
+        const token = Cookies.get("accessToken");
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/visit/${
+          token ? "auth" : "guest"
+        }`;
+
+        await axios.post(
+          url,
+          { hostId: Number(id) },
+          token
+            ? {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true,
+              }
+            : undefined
+        );
+      } catch (err: any) {
+        console.error("방문자 수 기록 실패:", err);
+        if (err.response?.status === 404) {
+          alert("존재하지 않는 페이지입니다.");
+          router.push("/");
+        }
+      }
+    };
+
+    countVisit();
+  }, [id]);
 
   return (
     <MinihomeStyle className="Minihome_wrap">

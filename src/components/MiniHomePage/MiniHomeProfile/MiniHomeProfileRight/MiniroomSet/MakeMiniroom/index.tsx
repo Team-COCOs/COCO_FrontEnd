@@ -76,7 +76,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     const fetchMinimiData = async () => {
       try {
         const response = await axiosInstance.get(`/purchases`);
-        console.log(response.data, "구매 목록?");
+
         setAllProduct(response.data);
       } catch (e: any) {
         if (e.response && e.response.status === 401) {
@@ -174,15 +174,14 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
       await axiosInstance.post("/minirooms/background", {
         purchaseId: backgroundPayload,
       });
-      console.log(backgroundPayload, "backgroundPayload?");
 
       // 레이아웃 저장 (변경 여부와 관계없이 저장)
       await axiosInstance.post("/minirooms/save-layout", {
         items: layoutData,
       });
-      console.log(layoutData, "layoutData?");
 
       alert("미니룸 레이아웃이 저장되었습니다!");
+      router.push(`/home/${id}`);
     } catch (error: any) {
       if (error.response?.status === 401) {
         alert("로그인이 필요합니다.");

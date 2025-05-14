@@ -1,8 +1,6 @@
 // pages/minihome/[id].tsx
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
-import axios from "axios";
 import Loading from "@/components/Loading";
 
 import MinihomeLayout from "@/features/Minihome";
@@ -96,40 +94,6 @@ const MinihomePage = () => {
       fetchNames();
     }
   }, [isOpen, id]);
-
-  useEffect(() => {
-    const countVisit = async () => {
-      if (!id || Array.isArray(id)) return;
-
-      try {
-        const token = Cookies.get("accessToken");
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/visit/${
-          token ? "auth" : "guest"
-        }`;
-
-        await axios.post(
-          url,
-          { hostId: Number(id) },
-          token
-            ? {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-                withCredentials: true,
-              }
-            : undefined
-        );
-      } catch (err: any) {
-        console.error("방문자 수 기록 실패:", err);
-        if (err.response?.status === 404) {
-          alert("존재하지 않는 페이지입니다.");
-          router.push("/");
-        }
-      }
-    };
-
-    countVisit();
-  }, [id]);
 
   if (!id || Array.isArray(id)) return <Loading />;
 
