@@ -60,6 +60,8 @@ const MiniStatus = () => {
     formData.append("name", values.title);
     if (selectedFile) {
       formData.append("minihompi_image", selectedFile);
+    } else {
+      formData.append("minihompi_image_url", values.minihompi_image);
     }
     formData.append("status", values.mood);
     formData.append("introduction", values.introduction);
