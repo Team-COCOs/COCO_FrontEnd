@@ -21,7 +21,8 @@ export const HomeMiniroomStyled = styled.div`
       font-family: "Gulim", sans-serif;
       width: 100%;
       span {
-        font-size: 12px;
+        align-self: flex-end;
+        font-size: 10px;
         font-weight: bolder;
       }
     }

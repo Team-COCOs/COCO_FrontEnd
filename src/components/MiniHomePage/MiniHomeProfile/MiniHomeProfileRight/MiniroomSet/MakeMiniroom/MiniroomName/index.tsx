@@ -1,12 +1,8 @@
-import React, { useRef } from "react";
+import React from "react";
 import { MiniroomNameStyled } from "./styled";
-import { DndProvider } from "react-dnd";
-import { TouchBackend } from "react-dnd-touch-backend";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/lib/axios";
-import { useIsMobile } from "@/hooks/useIsMobile";
-import { useAuth } from "@/context/AuthContext";
+
 import axios from "axios";
 import { useRouter } from "next/router";
 

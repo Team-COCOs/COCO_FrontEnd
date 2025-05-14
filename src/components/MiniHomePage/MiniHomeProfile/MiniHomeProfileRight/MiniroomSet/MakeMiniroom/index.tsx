@@ -304,13 +304,13 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
                         <input
                           type="checkbox"
                           checked={selectedMinimi.some(
-                            (item) => item.id === product.id
+                            (item) => String(item.id) === String(product.id)
                           )}
                           onChange={() => handleMinimiSelect(product)}
                         />
                         <img
                           src={product.storeItems.file || null}
-                          alt={`minimi ${index}`}
+                          alt={`minimi ${product.id}`}
                         />
                         <h3>{product.storeItems.name}</h3>
                       </div>

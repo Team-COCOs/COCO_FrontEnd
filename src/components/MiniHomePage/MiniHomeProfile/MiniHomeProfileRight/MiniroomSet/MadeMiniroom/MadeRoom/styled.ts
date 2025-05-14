@@ -34,6 +34,37 @@ export const MadeRoomStyled = styled.div`
       .MadeRoom_minimi {
         position: absolute;
       }
+      // 미니미 반응형
+      @media (max-width: 1024px) {
+        .MadeRoom_minimi {
+          height: 50px !important;
+        }
+      }
+      @media (max-width: 900px) {
+        .MadeRoom_minimi {
+          height: 40px !important;
+        }
+      }
+      @media (max-width: 769px) {
+        .MadeRoom_minimi {
+          height: 50px !important;
+        }
+      }
+      @media (max-width: 600px) {
+        .MadeRoom_minimi {
+          height: 35px !important;
+        }
+      }
+      @media (max-width: 480px) {
+        .MadeRoom_minimi {
+          height: 20px !important;
+        }
+      }
+      @media (max-width: 320px) {
+        .MadeRoom_minimi {
+          height: 15px !important;
+        }
+      }
       .MadeRoom_SpeechBubble {
         position: relative;
         background: #fff;
@@ -42,7 +73,7 @@ export const MadeRoomStyled = styled.div`
         padding: 8px;
         width: 100px;
         height: 50px;
-        font-size: 12px;
+        font-size: 11px;
         z-index: 1;
 
         textarea {
@@ -50,7 +81,7 @@ export const MadeRoomStyled = styled.div`
           resize: none;
           border: none;
           outline: none;
-          font-size: 12px;
+          font-size: 11px;
           background: transparent;
           overflow-y: hidden;
           text-align: center;
@@ -58,6 +89,49 @@ export const MadeRoomStyled = styled.div`
           align-items: center;
           justify-content: center;
           height: auto;
+        }
+      }
+      // 미니미 반응형
+      @media (max-width: 1024px) {
+        .MadeRoom_SpeechBubble {
+          width: 100px;
+          height: 50px;
+          font-size: 10px;
+        }
+      }
+      @media (max-width: 900px) {
+        .MadeRoom_SpeechBubble {
+          width: 85px;
+          height: 48px;
+          font-size: 9.5px;
+        }
+      }
+      @media (max-width: 769px) {
+        .MadeRoom_SpeechBubble {
+          width: 100px;
+          height: 45px;
+          font-size: 9.5px;
+        }
+      }
+      @media (max-width: 600px) {
+        .MadeRoom_SpeechBubble {
+          width: 80px;
+          height: 45px;
+          font-size: 8.5px;
+        }
+      }
+      @media (max-width: 480px) {
+        .MadeRoom_SpeechBubble {
+          width: 68px;
+          height: 30px;
+          font-size: 6px;
+        }
+      }
+      @media (max-width: 320px) {
+        .MadeRoom_SpeechBubble {
+          width: 50px;
+          height: 25px;
+          font-size: 5px;
         }
       }
 

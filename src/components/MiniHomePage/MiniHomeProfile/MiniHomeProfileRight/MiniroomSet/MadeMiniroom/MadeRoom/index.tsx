@@ -103,7 +103,7 @@ const MadeRoom = () => {
                     top: `${percentTop}%`,
                     left: `${percentLeft}%`,
                   }}
-                  className="MadeRoom_SpeechBubble"
+                  className="MadeRoom_SpeechBubble Gulim"
                 >
                   {bubble.text}
                 </div>
