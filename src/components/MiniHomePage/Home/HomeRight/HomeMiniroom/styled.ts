@@ -32,17 +32,23 @@ export const HomeMiniroomStyled = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden; // 이미지가 영역 밖으로 넘칠 경우 잘라냄
+      overflow: hidden;
+      .HomeMiniroom_background {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+      }
 
       img {
         width: 100%;
         height: 100%;
         object-fit: cover; // 꽉 차게, 비율 유지하면서 넘치는 부분 잘림
       }
-      .balloon,
-      .minimi {
+      .HomeMiniroom_speechBubble,
+      .HomeMiniroom_minimi {
         position: absolute;
-        transform: translate(-50%, -50%);
       }
     }
     @media (max-width: 480px) {

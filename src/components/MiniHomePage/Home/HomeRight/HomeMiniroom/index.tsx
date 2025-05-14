@@ -75,8 +75,18 @@ const HomeMiniroom = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/layout`
         );
         console.log(response.data, "미니미 말풍선 데이터?");
-        setMinimis(response.data.minimis || []);
-        setSpeechBubbles(response.data.speechBubbles || []);
+        // 미니미만 설정
+        setMinimis(
+          (response.data as { type: string }[]).filter(
+            (item) => item.type === "minimi"
+          )
+        );
+        // 말풍선만 설정
+        setSpeechBubbles(
+          (response.data as { type: string }[]).filter(
+            (item) => item.type === "speechBubble"
+          )
+        );
       } catch (e: any) {
         console.log(e, "미니룸 레이아웃 에러");
       }
@@ -97,53 +107,65 @@ const HomeMiniroom = () => {
           </span>
         </div>
         <div className="HomeMiniroom_imgWrap">
-          <img
+          {/* <img
             src={
               !miniroomBackground
                 ? "/miniroom/miniroom17.png"
                 : miniroomBackground
             }
             alt={"myminiroom"}
-          />
-        </div>
-        {/* 말풍선 */}
-        {speechBubbles.map((bubble) => (
+          /> */}
           <div
-            key={`speech-${bubble.id}`}
+            className="HomeMiniroom_background"
             style={{
-              position: "absolute",
-              top: `${bubble.top}%`,
-              left: `${bubble.left}%`,
-              transform: "translate(-50%, -50%)",
-              backgroundColor: "white",
-              border: "1px solid #ccc",
-              borderRadius: "10px",
-              padding: "5px 10px",
-              maxWidth: "150px",
-              wordBreak: "break-word",
-              fontSize: "12px",
+              backgroundImage: `url(${miniroomBackground})`,
             }}
           >
-            {bubble.text}
-          </div>
-        ))}
+            {/* 말풍선 */}
+            {speechBubbles.map((bubble) => (
+              <div
+                key={`speech-${bubble.id}`}
+                style={{
+                  position: "absolute",
+                  top: `${bubble.top}%`,
+                  left: `${bubble.left}%`,
+                  backgroundColor: "white",
+                  border: "1px solid #ccc",
+                  borderRadius: "10px",
+                  padding: "5px 10px",
+                  maxWidth: "150px",
+                  wordBreak: "break-word",
+                  fontSize: "12px",
+                }}
+                className="HomeMiniroom_SpeechBubble"
+              >
+                {bubble.text}
+              </div>
+            ))}
 
-        {/* 미니미 */}
-        {minimis.map((minimi) => (
-          <img
-            key={`minimi-${minimi.id}`}
-            src={`/items/${minimi.store_item_id}.png`}
-            alt="minimi"
-            style={{
-              position: "absolute",
-              top: `${minimi.top}%`,
-              left: `${minimi.left}%`,
-              transform: "translate(-50%, -50%)",
-              width: "50px",
-              height: "auto",
-            }}
-          />
-        ))}
+            {/* 미니미 */}
+            {minimis.map((minimi) => {
+              const percentTop = (minimi.top / 260) * 100;
+              const percentLeft = (minimi.left / 500) * 100;
+
+              return (
+                <img
+                  key={`minimi-${minimi.id}`}
+                  src={`${minimi.file}`}
+                  alt="minimi"
+                  style={{
+                    position: "absolute",
+                    top: `${percentTop}%`,
+                    left: `${percentLeft}%`,
+                    width: "50px",
+                    height: "auto",
+                  }}
+                  className="HomeMiniroom_minimi"
+                />
+              );
+            })}
+          </div>
+        </div>
       </div>
     </HomeMiniroomStyled>
   );
