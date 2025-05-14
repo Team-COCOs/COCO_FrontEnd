@@ -9,15 +9,15 @@ import DragMiniroom from "./DragMiniroom";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 interface MakeMiniroomProps {
   setfixMiniroom: (value: boolean) => void;
 }
 
 const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
-  const { query } = useRouter();
-  const { id } = query;
+  const router = useRouter();
+  const { id } = router.query;
   const [allProduct, setAllProduct] = useState<any[]>([]);
   const [buyItemTabs, setBuyItemTabs] = useState<string>("미니룸");
   // 드래그 완료된 위치
@@ -77,7 +77,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
       } catch (e: any) {
         if (e.response && e.response.status === 401) {
           alert("로그인이 필요합니다.");
-          window.location.reload();
+          router.push("/home");
         } else {
           console.log(e, "구매 목록 불러오기 실패");
         }
@@ -115,16 +115,24 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     } else {
       // 선택: selectedMinimi와 draggedData에 추가
       setSelectedMinimi((prev) => [...prev, product]);
-      setDraggedData((prev) => [
-        ...prev,
-        {
-          id: product.id,
-          text: product.storeItems.name,
-          x: 225,
-          y: 100,
-          store_item_id: product.id,
-        },
-      ]);
+      setDraggedData((prev) => {
+        const existing = prev.find((item) => item.id === product.id);
+
+        // 이미 존재하면 기존 위치 유지
+        if (existing) return [...prev];
+
+        // 없으면 기본 위치로 추가
+        return [
+          ...prev,
+          {
+            id: product.id,
+            text: product.storeItems.name,
+            x: 225,
+            y: 100,
+            store_item_id: product.id,
+          },
+        ];
+      });
     }
   };
   const handleLayoutSave = async () => {
@@ -189,7 +197,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     } catch (error: any) {
       if (error.response?.status === 401) {
         alert("로그인이 필요합니다.");
-        window.location.reload();
+        router.push("/home");
       } else {
         console.error("미니룸 레이아웃 저장 실패:", error.message || error);
         alert("서버와의 연결에 문제가 발생했습니다. 다시 시도해주세요.");

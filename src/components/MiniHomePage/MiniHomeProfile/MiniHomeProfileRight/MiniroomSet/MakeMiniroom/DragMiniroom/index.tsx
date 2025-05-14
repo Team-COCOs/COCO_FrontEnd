@@ -76,16 +76,19 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
           return updatedItems;
         });
       } else {
-        setItems((prev) => [
-          ...prev,
+        setItems((prevItems) => [
+          ...prevItems,
           {
-            ...item,
+            id: item.id,
+            text: item.text,
             left: newLeft,
             top: newTop,
+            store_item_id: item.store_item_id,
           },
         ]);
       }
-      // 선택된 미니룸 정보도 포함하여 부모에게 전달
+      console.log(items, "items??");
+      //선택된 미니룸 정보도 포함하여 부모에게 전달
       const layoutData = [
         ...items.map((item) => ({
           id: item.id,
@@ -94,7 +97,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
           y: item.top,
         })),
       ];
-
+      console.log(layoutData, "lay1111??");
       selectedMinimi.forEach((minimi) => {
         const alreadyExists = items.some((item) => item.id === minimi.id);
         if (!alreadyExists) {
@@ -107,7 +110,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
         }
       });
 
-      console.log(layoutData, "lay??");
+      console.log(layoutData, "lay222??");
       onDragComplete(
         items.map((item) => {
           const base = {

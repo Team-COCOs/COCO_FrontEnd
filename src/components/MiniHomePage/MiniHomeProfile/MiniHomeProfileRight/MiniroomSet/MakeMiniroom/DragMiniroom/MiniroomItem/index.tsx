@@ -30,8 +30,6 @@ const MiniroomItem: React.FC<MiniroomItemProps> = ({ item }) => {
     }),
   });
   drag(ref);
-
-  const isDefault = item.id === "default-minimi";
   return (
     <img
       ref={ref}
@@ -41,9 +39,7 @@ const MiniroomItem: React.FC<MiniroomItemProps> = ({ item }) => {
         position: "absolute",
         top: item.top,
         left: item.left,
-        // width: isDefault ? "fit-content" : 50,
         width: "fit-content",
-        // width: 50,
         height: 50,
         opacity: isDragging ? 0.5 : 1,
         cursor: "move",
