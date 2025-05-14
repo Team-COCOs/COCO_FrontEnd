@@ -37,6 +37,11 @@ const Comment = ({ comments, onSubmitSuccess }: CommentProps) => {
       return;
     }
 
+    if (!user?.id) {
+      alert("로그인 후 작성해주세요~");
+      return;
+    }
+
     console.log("대댓글일 때 부모 아이디 : ", parentId);
 
     // parentId 는 null일 수 있음. (대댓글이 아닌 경우)

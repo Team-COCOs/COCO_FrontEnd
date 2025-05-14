@@ -4,7 +4,7 @@ import EmptyPage from "@/components/EmptyPage";
 import axiosInstance from "@/lib/axios";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import Comment from "./Comment";
 interface PhotoProps {
   selectedMenu: { id: number; title: string } | null;
@@ -38,10 +38,15 @@ interface PhotoData {
 
 const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
   const [photoData, setPhotoData] = useState<PhotoData[]>([]);
+  const [queryId, setQueryId] = useState(false);
 
   const { user } = useAuth();
   const userId = user?.id;
   const router = useRouter();
+
+  const { query, isReady } = router;
+
+  const queryUserId = router.query.id;
 
   const getPhotoData = async () => {
     try {
@@ -80,16 +85,26 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
     }
   };
 
+  useEffect(() => {
+    if (!queryUserId || !user) return;
+
+    if (String(user?.id) === queryUserId) {
+      setQueryId(true);
+    }
+  }, [queryUserId, user]);
+
   return (
     <PhotoRightStyled>
       <div className="PhotoRight_wrap">
         <div className="PhotoRight_header">
-          <button
-            className="PhotoRight_btn Gulim"
-            onClick={() => setWrite(true)}
-          >
-            글 작성하기
-          </button>
+          {queryId && (
+            <button
+              className="PhotoRight_btn Gulim"
+              onClick={() => setWrite(true)}
+            >
+              글 작성하기
+            </button>
+          )}
         </div>
         <div className="PhotoRight_content">
           <div className="PhotoRight_title Gulim">
