@@ -111,6 +111,11 @@ const HomeMusicRight = () => {
     fetchBuyBgm();
   }, [id]);
 
+  useEffect(() => {
+    if (playlist.length > 0) {
+      setIsPlaying(true);
+    }
+  }, [playlist]);
   return (
     <HomeMusicRightStyled>
       <div className="HomeMusicRight_wrap">
@@ -163,8 +168,8 @@ const HomeMusicRight = () => {
                 <div
                   className={`scroll-text ${isPlaying ? "playing" : "paused"}`}
                 >
-                  🎵{" "}
-                  {playlist[currentTrack].name - playlist[currentTrack].artist}
+                  🎵 {playlist[currentTrack].name} -{" "}
+                  {playlist[currentTrack].artist}
                 </div>
               )}
             </div>
