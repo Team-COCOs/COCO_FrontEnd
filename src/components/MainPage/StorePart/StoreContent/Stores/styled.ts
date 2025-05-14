@@ -10,6 +10,10 @@ export const StoresStyle = styled.div`
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
 
+      .Store_bgmCard {
+        margin-bottom: 25px !important;
+      }
+
       .Stores_card {
         padding: 12px;
         text-align: center;
@@ -58,9 +62,13 @@ export const StoresStyle = styled.div`
 
         .Stores_mini {
           position: relative;
-          width: 35%;
+          width: 25px;
           height: 73%;
           margin: 0 auto;
+        }
+
+        .Stores_gif {
+          width: 50px !important;
         }
 
         .Stores_itemName {

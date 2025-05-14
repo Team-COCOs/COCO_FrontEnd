@@ -92,6 +92,7 @@ const MiniBgm = () => {
         bgmId: selectedBgm.storeItems.id,
         file: bgmFile,
       });
+
       alert("배경음악이 등록되었습니다.");
       window.location.reload();
     } catch (e) {
