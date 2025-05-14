@@ -33,7 +33,7 @@ const MiniroomItem: React.FC<MiniroomItemProps> = ({ item }) => {
   return (
     <img
       ref={ref}
-      src={item.storeItems.file}
+      src={item?.storeItems?.file || ""}
       alt="minimi"
       style={{
         position: "absolute",

@@ -77,7 +77,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
       } catch (e: any) {
         if (e.response && e.response.status === 401) {
           alert("로그인이 필요합니다.");
-          router.push("/home");
+          router.push(`/home/${id}`);
         } else {
           console.log(e, "구매 목록 불러오기 실패");
         }
@@ -197,7 +197,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     } catch (error: any) {
       if (error.response?.status === 401) {
         alert("로그인이 필요합니다.");
-        router.push("/home");
+        router.push(`/home/${id}`);
       } else {
         console.error("미니룸 레이아웃 저장 실패:", error.message || error);
         alert("서버와의 연결에 문제가 발생했습니다. 다시 시도해주세요.");

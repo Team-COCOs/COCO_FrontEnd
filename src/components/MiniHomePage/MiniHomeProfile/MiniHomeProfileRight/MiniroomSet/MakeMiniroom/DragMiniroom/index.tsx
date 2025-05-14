@@ -14,15 +14,6 @@ interface DragMiniroomProps {
   onDragComplete: (draggedItems: any[]) => void;
 }
 
-// 말풍선
-interface SpeechBubbleItem {
-  id: string;
-  type: "speechBubble";
-  text: string;
-  top: number;
-  left: number;
-}
-
 const DragMiniroom: React.FC<DragMiniroomProps> = ({
   selectedMiniroom,
   selectedMinimi,
@@ -30,13 +21,13 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
 }) => {
   const { query } = useRouter();
   const { id } = query;
-
   const [items, setItems] = useState<any[]>([]);
   const dropRef = useRef<HTMLDivElement>(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [layoutItems, setLayoutItems] = useState<
     { id: string; type: "minimi" | "miniroom"; x: number; y: number }[]
   >([]);
+  const [initialItems, setInitialItems] = useState<any[]>([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,96 +37,6 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  // const [{ isOver }, drop] = useDrop({
-  //   accept: ["minimi", "speechBubble"],
-  //   drop: (item: any, monitor) => {
-  //     const offset = monitor.getClientOffset();
-  //     if (!offset) return;
-
-  //     const containerRect = dropRef.current!.getBoundingClientRect();
-
-  //     const offsetX = item.offsetX || 25; // fallback: 가운데 정렬
-  //     const offsetY = item.offsetY || 25;
-
-  //     const newLeft = offset.x - containerRect.left - offsetX;
-  //     const newTop = offset.y - containerRect.top - offsetY;
-
-  //     const existingItemIndex = items.findIndex(
-  //       (existingItem) => existingItem.id === item.id
-  //     );
-
-  //     if (existingItemIndex !== -1) {
-  //       setItems((prevItems) => {
-  //         const updatedItems = [...prevItems];
-  //         updatedItems[existingItemIndex] = {
-  //           ...updatedItems[existingItemIndex],
-  //           left: newLeft,
-  //           top: newTop,
-  //         };
-  //         return updatedItems;
-  //       });
-  //     } else {
-  //       setItems((prevItems) => [
-  //         ...prevItems,
-  //         {
-  //           id: item.id,
-  //           text: item.text,
-  //           left: newLeft,
-  //           top: newTop,
-  //           store_item_id: item.store_item_id,
-  //         },
-  //       ]);
-  //     }
-  //     console.log(items, "items??");
-  //     //선택된 미니룸 정보도 포함하여 부모에게 전달
-  //     const layoutData = [
-  //       ...items.map((item) => ({
-  //         id: item.id,
-  //         type: item.type,
-  //         x: item.left,
-  //         y: item.top,
-  //       })),
-  //     ];
-  //     console.log(layoutData, "lay1111??");
-  //     selectedMinimi.forEach((minimi) => {
-  //       const alreadyExists = items.some((item) => item.id === minimi.id);
-  //       if (!alreadyExists) {
-  //         layoutData.push({
-  //           id: minimi.id,
-  //           type: "minimi",
-  //           x: 0,
-  //           y: 0,
-  //         });
-  //       }
-  //     });
-
-  //     console.log(layoutData, "lay222??");
-  //     onDragComplete(
-  //       items.map((item) => {
-  //         const base = {
-  //           id: item.id,
-  //           type: item.type,
-  //           x: item.left,
-  //           y: item.top,
-  //         };
-
-  //         if (item.type === "speechBubble") {
-  //           return {
-  //             ...base,
-  //             text: item.text || "",
-  //           };
-  //         }
-
-  //         return base;
-  //       })
-  //     );
-  //   },
-
-  //   collect: (monitor) => ({
-  //     isOver: !!monitor.isOver(),
-  //   }),
-  // });
 
   const [{ isOver }, drop] = useDrop({
     accept: ["minimi", "speechBubble"],
@@ -190,6 +91,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
       isOver: !!monitor.isOver(),
     }),
   });
+
   const handleLayoutUpdate = (updatedItems: any[]) => {
     // selectedMinimi 중 아직 없는 것 추가
     const layoutData = [
@@ -347,6 +249,37 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
 
     setLayoutItems(layoutData);
   }, [items]);
+
+  // 미니룸 조회(저장 내용 있으면 불러오기)
+  useEffect(() => {
+    const fetchLayout = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/layout`
+        );
+        const data = response.data;
+        console.log(data, "data??");
+        // 서버에서 받아온 데이터를 state에 적용
+        const formattedItems = data.map((item: any) => ({
+          id: item.id,
+          type: item.type,
+          text: item.text || "",
+          left: item.left,
+          top: item.top,
+          storeItems: { file: item?.file },
+        }));
+        console.log(formattedItems, "formattedItems??");
+        setItems(formattedItems);
+        setInitialItems(formattedItems);
+      } catch (error) {
+        console.error("미니룸 레이아웃 불러오기 실패:", error);
+      }
+    };
+
+    if (id) {
+      fetchLayout();
+    }
+  }, [id]);
 
   return (
     <DragMiniroomStyled>
