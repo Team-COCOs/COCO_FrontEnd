@@ -2,7 +2,6 @@ import { MadeRoomStyled } from "./styled";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useAuth } from "@/context/AuthContext";
 
 interface Minimi {
   id: number;
@@ -19,9 +18,8 @@ interface SpeechBubble {
 }
 
 const MadeRoom = () => {
-  const { query } = useRouter();
-  const { id } = query;
-  const { user } = useAuth();
+  const router = useRouter();
+  const { id } = router.query;
 
   // 미니룸 배경 관리
   const [miniroomBackground, setMiniroomBackground] = useState("");
@@ -29,6 +27,9 @@ const MadeRoom = () => {
   const [speechBubbles, setSpeechBubbles] = useState<any[]>([]);
   // 미니룸 미니미 불러오기 관리
   const [minimis, setMinimis] = useState<any[]>([]);
+
+  // 미니룸 미니미 성별 관리
+  const [profileGender, setProfileGender] = useState("woman");
 
   // 미니룸 배경 불러오기
   useEffect(() => {
@@ -77,6 +78,27 @@ const MadeRoom = () => {
     fetchLayout();
   }, [id]);
 
+  // 미니미 성별 불러오기
+  useEffect(() => {
+    const homepiProfile = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/history/${id}`
+        );
+
+        setProfileGender(response.data.gender);
+        console.log(response.data, " da?");
+      } catch (err: any) {
+        if (err.response?.status === 404) {
+          alert("존재하지 않는 페이지입니다.");
+          router.push("/");
+        }
+      }
+    };
+
+    if (id) homepiProfile();
+  }, [id]);
+
   return (
     <MadeRoomStyled>
       <div className="MadeRoom_wrap">
@@ -117,7 +139,7 @@ const MadeRoom = () => {
               const percentLeft = (minimi.left / 500) * 100;
               const isDefaultMinimi = minimi.id === "default-minimi";
               const minimiSrc = isDefaultMinimi
-                ? user?.gender === "man"
+                ? profileGender === "man"
                   ? "/avatarImg/man_avatar1.png"
                   : "/avatarImg/woman_avatar1.png"
                 : minimi.file;
