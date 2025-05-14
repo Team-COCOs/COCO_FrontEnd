@@ -72,6 +72,7 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
         );
 
         setProfile(response.data);
+        console.log(response.data, "profile?");
       } catch (err: any) {
         if (err.response?.status === 404) {
           alert("존재하지 않는 페이지입니다.");
@@ -98,7 +99,9 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
       <div>
         <div className="DiaryTitle_wrap">
           <div className="DiaryTitle_number_title">
-            {userTitle ? userTitle : `${profile?.name}님의 미니홈피`}
+            {userTitle !== "미니홈피"
+              ? userTitle
+              : `${profile?.name}님의 미니홈피`}
           </div>
           {!isOwnPage &&
             (!user ? (

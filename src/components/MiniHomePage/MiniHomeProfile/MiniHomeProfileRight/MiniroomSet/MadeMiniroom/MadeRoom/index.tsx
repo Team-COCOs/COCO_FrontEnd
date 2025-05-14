@@ -117,9 +117,9 @@ const MadeRoom = () => {
               const percentLeft = (minimi.left / 500) * 100;
               const isDefaultMinimi = minimi.id === "default-minimi";
               const minimiSrc = isDefaultMinimi
-                ? user?.gender === "woman"
-                  ? "/avatarImg/woman_avatar1.png"
-                  : "/avatarImg/man_avatar1.png"
+                ? user?.gender === "man"
+                  ? "/avatarImg/man_avatar1.png"
+                  : "/avatarImg/woman_avatar1.png"
                 : minimi.file;
 
               return (
