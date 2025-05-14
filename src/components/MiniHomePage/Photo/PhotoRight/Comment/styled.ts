@@ -98,6 +98,11 @@ export const CommentStyle = styled.div`
         &:active {
           background: linear-gradient(to top, #ffffff, #dddddd);
         }
+
+        &:focus,
+        &:active {
+          outline: none;
+        }
       }
     }
 

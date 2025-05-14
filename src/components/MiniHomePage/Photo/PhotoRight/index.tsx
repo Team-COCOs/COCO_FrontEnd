@@ -54,8 +54,6 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
         res.data.filter((item: PhotoData) => item.folderId === selectedMenu.id);
 
       setPhotoData(filtered);
-
-      setPhotoData(res.data);
     } catch (e: any) {
       if (e.response?.status === 401) {
         alert("로그인이 필요합니다.");
@@ -70,7 +68,17 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
     // getPhotoData();
   }, [selectedMenu]);
 
-  const addClip = () => {};
+  const clipPhoto = async (photoId: number) => {
+    try {
+      const res = await axiosInstance.post(`/photos/${photoId}/clip`);
+
+      console.log("스크랩 정보 : ", res.data);
+      alert("스크랩 완료!");
+      getPhotoData();
+    } catch (e) {
+      console.log("스크랩 실패: ", e);
+    }
+  };
 
   return (
     <PhotoRightStyled>
@@ -88,7 +96,7 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
             <span>[스크랩]</span>사프란블루_흐드르륵 언덕02
             <button
               className="PhotoRight_clipBtn Gulim"
-              onClick={() => addClip()}
+              // onClick={() => clipPhoto(data.id)}
             >
               스크랩
             </button>
@@ -132,7 +140,7 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                   {data.title}
                   <button
                     className="PhotoRight_clipBtn Gulim"
-                    onClick={() => addClip()}
+                    onClick={() => clipPhoto(data.id)}
                   >
                     스크랩
                   </button>

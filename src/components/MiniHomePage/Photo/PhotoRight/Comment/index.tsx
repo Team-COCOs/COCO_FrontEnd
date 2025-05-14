@@ -28,12 +28,14 @@ const Comment = ({ comments, onSubmitSuccess }: CommentProps) => {
   const [replyTargetId, setReplyTargetId] = useState<number | null>(null);
   const [commentInput, setCommentInput] = useState("");
   const [childCommentInput, setChildCommentInput] = useState("");
-  const [childComment, setChildComment] = useState(false); // 데이터 가져올 때 지워도 됨
   const router = useRouter();
   const { user } = useAuth();
 
   const submitComment = async ({ comment, parentId }: CommentSubmit) => {
-    if (!comment.trim()) return;
+    if (!comment.trim()) {
+      alert("댓글을 작성해주세요~");
+      return;
+    }
 
     console.log("대댓글일 때 부모 아이디 : ", parentId);
 
@@ -62,52 +64,10 @@ const Comment = ({ comments, onSubmitSuccess }: CommentProps) => {
 
   return (
     <CommentStyle className="Comment_wrap Gulim">
-      <p className="handFont">
-        아직 댓글이 없어요~ 당신의 한 마디로 이 공간을 채워주세요 💬
-      </p>
-      <div className="Comment_parent">
-        <div className="Comment_infos">
-          <span
-            className="Comment_Author"
-            // onClick={() => router.push(`/home/${authorId}`)}
-          >
-            어쩌구
-          </span>
-          <span className="Comment_comment">: 하이하이~</span>
-          <span className="Comment_date">(2005.11.11 04:01)</span>
-          <div className="Comment_icon" onClick={() => setChildComment(true)}>
-            <Image src="/arrowIcon.png" alt="icon" fill />
-          </div>
-        </div>
-
-        {childComment && (
-          <div className="Comment_childInput">
-            <div
-              className="Comment_closeIcon"
-              onClick={() => setChildComment(false)}
-            >
-              ×
-            </div>
-            <p>댓글</p>
-            <input type="text" />
-            <button>확인</button>
-          </div>
-        )}
-      </div>
-
-      <div className="Comment_child">
-        <span
-          className="Comment_Author"
-          // onClick={() => router.push(`/home/${authorId}`)}
-        >
-          저쩌구
-        </span>
-        <span className="Comment_comment">: 방가방가~</span>
-        <span className="Comment_date">(2005.11.11 04:01)</span>
-      </div>
-
-      {comments?.length === 0 ? (
-        <p>첫번째 댓글의 주인공이 되어주세요~</p>
+      {comments?.length === 0 || !comments ? (
+        <p className="handFont">
+          아직 댓글이 없어요~ 당신의 한 마디로 이 공간을 채워주세요 💬
+        </p>
       ) : (
         comments?.map((comment) => (
           <div key={comment.id} className="Comment_parent">
