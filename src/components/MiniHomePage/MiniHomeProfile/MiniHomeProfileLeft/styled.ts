@@ -13,7 +13,7 @@ export const MiniHomeProfileLeftStyled = styled.div`
   }
   @media (max-width: 769px) {
     .MiniHomeProfileLeft_wrap {
-      min-height: 80vh;
+      min-height: 60vh;
     }
   }
   .MiniHomeProfileLeft_titleWrap {

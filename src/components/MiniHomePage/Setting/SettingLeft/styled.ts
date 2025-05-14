@@ -3,6 +3,10 @@ import styled from "styled-components";
 export const SettingLeftStyled = styled.div`
   .SettingLeft_wrap {
     min-height: 80vh;
+
+    @media (max-width: 768px) {
+      min-height: 70vh;
+    }
   }
   .SettingLeft_titleWrap {
     padding: 20px 10px 10px 10px;

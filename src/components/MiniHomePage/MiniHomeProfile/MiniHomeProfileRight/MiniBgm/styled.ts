@@ -46,6 +46,16 @@ export const MiniBgmStyle = styled.div`
           width: 60px;
           height: 25px;
 
+          @media (max-width: 768px) {
+            & {
+              width: 45px;
+            }
+          }
+
+          @media (max-width: 452px) {
+            font-size: 9px;
+          }
+
           &:active,
           &:focus {
             outline: none;
@@ -57,6 +67,19 @@ export const MiniBgmStyle = styled.div`
           height: 25px;
           padding: 5px;
 
+          @media (max-width: 768px) {
+            & {
+              width: 120px;
+            }
+          }
+
+          @media (max-width: 452px) {
+            & {
+              width: 100px;
+              font-size: 9px;
+            }
+          }
+
           &:active,
           &:focus {
             outline: none;
@@ -65,6 +88,10 @@ export const MiniBgmStyle = styled.div`
 
         button {
           height: 25px;
+
+          @media (max-width: 452px) {
+            font-size: 9px;
+          }
         }
       }
     }

@@ -10,6 +10,7 @@ export const BgmStyle = styled.div`
   .Bgm_table {
     width: 100%;
     flex-grow: 1;
+    overflow-x: auto;
 
     .Bgm_tableHeader,
     .Bgm_item {
@@ -20,6 +21,12 @@ export const BgmStyle = styled.div`
       padding: 8px 10px;
       font-size: 13px;
       border-bottom: 1px solid #e4e4e4;
+
+      @media (max-width: 768px) {
+        & {
+          min-width: 600px;
+        }
+      }
     }
 
     .Bgm_tableHeader {
@@ -81,10 +88,68 @@ export const BgmStyle = styled.div`
       flex: 1.5;
       text-align: left;
     }
+
+    &::-webkit-scrollbar {
+      width: 16px;
+      background-color: #f0f0f0;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: rgb(237, 237, 237);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgb(215, 215, 215);
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: rgb(206, 206, 206);
+    }
+
+    &::-webkit-scrollbar-button {
+      background-color: #e0e0e0;
+      height: 16px;
+      display: block;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><polygon points='5,2 2,6 8,6' fill='%23666'/></svg>");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    &::-webkit-scrollbar-button:single-button:vertical:decrement {
+      height: 16px;
+      background-color: #e0e0e0;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><polygon points='5,2 2,6 8,6' fill='%23ffffff'/></svg>");
+      background-repeat: no-repeat;
+      background-position: center;
+      border-bottom: 1px solid rgb(255, 255, 255);
+    }
+
+    /* 스크롤바 버튼 아래쪽 (▼) */
+    &::-webkit-scrollbar-button:single-button:vertical:increment {
+      height: 16px;
+      background-color: #e0e0e0;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10'><polygon points='5,8 2,4 8,4' fill='%23ffffff'/></svg>");
+      background-repeat: no-repeat;
+      background-position: center;
+      border-top: 1px solid rgb(255, 255, 255);
+    }
+
+    /* 나머지 버튼 제거 */
+    &::-webkit-scrollbar-button:vertical:start:increment,
+    &::-webkit-scrollbar-button:vertical:end:decrement {
+      display: none;
+    }
+
+    /* 버튼 수정 중 */
+    &::-webkit-scrollbar-button:horizontal {
+      display: none;
+    }
   }
 
   .Bgm_footer {
     width: 100%;
+
+    @media (max-width: 768px) {
+      margin-top: 20px;
+    }
 
     .Bgm_pageNation {
       display: flex;
