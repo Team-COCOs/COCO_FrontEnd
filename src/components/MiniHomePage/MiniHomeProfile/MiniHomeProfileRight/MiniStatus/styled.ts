@@ -86,7 +86,9 @@ export const MiniStatusStyle = styled.div`
 
           .MiniStatus_select {
             width: 160px;
+            height: 30px;
             padding: 5px;
+            font-size: 13px;
 
             &:active,
             &:focus {

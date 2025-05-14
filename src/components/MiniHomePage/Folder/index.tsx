@@ -131,6 +131,8 @@ const Folder = ({ type, onSave }: FolderProps) => {
 
   // 현 폴더 구조
   useEffect(() => {
+    if (!userId) return;
+
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/${type}/folderList`, {
         params: { userId },
@@ -173,7 +175,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
         ]);
         setExpandedKeys(["0"]);
       });
-  }, [type]);
+  }, [type, userId]);
 
   return (
     <FolderStyle

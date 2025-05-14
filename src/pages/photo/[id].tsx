@@ -7,10 +7,12 @@ import MinihomeLayout from "@/features/Minihome";
 // 미니홈피 사진첩 컴포넌트
 import PhotoLeft from "@/components/MiniHomePage/Photo/PhotoLeft";
 import PhotoRight from "@/components/MiniHomePage/Photo/PhotoRight";
+import WritePage from "@/components/MiniHomePage/Photo/PhotoRight/WritePage";
 
 const MinihomePage = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [write, setWrite] = useState(false);
 
   // 공통 폴더/카테고리 선택 상태
   const [selectedMenu, setSelectedMenu] = useState<{
@@ -27,7 +29,13 @@ const MinihomePage = () => {
           setSelectedMenu={setSelectedMenu}
         />
       }
-      children={<PhotoRight selectedMenu={selectedMenu} />}
+      children={
+        write ? (
+          <WritePage />
+        ) : (
+          <PhotoRight selectedMenu={selectedMenu} setWrite={setWrite} />
+        )
+      }
     />
   );
 };
