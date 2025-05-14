@@ -4,6 +4,7 @@ import Image from "next/image";
 import Bgm from "./Bgm";
 import { useEffect, useState, useRef } from "react";
 import axiosInstance from "@/lib/axios";
+import { useRouter } from "next/router";
 
 interface BgmInfo {
   id: number;
@@ -39,6 +40,8 @@ const MiniBgm = () => {
   const [searchType, setSearchType] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
+  const router = useRouter();
+
   useEffect(() => {
     const bgm = async () => {
       try {
@@ -50,7 +53,11 @@ const MiniBgm = () => {
 
         setAllBgm(bgmItems);
         setBgm(bgmItems);
-      } catch (e) {
+      } catch (e: any) {
+        if (e.response?.status === 401) {
+          alert("로그인이 필요합니다.");
+          router.push(`/home/${user?.id}`);
+        }
         console.log(e);
       }
     };

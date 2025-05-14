@@ -24,11 +24,12 @@ export const PhotoRightStyled = styled.div`
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      margin-bottom: 10px;
 
       .PhotoRight_btn {
         padding: 3px;
         width: 75px;
-        font-size: 13px;
+        font-size: 12px;
         background: linear-gradient(to bottom, #ffffff, #dddddd);
         border: 1px solid #000000;
         border-radius: 3px;
@@ -41,19 +42,38 @@ export const PhotoRightStyled = styled.div`
     }
 
     .PhotoRight_content {
-      width: 90%;
+      width: 95%;
       padding: 10px;
       margin: 0 auto;
 
       .PhotoRight_title {
+        position: relative;
         display: flex;
+        align-items: center;
         justify-content: center;
+        gap: 5px;
         width: 100%;
-        padding: 5px;
-        font-size: 14.5px;
+        padding: 7px;
+        font-size: 13.5px;
         font-weight: bold;
         background-color: rgb(241, 241, 241);
         border-top: 1.5px solid rgb(209, 209, 209);
+
+        .PhotoRight_clipBtn {
+          position: absolute;
+          right: 10px;
+          padding: 2px 3px;
+          width: 45px;
+          font-size: 12px;
+          border: 1px solid rgb(164, 164, 164);
+          color: rgb(61, 61, 61);
+          border-radius: 3px;
+          cursor: pointer;
+
+          &:active {
+            background: linear-gradient(to top, #ffffff, #dddddd);
+          }
+        }
       }
 
       .PhotoRight_infos {
@@ -61,7 +81,8 @@ export const PhotoRightStyled = styled.div`
         justify-content: space-between;
         padding: 0 10px;
         font-size: 14px;
-        font-weight: 600;
+        font-weight: bold;
+        margin-top: 5px;
 
         .PhotoRight_user {
           color: rgb(46, 105, 188);
@@ -70,12 +91,13 @@ export const PhotoRightStyled = styled.div`
 
         .PhotoRight_info {
           display: flex;
-          gap: 20px;
+          gap: 15px;
+          font-size: 13px;
           align-items: center;
 
           .PhotoRight_font {
-            font-size: 13px;
-            margin-top: 5px;
+            font-size: 12px;
+            margin-top: 2px;
           }
         }
       }
@@ -87,12 +109,41 @@ export const PhotoRightStyled = styled.div`
       align-items: flex-start;
       width: 100%;
       height: 100%;
+      max-height: 350px;
       padding: 0 15px;
+      margin: 10px 0;
 
       .PhotoRight_img {
         position: relative;
         width: 100%;
-        height: 100%;
+        height: 350px;
+      }
+
+      @media (max-width: 768px) {
+        & {
+          width: 100%;
+          height: 350px;
+
+          .PhotoRight_img {
+            max-height: 350px;
+          }
+        }
+      }
+    }
+
+    .PhotoRight_isPublic {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5px;
+      font-size: 13px;
+      font-weight: bold;
+      color: rgb(169, 169, 169);
+
+      .PhotoRight_line {
+        font-size: 10px;
+        font-weight: 100;
+        margin: 0 2px;
       }
     }
 
