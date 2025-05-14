@@ -74,9 +74,6 @@ const HomeMiniroom = () => {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/layout`
         );
-        setMiniroomBackground(
-          response.data.miniroomBackground || "/miniroom/miniroom17.png"
-        );
         console.log(response.data, "미니미 말풍선 데이터?");
         setMinimis(response.data.minimis || []);
         setSpeechBubbles(response.data.speechBubbles || []);

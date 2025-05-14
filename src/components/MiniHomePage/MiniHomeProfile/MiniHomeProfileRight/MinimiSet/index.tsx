@@ -10,7 +10,8 @@ import { useRouter } from "next/router";
 const MinimiSet = () => {
   const { user } = useAuth();
   const [minimiData, setMinimiData] = useState<any[]>([]);
-  const [selectedMinimiId, setSelectedMinimiId] = useState<string>("default");
+  const [selectedMinimiId, setSelectedMinimiId] =
+    useState<string>("default-minimi");
   const [myMinimi, setMyMinimi] = useState<string>("");
   const { query } = useRouter();
   const { id } = query;
@@ -42,7 +43,9 @@ const MinimiSet = () => {
 
   const handleSave = async () => {
     const purchaseId =
-      selectedMinimiId === "default" ? "default-minimi" : selectedMinimiId;
+      selectedMinimiId === "default-minimi"
+        ? "default-minimi"
+        : selectedMinimiId;
     try {
       await axiosInstance.patch("/useritems/set-minimi", {
         purchaseId,
@@ -111,8 +114,10 @@ const MinimiSet = () => {
             <input
               type="radio"
               name="minimi"
-              checked={(selectedMinimiId ?? myMinimi) === "default"}
-              onChange={() => handleChange("default")}
+              checked={
+                String(selectedMinimiId ?? myMinimi) === "default-minimi"
+              }
+              onChange={() => handleChange("default-minimi")}
             />
             <div className="MinimiSet_minimi_imgWrap">
               <img
@@ -131,7 +136,7 @@ const MinimiSet = () => {
               <input
                 type="radio"
                 name="minimi"
-                checked={selectedMinimiId === minimi.id}
+                checked={String(selectedMinimiId) === String(minimi.id)}
                 onChange={() => handleChange(minimi.id)}
               />
               <div className="MinimiSet_minimi_imgWrap">
