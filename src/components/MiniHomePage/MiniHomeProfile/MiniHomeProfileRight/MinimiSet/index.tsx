@@ -41,7 +41,8 @@ const MinimiSet = () => {
   };
 
   const handleSave = async () => {
-    const purchaseId = selectedMinimiId === "default" ? null : selectedMinimiId;
+    const purchaseId =
+      selectedMinimiId === "default" ? "default-minimi" : selectedMinimiId;
     try {
       await axiosInstance.patch("/useritems/set-minimi", {
         purchaseId,
