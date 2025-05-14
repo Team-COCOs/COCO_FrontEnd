@@ -120,8 +120,8 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
         {
           id: product.id,
           text: product.storeItems.name,
-          x: 0,
-          y: 0,
+          x: 225,
+          y: 100,
           store_item_id: product.id,
         },
       ]);
@@ -247,7 +247,6 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-
     if (value.length <= 10) {
       setName(value);
     }
