@@ -135,9 +135,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
         : selectedBackgroundId;
 
       // 배경이 null인 경우에도 비교해서 저장되지 않도록 처리
-      const isBackgroundChanged =
-        backgroundPayload !== miniroomBackgroundId &&
-        backgroundPayload !== "default-miniroom";
+      const isBackgroundChanged = backgroundPayload !== miniroomBackgroundId;
 
       // 레이아웃 저장 여부 체크
       const hasLayoutChanged = draggedData.some(
