@@ -15,6 +15,7 @@ interface CommentData {
   id: number; // PK
   comment: string; // 댓글
   author: string; // 댓글 작성자
+  authorId: number; // 댓글 작성자 id
   date: string; // 날짜
   children: CommentData[]; // 대댓글
 }
@@ -37,41 +38,37 @@ interface PhotoData {
 
 const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
   const [photoData, setPhotoData] = useState<PhotoData[]>([]);
-  const [comments, setComments] = useState<CommentData[]>([]);
 
   const { user } = useAuth();
   const userId = user?.id;
   const router = useRouter();
 
-  useEffect(() => {
-    const data = async () => {
-      try {
-        const res = await axiosInstance.get(`/photos/my-photos/${userId}`);
+  const getPhotoData = async () => {
+    try {
+      const res = await axiosInstance.get(`/photos/my-photos/${userId}`);
 
-        console.log("사진첩 : ", res.data);
+      console.log("사진첩 : ", res.data);
 
-        const filtered =
-          selectedMenu &&
-          res.data.filter(
-            (item: PhotoData) => item.folderId === selectedMenu.id
-          );
+      const filtered =
+        selectedMenu &&
+        res.data.filter((item: PhotoData) => item.folderId === selectedMenu.id);
 
-        setPhotoData(filtered);
+      setPhotoData(filtered);
 
-        setPhotoData(res.data);
-        setComments(res.data.comments);
-      } catch (e: any) {
-        if (e.response?.status === 401) {
-          alert("로그인이 필요합니다.");
-          router.push(`/photo/${userId}`);
-        } else {
-          console.log("사진첩 불러오기 에러 : ", e);
-        }
+      setPhotoData(res.data);
+    } catch (e: any) {
+      if (e.response?.status === 401) {
+        alert("로그인이 필요합니다.");
+        router.push(`/photo/${userId}`);
+      } else {
+        console.log("사진첩 불러오기 에러 : ", e);
       }
-    };
+    }
+  };
 
-    // data();
-  }, []);
+  useEffect(() => {
+    // getPhotoData();
+  }, [selectedMenu]);
 
   const addClip = () => {};
 
@@ -123,7 +120,7 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
             <div>조회수 1,000</div>
           </div>
 
-          <Comment comments={comments} />
+          <Comment />
 
           {photoData.length === 0 ? (
             <EmptyPage />
@@ -160,7 +157,7 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                       src={data.image}
                       alt="photo"
                       fill
-                      objectFit="cover"
+                      objectFit="contain"
                     />
                   </div>
                 </div>
@@ -172,6 +169,11 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                   </div>
                   <div>조회수 {data.views.toLocaleString()}</div>
                 </div>
+
+                <Comment
+                  comments={data.comments}
+                  onSubmitSuccess={getPhotoData}
+                />
               </div>
             ))
           )}

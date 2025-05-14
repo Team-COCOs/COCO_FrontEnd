@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap");
 
 @font-face {
   font-family: "NeoDunggeunmo";
@@ -94,6 +95,10 @@ a {
 
 .Gulim {
   font-family: "Gulim", "굴림";
+}
+
+.handFont {
+  font-family: "Gamja Flower", sans-serif;
 }
 
 /* 스크롤바 */

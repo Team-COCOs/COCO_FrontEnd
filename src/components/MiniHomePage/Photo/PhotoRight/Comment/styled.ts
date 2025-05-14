@@ -9,13 +9,21 @@ export const CommentStyle = styled.div`
     padding: 10px 15px;
     background-color: rgb(241, 241, 241);
     margin-top: 10px;
+    font-weight: bold;
     font-size: 13px;
+
+    .handFont {
+      font-size: 15px;
+      color: rgb(80, 80, 80);
+      padding: 5px;
+    }
 
     .Comment_parent,
     .Comment_child {
       display: flex;
       align-items: center;
       gap: 5px;
+      font-weight: bold;
       margin-bottom: 3px;
 
       .Comment_icon {
@@ -25,13 +33,36 @@ export const CommentStyle = styled.div`
         cursor: pointer;
         margin: 3px 0 0 5px;
       }
+
+      .Comment_Author {
+        color: rgb(46, 105, 188);
+        cursor: pointer;
+      }
+
+      .Comment_date {
+        font-size: 10px;
+        font-weight: 600;
+        color: rgb(185, 185, 185);
+        margin: 2px 0 0 5px;
+      }
+    }
+
+    .Comment_parent {
+      align-items: flex-start;
+      flex-direction: column;
+
+      .Comment_infos {
+        display: flex;
+        gap: 3px;
+      }
     }
 
     .Comment_child {
       margin-left: 20px;
     }
 
-    .Comment_input {
+    .Comment_input,
+    .Comment_childInput {
       display: flex;
       align-items: center;
       margin-top: 5px;
@@ -67,6 +98,16 @@ export const CommentStyle = styled.div`
         &:active {
           background: linear-gradient(to top, #ffffff, #dddddd);
         }
+      }
+    }
+
+    .Comment_childInput {
+      padding-left: 20px;
+
+      .Comment_closeIcon {
+        width: 10px;
+        cursor: pointer;
+        color: rgb(157, 157, 157);
       }
     }
   }
