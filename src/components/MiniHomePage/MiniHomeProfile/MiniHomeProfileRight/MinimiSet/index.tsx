@@ -111,7 +111,7 @@ const MinimiSet = () => {
             <input
               type="radio"
               name="minimi"
-              checked={selectedMinimiId === "default" || myMinimi === "default"}
+              checked={(selectedMinimiId ?? myMinimi) === "default"}
               onChange={() => handleChange("default")}
             />
             <div className="MinimiSet_minimi_imgWrap">
