@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useDrag } from "react-dnd";
-
+import { useAuth } from "@/context/AuthContext";
 // 아이템 타입 정의
 interface Product {
   id: string;
@@ -19,6 +19,8 @@ interface MiniroomItemProps {
 
 const MiniroomItem: React.FC<MiniroomItemProps> = ({ item }) => {
   const ref = useRef<HTMLImageElement>(null);
+  const { user } = useAuth();
+
   const [{ isDragging }, drag] = useDrag({
     type: "minimi", // 타입 설정
     item: () => ({
@@ -33,7 +35,11 @@ const MiniroomItem: React.FC<MiniroomItemProps> = ({ item }) => {
   return (
     <img
       ref={ref}
-      src={item?.storeItems?.file || ""}
+      src={
+        item?.storeItems?.file || user?.gender === "woman"
+          ? "/avatarImg/woman_avatar1.png"
+          : "/avatarImg/man_avatar1.png"
+      }
       alt="minimi"
       style={{
         position: "absolute",

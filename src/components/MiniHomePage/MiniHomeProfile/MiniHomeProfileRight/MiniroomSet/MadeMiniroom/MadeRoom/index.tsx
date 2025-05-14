@@ -2,6 +2,7 @@ import { MadeRoomStyled } from "./styled";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
 
 interface Minimi {
   id: number;
@@ -20,6 +21,7 @@ interface SpeechBubble {
 const MadeRoom = () => {
   const { query } = useRouter();
   const { id } = query;
+  const { user } = useAuth();
 
   // 미니룸 배경 관리
   const [miniroomBackground, setMiniroomBackground] = useState("");
@@ -38,7 +40,6 @@ const MadeRoom = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/background`
         );
         setMiniroomBackground(response.data.file);
-        console.log(response.data.file, "miniroombk");
       } catch (e: any) {
         console.log(e, "미니룸 이미지 e");
       }
@@ -116,7 +117,9 @@ const MadeRoom = () => {
               const percentLeft = (minimi.left / 500) * 100;
               const isDefaultMinimi = minimi.id === "default-minimi";
               const minimiSrc = isDefaultMinimi
-                ? "/avatarImg/woman_avatar1.png"
+                ? user?.gender === "woman"
+                  ? "/avatarImg/woman_avatar1.png"
+                  : "/avatarImg/man_avatar1.png"
                 : minimi.file;
 
               return (
