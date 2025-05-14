@@ -30,6 +30,8 @@ const MiniStatus = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/${userId}/my-status`
         );
 
+        console.log("userData : ", res.data);
+
         setUserData(res.data);
         setMinihompi_image(res.data.minihompi_image);
       } catch (e) {
@@ -52,9 +54,14 @@ const MiniStatus = () => {
   // 데이터 저장 함수
   const saveData = async (values: UserData) => {
     const formData = new FormData();
+
+    console.log(values.minihompi_image);
+
     formData.append("name", values.title);
-    if (selectedFile !== null) {
+    if (selectedFile) {
       formData.append("minihompi_image", selectedFile);
+    } else {
+      formData.append("minihompi_image_url", values.minihompi_image);
     }
     formData.append("status", values.mood);
     formData.append("introduction", values.introduction);
@@ -66,8 +73,8 @@ const MiniStatus = () => {
         alert("저장 완료!");
         window.location.reload();
       }
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.log(e.response?.data);
     }
   };
 
