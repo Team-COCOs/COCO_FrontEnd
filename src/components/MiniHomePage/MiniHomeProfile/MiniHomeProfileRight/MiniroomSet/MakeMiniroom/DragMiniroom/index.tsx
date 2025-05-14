@@ -12,12 +12,14 @@ interface DragMiniroomProps {
   selectedMiniroom: any | null;
   selectedMinimi: any[];
   onDragComplete: (draggedItems: any[]) => void;
+  setSelectedMinimi: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 const DragMiniroom: React.FC<DragMiniroomProps> = ({
   selectedMiniroom,
   selectedMinimi,
   onDragComplete,
+  setSelectedMinimi,
 }) => {
   const { query } = useRouter();
   const { id } = query;
@@ -269,6 +271,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
           storeItems: { file: item?.file },
         }));
         console.log(formattedItems, "formattedItems??");
+        setSelectedMinimi(formattedItems);
         setItems(formattedItems);
         setInitialItems(formattedItems);
       } catch (error) {

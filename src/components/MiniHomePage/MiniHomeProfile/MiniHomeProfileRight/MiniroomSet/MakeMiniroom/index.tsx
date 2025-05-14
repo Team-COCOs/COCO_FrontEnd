@@ -242,6 +242,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
               <DragMiniroom
                 selectedMiniroom={selectedMiniroom}
                 selectedMinimi={selectedMinimi}
+                setSelectedMinimi={setSelectedMinimi}
                 onDragComplete={(draggedItems) => setDraggedData(draggedItems)}
               />
             </div>
