@@ -1,4 +1,6 @@
 // pages/minihome/[id].tsx
+// 방명록 헤더
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
@@ -93,11 +95,16 @@ const MinihomePage = () => {
   if (!id || Array.isArray(id)) return <Loading />;
 
   return (
-    <MinihomeLayout
-      id={id as string}
-      tapChildren={<HomeLeft />}
-      children={<VisitorRight />}
-    />
+    <>
+      <Head>
+        <title>방명록 - COCOWORLD</title>
+      </Head>
+      <MinihomeLayout
+        id={id as string}
+        tapChildren={<HomeLeft />}
+        children={<VisitorRight />}
+      />
+    </>
   );
 };
 

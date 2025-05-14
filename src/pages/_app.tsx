@@ -1,3 +1,4 @@
+import Head from "next/head";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
@@ -48,14 +49,25 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <Provider store={store}>
-      <AuthProvider>
-        <LanguageProvider>
-          <ThemeProvider theme={theme}>
-            {loading ? <Loading /> : <Component {...pageProps} />}
-          </ThemeProvider>
-        </LanguageProvider>
-      </AuthProvider>
-    </Provider>
+    <>
+      {/* 인터넷 상단 탭 - 기본 설정 */}
+      <Head>
+        <title>COCOWORLD</title>
+        <link rel="icon" href="/cocoworldicon.png" />
+        <meta
+          name="description"
+          content="COCOWORLD에서 나만의 미니홈피를 꾸미고, 친구들과 소통하며 다양한 활동을 즐겨보세요!"
+        />
+      </Head>
+      <Provider store={store}>
+        <AuthProvider>
+          <LanguageProvider>
+            <ThemeProvider theme={theme}>
+              {loading ? <Loading /> : <Component {...pageProps} />}
+            </ThemeProvider>
+          </LanguageProvider>
+        </AuthProvider>
+      </Provider>
+    </>
   );
 }

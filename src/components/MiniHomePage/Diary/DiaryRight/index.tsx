@@ -11,6 +11,7 @@ const DiaryRight = ({ selectedDiaryMenu }: DiaryProps) => {
       <div className="DiaryRight_wrap">
         <div className="DiaryRight_component_wrap">
           {selectedDiaryMenu?.title}
+          <div></div>
         </div>
       </div>
     </DiaryRightStyled>

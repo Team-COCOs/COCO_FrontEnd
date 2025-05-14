@@ -1,7 +1,7 @@
 import PaymentSuccess from "@/components/PayPage/SuccessPage";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-
+import Head from "next/head";
 const SuccessPage = () => {
   const router = useRouter();
   const [dotori, setDotori] = useState<string | null>(null);
@@ -14,7 +14,14 @@ const SuccessPage = () => {
     }
   }, [router.query.dotori]);
 
-  return <PaymentSuccess dotori={dotori!} />;
+  return (
+    <>
+      <Head>
+        <title>결제 - COCOWORLD</title>
+      </Head>
+      <PaymentSuccess dotori={dotori!} />
+    </>
+  );
 };
 
 export default SuccessPage;

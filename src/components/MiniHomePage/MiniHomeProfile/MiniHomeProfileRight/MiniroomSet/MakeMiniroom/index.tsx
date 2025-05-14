@@ -192,7 +192,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
       }
     }
   };
-
+  // 미니룸 배경
   useEffect(() => {
     if (!id) return;
     const fetchMiniroomBackground = async () => {
@@ -267,6 +267,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
                   미니미
                 </div>
               </div>
+
               <div
                 className={`MakeMiniroom_buyItems_wrap ${
                   buyItemTabs === "미니미" ? "grid-minimi" : "grid-miniroom"

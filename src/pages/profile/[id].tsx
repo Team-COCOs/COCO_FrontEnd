@@ -1,7 +1,7 @@
 // pages/minihome/[id].tsx
 import { useRouter } from "next/router";
 import { useState } from "react";
-
+import Head from "next/head";
 import MinihomeLayout from "@/features/Minihome";
 
 // 미니홈피 프로필 컴포넌트
@@ -22,23 +22,28 @@ const MinihomePage = () => {
   const [fixMiniroom, setfixMiniroom] = useState<boolean>(false);
 
   return (
-    <MinihomeLayout
-      id={id as string}
-      tapChildren={
-        <MiniHomeProfileLeft
-          setProfileSelectedMenu={setProfileSelectedMenu}
-          fixMiniroom={fixMiniroom}
-          setfixMiniroom={setfixMiniroom}
-        />
-      }
-      children={
-        <MiniHomeProfileRight
-          profileSelectedMenu={profileSelectedMenu}
-          fixMiniroom={fixMiniroom}
-          setfixMiniroom={setfixMiniroom}
-        />
-      }
-    />
+    <>
+      <Head>
+        <title>프로필 - COCOWORLD</title>
+      </Head>
+      <MinihomeLayout
+        id={id as string}
+        tapChildren={
+          <MiniHomeProfileLeft
+            setProfileSelectedMenu={setProfileSelectedMenu}
+            fixMiniroom={fixMiniroom}
+            setfixMiniroom={setfixMiniroom}
+          />
+        }
+        children={
+          <MiniHomeProfileRight
+            profileSelectedMenu={profileSelectedMenu}
+            fixMiniroom={fixMiniroom}
+            setfixMiniroom={setfixMiniroom}
+          />
+        }
+      />
+    </>
   );
 };
 

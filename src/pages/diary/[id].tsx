@@ -1,7 +1,7 @@
 // pages/minihome/[id].tsx
 import { useRouter } from "next/router";
 import { useState } from "react";
-
+import Head from "next/head";
 import MinihomeLayout from "@/features/Minihome";
 // 미니홈피 다이어리 컴포넌트
 import DiaryLeft from "@/components/MiniHomePage/Diary/DiaryLeft";
@@ -18,16 +18,21 @@ const MinihomePage = () => {
   } | null>(null);
 
   return (
-    <MinihomeLayout
-      id={id as string}
-      tapChildren={
-        <DiaryLeft
-          selectedDiaryMenu={selectedDiaryMenu}
-          setSelectedDiaryMenu={setSelectediaryMenu}
-        />
-      }
-      children={<DiaryRight selectedDiaryMenu={selectedDiaryMenu} />}
-    />
+    <>
+      <Head>
+        <title>다이어리 - COCOWORLD</title>
+      </Head>
+      <MinihomeLayout
+        id={id as string}
+        tapChildren={
+          <DiaryLeft
+            selectedDiaryMenu={selectedDiaryMenu}
+            setSelectedDiaryMenu={setSelectediaryMenu}
+          />
+        }
+        children={<DiaryRight selectedDiaryMenu={selectedDiaryMenu} />}
+      />
+    </>
   );
 };
 

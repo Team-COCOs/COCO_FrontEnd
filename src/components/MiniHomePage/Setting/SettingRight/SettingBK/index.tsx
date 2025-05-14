@@ -3,12 +3,6 @@ import { SettingBKStyled } from "./styled";
 import { useRouter } from "next/router";
 import axiosInstance from "@/lib/axios";
 
-const tabOptions = ["diary", "visitor", "photo", "coco"];
-const languageOptions = [
-  { label: "한국어", value: "ko" },
-  { label: "영어", value: "en" },
-];
-
 const SettingBK = () => {
   const { query } = useRouter();
   const { id } = query;

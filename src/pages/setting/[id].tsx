@@ -1,7 +1,7 @@
 // pages/minihome/[id].tsx
 import { useRouter } from "next/router";
 import { useState } from "react";
-
+import Head from "next/head";
 import MinihomeLayout from "@/features/Minihome";
 import SettingLeft from "@/components/MiniHomePage/Setting/SettingLeft";
 import SettingRight from "@/components/MiniHomePage/Setting/SettingRight";
@@ -16,13 +16,18 @@ const MinihomePage = () => {
   } | null>(null);
 
   return (
-    <MinihomeLayout
-      id={id as string}
-      tapChildren={
-        <SettingLeft setSettingSelectedMenu={setSettingSelectedMenu} />
-      }
-      children={<SettingRight settingSelectedMenu={settingSelectedMenu} />}
-    />
+    <>
+      <Head>
+        <title>관리 - COCOWORLD</title>
+      </Head>
+      <MinihomeLayout
+        id={id as string}
+        tapChildren={
+          <SettingLeft setSettingSelectedMenu={setSettingSelectedMenu} />
+        }
+        children={<SettingRight settingSelectedMenu={settingSelectedMenu} />}
+      />
+    </>
   );
 };
 

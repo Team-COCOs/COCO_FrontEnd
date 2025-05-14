@@ -1,7 +1,7 @@
 // pages/minihome/[id].tsx
 import { useRouter } from "next/router";
 import { useState } from "react";
-
+import Head from "next/head";
 import MinihomeLayout from "@/features/Minihome";
 
 // 미니홈피 사진첩 컴포넌트
@@ -21,22 +21,27 @@ const MinihomePage = () => {
   } | null>(null);
 
   return (
-    <MinihomeLayout
-      id={id as string}
-      tapChildren={
-        <PhotoLeft
-          selectedMenu={selectedMenu}
-          setSelectedMenu={setSelectedMenu}
-        />
-      }
-      children={
-        write ? (
-          <WritePage />
-        ) : (
-          <PhotoRight selectedMenu={selectedMenu} setWrite={setWrite} />
-        )
-      }
-    />
+    <>
+      <Head>
+        <title>사진첩 - COCOWORLD</title>
+      </Head>
+      <MinihomeLayout
+        id={id as string}
+        tapChildren={
+          <PhotoLeft
+            selectedMenu={selectedMenu}
+            setSelectedMenu={setSelectedMenu}
+          />
+        }
+        children={
+          write ? (
+            <WritePage />
+          ) : (
+            <PhotoRight selectedMenu={selectedMenu} setWrite={setWrite} />
+          )
+        }
+      />
+    </>
   );
 };
 
