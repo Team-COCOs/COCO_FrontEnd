@@ -10,6 +10,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
 import { useRouter } from "next/router";
+import MiniroomName from "./MiniroomName";
 
 interface MakeMiniroomProps {
   setfixMiniroom: (value: boolean) => void;
@@ -193,22 +194,6 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     }
   };
 
-  // 미니룸 이름 불러오기
-  useEffect(() => {
-    if (!id) return;
-    const fetchMiniroomName = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/title`
-        );
-        setName(response.data.title);
-      } catch (e: any) {
-        console.log(e, "미니룸 이름 e");
-      }
-    };
-    fetchMiniroomName();
-  }, [id]);
-
   useEffect(() => {
     if (!id) return;
     const fetchMiniroomBackground = async () => {
@@ -244,51 +229,13 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     fetchMiniroomBackground();
   }, [id]);
 
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (value.length <= 10) {
-      setName(value);
-    }
-  };
-
-  const handleSave = async () => {
-    if (name.length === 0) {
-      alert("이름을 입력해주세요.");
-    } else {
-      const res = await axiosInstance.patch(`/minirooms/title`, { name });
-
-      alert(`미니룸 이름이 변경되었습니다.`);
-      window.location.reload();
-    }
-  };
-
   return (
     <DndProvider backend={DND_BACKEND} options={backendOptions}>
       <MakeMiniroomStyled>
         <div className="MinimiSet_wrap">
           <div className="MakeMiniroom_titleWrap">
-            <div className="MakeMiniroom_wrap_title_fix">
-              <div className="MakeMiniroom_wrap_title Gulim">
-                <p>
-                  미니룸 이름 수정하기 <span>(10자 이내)</span>
-                </p>
-              </div>
-              <div className="MakeMiniroom_namefix_box">
-                <input
-                  className="MakeMiniroom_namefix_input"
-                  value={name === null || name === undefined ? "미니룸" : name}
-                  onChange={handleNameChange}
-                  maxLength={10}
-                ></input>
-                <button
-                  className="MakeMiniroom_name_saveBtn Gulim"
-                  onClick={handleSave}
-                >
-                  저장
-                </button>
-              </div>
-            </div>
-            <div className="MakeMiniroom_wrap_title Gulim">미니룸 수정하기</div>
+            {/* 미니룸 이름 수정 컴포넌트 */}
+            <MiniroomName />
 
             {/* 수정 미니룸 미리보기 */}
             <div className="MakeMiniroom_fixbox_wrap">
