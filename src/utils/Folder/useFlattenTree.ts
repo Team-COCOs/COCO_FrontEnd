@@ -1,5 +1,7 @@
 import axiosInstance from "@/lib/axios";
 import { TreeNode } from "./types";
+import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
 
 // 데이터 평탄화
 export const flattenTreeData = (treeData: TreeNode[]) => {
@@ -35,7 +37,15 @@ export const saveTreeData = async (
     });
     console.log("트리 저장 성공", res.data);
     onSave();
-  } catch (err) {
-    console.error("트리 저장 실패", err);
+  } catch (e: any) {
+    const router = useRouter();
+    const { user } = useAuth();
+
+    if (e.response?.status === 401) {
+      alert("로그인이 필요합니다.");
+      router.push(`/home/${user?.id}`);
+    } else {
+      console.log("사진첩 불러오기 에러 : ", e);
+    }
   }
 };

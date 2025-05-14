@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import Tree from "rc-tree";
 import "rc-tree/assets/index.css";
 import { FolderStyle } from "./styled";
-import { TreeNode } from "./types";
-import { useTreeData } from "./useTreeData";
-import { useDragDrop } from "./useDragDrop";
-import { saveTreeData } from "./useFlattenTree";
+import { TreeNode } from "@/utils/Folder/types";
+import { useTreeData } from "@/utils/Folder/useTreeData";
+import { useDragDrop } from "@/utils/Folder/useDragDrop";
+import { saveTreeData } from "@/utils/Folder/useFlattenTree";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
 
 interface FolderProps {
   type: string;
@@ -24,6 +25,8 @@ const Folder = ({ type, onSave }: FolderProps) => {
   const [editTitle, setEditTitle] = useState<string>("");
   const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
   const [editingKey, setEditingKey] = useState<string | null>(null);
+
+  const { user } = useAuth();
 
   const {
     treeData, // 저장된 treeData
@@ -167,8 +170,13 @@ const Folder = ({ type, onSave }: FolderProps) => {
         setTreeData(nestedTreeData);
         setExpandedKeys(collectAllKeys(nestedTreeData));
       })
-      .catch((err) => {
-        console.log("폴더 데이터 로딩 실패:", err);
+      .catch((e) => {
+        if (e.response?.status === 401) {
+          alert("로그인이 필요합니다.");
+          router.push(`/home/${user?.id}`);
+        }
+
+        console.log("폴더 데이터 로딩 실패:", e);
         // 에러 발생 시에도 새 폴더 하나는 보장
         setTreeData([
           {
