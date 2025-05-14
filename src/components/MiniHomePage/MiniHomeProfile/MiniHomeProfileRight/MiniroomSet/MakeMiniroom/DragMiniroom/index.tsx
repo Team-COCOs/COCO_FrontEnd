@@ -250,7 +250,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
     setLayoutItems(layoutData);
   }, [items]);
 
-  // 미니룸 조회(저장 내용 있으면 불러오기)
+  // 미니룸 아이템 조회(저장 내용 있으면 불러오기)
   useEffect(() => {
     const fetchLayout = async () => {
       try {

@@ -27,6 +27,9 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   // 선택된 제품 상태 관리
   const [selectedMiniroom, setSelectedMiniroom] = useState<any | null>(null);
   const [selectedMinimi, setSelectedMinimi] = useState<any[]>([]);
+  const [selectedMiniroomId, setSelectedMiniroomId] = useState<number | null>(
+    null
+  );
   const [selectedBackgroundId, setSelectedBackgroundId] = useState<
     number | null
   >(null);
@@ -138,12 +141,15 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   const handleLayoutSave = async () => {
     try {
       const isDefaultMiniroom = selectedMiniroom?.id === defaultMiniroom.id;
-      const backgroundPayload = isDefaultMiniroom
-        ? "default-miniroom"
-        : selectedBackgroundId;
 
-      // 배경이 null인 경우에도 비교해서 저장되지 않도록 처리
-      const isBackgroundChanged = backgroundPayload !== miniroomBackgroundId;
+      const backgroundPayload = selectedMiniroom
+        ? isDefaultMiniroom
+          ? "default-miniroom"
+          : selectedMiniroom.id
+        : "default-miniroom";
+
+      const isBackgroundChanged =
+        String(backgroundPayload) !== String(miniroomBackgroundId);
 
       // 레이아웃 저장 여부 체크
       const hasLayoutChanged = draggedData.some(
@@ -153,47 +159,29 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
           item.text !== item.originalText
       );
 
-      // 배경만 변경된 경우
-      if (isBackgroundChanged && !hasLayoutChanged) {
-        await axiosInstance.post("/minirooms/background", {
-          purchaseId: backgroundPayload,
-        });
-        console.log(selectedBackgroundId, "selectedBackgroundId?");
-        alert("배경이 변경되었습니다.");
-        return; // 레이아웃은 변경되지 않아서 저장할 필요 없음
-      }
-
-      // 레이아웃이 변경된 경우
+      // 미니미 데이터로 변경된 레이아웃 만들기
       const layoutData = draggedData.map((item) => ({
         id: item.id,
-        text: item.type !== "speechBubble" ? null : item.text,
+        text: item.type !== "speechBubble" ? null : item.text, // 'speechBubble'만 텍스트 포함
         left: item.x,
         top: item.y,
-        type: item.type === "speechBubble" ? "speechBubble" : "minimi",
+        type: item.type === "speechBubble" ? "speechBubble" : "minimi", // 타입에 맞게 구분
         created_at: new Date().toISOString(),
       }));
 
-      // 배경 변경과 레이아웃 변경 둘 다 있을 경우
-      if (isBackgroundChanged) {
-        await axiosInstance.post("/minirooms/background", {
-          purchaseId: backgroundPayload,
-        });
-        console.log(selectedBackgroundId, "selectedBackgroundId?");
-      }
+      // 배경 저장 (변경 여부와 관계없이 저장)
+      await axiosInstance.post("/minirooms/background", {
+        purchaseId: backgroundPayload,
+      });
+      console.log(backgroundPayload, "backgroundPayload?");
 
-      // 레이아웃 저장 요청
-      if (hasLayoutChanged) {
-        await axiosInstance.post("/minirooms/save-layout", {
-          items: layoutData,
-        });
-        console.log(layoutData, "layoutData?");
-      }
+      // 레이아웃 저장 (변경 여부와 관계없이 저장)
+      await axiosInstance.post("/minirooms/save-layout", {
+        items: layoutData,
+      });
+      console.log(layoutData, "layoutData?");
 
-      if (!isBackgroundChanged && !hasLayoutChanged) {
-        alert("변경된 내용이 없습니다.");
-      } else {
-        alert("미니룸 레이아웃이 저장되었습니다!");
-      }
+      alert("미니룸 레이아웃이 저장되었습니다!");
     } catch (error: any) {
       if (error.response?.status === 401) {
         alert("로그인이 필요합니다.");
@@ -230,6 +218,7 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
         );
 
         if (response.data?.id) {
+          setSelectedMiniroomId(response.data.id);
           setMiniroomBackgroundId(response.data.id);
           setSelectedMiniroom({
             id: response.data.id,
@@ -241,11 +230,13 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
         } else {
           // 배경 없을 경우 기본 미니룸 선택
           setMiniroomBackgroundId(null);
+          setSelectedMiniroomId(null);
           setSelectedMiniroom(defaultMiniroom);
         }
       } catch (e) {
         console.log(e, "미니룸 이미지 e");
         setMiniroomBackgroundId(null);
+        setSelectedMiniroomId(null);
         setSelectedMiniroom(defaultMiniroom);
       }
     };
