@@ -343,6 +343,10 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
               />
             ))}
         </div>
+        <div className="DragMiniroom_miniroomtext Gulim">
+          💡 저장 후 화면 크기에 따라 드래그한 위치가 조금씩 다르게 표시될 수
+          있어요!
+        </div>
         <div className="DragMiniroom_speechbubble_btnwrap Gulim">
           <button className="pixelFont" onClick={addSpeechBubble}>
             말풍선 추가

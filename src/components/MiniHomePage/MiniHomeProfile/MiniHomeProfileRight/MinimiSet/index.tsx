@@ -68,6 +68,7 @@ const MinimiSet = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/useritems/minimi/profile-image/${id}`
       );
       setMyMinimi(data.file || "");
+      setSelectedMinimiId(data.id);
       console.log(data.file, "data.file,?");
     } catch (e: any) {
       console.log(e, "대표미니미 e");

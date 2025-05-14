@@ -91,7 +91,7 @@ export const MadeRoomStyled = styled.div`
           height: auto;
         }
       }
-      // 미니미 반응형
+      // 말풍선 반응형
       @media (max-width: 1024px) {
         .MadeRoom_SpeechBubble {
           width: 100px;
@@ -122,9 +122,9 @@ export const MadeRoomStyled = styled.div`
       }
       @media (max-width: 480px) {
         .MadeRoom_SpeechBubble {
-          width: 68px;
+          width: 60px;
           height: 30px;
-          font-size: 6px;
+          font-size: 5.5px;
         }
       }
       @media (max-width: 320px) {
