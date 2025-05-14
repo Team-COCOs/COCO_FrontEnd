@@ -94,89 +94,87 @@ const MiniStatus = () => {
         onSubmit={saveData}
         enableReinitialize={true}
       >
-        {({ setFieldValue, values }) => (
-          <Form>
-            <div className="MiniStatus_top">
-              <div className="MiniStatus_left">
-                <div className="MiniStatus_img">
-                  <Image
-                    src={minihompi_image || "/avatarImg/defaultProfile.png"}
-                    alt="profile"
-                    fill
-                  />
-                </div>
-
-                <div
-                  className="MiniStatus_upload pixelFont"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  프로필 선택
-                  <input
-                    type="file"
-                    id="profile-upload"
-                    className="MiniStatus_input"
-                    ref={fileInputRef}
-                    onChange={(e) => handleFileChange(e)}
-                    accept="image/*"
-                  />
-                </div>
+        <Form>
+          <div className="MiniStatus_top">
+            <div className="MiniStatus_left">
+              <div className="MiniStatus_img">
+                <Image
+                  src={minihompi_image || "/avatarImg/defaultProfile.png"}
+                  alt="profile"
+                  fill
+                />
               </div>
 
-              <div className="MiniStatus_right">
-                <div className="MiniStatus_introduce">
-                  <span className="pixelFont MiniStatus_subTitle">
-                    <span className="MiniStatus_icon">🟧</span>내 상태
-                  </span>
-                  <div className="MiniStatus_state">
-                    <span className="pixelFont">Today is...</span>
-                    <Field
-                      as="select"
-                      name="mood"
-                      className="MiniStatus_select pixelFont"
-                    >
-                      <option value="happy">😊 행복</option>
-                      <option value="joy">🎵 즐거움</option>
-                      <option value="busy">💼 바쁨</option>
-                      <option value="sad">🌧️ 슬픔</option>
-                      <option value="angry">💢 화남</option>
-                    </Field>
-                  </div>
-                </div>
-                <div className="MiniStatus_introduce">
-                  <span className="pixelFont MiniStatus_subTitle">
-                    <span className="MiniStatus_icon">🟧</span>소개글
-                  </span>
-                  <Field
-                    as="textarea"
-                    name="introduction"
-                    className="Gulim"
-                    placeholder="50자 이내로 내 소개를 적어보세요~"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="MiniStatus_bottom">
-              <div className="MiniStatus_name">
-                <span className="pixelFont MiniStatus_subTitle">
-                  <span className="MiniStatus_icon">🟧</span>미니홈피 이름
-                </span>
-                <Field
-                  className="Gulim"
-                  type="text"
-                  name="title"
-                  placeholder={`${user?.name}님의 미니홈피`}
+              <div
+                className="MiniStatus_upload pixelFont"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                프로필 선택
+                <input
+                  type="file"
+                  id="profile-upload"
+                  className="MiniStatus_input"
+                  ref={fileInputRef}
+                  onChange={(e) => handleFileChange(e)}
+                  accept="image/*"
                 />
               </div>
             </div>
 
-            <div className="MiniStatus_footer">
-              <button className="MiniStatus_btn pixelFont" type="submit">
-                저장
-              </button>
+            <div className="MiniStatus_right">
+              <div className="MiniStatus_introduce">
+                <span className="pixelFont MiniStatus_subTitle">
+                  <span className="MiniStatus_icon">🟧</span>내 상태
+                </span>
+                <div className="MiniStatus_state">
+                  <span className="pixelFont">Today is...</span>
+                  <Field
+                    as="select"
+                    name="mood"
+                    className="MiniStatus_select pixelFont"
+                  >
+                    <option value="happy">😊 행복</option>
+                    <option value="joy">🎵 즐거움</option>
+                    <option value="busy">💼 바쁨</option>
+                    <option value="sad">🌧️ 슬픔</option>
+                    <option value="angry">💢 화남</option>
+                  </Field>
+                </div>
+              </div>
+              <div className="MiniStatus_introduce">
+                <span className="pixelFont MiniStatus_subTitle">
+                  <span className="MiniStatus_icon">🟧</span>소개글
+                </span>
+                <Field
+                  as="textarea"
+                  name="introduction"
+                  className="Gulim"
+                  placeholder="50자 이내로 내 소개를 적어보세요~"
+                />
+              </div>
             </div>
-          </Form>
-        )}
+          </div>
+
+          <div className="MiniStatus_bottom">
+            <div className="MiniStatus_name">
+              <span className="pixelFont MiniStatus_subTitle">
+                <span className="MiniStatus_icon">🟧</span>미니홈피 이름
+              </span>
+              <Field
+                className="Gulim"
+                type="text"
+                name="title"
+                placeholder={`${user?.name}님의 미니홈피`}
+              />
+            </div>
+          </div>
+
+          <div className="MiniStatus_footer">
+            <button className="MiniStatus_btn pixelFont" type="submit">
+              저장
+            </button>
+          </div>
+        </Form>
       </Formik>
     </MiniStatusStyle>
   );

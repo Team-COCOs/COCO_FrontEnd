@@ -13,7 +13,7 @@ const Dropdown = ({ label, options }: DropdownProps) => {
 
   // select 여닫기
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLabel, setSelectedLabel] = useState("바로가기");
+  const [selectedLabel, setSelectedLabel] = useState(label);
   const wrapperRef = useRef<HTMLDivElement>(null); // 바깥 감지 -> 외부 클릭 시 select 닫기
 
   // option 클릭 시

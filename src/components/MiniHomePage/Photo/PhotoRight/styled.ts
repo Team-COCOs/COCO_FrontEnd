@@ -24,17 +24,75 @@ export const PhotoRightStyled = styled.div`
       display: flex;
       align-items: center;
       justify-content: flex-end;
+
+      .PhotoRight_btn {
+        padding: 3px;
+        width: 75px;
+        font-size: 13px;
+        background: linear-gradient(to bottom, #ffffff, #dddddd);
+        border: 1px solid #000000;
+        border-radius: 3px;
+        cursor: pointer;
+
+        &:active {
+          background: linear-gradient(to top, #ffffff, #dddddd);
+        }
+      }
     }
 
-    .PhotoRight_component_wrap {
-      width: 92%;
-      height: 100%;
-      padding-left: 10px;
+    .PhotoRight_content {
+      width: 90%;
+      padding: 10px;
+      margin: 0 auto;
 
-      @media (max-width: 1024px) {
-        & {
-          padding-left: 0px;
+      .PhotoRight_title {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: 5px;
+        font-size: 14.5px;
+        font-weight: bold;
+        background-color: rgb(241, 241, 241);
+        border-top: 1.5px solid rgb(209, 209, 209);
+      }
+
+      .PhotoRight_infos {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10px;
+        font-size: 14px;
+        font-weight: 600;
+
+        .PhotoRight_user {
+          color: rgb(46, 105, 188);
+          cursor: pointer;
         }
+
+        .PhotoRight_info {
+          display: flex;
+          gap: 20px;
+          align-items: center;
+
+          .PhotoRight_font {
+            font-size: 13px;
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+
+    .PhotoRight_imgBox {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      width: 100%;
+      height: 100%;
+      padding: 0 15px;
+
+      .PhotoRight_img {
+        position: relative;
+        width: 100%;
+        height: 100%;
       }
     }
 
