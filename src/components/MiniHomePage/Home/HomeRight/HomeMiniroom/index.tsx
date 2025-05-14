@@ -58,6 +58,7 @@ const HomeMiniroom = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/background`
         );
         setMiniroomBackground(response.data.file);
+        console.log(response.data.file, "miniroombk");
       } catch (e: any) {
         console.log(e, "미니룸 이미지 e");
       }
@@ -118,7 +119,11 @@ const HomeMiniroom = () => {
           <div
             className="HomeMiniroom_background"
             style={{
-              backgroundImage: `url(${miniroomBackground})`,
+              backgroundImage: `url(${
+                miniroomBackground
+                  ? miniroomBackground
+                  : "/miniroom/miniroom17.png"
+              })`,
             }}
           >
             {/* 말풍선 */}
@@ -147,18 +152,22 @@ const HomeMiniroom = () => {
             {minimis.map((minimi) => {
               const percentTop = (minimi.top / 260) * 100;
               const percentLeft = (minimi.left / 500) * 100;
+              const isDefaultMinimi = minimi.id === "default-minimi";
+              const minimiSrc = isDefaultMinimi
+                ? "/avatarImg/woman_avatar1.png"
+                : minimi.file;
 
               return (
                 <img
                   key={`minimi-${minimi.id}`}
-                  src={`${minimi.file}`}
+                  src={minimiSrc}
                   alt="minimi"
                   style={{
                     position: "absolute",
                     top: `${percentTop}%`,
                     left: `${percentLeft}%`,
-                    width: "50px",
-                    height: "auto",
+                    width: "auto",
+                    height: "50px",
                   }}
                   className="HomeMiniroom_minimi"
                 />
