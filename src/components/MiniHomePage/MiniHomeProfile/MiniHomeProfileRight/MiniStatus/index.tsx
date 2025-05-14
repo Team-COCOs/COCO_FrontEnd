@@ -55,8 +55,6 @@ const MiniStatus = () => {
   const saveData = async (values: UserData) => {
     const formData = new FormData();
 
-    console.log(values.minihompi_image);
-
     formData.append("name", values.title);
     if (selectedFile) {
       formData.append("minihompi_image", selectedFile);

@@ -18,11 +18,12 @@ const Folder = ({ type, onSave }: FolderProps) => {
   const router = useRouter();
   const userId = router.query.id;
 
-  const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
   // 폴더 축소, 확대
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-  const [isEditing, setIsEditing] = useState(false);
+
   const [editTitle, setEditTitle] = useState<string>("");
+  const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
+  const [editingKey, setEditingKey] = useState<string | null>(null);
 
   const {
     treeData, // 저장된 treeData
@@ -69,7 +70,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
 
   // 수정 시작 -> 노드 제목 input으로
   const handleStartEditing = () => {
-    if (checkedKeys.length === 1) {
+    if (checkedKeys.length === 1 && checkedKeys[0] !== editingKey) {
       const findTitle = (nodes: TreeNode[]): string | undefined => {
         for (const node of nodes) {
           if (node.key === checkedKeys[0]) return node.title;
@@ -82,8 +83,8 @@ const Folder = ({ type, onSave }: FolderProps) => {
       };
       const title = findTitle(treeData);
       if (title) {
+        setEditingKey(checkedKeys[0]);
         setEditTitle(title);
-        setIsEditing(true);
       }
     }
   };
@@ -92,7 +93,9 @@ const Folder = ({ type, onSave }: FolderProps) => {
   const handleFinishEditing = () => {
     const updatedTree = editNodeByKey(treeData, checkedKeys[0], editTitle);
     setTreeData(updatedTree);
-    setIsEditing(false);
+
+    setEditingKey(null);
+    setCheckedKeys([]);
   };
 
   // 트리 구조 저장 (useFlattenTree.ts 에서 저장)
@@ -131,7 +134,9 @@ const Folder = ({ type, onSave }: FolderProps) => {
 
   // 현 폴더 구조
   useEffect(() => {
-    if (!userId) return;
+    if (!userId) {
+      return;
+    }
 
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/${type}/folderList`, {
@@ -163,7 +168,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
         setExpandedKeys(collectAllKeys(nestedTreeData));
       })
       .catch((err) => {
-        console.error("폴더 데이터 로딩 실패:", err);
+        console.log("폴더 데이터 로딩 실패:", err);
         // 에러 발생 시에도 새 폴더 하나는 보장
         setTreeData([
           {
@@ -185,7 +190,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
         <button className="pixelFont" onClick={() => handleEdit("add")}>
           추가
         </button>
-        {isEditing ? (
+        {editingKey ? (
           <button
             onClick={handleFinishEditing}
             className="Folder_editingBtn pixelFont"
@@ -214,9 +219,8 @@ const Folder = ({ type, onSave }: FolderProps) => {
           onExpand={handleExpand}
           titleRender={(node: TreeNode) => (
             <span className="Folder_text pixelFont">
-              {node.key === checkedKeys[0] && isEditing ? (
+              {editingKey === node.key ? (
                 <input
-                  type="text"
                   value={editTitle}
                   onChange={handleTitleChange}
                   onBlur={handleFinishEditing}
