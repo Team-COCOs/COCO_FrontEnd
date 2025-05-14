@@ -55,7 +55,7 @@ const MadeRoom = () => {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/layout`
         );
-        console.log(response.data, "미니미 말풍선 데이터?");
+
         // 미니미만 설정
         setMinimis(
           (response.data as { type: string }[]).filter(

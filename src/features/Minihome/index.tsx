@@ -8,9 +8,6 @@ import axios from "axios";
 import HomeTodayTitle from "@/components/MiniHomePage/Home/HomeTodayTitle";
 // 미니홈피 이름
 import DiaryTitle from "@/components/MiniHomePage/Home/DiaryTitle";
-// 미니홈피 홈 왼쪽 오른쪽 컴포넌트
-import HomeLeft from "@/components/MiniHomePage/Home/HomeLeft";
-import HomeRight from "@/components/MiniHomePage/Home/HomeRight";
 // 미니홈피 탭
 import HomeTab from "@/components/MiniHomePage/Home/HomeTab";
 // 미니홈피 쥬크박스

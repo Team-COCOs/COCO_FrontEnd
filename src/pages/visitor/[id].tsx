@@ -50,11 +50,6 @@ const MinihomePage = () => {
     title: string;
   } | null>(null);
 
-  const [selectedDiaryMenu, setSelectediaryMenu] = useState<{
-    id: number;
-    title: string;
-  } | null>(null);
-
   // 페이지가 처음 로드될 때 로딩 상태 종료
   useEffect(() => {
     const timer = setTimeout(() => {
