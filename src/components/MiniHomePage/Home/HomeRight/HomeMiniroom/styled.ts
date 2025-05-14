@@ -25,7 +25,6 @@ export const HomeMiniroomStyled = styled.div`
         font-weight: bolder;
       }
     }
-
     .HomeMiniroom_imgWrap {
       width: 100%;
       aspect-ratio: 2/1;
@@ -33,23 +32,6 @@ export const HomeMiniroomStyled = styled.div`
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      .HomeMiniroom_background {
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        position: relative;
-      }
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; // 꽉 차게, 비율 유지하면서 넘치는 부분 잘림
-      }
-      .HomeMiniroom_speechBubble,
-      .HomeMiniroom_minimi {
-        position: absolute;
-      }
     }
     @media (max-width: 480px) {
       .HomeMiniroom_imgWrap {

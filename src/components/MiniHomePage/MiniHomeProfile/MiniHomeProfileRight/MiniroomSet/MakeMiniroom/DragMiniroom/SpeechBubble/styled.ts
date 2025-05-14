@@ -26,32 +26,10 @@ export const SpeechBubbleStyled = styled.div`
     }
   }
 
-  /* .bubble-tail {
-    position: absolute;
-    bottom: -10px;
-    left: 20px;
-    width: 0;
-    height: 0;
-    border: 10px solid transparent;
-    border-top-color: #fff;
-    z-index: 0;
-  } */
-
-  /* .speech-bubble::after {
-    content: "";
-    position: absolute;
-    bottom: -20px;
-    left: 45px;
-    width: 0;
-    height: 0;
-    border: 10px solid transparent;
-    border-top-color: #999;
-    z-index: 0;
-  } */
   .speech-bubble::after {
     content: "";
     position: absolute;
-    bottom: -9px; /* 꼬리의 위치 조정 */
+    bottom: -9px;
     left: 50%;
     transform: translateX(-50%); /* 꼬리 중앙 정렬 */
     width: 0;
