@@ -42,7 +42,7 @@ const MiniroomName = () => {
       const res = await axiosInstance.patch(`/minirooms/title`, { name });
 
       alert(`미니룸 이름이 변경되었습니다.`);
-      window.location.reload();
+      router.push(`/home/${id}`);
     }
   };
 
