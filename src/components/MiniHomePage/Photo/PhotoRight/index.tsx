@@ -73,18 +73,6 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
     // getPhotoData();
   }, [selectedMenu]);
 
-  const clipPhoto = async (photoId: number) => {
-    try {
-      const res = await axiosInstance.post(`/photos/${photoId}/clip`);
-
-      console.log("스크랩 정보 : ", res.data);
-      alert("스크랩 완료!");
-      getPhotoData();
-    } catch (e) {
-      console.log("스크랩 실패: ", e);
-    }
-  };
-
   useEffect(() => {
     if (!queryUserId || !user) return;
 
@@ -109,12 +97,6 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
         <div className="PhotoRight_content">
           <div className="PhotoRight_title Gulim">
             <span>[스크랩]</span>사프란블루_흐드르륵 언덕02
-            <button
-              className="PhotoRight_clipBtn Gulim"
-              // onClick={() => clipPhoto(data.id)}
-            >
-              스크랩
-            </button>
           </div>
 
           <div className="PhotoRight_infos Gulim">
@@ -153,12 +135,6 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                 <div className="PhotoRight_title Gulim">
                   {data.isClip && <span>[스크랩]</span>}
                   {data.title}
-                  <button
-                    className="PhotoRight_clipBtn Gulim"
-                    onClick={() => clipPhoto(data.id)}
-                  >
-                    스크랩
-                  </button>
                 </div>
 
                 <div className="PhotoRight_infos Gulim">
@@ -196,6 +172,8 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                 <Comment
                   comments={data.comments}
                   onSubmitSuccess={getPhotoData}
+                  getPhotoData={getPhotoData}
+                  photo_id={data.id}
                 />
               </div>
             ))

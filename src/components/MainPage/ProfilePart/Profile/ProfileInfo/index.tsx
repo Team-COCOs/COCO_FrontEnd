@@ -11,18 +11,6 @@ interface ProfileInfoProps {
   showBadge?: boolean;
   data?: any;
 }
-interface data {
-  id: number;
-  title?: string;
-  content?: string;
-  createdAt?: string;
-  requester?: string;
-  profileImg?: string;
-  receivedAt?: string;
-  message?: string;
-  requester_name?: string;
-  receiver_name?: string;
-}
 
 const ProfileInfo = ({
   label,
@@ -33,6 +21,8 @@ const ProfileInfo = ({
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
   const userName = user?.name;
+
+  console.log(data);
 
   const type = label === "새게시물" ? "newPost" : "newFriend";
 

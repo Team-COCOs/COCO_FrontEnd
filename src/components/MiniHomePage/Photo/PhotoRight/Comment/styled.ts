@@ -11,6 +11,24 @@ export const CommentStyle = styled.div`
     margin-top: 10px;
     font-weight: bold;
     font-size: 13px;
+    width: 100%;
+
+    .PhotoRight_clipBtn {
+      position: relative;
+      display: flex;
+      align-self: flex-end;
+      padding: 2px 3px;
+      width: 45px;
+      font-size: 12px;
+      border: 1px solid rgb(164, 164, 164);
+      color: rgb(61, 61, 61);
+      border-radius: 3px;
+      cursor: pointer;
+
+      &:active {
+        background: linear-gradient(to top, #ffffff, #dddddd);
+      }
+    }
 
     .handFont {
       font-size: 15px;

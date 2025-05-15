@@ -78,7 +78,7 @@ const Profile = ({ setHasToken }: profileProps) => {
               : "/avatarImg/woman_avatar1.png",
         };
 
-        console.log("유저 이미지 찾기 : ", res.data);
+        console.log("유저 데이터들 : ", res.data);
 
         setUserData(updatedData);
       } catch (err) {
