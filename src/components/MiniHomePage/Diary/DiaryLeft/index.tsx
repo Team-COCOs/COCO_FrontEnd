@@ -1,5 +1,5 @@
 import { DiaryLeftStyled } from "./styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DynamicFolder from "../../DynamicFolder";
 import Folder from "../../Folder";
 import { useRouter } from "next/router";
@@ -13,17 +13,22 @@ interface DiaryProps {
   setSelectedDiaryMenu: React.Dispatch<
     React.SetStateAction<{ id: number; title: string } | null>
   >;
+  selectedDate: Date | null;
+  setSelectedDate: React.Dispatch<React.SetStateAction<Date | null>>;
 }
 
-const DiaryLeft = ({ selectedDiaryMenu, setSelectedDiaryMenu }: DiaryProps) => {
+const DiaryLeft = ({
+  selectedDate,
+  setSelectedDate,
+  selectedDiaryMenu,
+  setSelectedDiaryMenu,
+}: DiaryProps) => {
   // Folder 또는 DynamicFolder 전환용
   const [editMode, setEditMode] = useState(false);
   const router = useRouter();
   const { user } = useAuth();
   const { id } = router.query;
 
-  // 달력
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const isMyHomepage = user?.id?.toString() === id?.toString();
 
   const handleSave = () => {
@@ -35,12 +40,11 @@ const DiaryLeft = ({ selectedDiaryMenu, setSelectedDiaryMenu }: DiaryProps) => {
     setEditMode(true); // 수정하기 버튼 눌렀을 때 Folder 컴포넌트 보이도록
   };
 
-  // 날짜 선택
-  const handleDateChange = (value: Date | Date[]) => {
-    if (value instanceof Date) {
-      setSelectedDate(value);
+  useEffect(() => {
+    if (selectedDate) {
+      console.log(selectedDate, "selectedDate");
     }
-  };
+  }, [selectedDate]);
 
   return (
     <DiaryLeftStyled className="Diary_wrap">

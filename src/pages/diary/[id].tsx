@@ -16,7 +16,7 @@ const MinihomePage = () => {
     id: number;
     title: string;
   } | null>(null);
-
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   return (
     <>
       <Head>
@@ -26,11 +26,18 @@ const MinihomePage = () => {
         id={id as string}
         tapChildren={
           <DiaryLeft
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
             selectedDiaryMenu={selectedDiaryMenu}
             setSelectedDiaryMenu={setSelectediaryMenu}
           />
         }
-        children={<DiaryRight selectedDiaryMenu={selectedDiaryMenu} />}
+        children={
+          <DiaryRight
+            selectedDiaryMenu={selectedDiaryMenu}
+            selectedDate={selectedDate}
+          />
+        }
       />
     </>
   );
