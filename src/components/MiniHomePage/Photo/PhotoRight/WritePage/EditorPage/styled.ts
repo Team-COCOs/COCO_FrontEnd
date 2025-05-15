@@ -2,6 +2,10 @@ import styled from "styled-components";
 
 export const EditorPageStyle = styled.div`
   &.EditorPage_wrap {
+    width: 98%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
     border: 1.5px solid rgb(204, 204, 204);
     border-radius: 3px;
 
@@ -10,6 +14,11 @@ export const EditorPageStyle = styled.div`
       flex-wrap: wrap;
       gap: 8px;
       padding: 10px;
+
+      select {
+        width: 70px;
+        max-width: auto;
+      }
 
       select,
       button {
