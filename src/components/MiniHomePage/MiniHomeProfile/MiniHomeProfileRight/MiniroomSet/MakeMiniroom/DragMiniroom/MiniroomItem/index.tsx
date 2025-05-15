@@ -36,7 +36,9 @@ const MiniroomItem: React.FC<MiniroomItemProps> = ({ item }) => {
     <img
       ref={ref}
       src={
-        item?.storeItems?.file || user?.gender === "woman"
+        item?.storeItems?.file
+          ? item.storeItems.file
+          : user?.gender === "woman"
           ? "/avatarImg/woman_avatar1.png"
           : "/avatarImg/man_avatar1.png"
       }
