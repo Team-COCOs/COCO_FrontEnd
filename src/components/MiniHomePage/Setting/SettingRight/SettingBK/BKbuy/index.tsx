@@ -143,7 +143,7 @@ const BKbuy = () => {
                       type="radio"
                       value={String(x.id)}
                       name="minihomepis"
-                      checked={selectedMinihomepis === String(x.id)}
+                      checked={String(selectedMinihomepis) === String(x.id)}
                       onChange={(e) => setSelectedMinihomepis(e.target.value)}
                     ></input>
                     <div className="BKbuy_bk_imgwrap">
@@ -164,7 +164,7 @@ const BKbuy = () => {
                       type="radio"
                       value={String(x.id)}
                       name={"diary_background"}
-                      checked={selectedDiary === String(x.id)}
+                      checked={String(selectedDiary) === String(x.id)}
                       onChange={(e) => setSelectedDiary(e.target.value)}
                     ></input>
                     <div className="BKbuy_bk_imgwrap">
@@ -185,7 +185,7 @@ const BKbuy = () => {
                       type="radio"
                       value={String(x.id)}
                       name="tapcolor"
-                      checked={selectedTab === String(x.id)}
+                      checked={String(selectedTab) === String(x.id)}
                       onChange={(e) => setSelectedTab(e.target.value)}
                     ></input>
                     <div className="BKbuy_bk_imgwrap">
