@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SettingBKStyled } from "./styled";
-import { useRouter } from "next/router";
-import axiosInstance from "@/lib/axios";
+import BKbuy from "./BKbuy";
 
 const SettingBK = () => {
-  const { query } = useRouter();
-  const { id } = query;
-
   return (
     <SettingBKStyled>
       <div className="SettingBK_wrap">
@@ -15,10 +11,11 @@ const SettingBK = () => {
             미니홈피 효과 설정하기
           </div>
           <div className="SettingBK_setBox">
-            <h2 className="SettingBK_title Gulim">🔸배경색 꾸미기</h2>
-            <div></div>
-            <div className="SettingBK_btnWrap">
-              <button className="SettingBK_savebtn">저장</button>
+            <h2 className="SettingBK_title Gulim">
+              미니홈피 배경색을 꾸며보세요~!
+            </h2>
+            <div>
+              <BKbuy />
             </div>
           </div>
         </div>

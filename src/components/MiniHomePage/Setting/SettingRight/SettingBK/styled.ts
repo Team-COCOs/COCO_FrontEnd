@@ -30,10 +30,10 @@ export const SettingBKStyled = styled.div`
     flex-direction: column;
   }
   .SettingBK_title {
-    color: black;
-    font-size: 12px;
+    color: #2686a3;
+    font-size: 11px;
     font-weight: bolder;
-    padding-bottom: 7px;
+    padding-bottom: 15px;
   }
   /* 버튼 */
   .SettingBK_btnWrap {
