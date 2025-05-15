@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const SettingBKStyled = styled.div`
+export const BKbuyStyled = styled.div`
   width: 100%;
-  .SettingBK_wrap_title {
+  .BKbuy_wrap_title {
     color: #4b4b4b;
     font-size: 12px;
     font-weight: bolder;
@@ -10,13 +10,15 @@ export const SettingBKStyled = styled.div`
     border-bottom: 1.5px dotted #ddd;
     margin-bottom: 7px;
   }
-  .SettingBK_titleWrap {
-    display: flex;
-    flex-direction: column;
-    padding-top: 10px;
-  }
 
-  .SettingBK_ex_text {
+  .BKbuy_miniTitle {
+    color: black;
+    font-size: 12px;
+    font-weight: bolder;
+    padding-bottom: 7px;
+    padding-top: 7px;
+  }
+  .BKbuy_ex_text {
     display: flex;
     justify-content: flex-end;
     color: #4b4b4b;
@@ -24,24 +26,24 @@ export const SettingBKStyled = styled.div`
     padding-top: 7px;
     width: 100%;
   }
-  .SettingBK_setBox {
+  .BKbuy_setBox {
     padding-bottom: 10px;
     display: flex;
     flex-direction: column;
   }
-  .SettingBK_title {
-    color: #2686a3;
-    font-size: 11px;
+  .BKbuy_title {
+    color: black;
+    font-size: 12px;
     font-weight: bolder;
-    padding-bottom: 15px;
+    padding-bottom: 7px;
   }
   /* 버튼 */
-  .SettingBK_btnWrap {
+  .BKbuy_btnWrap {
     width: 100%;
     display: flex;
     justify-content: flex-end;
   }
-  .SettingBK_savebtn {
+  .BKbuy_savebtn {
     margin-top: 10px;
     padding: 4px 5px;
     background-color: rgb(248, 248, 248);
@@ -64,5 +66,28 @@ export const SettingBKStyled = styled.div`
   input {
     margin-right: 5px;
     vertical-align: middle;
+  }
+  .BKbuy_bk_allwrap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    .BKbuy_bk_grid {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .BKbuy_bk_imgwrap {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        margin-top: 3px;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
   }
 `;

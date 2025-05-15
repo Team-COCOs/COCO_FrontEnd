@@ -60,7 +60,7 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
     } catch (e: any) {
       if (e.response?.status === 401) {
         alert("로그인이 필요합니다.");
-        router.push(`/photo/${userId}`);
+        router.push(`/home/${userId}`);
       } else {
         console.log("사진첩 불러오기 에러 : ", e);
       }

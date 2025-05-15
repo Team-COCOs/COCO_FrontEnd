@@ -13,8 +13,8 @@ const MinimiSet = () => {
   const [selectedMinimiId, setSelectedMinimiId] =
     useState<string>("default-minimi");
   const [myMinimi, setMyMinimi] = useState<string>("");
-  const { query } = useRouter();
-  const { id } = query;
+  const router = useRouter();
+  const { id } = router.query;
 
   useEffect(() => {
     const fetchMinimiData = async () => {
@@ -24,7 +24,7 @@ const MinimiSet = () => {
       } catch (e: any) {
         if (e.response && e.response.status === 401) {
           alert("로그인이 필요합니다.");
-          window.location.reload();
+          router.push(`/home/${id}`);
         } else {
           console.log(e, "구매 목록 불러오기 실패");
         }
@@ -55,7 +55,7 @@ const MinimiSet = () => {
     } catch (error: any) {
       if (error?.response?.status === 401) {
         alert("로그인이 필요합니다.");
-        window.location.reload();
+        router.push(`/home/${id}`);
       }
       console.error("대표 미니미 저장 실패", error);
       alert("대표 미니미 저장에 실패했습니다.");
