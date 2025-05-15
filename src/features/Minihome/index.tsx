@@ -41,6 +41,10 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
   const [requesterName, setRequesterName] = useState("");
   const [receiverName, setReceiverName] = useState("");
 
+  // 일촌신청 이미지 및 성별
+  const [requesterImage, setRequesterImage] = useState("");
+  const [requesterGender, setRequesterGender] = useState("");
+
   // 로그인 한 사람 ID
   // 탭 클릭 시 상태 변경 함수
   const handleTabClick = (tab: string) => {
@@ -61,8 +65,11 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
         const response = await axiosInstance.get(`/friends/names/${id}`, {
           withCredentials: true,
         });
+        console.log(response.data, "???");
         setRequesterName(response.data.requesterName);
         setReceiverName(response.data.receiverName);
+        setRequesterImage(response.data.requesterImage);
+        setRequesterGender(response.data.requesterGender);
       } catch (error) {
         console.error("이름 정보 불러오기 실패:", error);
       }
@@ -141,6 +148,8 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
                         onClose={() => setIsOpen(false)}
                         requesterName={requesterName}
                         receiverName={receiverName}
+                        requesterImage={requesterImage}
+                        requesterGender={requesterGender}
                         receiverUserId={id}
                       />
                     </div>
