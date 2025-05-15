@@ -44,6 +44,7 @@ export const FooterStyled = styled.footer`
 
   .Footer_links {
     margin-bottom: 10px;
+    cursor: pointer;
 
     a {
       margin: 0 4px;
