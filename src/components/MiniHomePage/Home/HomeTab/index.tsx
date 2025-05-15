@@ -10,6 +10,7 @@ interface HomeTabProps {
 }
 
 const DEFAULT_TABS = ["photo", "diary", "visitor", "coco"];
+const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
 const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
   const router = useRouter();
@@ -19,7 +20,9 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
   const currentTab = router.pathname.split("/")[1];
 
   const [userTabs, setUserTabs] = useState<string[]>([]);
+  const [language, setLanguage] = useState<string>("ko");
 
+  // 메인 홈 탭 불러오기
   useEffect(() => {
     if (!id) return;
     const fetchTabs = async () => {
@@ -42,6 +45,8 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
     fetchTabs();
   }, [id]);
 
+  // 홈 탭 필터
+
   const filteredTabs = Object.entries(TAB_LABELS).filter(([key]) => {
     const isHomeTab = key === "home";
     const isOwnerTab = isOwner && (key === "setting" || key === "profile");
@@ -49,6 +54,23 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
     const isOtherVisibleTab = key !== "setting" && key !== "profile";
     return isHomeTab || isOwnerTab || (allowed && isOtherVisibleTab);
   });
+
+  // 메인 홈 탭 언어 기본 설정 불러오기
+  useEffect(() => {
+    if (!id) return;
+    const fetchLanguageSettings = async () => {
+      try {
+        const { data } = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/useritems/language/${id}`
+        );
+        setLanguage(data);
+        console.log(data, "tab 데이터 오는지");
+      } catch (error) {
+        console.error("설정 불러오기 실패:", error);
+      }
+    };
+    fetchLanguageSettings();
+  }, [id]);
 
   return (
     <HomeTabStyled>
@@ -63,7 +85,7 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
               router.push(`/${key}/${id}`);
             }}
           >
-            {label}
+            {language === "en" ? capitalize(key) : label}
           </div>
         ))}
       </div>
