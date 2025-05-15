@@ -64,9 +64,13 @@
 .AddFriendModal_profile_imgWrap {
   width: 85px;
   height: 85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   img {
-    width: 100%;
+    width: auto;
     height: 100%;
+    object-fit: cover;
   }
 }
 .AddFriendModa_friendname {

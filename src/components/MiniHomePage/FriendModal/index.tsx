@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import ReactDOM from "react-dom/client";
 import AddFriendModal from "./AddFriendModal";
 import { FriendModalStyle } from "./styled";
-
+import axios from "axios";
 interface ModalProps {
   type: string;
   isOpen: boolean;
@@ -11,6 +11,8 @@ interface ModalProps {
   requesterName: string;
   receiverName: string;
   receiverUserId: string;
+  requesterImage: string;
+  requesterGender: string;
 }
 
 const FriendModal = ({
@@ -20,6 +22,8 @@ const FriendModal = ({
   requesterName,
   receiverName,
   receiverUserId,
+  requesterImage,
+  requesterGender,
 }: ModalProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -59,6 +63,8 @@ const FriendModal = ({
           requesterName={requesterName}
           receiverName={receiverName}
           receiverUserId={receiverUserId}
+          requesterImage={requesterImage}
+          requesterGender={requesterGender}
         />
       );
     }

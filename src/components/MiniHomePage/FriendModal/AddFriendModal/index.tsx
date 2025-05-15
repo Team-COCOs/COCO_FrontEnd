@@ -1,12 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import axiosInstance from "@/utils/axiosInstance";
+import { useAuth } from "@/context/AuthContext";
+import axios from "axios";
 
 interface AddFriendModalProps {
   onClose: () => void;
   requesterName: string;
   receiverName: string;
   receiverUserId: string;
+  requesterImage: string;
+  requesterGender: string;
 }
 
 const AddFriendModal = ({
@@ -14,13 +18,14 @@ const AddFriendModal = ({
   requesterName,
   receiverName,
   receiverUserId,
+  requesterImage,
+  requesterGender,
 }: AddFriendModalProps) => {
   const [message, setMessage] = useState("일촌 신청합니다.");
   const [fromLabelType, setFromLabelType] = useState("직접입력");
   const [toLabelType, setToLabelType] = useState("직접입력");
   const [fromInput, setFromInput] = useState("");
   const [toInput, setToInput] = useState("");
-
   const isMessageValid = message.trim() !== "";
 
   const handleSubmit = async () => {
@@ -43,7 +48,6 @@ const AddFriendModal = ({
 
     try {
       const response = await axiosInstance.post("/friends/request", payload);
-
       alert(response.data.message);
       onClose();
       location.reload();
@@ -52,7 +56,6 @@ const AddFriendModal = ({
       alert("일촌 신청에 실패했습니다. 다시 시도해주세요.");
     }
   };
-
   // 오늘 날짜
   const today = new Date();
   const formattedDate = `${today.getFullYear()}.${String(
@@ -96,7 +99,13 @@ const AddFriendModal = ({
             <div className="AddFriendModal_imgBox">
               <div className="AddFriendModal_profile_imgWrap">
                 <img
-                  src="/avatarImg/headphone_girl.png"
+                  src={
+                    requesterImage
+                      ? requesterImage
+                      : requesterGender === "woman"
+                      ? "/avatarImg/woman_avatar1.png"
+                      : "/avatarImg/man_avatar1.png"
+                  }
                   alt="senduser_profile"
                 />
               </div>
