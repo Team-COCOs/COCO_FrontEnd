@@ -7,8 +7,10 @@ const BKbuy = () => {
   const router = useRouter();
   const { id } = router.query;
   const [homepiBkData, setHomepiBkData] = useState<any[]>([]);
-  const [selectedMinihomepis, setSelectedMinihomepis] = useState("default-bk");
-  const [selectedDiary, setSelectedDiary] = useState("default-minihomepis");
+  const [selectedMinihomepis, setSelectedMinihomepis] = useState(
+    "default-minihomepis"
+  );
+  const [selectedDiary, setSelectedDiary] = useState("default-bk");
   const [selectedTab, setSelectedTab] = useState("default-tapcolor");
 
   useEffect(() => {
@@ -18,6 +20,7 @@ const BKbuy = () => {
       try {
         const response = await axiosInstance.get("/purchases");
         setHomepiBkData(response.data);
+        console.log(response.data, "전체 구매 배경 데이터?");
       } catch (e: any) {
         if (e.response?.status === 401) {
           alert("로그인이 필요합니다.");
@@ -39,9 +42,10 @@ const BKbuy = () => {
             `${process.env.NEXT_PUBLIC_API_URL}/useritems/tapcolor/${id}`
           ),
         ]);
-        console.log(minihomepisRes.data, "minihomepisRes.data");
-        setSelectedMinihomepis(minihomepisRes.data?.id || "default-bk");
-        setSelectedDiary(diaryRes.data?.id || "default-minihomepis");
+        setSelectedMinihomepis(
+          minihomepisRes.data?.id || "default-minihomepis"
+        );
+        setSelectedDiary(diaryRes.data?.id || "default-bk");
         setSelectedTab(tabRes.data?.id || "default-tapcolor");
 
         console.log(minihomepisRes.data?.id, "minihomepisRes.data?.id");
@@ -56,8 +60,8 @@ const BKbuy = () => {
     fetchCurrentTheme();
   }, [id]);
   // 기본 항목 정의
-  const defaultBK = {
-    id: "default-bk",
+  const defaultMinihomepis = {
+    id: "default-minihomepis",
     storeItems: {
       file: "/background/default_bk.jpg",
       name: "기본 배경",
@@ -65,8 +69,8 @@ const BKbuy = () => {
     },
   };
 
-  const defaultSkin = {
-    id: "default-minihomepis",
+  const defaultBK = {
+    id: "default-bk",
     storeItems: {
       file: "/background/default_diarybk.jpg",
       name: "기본 다이어리",
@@ -84,13 +88,13 @@ const BKbuy = () => {
   };
 
   // 기존 필터에 기본값 추가
-  const onlyBK = [
-    defaultBK,
+  const onlyMinihomepis = [
+    defaultMinihomepis,
     ...homepiBkData.filter((x) => x.storeItems.category === "minihomepis"),
   ];
 
   const onlySkin = [
-    defaultSkin,
+    defaultBK,
     ...homepiBkData.filter((x) => x.storeItems.category === "diary_background"),
   ];
 
@@ -116,6 +120,9 @@ const BKbuy = () => {
         }),
       ]);
       console.log("모든 테마 저장 완료!");
+      console.log(selectedTab, "selectedTab");
+      console.log(selectedDiary, "selectedDiary");
+      console.log(selectedMinihomepis, "selectedMinihomepis");
     } catch (error) {
       console.error("테마 저장 중 오류 발생:", error);
     }
@@ -129,7 +136,7 @@ const BKbuy = () => {
             {/* minihomepis */}
             <div className="BKbuy_miniTitle Gulim">🔸미니홈피 배경 변경</div>
             <div className="BKbuy_grid">
-              {onlyBK.map((x) => (
+              {onlyMinihomepis.map((x) => (
                 <div key={x.id} className="BKbuy_bk_allwrap Gulim">
                   <div className="BKbuy_bk_grid Gulim">
                     <input
