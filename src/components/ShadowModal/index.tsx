@@ -1,4 +1,3 @@
-// ShadowModal.tsx
 import { useEffect, useRef } from "react";
 import ReactDOM from "react-dom/client";
 import AlertModal from "./AlertModal";

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import axiosInstance from "@/lib/axios";
 
 interface CommentData {
   id: number; // PK
@@ -17,6 +18,8 @@ interface CommentData {
 interface CommentProps {
   comments?: CommentData[];
   onSubmitSuccess?: () => void;
+  getPhotoData?: () => void;
+  photo_id?: number;
 }
 
 interface CommentSubmit {
@@ -24,7 +27,12 @@ interface CommentSubmit {
   parentId?: number | null;
 }
 
-const Comment = ({ comments, onSubmitSuccess }: CommentProps) => {
+const Comment = ({
+  comments,
+  onSubmitSuccess,
+  getPhotoData,
+  photo_id,
+}: CommentProps) => {
   const [replyTargetId, setReplyTargetId] = useState<number | null>(null);
   const [commentInput, setCommentInput] = useState("");
   const [childCommentInput, setChildCommentInput] = useState("");
@@ -67,8 +75,26 @@ const Comment = ({ comments, onSubmitSuccess }: CommentProps) => {
     }
   };
 
+  const clipPhoto = async (photoId: number) => {
+    try {
+      const res = await axiosInstance.post(`/photos/${photoId}/clip`);
+
+      console.log("스크랩 정보 : ", res.data);
+      alert("스크랩 완료!");
+      getPhotoData?.();
+    } catch (e) {
+      console.log("스크랩 실패: ", e);
+    }
+  };
+
   return (
     <CommentStyle className="Comment_wrap Gulim">
+      <button
+        className="PhotoRight_clipBtn Gulim"
+        onClick={() => clipPhoto(photo_id!)}
+      >
+        스크랩
+      </button>
       {comments?.length === 0 || !comments ? (
         <p className="handFont">
           아직 댓글이 없어요~ 당신의 한 마디로 이 공간을 채워주세요 💬

@@ -58,22 +58,6 @@ export const PhotoRightStyled = styled.div`
         font-weight: bold;
         background-color: rgb(241, 241, 241);
         border-top: 1.5px solid rgb(209, 209, 209);
-
-        .PhotoRight_clipBtn {
-          position: absolute;
-          right: 10px;
-          padding: 2px 3px;
-          width: 45px;
-          font-size: 12px;
-          border: 1px solid rgb(164, 164, 164);
-          color: rgb(61, 61, 61);
-          border-radius: 3px;
-          cursor: pointer;
-
-          &:active {
-            background: linear-gradient(to top, #ffffff, #dddddd);
-          }
-        }
       }
 
       .PhotoRight_infos {

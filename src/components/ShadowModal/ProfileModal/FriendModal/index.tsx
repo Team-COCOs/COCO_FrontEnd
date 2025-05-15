@@ -1,6 +1,6 @@
 import axiosInstance from "@/lib/axios";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ShadowModal from "../..";
 
 interface FriendModalProps {
@@ -55,7 +55,9 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
               <Image
                 src={
                   data.profileImg === null
-                    ? "/avatarImg/man_avatar1.png"
+                    ? data.requester_gender === "man"
+                      ? "/avatarImg/man_avatar1.png"
+                      : "/avatarImg/woman_avatar1.png"
                     : data.profileImg
                 }
                 alt="friend image"
