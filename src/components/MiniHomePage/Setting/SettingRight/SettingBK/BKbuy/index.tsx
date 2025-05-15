@@ -2,30 +2,59 @@ import React, { useEffect, useState } from "react";
 import { BKbuyStyled } from "./styled";
 import { useRouter } from "next/router";
 import axiosInstance from "@/lib/axios";
-
+import axios from "axios";
 const BKbuy = () => {
   const router = useRouter();
   const { id } = router.query;
   const [homepiBkData, setHomepiBkData] = useState<any[]>([]);
+  const [selectedMinihomepis, setSelectedMinihomepis] = useState("default-bk");
+  const [selectedDiary, setSelectedDiary] = useState("default-minihomepis");
+  const [selectedTab, setSelectedTab] = useState("default-tapcolor");
 
   useEffect(() => {
-    const fetchMinimiData = async () => {
+    if (!id) return;
+
+    const fetchPurchasedItems = async () => {
       try {
-        const response = await axiosInstance.get(`/purchases`);
+        const response = await axiosInstance.get("/purchases");
         setHomepiBkData(response.data);
-        console.log(response.data, "??");
       } catch (e: any) {
-        if (e.response && e.response.status === 401) {
+        if (e.response?.status === 401) {
           alert("로그인이 필요합니다.");
           router.push(`/home/${id}`);
         } else {
-          console.log(e, "구매 목록 불러오기 실패");
+          console.error("구매 목록 불러오기 실패", e);
         }
       }
     };
-    fetchMinimiData();
-  }, []);
 
+    const fetchCurrentTheme = async () => {
+      try {
+        const [minihomepisRes, diaryRes, tabRes] = await Promise.all([
+          axios.get(
+            `${process.env.NEXT_PUBLIC_API_URL}/useritems/minihomepis/${id}`
+          ),
+          axios.get(`${process.env.NEXT_PUBLIC_API_URL}/useritems/bk/${id}`),
+          axios.get(
+            `${process.env.NEXT_PUBLIC_API_URL}/useritems/tapcolor/${id}`
+          ),
+        ]);
+        console.log(minihomepisRes.data, "minihomepisRes.data");
+        setSelectedMinihomepis(minihomepisRes.data?.id || "default-bk");
+        setSelectedDiary(diaryRes.data?.id || "default-minihomepis");
+        setSelectedTab(tabRes.data?.id || "default-tapcolor");
+
+        console.log(minihomepisRes.data?.id, "minihomepisRes.data?.id");
+        console.log(diaryRes.data?.id, "diaryRes.data?.id");
+        console.log(tabRes.data?.id, "tabRes.data?.id");
+      } catch (e) {
+        console.error("초기 설정값 불러오기 실패", e);
+      }
+    };
+
+    fetchPurchasedItems();
+    fetchCurrentTheme();
+  }, [id]);
   // 기본 항목 정의
   const defaultBK = {
     id: "default-bk",
@@ -70,6 +99,28 @@ const BKbuy = () => {
     ...homepiBkData.filter((x) => x.storeItems.category === "tapcolor"),
   ];
 
+  useEffect(() => {
+    console.log(onlytab, "onlytab?");
+  });
+  const saveUserThemes = async () => {
+    try {
+      await Promise.all([
+        axiosInstance.patch("/useritems/set-tapcolor", {
+          purchaseId: selectedTab,
+        }),
+        axiosInstance.patch("/useritems/set-BK", {
+          purchaseId: selectedDiary,
+        }),
+        axiosInstance.patch("/useritems/set-minihomepis", {
+          purchaseId: selectedMinihomepis,
+        }),
+      ]);
+      console.log("모든 테마 저장 완료!");
+    } catch (error) {
+      console.error("테마 저장 중 오류 발생:", error);
+    }
+  };
+
   return (
     <BKbuyStyled>
       <div className="BKbuy_wrap">
@@ -83,8 +134,10 @@ const BKbuy = () => {
                   <div className="BKbuy_bk_grid Gulim">
                     <input
                       type="radio"
-                      value={`${x.id}`}
+                      value={String(x.id)}
                       name="minihomepis"
+                      checked={selectedMinihomepis === String(x.id)}
+                      onChange={(e) => setSelectedMinihomepis(e.target.value)}
                     ></input>
                     <div className="BKbuy_bk_imgwrap">
                       <img src={x.storeItems.file} />
@@ -102,8 +155,10 @@ const BKbuy = () => {
                   <div className="BKbuy_bk_grid Gulim">
                     <input
                       type="radio"
-                      value={`${x.id}`}
+                      value={String(x.id)}
                       name={"diary_background"}
+                      checked={selectedDiary === String(x.id)}
+                      onChange={(e) => setSelectedDiary(e.target.value)}
                     ></input>
                     <div className="BKbuy_bk_imgwrap">
                       <img src={x.storeItems.file} />
@@ -121,8 +176,10 @@ const BKbuy = () => {
                   <div className="BKbuy_bk_grid Gulim">
                     <input
                       type="radio"
-                      value={`${x.id}`}
+                      value={String(x.id)}
                       name="tapcolor"
+                      checked={selectedTab === String(x.id)}
+                      onChange={(e) => setSelectedTab(e.target.value)}
                     ></input>
                     <div className="BKbuy_bk_imgwrap">
                       <img src={x.storeItems.file} />
@@ -134,7 +191,9 @@ const BKbuy = () => {
             </div>
           </div>
           <div className="BKbuy_btnWrap">
-            <button className="BKbuy_savebtn">저장</button>
+            <button className="BKbuy_savebtn" onClick={saveUserThemes}>
+              저장
+            </button>
           </div>
         </div>
       </div>
