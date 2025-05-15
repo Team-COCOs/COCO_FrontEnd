@@ -95,43 +95,43 @@ export const MadeRoomStyled = styled.div`
       @media (max-width: 1024px) {
         .MadeRoom_SpeechBubble {
           width: 100px;
-          height: 50px;
+          height: 45px;
           font-size: 10px;
         }
       }
       @media (max-width: 900px) {
         .MadeRoom_SpeechBubble {
-          width: 85px;
-          height: 48px;
-          font-size: 9.5px;
+          width: 70px;
+          height: 45px;
+          font-size: 7.5px;
         }
       }
       @media (max-width: 769px) {
         .MadeRoom_SpeechBubble {
-          width: 100px;
-          height: 45px;
-          font-size: 9.5px;
+          width: 80px;
+          height: 40px;
+          font-size: 7.5px;
         }
       }
       @media (max-width: 600px) {
         .MadeRoom_SpeechBubble {
-          width: 80px;
-          height: 45px;
-          font-size: 8.5px;
+          width: 65px;
+          height: 37px;
+          font-size: 6.5px;
         }
       }
       @media (max-width: 480px) {
         .MadeRoom_SpeechBubble {
-          width: 60px;
+          width: 50px;
           height: 30px;
-          font-size: 5.5px;
+          font-size: 5px;
         }
       }
       @media (max-width: 320px) {
         .MadeRoom_SpeechBubble {
-          width: 50px;
-          height: 25px;
-          font-size: 5px;
+          width: 43px;
+          height: 27px;
+          font-size: 4px;
         }
       }
 
