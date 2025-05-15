@@ -81,12 +81,14 @@ const WritePage = () => {
     formData.append("folderId", String(selectedFolder.id));
     formData.append("visibility", visibility);
     if (file) {
-      formData.append("image", file);
+      formData.append("photo", file);
     }
 
     for (const [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
+
+    console.log(file);
 
     try {
       const res = await axiosInstance.post("/photos/save", formData, {
@@ -111,6 +113,7 @@ const WritePage = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setFile(file);
       setFileName(file.name);
     }
   };
