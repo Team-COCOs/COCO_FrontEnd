@@ -77,43 +77,61 @@ const BKbuy = () => {
           <div className="BKbuy_setBox">
             {/* minihomepis */}
             <div className="BKbuy_miniTitle Gulim">🔸미니홈피 배경 변경</div>
-            {onlyBK.map((x) => (
-              <div key={x.id} className="BKbuy_bk_allwrap pixelFont">
-                <div className="BKbuy_bk_grid pixelFont">
-                  <input type="radio" value={`${x.id}`}></input>
-                  <div className="BKbuy_bk_imgwrap">
-                    <img src={x.storeItems.file} />
+            <div className="BKbuy_grid">
+              {onlyBK.map((x) => (
+                <div key={x.id} className="BKbuy_bk_allwrap Gulim">
+                  <div className="BKbuy_bk_grid Gulim">
+                    <input
+                      type="radio"
+                      value={`${x.id}`}
+                      name="minihomepis"
+                    ></input>
+                    <div className="BKbuy_bk_imgwrap">
+                      <img src={x.storeItems.file} />
+                    </div>
+                    <div className="BKbuy_bk_name">{x.storeItems.name}</div>
                   </div>
-                  <div>{x.storeItems.name}</div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
             {/* diary_background */}
             <div className="BKbuy_miniTitle Gulim">🔸다이어리 배경 변경</div>
-            {onlySkin.map((x) => (
-              <div key={x.id} className="BKbuy_bk_allwrap pixelFont">
-                <div className="BKbuy_bk_grid pixelFont">
-                  <input type="radio" value={`${x.id}`}></input>
-                  <div className="BKbuy_bk_imgwrap">
-                    <img src={x.storeItems.file} />
+            <div className="BKbuy_grid">
+              {onlySkin.map((x) => (
+                <div key={x.id} className="BKbuy_bk_allwrap Gulim">
+                  <div className="BKbuy_bk_grid Gulim">
+                    <input
+                      type="radio"
+                      value={`${x.id}`}
+                      name={"diary_background"}
+                    ></input>
+                    <div className="BKbuy_bk_imgwrap">
+                      <img src={x.storeItems.file} />
+                    </div>
+                    <div className="BKbuy_bk_name">{x.storeItems.name}</div>
                   </div>
-                  <div>{x.storeItems.name}</div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
             {/* tapcolor */}
             <div className="BKbuy_miniTitle Gulim">🔸탭 색 변경</div>
-            {onlytab.map((x) => (
-              <div key={x.id} className="BKbuy_bk_allwrap pixelFont">
-                <div className="BKbuy_bk_grid pixelFont">
-                  <input type="radio" value={`${x.id}`}></input>
-                  <div className="BKbuy_bk_imgwrap">
-                    <img src={x.storeItems.file} />
+            <div className="BKbuy_grid">
+              {onlytab.map((x) => (
+                <div key={x.id} className="BKbuy_bk_allwrap Gulim">
+                  <div className="BKbuy_bk_grid Gulim">
+                    <input
+                      type="radio"
+                      value={`${x.id}`}
+                      name="tapcolor"
+                    ></input>
+                    <div className="BKbuy_bk_imgwrap">
+                      <img src={x.storeItems.file} />
+                    </div>
+                    <div className="BKbuy_bk_name">{x.storeItems.name}</div>
                   </div>
-                  <div>{x.storeItems.name}</div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
           <div className="BKbuy_btnWrap">
             <button className="BKbuy_savebtn">저장</button>

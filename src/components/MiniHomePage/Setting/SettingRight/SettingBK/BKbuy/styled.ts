@@ -66,11 +66,14 @@ export const BKbuyStyled = styled.div`
   input {
     margin-right: 5px;
     vertical-align: middle;
+    margin-top: 10px;
   }
-  .BKbuy_bk_allwrap {
+  .BKbuy_grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-
+    gap: 5px;
+  }
+  .BKbuy_bk_allwrap {
     .BKbuy_bk_grid {
       display: flex;
       flex-direction: column;
@@ -79,15 +82,31 @@ export const BKbuyStyled = styled.div`
 
       .BKbuy_bk_imgwrap {
         width: 100%;
-        height: auto;
+        aspect-ratio: 1/1;
         overflow: hidden;
         margin-top: 3px;
       }
       img {
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        object-fit: cover;
       }
+    }
+  }
+  .BKbuy_bk_name {
+    font-size: 10px;
+    padding: 5px;
+    margin-bottom: 15px;
+  }
+  @media (max-width: 1024px) {
+    .BKbuy_grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .BKbuy_grid {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 `;
