@@ -58,6 +58,23 @@ export const PhotoRightStyled = styled.div`
         font-weight: bold;
         background-color: rgb(241, 241, 241);
         border-top: 1.5px solid rgb(209, 209, 209);
+
+        @media (max-width: 768px) {
+          font-size: 12px;
+        }
+
+        @media (max-width: 530px) {
+          & {
+            flex-direction: column;
+            font-size: 11px;
+          }
+        }
+
+        @media (max-width: 430px) {
+          & {
+            font-size: 10px;
+          }
+        }
       }
 
       .PhotoRight_infos {
@@ -67,6 +84,25 @@ export const PhotoRightStyled = styled.div`
         font-size: 14px;
         font-weight: bold;
         margin-top: 5px;
+
+        @media (max-width: 768px) {
+          & {
+            font-size: 12px;
+          }
+        }
+
+        @media (max-width: 530px) {
+          & {
+            align-items: center;
+            font-size: 11px;
+          }
+        }
+
+        @media (max-width: 430px) {
+          & {
+            font-size: 10px;
+          }
+        }
 
         .PhotoRight_user {
           color: rgb(46, 105, 188);
@@ -79,9 +115,41 @@ export const PhotoRightStyled = styled.div`
           font-size: 13px;
           align-items: center;
 
+          @media (max-width: 768px) {
+            & {
+              font-size: 12px;
+            }
+          }
+
+          @media (max-width: 530px) {
+            & {
+              flex-direction: column;
+              gap: 5px;
+              font-size: 11px;
+            }
+          }
+
+          @media (max-width: 430px) {
+            & {
+              font-size: 10px;
+            }
+          }
+
           .PhotoRight_font {
             font-size: 12px;
             margin-top: 2px;
+
+            @media (max-width: 530px) {
+              & {
+                font-size: 11px;
+              }
+            }
+
+            @media (max-width: 430px) {
+              & {
+                font-size: 10px;
+              }
+            }
           }
         }
       }
@@ -92,26 +160,13 @@ export const PhotoRightStyled = styled.div`
       justify-content: center;
       align-items: flex-start;
       width: 100%;
-      height: 100%;
-      max-height: 350px;
+      height: auto;
       padding: 0 15px;
-      margin: 10px 0;
+      margin: 20px 0;
 
-      .PhotoRight_img {
-        position: relative;
+      img {
+        height: auto;
         width: 100%;
-        height: 350px;
-      }
-
-      @media (max-width: 768px) {
-        & {
-          width: 100%;
-          height: 350px;
-
-          .PhotoRight_img {
-            max-height: 350px;
-          }
-        }
       }
     }
 
@@ -123,6 +178,49 @@ export const PhotoRightStyled = styled.div`
       font-size: 13px;
       font-weight: bold;
       color: rgb(169, 169, 169);
+
+      @media (max-width: 768px) {
+        & {
+          font-size: 12px;
+        }
+      }
+
+      @media (max-width: 530px) {
+        & {
+          flex-direction: column;
+          gap: 10px;
+          font-size: 11px;
+        }
+      }
+
+      @media (max-width: 430px) {
+        & {
+          font-size: 10px;
+        }
+      }
+
+      .PhotoRight_clips {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .PhotoRight_clipBtn {
+        position: relative;
+        display: flex;
+        align-self: flex-end;
+        padding: 2px 3px;
+        width: 45px;
+        font-size: 12px;
+        border: 1px solid rgb(164, 164, 164);
+        color: rgb(61, 61, 61);
+        border-radius: 3px;
+        cursor: pointer;
+
+        &:active {
+          background: linear-gradient(to top, #ffffff, #dddddd);
+        }
+      }
 
       .PhotoRight_line {
         font-size: 10px;

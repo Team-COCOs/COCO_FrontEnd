@@ -44,8 +44,6 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
   const userId = user?.id;
   const router = useRouter();
 
-  const { query, isReady } = router;
-
   const queryUserId = router.query.id;
 
   const getPhotoData = async () => {
@@ -66,6 +64,18 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
       } else {
         console.log("사진첩 불러오기 에러 : ", e);
       }
+    }
+  };
+
+  const clipPhoto = async (photoId: number) => {
+    try {
+      const res = await axiosInstance.post(`/photos/${photoId}/clip`);
+
+      console.log("스크랩 정보 : ", res.data);
+      alert("스크랩 완료!");
+      getPhotoData?.();
+    } catch (e) {
+      console.log("스크랩 실패: ", e);
     }
   };
 
@@ -109,12 +119,7 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
 
           <div className="PhotoRight_imgBox">
             <div className="PhotoRight_img">
-              <Image
-                src="/miniroom/miniroom1.jpg"
-                alt="photo"
-                fill
-                objectFit="contain"
-              />
+              <img src="/advertising/Advertising3.jpg" alt="photo" />
             </div>
           </div>
 
@@ -122,7 +127,15 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
             <div>
               공개설정 <span className="PhotoRight_line">|</span> 전체공개
             </div>
-            <div>조회수 1,000</div>
+            <div className="PhotoRight_clips">
+              <div>조회수 1,000</div>
+              <button
+                className="PhotoRight_clipBtn Gulim"
+                // onClick={() => clipPhoto(data.id)}
+              >
+                스크랩
+              </button>
+            </div>
           </div>
 
           <Comment />
@@ -152,12 +165,7 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
 
                 <div className="PhotoRight_imgBox">
                   <div className="PhotoRight_img">
-                    <Image
-                      src={data.image}
-                      alt="photo"
-                      fill
-                      objectFit="contain"
-                    />
+                    <img src={data.image} alt="photo" />
                   </div>
                 </div>
 
@@ -166,14 +174,20 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                     공개설정 <span className="PhotoRight_line">|</span>
                     {data.isPublic}
                   </div>
-                  <div>조회수 {data.views.toLocaleString()}</div>
+                  <div className="PhotoRight_clips">
+                    <div>조회수 {data.views.toLocaleString()}</div>
+                    <button
+                      className="PhotoRight_clipBtn Gulim"
+                      onClick={() => clipPhoto(data.id)}
+                    >
+                      스크랩
+                    </button>
+                  </div>
                 </div>
 
                 <Comment
                   comments={data.comments}
                   onSubmitSuccess={getPhotoData}
-                  getPhotoData={getPhotoData}
-                  photo_id={data.id}
                 />
               </div>
             ))

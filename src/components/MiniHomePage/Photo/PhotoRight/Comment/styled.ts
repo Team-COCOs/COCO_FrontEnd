@@ -13,27 +13,28 @@ export const CommentStyle = styled.div`
     font-size: 13px;
     width: 100%;
 
-    .PhotoRight_clipBtn {
-      position: relative;
-      display: flex;
-      align-self: flex-end;
-      padding: 2px 3px;
-      width: 45px;
-      font-size: 12px;
-      border: 1px solid rgb(164, 164, 164);
-      color: rgb(61, 61, 61);
-      border-radius: 3px;
-      cursor: pointer;
-
-      &:active {
-        background: linear-gradient(to top, #ffffff, #dddddd);
-      }
-    }
-
     .handFont {
       font-size: 15px;
       color: rgb(80, 80, 80);
       padding: 5px;
+
+      @media (max-width: 768px) {
+        & {
+          font-size: 13px;
+        }
+      }
+
+      @media (max-width: 530px) {
+        & {
+          font-size: 12px;
+        }
+      }
+
+      @media (max-width: 430px) {
+        & {
+          font-size: 11px;
+        }
+      }
     }
 
     .Comment_parent,
@@ -96,6 +97,24 @@ export const CommentStyle = styled.div`
         height: 23px;
         padding: 2px 5px;
         font-size: 12px;
+
+        @media (max-width: 650px) {
+          & {
+            max-width: 70%;
+          }
+        }
+
+        @media (max-width: 530px) {
+          & {
+            max-width: 60%;
+          }
+        }
+
+        @media (max-width: 430px) {
+          & {
+            max-width: 50%;
+          }
+        }
 
         &:active,
         &:focus {
