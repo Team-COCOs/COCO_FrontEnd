@@ -86,9 +86,17 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
       setPhotoData(filtered);
     } catch (e: any) {
       if (e.response?.status === 401) {
-        const res = await axios.get(`/photos/${queryUserId}`);
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/photos/logout/${queryUserId}`
+        );
 
-        console.log("비로그인일 때 : ", res.data);
+        const filtered =
+          selectedMenu &&
+          res.data.filter(
+            (item: PhotoData) => item.folder.id === selectedMenu.id
+          );
+
+        setPhotoData(filtered);
       } else {
         console.log("사진첩 불러오기 에러 : ", e);
       }

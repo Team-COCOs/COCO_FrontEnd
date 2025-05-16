@@ -171,6 +171,10 @@ export const PhotoRightStyled = styled.div`
       }
     }
 
+    .PhotoRight_text {
+      margin: 30px 10px;
+    }
+
     .PhotoRight_isPublic {
       display: flex;
       justify-content: space-between;
