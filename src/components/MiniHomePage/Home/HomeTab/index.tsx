@@ -2,6 +2,7 @@ import { HomeTabStyled } from "./styled";
 import { TAB_LABELS } from "@/constants/tabs";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import { useTabs } from "@/context/TabsContext";
 import axios from "axios";
 import { useSkin } from "@/context/SkinContext";
 import { useLanguage } from "@/context/LanguageContext";
@@ -19,8 +20,7 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
   // 쿼리 값으로 현재 페이지 탭 구분
   const { id } = router.query;
   const currentTab = router.pathname.split("/")[1];
-
-  const [userTabs, setUserTabs] = useState<string[]>([]);
+  const { userTabs } = useTabs();
   const { language } = useLanguage();
   // 탭 색깔
   const { tabBackgroundColor, fetchSkin } = useSkin();
@@ -32,27 +32,27 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
   }, [id, fetchSkin]);
 
   // 메인 홈 탭 불러오기
-  useEffect(() => {
-    if (!id) return;
-    const fetchTabs = async () => {
-      try {
-        const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/useritems/tabs/${id}`
-        );
+  // useEffect(() => {
+  //   if (!id) return;
+  //   const fetchTabs = async () => {
+  //     try {
+  //       const { data } = await axios.get(
+  //         `${process.env.NEXT_PUBLIC_API_URL}/useritems/tabs/${id}`
+  //       );
 
-        if (Array.isArray(data) && data.length === 0) {
-          setUserTabs(DEFAULT_TABS);
-        } else {
-          setUserTabs(data);
-        }
-      } catch (error) {
-        console.error("탭 불러오기 실패", error);
-        setUserTabs(DEFAULT_TABS);
-      }
-    };
+  //       if (Array.isArray(data) && data.length === 0) {
+  //         setUserTabs(DEFAULT_TABS);
+  //       } else {
+  //         setUserTabs(data);
+  //       }
+  //     } catch (error) {
+  //       console.error("탭 불러오기 실패", error);
+  //       setUserTabs(DEFAULT_TABS);
+  //     }
+  //   };
 
-    fetchTabs();
-  }, [id]);
+  //   fetchTabs();
+  // }, [id]);
 
   // 홈 탭 필터
   const filteredTabs = Object.entries(TAB_LABELS).filter(([key]) => {

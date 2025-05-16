@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import axiosInstance from "@/lib/axios";
 import axios from "axios";
 import { useLanguage } from "@/context/LanguageContext";
-
+import { useTabs } from "@/context/TabsContext";
 const tabOptions = ["diary", "visitor", "photo", "coco"];
 const languageOptions = [
   { label: "한국어", value: "ko" },
@@ -14,29 +14,22 @@ const languageOptions = [
 const SettingTabs = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [selectedTabs, setSelectedTabs] = useState<string[]>([]);
   const { language, setLanguage } = useLanguage();
+  const { userTabs, setUserTabs, fetchUserTabs } = useTabs();
 
-  // 탭 기본 설정 불러오기
+  // 탭 불러오기
   useEffect(() => {
-    if (!id) return;
-    const fetchTabSettings = async () => {
-      try {
-        const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/useritems/tabs/${id}`
-        );
-        setSelectedTabs(data);
-        console.log(data, "tab 데이터 오는지");
-      } catch (error) {
-        console.error("설정 불러오기 실패:", error);
-      }
-    };
-    fetchTabSettings();
+    if (id && typeof id === "string") {
+      fetchUserTabs(id);
+    }
   }, [id]);
+  useEffect(() => {
+    console.log("현재 userTabs 상태:", userTabs);
+  }, [userTabs]);
 
   // 탭 체크박스 변경
   const handleCheckboxChange = (tab: string) => {
-    setSelectedTabs((prev) =>
+    setUserTabs((prev) =>
       prev.includes(tab) ? prev.filter((t) => t !== tab) : [...prev, tab]
     );
   };
@@ -45,31 +38,15 @@ const SettingTabs = () => {
   const handleTabSubmit = async () => {
     try {
       await axiosInstance.patch(`/useritems/set-tabs`, {
-        tabs: selectedTabs,
+        tabs: userTabs,
       });
-      console.log(selectedTabs, "저장하는 탭 데이터");
+      console.log(userTabs, "저장하는 탭 데이터");
       alert("탭 설정이 저장되었습니다.");
       router.push(`/home/${id}`);
     } catch (error) {
       console.error("탭 설정 저장 실패:", error);
     }
   };
-
-  // 언어 불러오기
-  // useEffect(() => {
-  //   if (!id) return;
-  //   const fetchLanguage = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/useritems/language/${id}`
-  //       );
-  //       setLanguage(response.data);
-  //     } catch (error) {
-  //       console.error("언어 설정 불러오기 실패:", error);
-  //     }
-  //   };
-  //   fetchLanguage();
-  // }, [id, setLanguage]);
 
   // 언어 설정 저장
   const handleLanguageSubmit = async () => {
@@ -97,7 +74,7 @@ const SettingTabs = () => {
                 <label key={tab} className="Gulim">
                   <input
                     type="checkbox"
-                    checked={selectedTabs.includes(tab)}
+                    checked={userTabs.includes(tab)}
                     onChange={() => handleCheckboxChange(tab)}
                   />
                   {tab}
