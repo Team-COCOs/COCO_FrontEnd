@@ -35,25 +35,28 @@ interface FolderData {
   title: string;
 }
 
+interface UserData {
+  id: number;
+  name: string;
+}
+
 interface PhotoData {
   id: number; // PK
   title: string; // 제목
   photo_url: string; // 이미지
   content: string; // 내용
-  writer: string; // 작성자
-  writerId: number; // 작성자 아이디(FK)
+  origin_author: string; // 원작자
   use_count: number; // 스크랩 수
   created_at: string; // 날짜
   visibility: string; // 전체 공개 / 일촌 공개 / 비공개
   isScripted: boolean; // 스크랩한 글인지 아닌지
   folder: FolderData; // 폴더
-  view_count: number; // 조회수
   comments: CommentData[]; // 댓글
+  user: UserData; // 작성자 정보
 }
 
 const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
   const [photoData, setPhotoData] = useState<PhotoData[]>([]);
-  const [queryId, setQueryId] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 5;
@@ -71,9 +74,18 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
 
   const queryUserId = router.query.id;
 
+  // 사진첩 데이터 가져오기
   const getPhotoData = async () => {
     try {
-      const res = await axiosInstance.get(`/photos/${queryUserId}`);
+      let res;
+
+      if (!userId) {
+        res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/photos/logout/${queryUserId}`
+        );
+      } else {
+        res = await axiosInstance.get(`/photos/${queryUserId}`);
+      }
 
       console.log("사진첩 : ", res.data);
 
@@ -85,27 +97,14 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
 
       setPhotoData(filtered);
     } catch (e: any) {
-      if (e.response?.status === 401) {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/photos/logout/${queryUserId}`
-        );
-
-        const filtered =
-          selectedMenu &&
-          res.data.filter(
-            (item: PhotoData) => item.folder.id === selectedMenu.id
-          );
-
-        setPhotoData(filtered);
-      } else {
-        console.log("사진첩 불러오기 에러 : ", e);
-      }
+      console.log("사진첩 불러오기 에러 : ", e);
     }
   };
 
+  // 스크랩
   const clipPhoto = async (photoId: number) => {
     try {
-      const res = await axiosInstance.post(`/photos/${photoId}/clip`);
+      const res = await axiosInstance.patch(`/photos/${photoId}/clip`);
 
       console.log("스크랩 정보 : ", res.data);
       alert("스크랩 완료!");
@@ -115,23 +114,30 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
     }
   };
 
+  // delete
+  const deletePhoto = async (photoId: number, isScripted: boolean) => {
+    try {
+      if (isScripted) {
+        await axiosInstance.delete(`/photos/${photoId}/unscrap`);
+      } else {
+        await axiosInstance.delete(`/photos/${photoId}`);
+      }
+      alert("삭제되었습니다.");
+      getPhotoData();
+    } catch (err) {
+      console.error("삭제 실패: ", err);
+    }
+  };
+
   useEffect(() => {
     queryUserId && getPhotoData();
   }, [selectedMenu, queryUserId]);
-
-  useEffect(() => {
-    if (!queryUserId || !user) return;
-
-    if (String(user?.id) === queryUserId) {
-      setQueryId(true);
-    }
-  }, [queryUserId, user]);
 
   return (
     <PhotoRightStyled>
       <div className="PhotoRight_wrap">
         <div className="PhotoRight_header">
-          {queryId && (
+          {queryUserId && (
             <button
               className="PhotoRight_btn Gulim"
               onClick={() => setWrite(true)}
@@ -154,9 +160,9 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                 <div className="PhotoRight_infos Gulim">
                   <p
                     className="PhotoRight_user"
-                    onClick={() => router.push(`/home/${data.writerId}}`)}
+                    onClick={() => router.push(`/home/${data.user.id}`)}
                   >
-                    {data.writer}
+                    {data.user.name}
                   </p>
                   <div className="PhotoRight_info">
                     <p className="PhotoRight_font">
@@ -192,18 +198,30 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                       : "일촌공개"}
                   </div>
                   <div className="PhotoRight_clips">
-                    <div>
-                      조회수
-                      {data.view_count ? data.view_count.toLocaleString() : 0}
+                    <div className="PhotoRight_clips">
+                      {/* 로그인 안 했으면 아무 버튼도 안 보여줌 */}
+                      {!userId ? null : userId === Number(data.user.id) &&
+                        !data.isScripted ? (
+                        // 로그인한 내가 쓴 글
+                        <div className="PhotoRight_btns">
+                          <button className="Gulim">수정</button>
+                          <button className="Gulim">삭제</button>
+                        </div>
+                      ) : data.isScripted ? (
+                        // 로그인한 남이 스크랩한 글
+                        <div className="PhotoRight_btns">
+                          <button className="Gulim">삭제</button>
+                        </div>
+                      ) : (
+                        // 로그인한 남이 스크랩 안 한 글
+                        <button
+                          className="PhotoRight_clipBtn Gulim"
+                          onClick={() => clipPhoto(data.id)}
+                        >
+                          스크랩
+                        </button>
+                      )}
                     </div>
-                    {user?.id !== queryUserId && (
-                      <button
-                        className="PhotoRight_clipBtn Gulim"
-                        onClick={() => clipPhoto(data.id)}
-                      >
-                        스크랩
-                      </button>
-                    )}
                   </div>
                 </div>
 

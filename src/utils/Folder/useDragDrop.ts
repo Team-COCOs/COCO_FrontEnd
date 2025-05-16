@@ -1,4 +1,5 @@
 import { TreeNode } from "./types";
+import { findNodeByKey } from "./useSearch";
 
 // 트리 속성 중 onDrag
 export const useDragDrop = (
@@ -11,17 +12,11 @@ export const useDragDrop = (
   ) => TreeNode[]
 ) => {
   const handleDrop = ({ dragNode, node, dropPosition, dropToGap }: any) => {
-    // 노드 찾기 -> drag, drop할 때 어떤 노드인지 알아야 해서
-    const findNodeByKey = (nodes: TreeNode[], key: string): TreeNode | null => {
-      for (const n of nodes) {
-        if (n.key === key) return n;
-        if (n.children) {
-          const found = findNodeByKey(n.children, key);
-          if (found) return found;
-        }
-      }
-      return null;
-    };
+    // 스크랩 폴더 안으로 드롭하려고 하면 막기
+    if (!dropToGap && node.title === "스크랩") {
+      alert("스크랩 폴더 안에는 항목을 넣을 수 없습니다.");
+      return;
+    }
 
     // 노드 제거
     const removeNode = (nodes: TreeNode[], key: string): TreeNode[] => {
