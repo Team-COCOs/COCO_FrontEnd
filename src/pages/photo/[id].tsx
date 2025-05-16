@@ -31,6 +31,7 @@ const MinihomePage = () => {
           <PhotoLeft
             selectedMenu={selectedMenu}
             setSelectedMenu={setSelectedMenu}
+            setWrite={setWrite}
           />
         }
         children={

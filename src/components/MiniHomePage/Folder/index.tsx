@@ -9,6 +9,7 @@ import { saveTreeData } from "@/utils/Folder/useFlattenTree";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
+import { findNodeByKey } from "@/utils/Folder/useSearch";
 
 interface FolderProps {
   type: string;
@@ -60,6 +61,11 @@ const Folder = ({ type, onSave }: FolderProps) => {
       );
     } else if (action === "delete") {
       checkedKeys.forEach((key) => {
+        const node = findNodeByKey(treeData, key);
+        if (node?.title === "스크랩") {
+          alert("스크랩 폴더는 삭제할 수 없습니다.");
+          return;
+        }
         updatedTreeData = deleteNodeByKey(updatedTreeData, key);
       });
     }
@@ -73,6 +79,12 @@ const Folder = ({ type, onSave }: FolderProps) => {
 
   // 수정 시작 -> 노드 제목 input으로
   const handleStartEditing = () => {
+    const node = findNodeByKey(treeData, checkedKeys[0]);
+    if (node?.title === "스크랩") {
+      alert("스크랩 폴더는 수정할 수 없습니다.");
+      return;
+    }
+
     if (checkedKeys.length === 1 && checkedKeys[0] !== editingKey) {
       const findTitle = (nodes: TreeNode[]): string | undefined => {
         for (const node of nodes) {
@@ -94,6 +106,11 @@ const Folder = ({ type, onSave }: FolderProps) => {
 
   // 수정 끝 -> 제목 적용
   const handleFinishEditing = () => {
+    if (editTitle.trim() === "스크랩") {
+      alert("폴더 이름을 '스크랩'으로 지정할 수 없습니다.");
+      return;
+    }
+
     const updatedTree = editNodeByKey(treeData, checkedKeys[0], editTitle);
     setTreeData(updatedTree);
 
@@ -148,19 +165,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
       .then((res) => {
         const fetchedData = res.data;
 
-        // 폴더 데이터가 비어있으면 기본 새 폴더 하나 생성
-        const dataToUse =
-          fetchedData.length === 0
-            ? [
-                {
-                  id: 0,
-                  title: "새 폴더",
-                  children: [],
-                },
-              ]
-            : fetchedData;
-
-        const nestedTreeData = dataToUse.map((item: any) => ({
+        const nestedTreeData = fetchedData.map((item: any) => ({
           key: String(item.id),
           title: item.title,
           isLeaf: false,
@@ -177,16 +182,6 @@ const Folder = ({ type, onSave }: FolderProps) => {
         }
 
         console.log("폴더 데이터 로딩 실패:", e);
-        // 에러 발생 시에도 새 폴더 하나는 보장
-        setTreeData([
-          {
-            key: "0",
-            title: "새 폴더",
-            isLeaf: false,
-            children: [],
-          },
-        ]);
-        setExpandedKeys(["0"]);
       });
   }, [type, userId]);
 
@@ -217,7 +212,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
 
       <div className="Folder_componentWrap">
         <Tree
-          draggable
+          draggable={(node) => node.title !== "스크랩"}
           treeData={treeData}
           checkable
           checkStrictly

@@ -165,6 +165,8 @@ const SignPage = () => {
       return;
     }
 
+    console.log("phone", phone);
+
     try {
       const cleanedPhone = phone.replace(/[^\d]/g, "");
 
@@ -174,6 +176,7 @@ const SignPage = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/auth/check/${type}`,
         data
       );
+
       if (response.data.exists) {
         if (type === "email") {
           setIsEmailDuplicate(true);

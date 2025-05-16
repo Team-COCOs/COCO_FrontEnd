@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { PhotoLeftStyled } from "./styled";
 import Folder from "../../Folder";
 import DynamicFolder from "../../DynamicFolder";
@@ -12,9 +12,11 @@ interface PhotoProps {
   setSelectedMenu: React.Dispatch<
     React.SetStateAction<{ id: number; title: string } | null>
   >;
+
+  setWrite: Dispatch<SetStateAction<boolean>>;
 }
 
-const PhotoLeft = ({ selectedMenu, setSelectedMenu }: PhotoProps) => {
+const PhotoLeft = ({ selectedMenu, setSelectedMenu, setWrite }: PhotoProps) => {
   // Folder 또는 DynamicFolder 전환용
   const [editMode, setEditMode] = useState(false);
 
@@ -34,6 +36,11 @@ const PhotoLeft = ({ selectedMenu, setSelectedMenu }: PhotoProps) => {
     setEditMode(true);
   };
 
+  const handleClickFolder = (menu: any) => {
+    setSelectedMenu(menu);
+    setWrite(false); // WritePage에서 벗어나기
+  };
+
   return (
     <PhotoLeftStyled className="PhotoLeft_wrap">
       <div className="PhotoLeft_title pixelFont">Photo Album</div>
@@ -44,7 +51,10 @@ const PhotoLeft = ({ selectedMenu, setSelectedMenu }: PhotoProps) => {
         <DynamicFolder
           type="photos"
           selectedMenu={selectedMenu}
-          onMenuSelect={(menu) => setSelectedMenu(menu)}
+          onMenuSelect={(menu) => {
+            setSelectedMenu(menu);
+            setWrite(false);
+          }}
         />
       )}
 

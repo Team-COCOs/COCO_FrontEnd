@@ -208,6 +208,25 @@ export const PhotoRightStyled = styled.div`
         display: flex;
         align-items: center;
         gap: 10px;
+
+        .PhotoRight_btns {
+          display: flex;
+          gap: 5px;
+
+          button {
+            padding: 2px 3px;
+            width: 35px;
+            font-size: 12px;
+            border: 1px solid rgb(164, 164, 164);
+            color: rgb(61, 61, 61);
+            border-radius: 3px;
+            cursor: pointer;
+
+            &:active {
+              background: linear-gradient(to top, #ffffff, #dddddd);
+            }
+          }
+        }
       }
 
       .PhotoRight_clipBtn {
