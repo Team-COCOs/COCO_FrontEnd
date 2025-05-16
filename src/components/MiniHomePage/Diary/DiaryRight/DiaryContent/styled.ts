@@ -51,7 +51,7 @@ export const DiaryContentStyle = styled.div`
     align-items: center;
     font-size: 11px;
     min-height: 20px;
-    padding: 5px 5px;
+    padding: 8px 5px;
     margin-bottom: 10px;
     color: #aaa;
     font-weight: bold;
