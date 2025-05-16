@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { SettingTabsStyled } from "./styled";
 import { useRouter } from "next/router";
 import axiosInstance from "@/lib/axios";
-import axios from "axios";
 import { useLanguage } from "@/context/LanguageContext";
 import { useTabs } from "@/context/TabsContext";
 const tabOptions = ["diary", "visitor", "photo", "coco"];

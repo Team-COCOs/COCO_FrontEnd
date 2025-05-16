@@ -127,7 +127,7 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
       <div
         className="Minihome_container"
         style={{
-          backgroundImage: backgroundColor ? "" : `url("/background.jpg")`,
+          backgroundImage: backgroundUrl ? `url("/background.jpg")` : "",
           backgroundColor: backgroundColor || "transparent",
           backgroundSize: "cover",
           backgroundPosition: "center",

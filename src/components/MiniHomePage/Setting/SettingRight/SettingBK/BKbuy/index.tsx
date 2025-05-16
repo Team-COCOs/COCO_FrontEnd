@@ -3,6 +3,8 @@ import { BKbuyStyled } from "./styled";
 import { useRouter } from "next/router";
 import axiosInstance from "@/lib/axios";
 import axios from "axios";
+import { useSkin } from "@/context/SkinContext";
+
 const BKbuy = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -12,6 +14,13 @@ const BKbuy = () => {
   );
   const [selectedDiary, setSelectedDiary] = useState("default-bk");
   const [selectedTab, setSelectedTab] = useState("default-tapcolor");
+  const { fetchSkin } = useSkin();
+
+  useEffect(() => {
+    if (typeof id === "string") {
+      fetchSkin(id);
+    }
+  }, [id, fetchSkin]);
 
   useEffect(() => {
     if (!id) return;
@@ -20,7 +29,6 @@ const BKbuy = () => {
       try {
         const response = await axiosInstance.get("/purchases");
         setHomepiBkData(response.data);
-        console.log(response.data, "전체 구매 배경 데이터?");
       } catch (e: any) {
         if (e.response?.status === 401) {
           alert("로그인이 필요합니다.");
