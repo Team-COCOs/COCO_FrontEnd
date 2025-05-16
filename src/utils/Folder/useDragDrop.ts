@@ -12,12 +12,6 @@ export const useDragDrop = (
   ) => TreeNode[]
 ) => {
   const handleDrop = ({ dragNode, node, dropPosition, dropToGap }: any) => {
-    // 스크랩 폴더 안으로 드롭하려고 하면 막기
-    if (!dropToGap && node.title === "스크랩") {
-      alert("스크랩 폴더 안에는 항목을 넣을 수 없습니다.");
-      return;
-    }
-
     // 노드 제거
     const removeNode = (nodes: TreeNode[], key: string): TreeNode[] => {
       return nodes

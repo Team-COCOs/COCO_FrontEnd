@@ -213,7 +213,7 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                           <button className="Gulim">삭제</button>
                         </div>
                       ) : (
-                        // 로그인한 남이 스크랩 안 한 글
+                        // 로그인한 남이 본 글
                         <button
                           className="PhotoRight_clipBtn Gulim"
                           onClick={() => clipPhoto(data.id)}
