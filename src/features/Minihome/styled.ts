@@ -24,7 +24,7 @@ export const MinihomeStyle = styled.div`
     width: 100%;
     height: 100%;
     display: flex;
-    background-image: url("/background.jpg");
+    /* background-image: url("/background.jpg"); */
     background-size: cover;
     background-position: center;
   }

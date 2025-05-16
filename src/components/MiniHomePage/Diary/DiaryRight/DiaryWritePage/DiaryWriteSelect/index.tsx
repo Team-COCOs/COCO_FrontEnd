@@ -28,7 +28,7 @@ const DiaryWriteSelect = () => {
         {/* 날씨 선택 */}
         <div className="DiaryWritePage_WeatherSelector">
           <span>날씨</span>
-          {["☀️", "🌤️", "🌧️", "⛈️", "❄️"].map((weather, index) => (
+          {["☀️", "🌤️", "🌧️", "⛈️", "☃️"].map((weather, index) => (
             <button
               key={index}
               className="DiaryWritePage_WeatherButton"
@@ -41,10 +41,9 @@ const DiaryWriteSelect = () => {
 
         {/* 감정 select */}
         <div className="DiaryWritePage_SelectWrapper">
-          <label>오늘의 기분</label>
           <select defaultValue="">
             <option value="" disabled>
-              선택하기
+              기분 선택
             </option>
             <option value="love">❤️</option>
             <option value="happy">✨</option>
@@ -56,7 +55,7 @@ const DiaryWriteSelect = () => {
 
         {/* 카테고리 select */}
         <div className="DiaryWritePage_SelectWrapper">
-          <label>카테고리</label>
+          <label>폴더 이름 : </label>
           <select defaultValue="">
             <option value="" disabled>
               선택하세요

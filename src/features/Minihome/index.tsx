@@ -53,6 +53,8 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
 
   // 미니홈피 기본 배경(체크무늬) 상태 관리
   const [backGroundData, setBackGroundData] = useState<any>(null);
+  const [backgroundUrl, setBackgroundUrl] = useState("");
+  const [backgroundColor, setBackgroundColor] = useState("");
 
   // 페이지가 처음 로드될 때 로딩 상태 종료
   useEffect(() => {
@@ -62,21 +64,49 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
     return () => clearTimeout(timer);
   }, []);
 
+  // 배경 바꿔주기
   useEffect(() => {
     const fetchBackGround = async () => {
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/useritems/minihomepis/${id}`
         );
-        setBackGroundData(response.data);
-        console.log(response.data, "배경색");
+        const data = response.data;
+        const dataArray = Array.isArray(data) ? data : [data];
+        // 배열로 만들기
+        const matched = dataArray.find(
+          (item: any) =>
+            item.name &&
+            (item.name.includes("pink") ||
+              item.name.includes("black") ||
+              item.name.includes("green"))
+        );
+
+        if (matched) {
+          setBackgroundUrl(""); // 배경 이미지는 사용 안 함
+
+          // 색상 조건 분기
+          if (matched.name.includes("pink")) {
+            setBackgroundColor("#e5c7dc"); // 분홍
+          } else if (matched.name.includes("black")) {
+            setBackgroundColor("black"); // 검정
+          } else if (matched.name.includes("green")) {
+            setBackgroundColor("#395f4a"); // 초록
+          }
+        } else {
+          setBackgroundUrl("/images/default_bg.jpg");
+          setBackgroundColor(""); // 기본 연회색
+        }
       } catch (e: any) {
-        console.error("이름 정보 불러오기 실패:", e);
+        console.error("배경 조회 실패:", e);
+        setBackgroundUrl("/images/default_bg.jpg");
+        setBackgroundColor("");
       }
     };
     fetchBackGround();
   }, [id]);
 
+  // 이름
   useEffect(() => {
     const fetchNames = async () => {
       try {
@@ -133,7 +163,15 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
 
   return (
     <MinihomeStyle className="Minihome_wrap">
-      <div className="Minihome_container">
+      <div
+        className="Minihome_container"
+        style={{
+          backgroundImage: backgroundColor ? "" : `url("/background.jpg")`,
+          backgroundColor: backgroundColor || "transparent",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         {isLoading ? (
           <Loading />
         ) : (
