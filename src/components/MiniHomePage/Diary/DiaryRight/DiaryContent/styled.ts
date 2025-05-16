@@ -6,28 +6,22 @@ export const DiaryContentStyle = styled.div`
     margin-top: 10px;
     margin-left: 5px;
     width: 100%;
-    border: 1.5px solid #eee;
-    border-radius: 3px;
+    border: 1.3px solid #ddd;
+    border-radius: 2px;
     position: relative;
     min-height: 250px;
     background-color: white;
+    padding: 0px 25px;
   }
 
   .DiaryContent_dateWrap {
-    padding: 3px 0px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    .DiaryContent_dateMM {
-      color: ${({ theme }) => theme.colors.tabColor};
-      letter-spacing: 2px;
-      font-size: 16px;
-    }
-    .DiaryContent_dateEE {
-      font-size: 12px;
-      color: #aaa;
-      letter-spacing: 1px;
-    }
+    padding: 21px 0px;
+    font-size: 11px;
+    font-weight: bolder;
+    letter-spacing: 1px;
+    color: rgb(51, 161, 194);
   }
   .DiaryContent_DotLine {
     display: block;
@@ -37,41 +31,41 @@ export const DiaryContentStyle = styled.div`
     width: 100%;
     margin-left: 5px;
   }
+  .DiaryContent_contentText {
+    font-size: 12px;
+    min-height: 100px;
+    padding-bottom: 10px;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+  }
+  .DiaryContent_Secret {
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    min-height: 20px;
+    padding: 5px 5px;
+    margin-bottom: 10px;
+    color: #aaa;
+    font-weight: bold;
+    letter-spacing: 1px;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+  }
   /* 반응형 */
   @media (max-width: 830px) {
     .DiaryContent_dateWrap {
-      .DiaryContent_dateMM {
-        font-size: 15px;
-      }
-
-      .DiaryContent_dateEE {
-        font-size: 10px;
-      }
     }
   }
   @media (max-width: 769px) {
     .DiaryContent_dateWrap {
-      .DiaryContent_dateMM {
-        font-size: 16px;
-      }
-
-      .DiaryContent_dateEE {
-        font-size: 10px;
-      }
     }
   }
   @media (max-width: 600px) {
     .DiaryContent_dateWrap {
-      .DiaryContent_dateMM {
-        font-size: 13px;
-      }
     }
   }
   @media (max-width: 480px) {
     .DiaryContent_dateWrap {
-      .DiaryContent_dateMM {
-        font-size: 12px;
-      }
     }
   }
   @media (max-width: 420px) {
@@ -79,13 +73,6 @@ export const DiaryContentStyle = styled.div`
       padding: 3px 10px;
     }
     .DiaryContent_dateWrap {
-      .DiaryContent_dateMM {
-        font-size: 9px;
-        width: 30px;
-      }
-      .DiaryContent_dateEE {
-        font-size: 5px;
-      }
     }
   }
 `;

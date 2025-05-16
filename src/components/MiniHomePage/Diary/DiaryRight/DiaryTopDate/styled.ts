@@ -31,7 +31,7 @@ export const DiaryTopDateStyle = styled.div`
     flex-direction: column;
     align-items: center;
     .DiaryTopDate_dateMM {
-      color: ${({ theme }) => theme.colors.tabColor};
+      color: rgb(51, 161, 194);
       letter-spacing: 2px;
       font-size: 16px;
     }
