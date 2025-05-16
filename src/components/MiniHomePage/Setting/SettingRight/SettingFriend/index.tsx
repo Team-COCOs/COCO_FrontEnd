@@ -7,13 +7,27 @@ import { useRouter } from "next/router";
 interface FriendData {
   id: number;
   userId: number;
+  friend: string;
   theirNaming: string;
   profile_image: string;
+  friend_gender: string;
 }
 
 const SettingFriend = () => {
   const [friend, setFriend] = useState<FriendData[]>([]);
   const router = useRouter();
+
+  const handleDelete = async (id: number) => {
+    if (confirm("정말 삭제하시겠습니까?")) {
+      try {
+        await axiosInstance.delete(`/friends/${id}`);
+        setFriend(friend.filter((f) => f.id !== id));
+        alert("삭제되었습니다!");
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
 
   useEffect(() => {
     const friends = async () => {
@@ -25,7 +39,7 @@ const SettingFriend = () => {
     };
 
     friends();
-  }, []);
+  }, [friend]);
 
   return (
     <SettingFriendStyle className="SettingFriend_wrap">
@@ -37,16 +51,44 @@ const SettingFriend = () => {
         {!friend || friend.length === 0 ? (
           <EmptyPage />
         ) : (
-          friend.map((d) => (
-            <div
-              key={d.id}
-              onClick={() => {
-                router.push(`/home/${d.userId}`);
-              }}
-            >
-              {d.theirNaming}
-            </div>
-          ))
+          <div className="Friend_grid">
+            {friend.map((d) => (
+              <div
+                key={d.id}
+                className="Friend_card"
+                onClick={() => router.push(`/home/${d.userId}`)}
+              >
+                <button
+                  className="Delete_btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(d.userId);
+                  }}
+                >
+                  ✕
+                </button>
+
+                <img
+                  src={
+                    d.profile_image === "/avatarImg/default.png"
+                      ? d.friend_gender === "man"
+                        ? "/avatarImg/man_avatar1.png"
+                        : "/avatarImg/woman_avatar1.png"
+                      : d.profile_image
+                  }
+                  alt="프로필"
+                  className="Friend_img"
+                />
+
+                <div className="Friend_text">
+                  <div className="Friend_name pixelFont">{d.friend}</div>
+                  <div className="Friend_naming pixelFont">
+                    ({d.theirNaming})
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </SettingFriendStyle>
