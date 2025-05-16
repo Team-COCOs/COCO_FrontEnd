@@ -2,10 +2,10 @@ import { PhotoRightStyled } from "./styled";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import EmptyPage from "@/components/EmptyPage";
 import axiosInstance from "@/lib/axios";
-import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import Comment from "./Comment";
+import DOMPurify from "dompurify";
 interface PhotoProps {
   selectedMenu: { id: number; title: string } | null;
   setWrite: Dispatch<SetStateAction<boolean>>;
@@ -20,25 +20,40 @@ interface CommentData {
   children: CommentData[]; // 대댓글
 }
 
+interface FolderData {
+  id: number;
+  title: string;
+}
+
 interface PhotoData {
   id: number; // PK
   title: string; // 제목
-  image: string; // 이미지
+  photo_url: string; // 이미지
   content: string; // 내용
   writer: string; // 작성자
   writerId: number; // 작성자 아이디(FK)
-  clip: number; // 스크랩 수
-  date: string; // 날짜
-  isPublic: string; // 전체 공개 / 일촌 공개 / 비공개
-  isClip: boolean; // 스크랩한 글인지 아닌지
-  folderId: number; // 폴더 아이디 (FK)
-  views: number; // 조회수
+  use_count: number; // 스크랩 수
+  created_at: string; // 날짜
+  visibility: string; // 전체 공개 / 일촌 공개 / 비공개
+  isScripted: boolean; // 스크랩한 글인지 아닌지
+  folder: FolderData; // 폴더
+  view_count: number; // 조회수
   comments: CommentData[]; // 댓글
 }
 
 const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
   const [photoData, setPhotoData] = useState<PhotoData[]>([]);
   const [queryId, setQueryId] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 5;
+
+  const indexOfLast = currentPage * itemsPerPage;
+  const indexOfFirst = indexOfLast - itemsPerPage;
+  const currentPhotos = photoData
+    ? photoData.slice(indexOfFirst, indexOfLast)
+    : [];
+  const totalPages = photoData ? Math.ceil(photoData.length / itemsPerPage) : 0;
 
   const { user } = useAuth();
   const userId = user?.id;
@@ -48,13 +63,15 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
 
   const getPhotoData = async () => {
     try {
-      const res = await axiosInstance.get(`/photos/my-photos/${userId}`);
+      const res = await axiosInstance.get(`/photos/${queryUserId}`);
 
       console.log("사진첩 : ", res.data);
 
       const filtered =
         selectedMenu &&
-        res.data.filter((item: PhotoData) => item.folderId === selectedMenu.id);
+        res.data.filter(
+          (item: PhotoData) => item.folder.id === selectedMenu.id
+        );
 
       setPhotoData(filtered);
     } catch (e: any) {
@@ -80,8 +97,8 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
   };
 
   useEffect(() => {
-    // getPhotoData();
-  }, [selectedMenu]);
+    queryUserId && getPhotoData();
+  }, [selectedMenu, queryUserId]);
 
   useEffect(() => {
     if (!queryUserId || !user) return;
@@ -105,48 +122,13 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
           )}
         </div>
         <div className="PhotoRight_content">
-          <div className="PhotoRight_title Gulim">
-            <span>[스크랩]</span>사프란블루_흐드르륵 언덕02
-          </div>
-
-          <div className="PhotoRight_infos Gulim">
-            <p className="PhotoRight_user">홍순애</p>
-            <div className="PhotoRight_info">
-              <p className="PhotoRight_font">2005.06.19 05:06</p>
-              <p>스크랩 0</p>
-            </div>
-          </div>
-
-          <div className="PhotoRight_imgBox">
-            <div className="PhotoRight_img">
-              <img src="/advertising/Advertising3.jpg" alt="photo" />
-            </div>
-          </div>
-
-          <div className="PhotoRight_isPublic Gulim">
-            <div>
-              공개설정 <span className="PhotoRight_line">|</span> 전체공개
-            </div>
-            <div className="PhotoRight_clips">
-              <div>조회수 1,000</div>
-              <button
-                className="PhotoRight_clipBtn Gulim"
-                // onClick={() => clipPhoto(data.id)}
-              >
-                스크랩
-              </button>
-            </div>
-          </div>
-
-          <Comment />
-
-          {photoData.length === 0 ? (
+          {!photoData || photoData.length == 0 ? (
             <EmptyPage />
           ) : (
-            photoData.map((data) => (
+            currentPhotos.map((data) => (
               <div key={data.id}>
                 <div className="PhotoRight_title Gulim">
-                  {data.isClip && <span>[스크랩]</span>}
+                  {data.isScripted && <span>[스크랩]</span>}
                   {data.title}
                 </div>
 
@@ -158,24 +140,41 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                     {data.writer}
                   </p>
                   <div className="PhotoRight_info">
-                    <p className="PhotoRight_font">{data.date}</p>
-                    <p>스크랩 {data.clip}</p>
+                    <p className="PhotoRight_font">{data.created_at}</p>
+                    <p>스크랩 {data.use_count}</p>
                   </div>
                 </div>
 
                 <div className="PhotoRight_imgBox">
                   <div className="PhotoRight_img">
-                    <img src={data.image} alt="photo" />
+                    <img
+                      src={`http://localhost:5001${data.photo_url}`}
+                      alt="photo"
+                    />
                   </div>
                 </div>
+
+                <div
+                  className="PhotoRight_text"
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(data.content),
+                  }}
+                />
 
                 <div className="PhotoRight_isPublic Gulim">
                   <div>
                     공개설정 <span className="PhotoRight_line">|</span>
-                    {data.isPublic}
+                    {data.visibility === "public"
+                      ? "모두공개"
+                      : data.visibility === "private"
+                      ? "비공개"
+                      : "일촌공개"}
                   </div>
                   <div className="PhotoRight_clips">
-                    <div>조회수 {data.views.toLocaleString()}</div>
+                    <div>
+                      조회수
+                      {data.view_count ? data.view_count.toLocaleString() : 0}
+                    </div>
                     {user?.id !== queryUserId && (
                       <button
                         className="PhotoRight_clipBtn Gulim"
@@ -195,6 +194,24 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
             ))
           )}
         </div>
+
+        {photoData && photoData.length > 0 && (
+          <div className="PhotoRight_footer">
+            <div className="PhotoRight_pageNation">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (pageNum) => (
+                  <button
+                    key={pageNum}
+                    onClick={() => setCurrentPage(pageNum)}
+                    className={currentPage === pageNum ? "active" : ""}
+                  >
+                    {pageNum}
+                  </button>
+                )
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </PhotoRightStyled>
   );

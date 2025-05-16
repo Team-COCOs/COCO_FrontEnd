@@ -44,15 +44,14 @@ const WritePage = () => {
     },
   ];
 
-  // 폴더 불러오기
   useEffect(() => {
+    // 폴더 불러오기
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/photos/folderList`, {
         params: { userId },
       })
       .then((res) => {
         setFolder(res.data);
-        console.log("폴더 : ", res.data);
       })
       .catch((e) => {
         console.log("폴더 데이터 로딩 실패:", e);
@@ -66,18 +65,12 @@ const WritePage = () => {
     if (!selectedFolder) return alert("폴더를 선택해주세요.");
     if (!visibility) return alert("공개 여부를 선택해주세요.");
 
-    console.log("저장 공개 여부", visibility);
-
     // 에디터 HTML 추출
-    const htmlContent = String(editorRef.current?.getHtml());
-
-    console.log("텍스트 어떻게 옴?", convertHtmlToJsxString(htmlContent));
-
-    const jsxContent = convertHtmlToJsxString(htmlContent);
+    const htmlContent = editorRef.current?.getHtml() || "";
 
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("content", jsxContent);
+    formData.append("content", htmlContent);
     formData.append("folderId", String(selectedFolder.id));
     formData.append("visibility", visibility);
     if (file) {
@@ -88,8 +81,6 @@ const WritePage = () => {
       console.log(`${key}:`, value);
     }
 
-    console.log(file);
-
     try {
       const res = await axiosInstance.post("/photos/save", formData, {
         headers: {
@@ -99,7 +90,7 @@ const WritePage = () => {
       alert("저장 완료!");
 
       console.log("저장 대답 : ", res.data);
-      // window.location.reload();
+      window.location.reload();
     } catch (e) {
       console.log("저장 실패:", e);
     }
@@ -117,14 +108,6 @@ const WritePage = () => {
       setFileName(file.name);
     }
   };
-
-  useEffect(() => {
-    console.log("폴더 잘 오는감?", selectedFolder);
-  }, [selectedFolder]);
-
-  useEffect(() => {
-    console.log("공개 여부 : ", visibility);
-  }, [visibility]);
 
   // 어느 폴더에 저장할 건지 선택해야함.
   return (

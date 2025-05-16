@@ -2,6 +2,8 @@ import { SettingRightStyled } from "./styled";
 import { useEffect } from "react";
 import SettingTabs from "./SettingTabs";
 import SettingBK from "./SettingBK";
+import SettingMyInfo from "./SettingMyInfo";
+import SettingFriend from "./SettingFriend";
 
 interface SettingSelectedMenu {
   type?: string;
@@ -15,12 +17,12 @@ const SettingRight = ({
 }) => {
   const renderContent = () => {
     if (!settingSelectedMenu) {
-      return <div>일촌 관리</div>;
+      return <SettingFriend />;
     }
 
     switch (settingSelectedMenu.title) {
       case "일촌 관리":
-        return <div>일촌 관리</div>;
+        return <SettingFriend />;
       case "미니홈피 효과":
         return (
           <div>
@@ -34,9 +36,9 @@ const SettingRight = ({
           </div>
         );
       case "내 정보 수정":
-        return <div>내 정보 수정</div>;
+        return <SettingMyInfo />;
       default:
-        return <div>일촌 관리</div>;
+        return <SettingFriend />;
     }
   };
   return (
