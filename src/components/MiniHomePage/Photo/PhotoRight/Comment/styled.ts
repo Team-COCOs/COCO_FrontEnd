@@ -9,6 +9,7 @@ export const CommentStyle = styled.div`
     padding: 10px 15px;
     background-color: rgb(241, 241, 241);
     margin-top: 10px;
+    margin-bottom: 30px;
     font-weight: bold;
     font-size: 13px;
     width: 100%;

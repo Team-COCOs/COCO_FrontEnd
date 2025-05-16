@@ -9,10 +9,18 @@ export const WritePageStyle = styled.div`
     justify-content: center;
     gap: 10px;
 
+    @media (max-width: 768px) {
+      padding: 10px;
+    }
+
     .WritePage_title {
       display: flex;
       align-items: center;
       gap: 10px;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+      }
 
       .WritePage_none {
         display: none;
@@ -23,6 +31,11 @@ export const WritePageStyle = styled.div`
         width: 40px;
         font-size: 13px;
         font-weight: bold;
+
+        @media (max-width: 768px) {
+          width: 100%;
+          text-align: center;
+        }
       }
 
       input {
@@ -32,6 +45,18 @@ export const WritePageStyle = styled.div`
         padding: 5px 10px;
         border: 1px solid rgb(161, 161, 161);
 
+        @media (max-width: 1020px) {
+          width: 90%;
+        }
+
+        @media (max-width: 890px) {
+          width: 80%;
+        }
+
+        @media (max-width: 768px) {
+          width: 98%;
+        }
+
         &:active,
         &:focus {
           outline: none;
@@ -40,6 +65,16 @@ export const WritePageStyle = styled.div`
 
       .WritePage_dropDown {
         width: 20%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        @media (max-width: 1020px) {
+          width: 25%;
+        }
+
+        @media (max-width: 768px) {
+          width: 98%;
+        }
 
         .WritePage_btn {
           width: 100%;
@@ -54,6 +89,10 @@ export const WritePageStyle = styled.div`
           border: 1px solid rgb(161, 161, 161);
           border-radius: 3px;
           cursor: pointer;
+
+          @media (max-width: 1180px) {
+            font-size: 12px;
+          }
 
           &:active {
             background: linear-gradient(to top, #ffffff, #dddddd);

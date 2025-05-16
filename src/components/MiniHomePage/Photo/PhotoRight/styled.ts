@@ -14,6 +14,7 @@ export const PhotoRightStyled = styled.div`
     padding: 10px;
     width: 98%;
     height: 95%;
+    margin: 0 auto;
     white-space: normal;
     overflow-y: auto;
     overflow-x: hidden;
@@ -226,6 +227,39 @@ export const PhotoRightStyled = styled.div`
         font-size: 10px;
         font-weight: 100;
         margin: 0 2px;
+      }
+    }
+
+    .PhotoRight_footer {
+      width: 100%;
+
+      @media (max-width: 768px) {
+        margin-top: 20px;
+      }
+
+      .PhotoRight_pageNation {
+        display: flex;
+        gap: 7px;
+        justify-content: center;
+        align-items: center;
+
+        button {
+          all: unset;
+          background-color: white;
+          border-top: none;
+          border-bottom: none;
+          border-left: 2px solid rgb(231, 231, 231);
+          border-right: 2px solid rgb(231, 231, 231);
+          padding: 0 5px;
+          color: rgb(157, 157, 157);
+          font-size: 13px;
+          font-weight: bold;
+          cursor: pointer;
+
+          &.active {
+            color: ${({ theme }) => theme.colors.mainColor};
+          }
+        }
       }
     }
 
