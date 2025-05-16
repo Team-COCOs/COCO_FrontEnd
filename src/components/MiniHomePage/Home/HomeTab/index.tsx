@@ -11,7 +11,6 @@ interface HomeTabProps {
   isOwner: boolean;
 }
 
-const DEFAULT_TABS = ["photo", "diary", "visitor", "coco"];
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
 const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
@@ -30,29 +29,6 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
       fetchSkin(id);
     }
   }, [id, fetchSkin]);
-
-  // 메인 홈 탭 불러오기
-  // useEffect(() => {
-  //   if (!id) return;
-  //   const fetchTabs = async () => {
-  //     try {
-  //       const { data } = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_API_URL}/useritems/tabs/${id}`
-  //       );
-
-  //       if (Array.isArray(data) && data.length === 0) {
-  //         setUserTabs(DEFAULT_TABS);
-  //       } else {
-  //         setUserTabs(data);
-  //       }
-  //     } catch (error) {
-  //       console.error("탭 불러오기 실패", error);
-  //       setUserTabs(DEFAULT_TABS);
-  //     }
-  //   };
-
-  //   fetchTabs();
-  // }, [id]);
 
   // 홈 탭 필터
   const filteredTabs = Object.entries(TAB_LABELS).filter(([key]) => {
