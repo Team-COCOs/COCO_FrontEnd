@@ -100,6 +100,29 @@ export const DiaryContentStyle = styled.div`
     font-weight: bold;
     cursor: pointer;
   }
+  .DiaryContent_fixDeletebtn {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: ${({ theme }) => theme.colors.mainColor};
+    margin-top: 15px;
+    padding-right: 12px;
+    span {
+      font-size: 13px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 2px;
+    }
+    button {
+      background-color: transparent;
+      border: none;
+      color: ${({ theme }) => theme.colors.mainColor};
+      font-size: 11px;
+      cursor: pointer;
+    }
+  }
 
   /* 다이어리 내용 검색 */
   .DiaryContent_findwrap {

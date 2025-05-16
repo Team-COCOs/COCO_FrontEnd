@@ -18,7 +18,7 @@ const DiaryWriteEditor = () => {
 
   return (
     <DiaryWriteEditorStyle className="WritePage_wrap">
-      에디터
+      글쓰기
     </DiaryWriteEditorStyle>
   );
 };
