@@ -14,7 +14,7 @@ export const HomeTabStyled = styled.div`
     width: 75%;
     font-size: 10.5px;
     font-weight: bolder;
-    background-color: ${({ theme }) => theme.colors.tabColor};
+    /* background-color: ${({ theme }) => theme.colors.tabColor}; */
     margin-bottom: 3.5px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -51,6 +51,10 @@ export const HomeTabStyled = styled.div`
       font-size: 8px;
     }
   }
+  /* .HomeTab_item.active.black {
+    background-color: rgb(255, 255, 255) !important;
+    color: black;
+  } */
   .HomeTab_item.active {
     background-color: #ffffff;
     color: black;

@@ -24,7 +24,6 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
   const [profile, setProfile] = useState<any>(null);
 
   useEffect(() => {
-    console.log(id, "id");
     const fetchUserInfo = async () => {
       try {
         const res = await axios.get(
@@ -72,7 +71,6 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
         );
 
         setProfile(response.data);
-        console.log(response.data, "profile?");
       } catch (err: any) {
         if (err.response?.status === 404) {
           alert("존재하지 않는 페이지입니다.");

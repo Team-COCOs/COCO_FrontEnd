@@ -22,6 +22,9 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
   const [userTabs, setUserTabs] = useState<string[]>([]);
   const [language, setLanguage] = useState<string>("ko");
 
+  // 탭 색깔
+  const [tabBackgroundColor, setTabBackgroundColor] = useState("");
+
   // 메인 홈 탭 불러오기
   useEffect(() => {
     if (!id) return;
@@ -72,18 +75,66 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
     fetchLanguageSettings();
   }, [id]);
 
+  // 메인 홈 탭 배경 색 불러오기
+  useEffect(() => {
+    const fetchTabBackGround = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/useritems/tapcolor/${id}`
+        );
+        const data = response.data;
+        const dataArray = Array.isArray(data) ? data : [data];
+        // 배열로 만들기
+        const matched = dataArray.find(
+          (item: any) =>
+            item.name &&
+            (item.name.includes("pink") ||
+              item.name.includes("black") ||
+              item.name.includes("blue"))
+        );
+
+        if (matched) {
+          // 색상 조건 분기
+          if (matched.name.includes("blue")) {
+            setTabBackgroundColor("#697dff"); // 파랑
+          } else if (matched.name.includes("black")) {
+            setTabBackgroundColor("black"); // 검정
+          } else if (matched.name.includes("pink")) {
+            setTabBackgroundColor("#ffadbf"); // 핑크
+          }
+        } else {
+          setTabBackgroundColor("#2686a3");
+        }
+      } catch (e: any) {
+        console.error("다이어리 배경 조회 실패:", e);
+        setTabBackgroundColor("#2686a3");
+      }
+    };
+    fetchTabBackGround();
+  }, [id]);
   return (
     <HomeTabStyled>
       <div className="HomeTab_wrap">
         {filteredTabs.map(([key, label]) => (
           <div
             key={key}
-            className={`HomeTab_item ${
-              currentTab === key ? "active" : ""
-            } dotumFont HomeTab_number_title`}
+            className={`HomeTab_item 
+  ${currentTab === key ? "active" : ""} 
+  dotumFont 
+  HomeTab_number_title 
+  ${currentTab === key && tabBackgroundColor === "black" ? "black" : ""}
+`}
             onClick={() => {
               router.push(`/${key}/${id}`);
             }}
+            style={
+              currentTab === key
+                ? { backgroundColor: "#ffffff", color: "black" } // 현재 탭: 흰 배경 + 검정 글씨
+                : {
+                    backgroundColor: tabBackgroundColor || "#2686a3",
+                    color: "white",
+                  }
+            }
           >
             {language === "en" ? capitalize(key) : label}
           </div>
