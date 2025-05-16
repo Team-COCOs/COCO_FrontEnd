@@ -15,6 +15,7 @@ import { SkinProvider } from "@/context/SkinContext";
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { id } = router.query;
 
   useEffect(() => {
     let startTime = 0;

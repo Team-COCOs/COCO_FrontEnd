@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSkin } from "@/context/SkinContext";
-
+import { useLanguage } from "@/context/LanguageContext";
 interface HomeTabProps {
   activeTab: string;
   isOwner: boolean;
@@ -21,8 +21,7 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
   const currentTab = router.pathname.split("/")[1];
 
   const [userTabs, setUserTabs] = useState<string[]>([]);
-  const [language, setLanguage] = useState<string>("ko");
-
+  const { language } = useLanguage();
   // 탭 색깔
   const { tabBackgroundColor, fetchSkin } = useSkin();
 
@@ -63,23 +62,6 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
     const isOtherVisibleTab = key !== "setting" && key !== "profile";
     return isHomeTab || isOwnerTab || (allowed && isOtherVisibleTab);
   });
-
-  // 메인 홈 탭 언어 기본 설정 불러오기
-  useEffect(() => {
-    if (!id) return;
-    const fetchLanguageSettings = async () => {
-      try {
-        const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/useritems/language/${id}`
-        );
-        setLanguage(data);
-        console.log(data, "tab 데이터 오는지");
-      } catch (error) {
-        console.error("설정 불러오기 실패:", error);
-      }
-    };
-    fetchLanguageSettings();
-  }, [id]);
 
   return (
     <HomeTabStyled>

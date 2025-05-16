@@ -3,6 +3,7 @@ import { SettingTabsStyled } from "./styled";
 import { useRouter } from "next/router";
 import axiosInstance from "@/lib/axios";
 import axios from "axios";
+import { useLanguage } from "@/context/LanguageContext";
 
 const tabOptions = ["diary", "visitor", "photo", "coco"];
 const languageOptions = [
@@ -13,9 +14,8 @@ const languageOptions = [
 const SettingTabs = () => {
   const router = useRouter();
   const { id } = router.query;
-
   const [selectedTabs, setSelectedTabs] = useState<string[]>([]);
-  const [language, setLanguage] = useState<string>("ko");
+  const { language, setLanguage } = useLanguage();
 
   // 탭 기본 설정 불러오기
   useEffect(() => {
@@ -56,21 +56,20 @@ const SettingTabs = () => {
   };
 
   // 언어 불러오기
-  useEffect(() => {
-    if (!id) return;
-    const fetchLanguage = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/useritems/language/${id}`
-        );
-        setLanguage(response.data);
-        console.log(response.data, "언어 불러오기");
-      } catch (error) {
-        console.error("언어 설정 저장 실패:", error);
-      }
-    };
-    fetchLanguage();
-  }, [id]);
+  // useEffect(() => {
+  //   if (!id) return;
+  //   const fetchLanguage = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${process.env.NEXT_PUBLIC_API_URL}/useritems/language/${id}`
+  //       );
+  //       setLanguage(response.data);
+  //     } catch (error) {
+  //       console.error("언어 설정 불러오기 실패:", error);
+  //     }
+  //   };
+  //   fetchLanguage();
+  // }, [id, setLanguage]);
 
   // 언어 설정 저장
   const handleLanguageSubmit = async () => {
@@ -120,7 +119,7 @@ const SettingTabs = () => {
                     type="radio"
                     value={value}
                     checked={language === value}
-                    onChange={(e) => setLanguage(e.target.value)}
+                    onChange={(e) => setLanguage(e.target.value as "ko" | "en")}
                   />
                   {label}
                 </label>
