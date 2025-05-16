@@ -93,7 +93,7 @@ export const DiaryContentStyle = styled.div`
     border: 1px solid rgb(195, 195, 195);
     background-color: rgb(251, 251, 251);
     color: #4b4b4b;
-    padding: 3.5px 5px;
+    padding: 3px 5px;
     font-size: 10px;
     border-radius: 3px;
     margin-left: 3px;

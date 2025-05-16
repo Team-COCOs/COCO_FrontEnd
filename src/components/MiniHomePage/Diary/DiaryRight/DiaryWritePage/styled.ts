@@ -9,15 +9,17 @@ export const DiaryWritePageStyle = styled.div`
   }
   .WritePage_wrap_SelectWrap {
     width: 100%;
-    height: 20%;
+    padding: 10px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: red;
+    border-top: 1.5px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin-top: 31.5px;
   }
   .WritePage_wrap_EditorWrap {
     width: 100%;
-    height: 70%;
+    height: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
