@@ -2,8 +2,10 @@ import { useState, useEffect, ReactNode } from "react";
 import { MinihomeStyle } from "./styled";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
+
 import Cookies from "js-cookie";
 import axios from "axios";
+import axiosInstance from "@/lib/axios";
 // 미니홈피 투데이
 import HomeTodayTitle from "@/components/MiniHomePage/Home/HomeTodayTitle";
 // 미니홈피 이름
@@ -17,7 +19,6 @@ import HomeMusicRight from "@/components/MiniHomePage/Home/HomeMusicRight";
 import FriendModal from "@/components/MiniHomePage/FriendModal";
 // 로딩 중
 import Loading from "@/components/Loading";
-import axiosInstance from "@/lib/axios";
 
 interface MinihomeLayoutProps {
   tapChildren: ReactNode;
@@ -29,7 +30,6 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
   const { user } = useAuth();
   const isOwner = String(user?.id) === id;
   const router = useRouter();
-
   // 탭 상태 관리
   const [activeTab, setActiveTab] = useState<string>("home");
   // 모달
@@ -51,6 +51,9 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
     setActiveTab(tab);
   };
 
+  // 미니홈피 기본 배경(체크무늬) 상태 관리
+  const [backGroundData, setBackGroundData] = useState<any>(null);
+
   // 페이지가 처음 로드될 때 로딩 상태 종료
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -60,12 +63,26 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
   }, []);
 
   useEffect(() => {
+    const fetchBackGround = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/useritems/minihomepis/${id}`
+        );
+        setBackGroundData(response.data);
+        console.log(response.data, "배경색");
+      } catch (e: any) {
+        console.error("이름 정보 불러오기 실패:", e);
+      }
+    };
+    fetchBackGround();
+  }, [id]);
+
+  useEffect(() => {
     const fetchNames = async () => {
       try {
         const response = await axiosInstance.get(`/friends/names/${id}`, {
           withCredentials: true,
         });
-        console.log(response.data, "???");
         setRequesterName(response.data.requesterName);
         setReceiverName(response.data.receiverName);
         setRequesterImage(response.data.requesterImage);

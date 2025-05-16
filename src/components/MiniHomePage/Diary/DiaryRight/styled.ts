@@ -73,6 +73,10 @@ export const DiaryRightStyled = styled.div`
       height: 100%;
       padding-left: 10px;
     }
+    .DiaryWritePage_component_wrap {
+      width: 100%;
+      height: 100%;
+    }
     @media (max-width: 1024px) {
       .DiaryRight_component_wrap {
         padding-left: 0px;

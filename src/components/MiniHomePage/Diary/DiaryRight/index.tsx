@@ -1,17 +1,52 @@
 import { DiaryRightStyled } from "./styled";
 import { useEffect, useState } from "react";
+import { format } from "date-fns";
+import DiaryWritePage from "./DiaryWritePage";
+import DiaryTopDate from "./DiaryTopDate";
+import DiaryContent from "./DiaryContent";
 
 interface DiaryProps {
   selectedDiaryMenu: { id: number; title: string } | null;
+  selectedDate: Date | null;
 }
 
-const DiaryRight = ({ selectedDiaryMenu }: DiaryProps) => {
+const DiaryRight = ({ selectedDate, selectedDiaryMenu }: DiaryProps) => {
+  const [diaryWrite, setDiaryWrite] = useState<boolean>(false);
+
   return (
     <DiaryRightStyled>
       <div className="DiaryRight_wrap">
         <div className="DiaryRight_component_wrap">
-          {selectedDiaryMenu?.title}
-          <div></div>
+          {/* 여기부터 컴포넌트 */}
+          {/* 상단 날짜 밑 글쓰기 버튼 */}
+          {!diaryWrite ? (
+            <div>
+              <DiaryTopDate
+                selectedDate={selectedDate}
+                selectedDiaryMenu={selectedDiaryMenu}
+                setDiaryWrite={setDiaryWrite}
+              />
+              <DiaryContent
+                selectedDate={selectedDate}
+                selectedDiaryMenu={selectedDiaryMenu}
+                setDiaryWrite={setDiaryWrite}
+              />
+            </div>
+          ) : (
+            <div className="DiaryWritePage_component_wrap">
+              <DiaryWritePage setDiaryWrite={setDiaryWrite} />
+            </div>
+          )}
+
+          {/* {selectedDiaryMenu?.title}
+          {selectedDiaryMenu?.id}
+          <div>
+            {selectedDate ? (
+              <p>{format(selectedDate, "yyyy-MM-dd")}</p>
+            ) : (
+              <p>날짜를 선택하지 않았습니다.</p>
+            )}
+          </div> */}
         </div>
       </div>
     </DiaryRightStyled>

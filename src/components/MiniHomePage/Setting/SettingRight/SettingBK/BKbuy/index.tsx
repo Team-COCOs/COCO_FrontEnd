@@ -47,10 +47,6 @@ const BKbuy = () => {
         );
         setSelectedDiary(diaryRes.data?.id || "default-bk");
         setSelectedTab(tabRes.data?.id || "default-tapcolor");
-
-        console.log(minihomepisRes.data?.id, "minihomepisRes.data?.id");
-        console.log(diaryRes.data?.id, "diaryRes.data?.id");
-        console.log(tabRes.data?.id, "tabRes.data?.id");
       } catch (e) {
         console.error("초기 설정값 불러오기 실패", e);
       }
@@ -103,9 +99,6 @@ const BKbuy = () => {
     ...homepiBkData.filter((x) => x.storeItems.category === "tapcolor"),
   ];
 
-  useEffect(() => {
-    console.log(onlytab, "onlytab?");
-  });
   const saveUserThemes = async () => {
     try {
       await Promise.all([
@@ -119,10 +112,9 @@ const BKbuy = () => {
           purchaseId: selectedMinihomepis,
         }),
       ]);
-      console.log("모든 테마 저장 완료!");
-      console.log(selectedTab, "selectedTab");
-      console.log(selectedDiary, "selectedDiary");
-      console.log(selectedMinihomepis, "selectedMinihomepis");
+
+      alert("미니홈피 효과 저장 완료!");
+      router.push(`/home/${id}`);
     } catch (error) {
       console.error("테마 저장 중 오류 발생:", error);
     }
@@ -163,7 +155,7 @@ const BKbuy = () => {
                     <input
                       type="radio"
                       value={String(x.id)}
-                      name={"diary_background"}
+                      name="diary_background"
                       checked={String(selectedDiary) === String(x.id)}
                       onChange={(e) => setSelectedDiary(e.target.value)}
                     ></input>
