@@ -32,7 +32,7 @@ export const saveTreeData = async (
 ) => {
   const flat = flattenTreeData(treeData);
   try {
-    const res = await axiosInstance.post(`/${type}/saveTree`, {
+    const res = await axiosInstance.patch(`/${type}/saveTree`, {
       folders: flat,
     });
     console.log("트리 저장 성공", res.data);
