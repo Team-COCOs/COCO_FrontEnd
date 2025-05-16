@@ -17,11 +17,19 @@ export const DiaryContentStyle = styled.div`
   .DiaryContent_dateWrap {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 21px 0px;
     font-size: 11px;
     font-weight: bolder;
     letter-spacing: 1px;
     color: rgb(51, 161, 194);
+  }
+  .DiaryContent_weather {
+    padding-left: 5px;
+    font-size: 15px;
+  }
+  .DiaryContent_now {
+    color: #aaa;
   }
   .DiaryContent_DotLine {
     display: block;

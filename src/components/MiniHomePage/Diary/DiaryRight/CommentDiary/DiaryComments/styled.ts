@@ -5,7 +5,7 @@ export const DiaryCommentsStyle = styled.div`
     width: 100%;
   }
   .DiaryComments_mapwrap {
-    font-size: 12px;
+    font-size: 11px;
     img {
       width: 10px;
       margin-left: 5px;

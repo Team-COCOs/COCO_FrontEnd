@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const CommentDiaryStyle = styled.div`
   .CommentDiary_wrap {
     margin-top: 10px;
+    margin-bottom: 15px;
     width: 100%;
     border: 1px solid #ddd;
     background-color: #f2f2f2;
