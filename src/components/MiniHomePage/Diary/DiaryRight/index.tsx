@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import DiaryWritePage from "./DiaryWritePage";
 import DiaryTopDate from "./DiaryTopDate";
+import DiaryContent from "./DiaryContent";
 
 interface DiaryProps {
   selectedDiaryMenu: { id: number; title: string } | null;
@@ -19,11 +20,18 @@ const DiaryRight = ({ selectedDate, selectedDiaryMenu }: DiaryProps) => {
           {/* 여기부터 컴포넌트 */}
           {/* 상단 날짜 밑 글쓰기 버튼 */}
           {!diaryWrite ? (
-            <DiaryTopDate
-              selectedDate={selectedDate}
-              selectedDiaryMenu={selectedDiaryMenu}
-              setDiaryWrite={setDiaryWrite}
-            />
+            <div>
+              <DiaryTopDate
+                selectedDate={selectedDate}
+                selectedDiaryMenu={selectedDiaryMenu}
+                setDiaryWrite={setDiaryWrite}
+              />
+              <DiaryContent
+                selectedDate={selectedDate}
+                selectedDiaryMenu={selectedDiaryMenu}
+                setDiaryWrite={setDiaryWrite}
+              />
+            </div>
           ) : (
             <div className="DiaryWritePage_component_wrap">
               <DiaryWritePage setDiaryWrite={setDiaryWrite} />

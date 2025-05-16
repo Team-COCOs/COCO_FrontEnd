@@ -15,7 +15,7 @@ export const DiaryTopDateStyle = styled.div`
     width: 100%;
     height: 100%;
     bottom: 3px;
-    right: 4px;
+    right: 3px;
     display: flex;
     align-items: center;
     justify-content: space-between;
