@@ -46,7 +46,7 @@ export const DiaryTopDateStyle = styled.div`
     font-weight: border;
   }
   .DiaryTopDate_diaryWriteBtn {
-    background-color: white;
+    background-color: rgb(248, 248, 248);
     border-radius: 5px;
     border: 1.5px solid #ddd;
     padding: 4px 6px;

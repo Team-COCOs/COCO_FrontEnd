@@ -1,6 +1,7 @@
 import { DiaryContentStyle } from "./styled";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
+import CommentDiary from "../CommentDiary";
 
 interface DiaryContentProps {
   selectedDate: Date | null;
@@ -27,10 +28,14 @@ const DiaryContent = ({
             내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
           </div>
         </div>
+        <div>
+          <CommentDiary />
+        </div>
         <div className="DiaryContent_Secret Gulim">
           <div>공개설정 : 전체공개</div>
         </div>
       </div>
+
       <span className="DiaryContent_DotLine"></span>
     </DiaryContentStyle>
   );
