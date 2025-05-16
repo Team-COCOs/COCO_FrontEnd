@@ -6,6 +6,8 @@ const SettingMyInfo = () => {
       <div className="SettingMyInfo_header">
         <div className="SettingMyInfo_title Gulim">내 정보 수정하기</div>
       </div>
+
+      <div className="SettingMyInfo_body"></div>
     </SettingMyInfoStyle>
   );
 };

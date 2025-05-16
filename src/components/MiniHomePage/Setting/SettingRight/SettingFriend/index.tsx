@@ -3,6 +3,7 @@ import { SettingFriendStyle } from "./styled";
 import axiosInstance from "@/lib/axios";
 import EmptyPage from "@/components/EmptyPage";
 import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
 
 interface FriendData {
   id: number;
@@ -16,6 +17,7 @@ interface FriendData {
 const SettingFriend = () => {
   const [friend, setFriend] = useState<FriendData[]>([]);
   const router = useRouter();
+  const { user } = useAuth();
 
   const handleDelete = async (id: number) => {
     if (confirm("정말 삭제하시겠습니까?")) {
@@ -31,11 +33,17 @@ const SettingFriend = () => {
 
   useEffect(() => {
     const friends = async () => {
-      const res = await axiosInstance.get("/friends/list");
+      try {
+        const res = await axiosInstance.get("/friends/list");
 
-      console.log("친구", res.data.friends);
-
-      setFriend(res.data.friends);
+        setFriend(res.data.friends);
+      } catch (e: any) {
+        if (e.response?.status === 401) {
+          alert("로그인이 필요합니다.");
+          router.push(`/home/${user?.id}`);
+        }
+        console.log(e);
+      }
     };
 
     friends();
