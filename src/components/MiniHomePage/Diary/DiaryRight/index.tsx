@@ -25,10 +25,12 @@ const DiaryRight = ({ selectedDate, selectedDiaryMenu }: DiaryProps) => {
               setDiaryWrite={setDiaryWrite}
             />
           ) : (
-            <DiaryWritePage />
+            <div className="DiaryWritePage_component_wrap">
+              <DiaryWritePage setDiaryWrite={setDiaryWrite} />
+            </div>
           )}
 
-          {selectedDiaryMenu?.title}
+          {/* {selectedDiaryMenu?.title}
           {selectedDiaryMenu?.id}
           <div>
             {selectedDate ? (
@@ -36,7 +38,7 @@ const DiaryRight = ({ selectedDate, selectedDiaryMenu }: DiaryProps) => {
             ) : (
               <p>날짜를 선택하지 않았습니다.</p>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </DiaryRightStyled>

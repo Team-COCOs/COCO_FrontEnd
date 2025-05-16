@@ -12,7 +12,11 @@ interface FolderItem {
   parent_id: number | null;
 }
 
-const DiaryWritePage = () => {
+interface DiaryWritePageProps {
+  setDiaryWrite: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const DiaryWritePage = ({ setDiaryWrite }: DiaryWritePageProps) => {
   const router = useRouter();
   const { id } = router.query;
   const { user } = useAuth();
@@ -45,11 +49,20 @@ const DiaryWritePage = () => {
 
   return (
     <DiaryWritePageStyle className="WritePage_wrap">
-      <div>
+      <div className="WritePage_wrap_SelectWrap">
         <DiaryWriteSelect />
       </div>
-      <div>
+      <div className="WritePage_wrap_EditorWrap">
         <DiaryWriteEditor />
+      </div>
+      <div className="WritePage_wrap_SaveBtnWrap">
+        <button
+          className="WritePage_SaveBtn"
+          onClick={() => setDiaryWrite(false)}
+        >
+          목록
+        </button>
+        <button className="WritePage_SaveBtn">저장</button>
       </div>
     </DiaryWritePageStyle>
   );
