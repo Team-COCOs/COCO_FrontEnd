@@ -53,7 +53,7 @@ export const MinihomeStyle = styled.div`
       border-bottom-left-radius: 10px;
       border-top-right-radius: 18px;
       border-bottom-right-radius: 18px;
-      background-color: ${({ theme }) => theme.colors.bookColor};
+      /* background-color: ${({ theme }) => theme.colors.bookColor}; */
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -156,7 +156,7 @@ export const MinihomeStyle = styled.div`
       border-bottom-left-radius: 18px;
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
-      background-color: ${({ theme }) => theme.colors.bookColor};
+      /* background-color: ${({ theme }) => theme.colors.bookColor}; */
       display: flex;
       justify-content: flex-start;
       align-items: center;

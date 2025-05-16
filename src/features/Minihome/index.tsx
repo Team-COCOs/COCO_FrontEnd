@@ -55,6 +55,7 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
   const [backGroundData, setBackGroundData] = useState<any>(null);
   const [backgroundUrl, setBackgroundUrl] = useState("");
   const [backgroundColor, setBackgroundColor] = useState("");
+  const [diaryBackgroundColor, setDiaryBackgroundColor] = useState("");
 
   // 페이지가 처음 로드될 때 로딩 상태 종료
   useEffect(() => {
@@ -95,7 +96,7 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
           }
         } else {
           setBackgroundUrl("/images/default_bg.jpg");
-          setBackgroundColor(""); // 기본 연회색
+          setBackgroundColor("");
         }
       } catch (e: any) {
         console.error("배경 조회 실패:", e);
@@ -104,6 +105,44 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
       }
     };
     fetchBackGround();
+  }, [id]);
+
+  // 책 배경 (bk) 바꿔주기
+  useEffect(() => {
+    const fetchDiaryBackGround = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/useritems/bk/${id}`
+        );
+        const data = response.data;
+        const dataArray = Array.isArray(data) ? data : [data];
+        // 배열로 만들기
+        const matched = dataArray.find(
+          (item: any) =>
+            item.name &&
+            (item.name.includes("pink") ||
+              item.name.includes("black") ||
+              item.name.includes("green"))
+        );
+
+        if (matched) {
+          // 색상 조건 분기
+          if (matched.name.includes("pink")) {
+            setDiaryBackgroundColor("#cfa2be"); // 분홍
+          } else if (matched.name.includes("black")) {
+            setDiaryBackgroundColor("black"); // 검정
+          } else if (matched.name.includes("green")) {
+            setDiaryBackgroundColor("#4a5245"); // 초록
+          }
+        } else {
+          setDiaryBackgroundColor("#a6cfdb"); // 기본 다이어리 배경색
+        }
+      } catch (e: any) {
+        console.error("다이어리 배경 조회 실패:", e);
+        setDiaryBackgroundColor("#a6cfdb");
+      }
+    };
+    fetchDiaryBackGround();
   }, [id]);
 
   // 이름
@@ -178,7 +217,12 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
           <div className="Minihome_left">
             <div className="Minihome_book_wrap">
               {/* 왼쪽 */}
-              <div className="Minihome_book_left">
+              <div
+                className="Minihome_book_left"
+                style={{
+                  backgroundColor: diaryBackgroundColor || "#a6cfdb",
+                }}
+              >
                 <div className="Minihome_bookLeft_line">
                   <div className="Minihome_bookLeft_paper">
                     <div className="Minihome_bookLeft_todayWrap">
@@ -190,7 +234,12 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
               </div>
 
               {/* 오른쪽 */}
-              <div className="Minihome_book_right">
+              <div
+                className="Minihome_book_right"
+                style={{
+                  backgroundColor: diaryBackgroundColor || "#a6cfdb",
+                }}
+              >
                 <div className="Minihome_bookRight_line">
                   <div className="Minihome_bookRight_paper">
                     <div className="Minihome_bookRight_todayWrap">
