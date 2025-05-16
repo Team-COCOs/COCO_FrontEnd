@@ -2,7 +2,7 @@ import { useState, useEffect, ReactNode } from "react";
 import { MinihomeStyle } from "./styled";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
-
+import { useSkin } from "@/context/SkinContext";
 import Cookies from "js-cookie";
 import axios from "axios";
 import axiosInstance from "@/lib/axios";
@@ -30,6 +30,8 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
   const { user } = useAuth();
   const isOwner = String(user?.id) === id;
   const router = useRouter();
+  const { backgroundColor, diaryBackgroundColor, backgroundUrl, fetchSkin } =
+    useSkin();
   // 탭 상태 관리
   const [activeTab, setActiveTab] = useState<string>("home");
   // 모달
@@ -51,12 +53,6 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
     setActiveTab(tab);
   };
 
-  // 미니홈피 기본 배경(체크무늬) 상태 관리
-  const [backGroundData, setBackGroundData] = useState<any>(null);
-  const [backgroundUrl, setBackgroundUrl] = useState("");
-  const [backgroundColor, setBackgroundColor] = useState("");
-  const [diaryBackgroundColor, setDiaryBackgroundColor] = useState("");
-
   // 페이지가 처음 로드될 때 로딩 상태 종료
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -65,85 +61,11 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
     return () => clearTimeout(timer);
   }, []);
 
-  // 배경 바꿔주기
   useEffect(() => {
-    const fetchBackGround = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/useritems/minihomepis/${id}`
-        );
-        const data = response.data;
-        const dataArray = Array.isArray(data) ? data : [data];
-        // 배열로 만들기
-        const matched = dataArray.find(
-          (item: any) =>
-            item.name &&
-            (item.name.includes("pink") ||
-              item.name.includes("black") ||
-              item.name.includes("green"))
-        );
-
-        if (matched) {
-          setBackgroundUrl(""); // 배경 이미지는 사용 안 함
-
-          // 색상 조건 분기
-          if (matched.name.includes("pink")) {
-            setBackgroundColor("#e5c7dc"); // 분홍
-          } else if (matched.name.includes("black")) {
-            setBackgroundColor("black"); // 검정
-          } else if (matched.name.includes("green")) {
-            setBackgroundColor("#395f4a"); // 초록
-          }
-        } else {
-          setBackgroundUrl("/images/default_bg.jpg");
-          setBackgroundColor("");
-        }
-      } catch (e: any) {
-        console.error("배경 조회 실패:", e);
-        setBackgroundUrl("/images/default_bg.jpg");
-        setBackgroundColor("");
-      }
-    };
-    fetchBackGround();
-  }, [id]);
-
-  // 책 배경 (bk) 바꿔주기
-  useEffect(() => {
-    const fetchDiaryBackGround = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/useritems/bk/${id}`
-        );
-        const data = response.data;
-        const dataArray = Array.isArray(data) ? data : [data];
-        // 배열로 만들기
-        const matched = dataArray.find(
-          (item: any) =>
-            item.name &&
-            (item.name.includes("pink") ||
-              item.name.includes("black") ||
-              item.name.includes("green"))
-        );
-
-        if (matched) {
-          // 색상 조건 분기
-          if (matched.name.includes("pink")) {
-            setDiaryBackgroundColor("#cfa2be"); // 분홍
-          } else if (matched.name.includes("black")) {
-            setDiaryBackgroundColor("black"); // 검정
-          } else if (matched.name.includes("green")) {
-            setDiaryBackgroundColor("#4a5245"); // 초록
-          }
-        } else {
-          setDiaryBackgroundColor("#a6cfdb"); // 기본 다이어리 배경색
-        }
-      } catch (e: any) {
-        console.error("다이어리 배경 조회 실패:", e);
-        setDiaryBackgroundColor("#a6cfdb");
-      }
-    };
-    fetchDiaryBackGround();
-  }, [id]);
+    if (id) {
+      fetchSkin(id);
+    }
+  }, [id, fetchSkin]);
 
   // 이름
   useEffect(() => {

@@ -10,6 +10,7 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
 import { useRouter } from "next/router";
+import { SkinProvider } from "@/context/SkinContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -61,11 +62,13 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <Provider store={store}>
         <AuthProvider>
-          <LanguageProvider>
-            <ThemeProvider theme={theme}>
-              {loading ? <Loading /> : <Component {...pageProps} />}
-            </ThemeProvider>
-          </LanguageProvider>
+          <SkinProvider>
+            <LanguageProvider>
+              <ThemeProvider theme={theme}>
+                {loading ? <Loading /> : <Component {...pageProps} />}
+              </ThemeProvider>
+            </LanguageProvider>
+          </SkinProvider>
         </AuthProvider>
       </Provider>
     </>

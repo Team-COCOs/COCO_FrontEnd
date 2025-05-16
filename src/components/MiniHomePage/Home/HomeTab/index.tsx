@@ -3,6 +3,7 @@ import { TAB_LABELS } from "@/constants/tabs";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useSkin } from "@/context/SkinContext";
 
 interface HomeTabProps {
   activeTab: string;
@@ -23,7 +24,13 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
   const [language, setLanguage] = useState<string>("ko");
 
   // 탭 색깔
-  const [tabBackgroundColor, setTabBackgroundColor] = useState("");
+  const { tabBackgroundColor, fetchSkin } = useSkin();
+
+  useEffect(() => {
+    if (id && typeof id === "string") {
+      fetchSkin(id);
+    }
+  }, [id, fetchSkin]);
 
   // 메인 홈 탭 불러오기
   useEffect(() => {
@@ -49,7 +56,6 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
   }, [id]);
 
   // 홈 탭 필터
-
   const filteredTabs = Object.entries(TAB_LABELS).filter(([key]) => {
     const isHomeTab = key === "home";
     const isOwnerTab = isOwner && (key === "setting" || key === "profile");
@@ -75,43 +81,6 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
     fetchLanguageSettings();
   }, [id]);
 
-  // 메인 홈 탭 배경 색 불러오기
-  useEffect(() => {
-    const fetchTabBackGround = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/useritems/tapcolor/${id}`
-        );
-        const data = response.data;
-        const dataArray = Array.isArray(data) ? data : [data];
-        // 배열로 만들기
-        const matched = dataArray.find(
-          (item: any) =>
-            item.name &&
-            (item.name.includes("pink") ||
-              item.name.includes("black") ||
-              item.name.includes("blue"))
-        );
-
-        if (matched) {
-          // 색상 조건 분기
-          if (matched.name.includes("blue")) {
-            setTabBackgroundColor("#697dff"); // 파랑
-          } else if (matched.name.includes("black")) {
-            setTabBackgroundColor("black"); // 검정
-          } else if (matched.name.includes("pink")) {
-            setTabBackgroundColor("#ffadbf"); // 핑크
-          }
-        } else {
-          setTabBackgroundColor("#2686a3");
-        }
-      } catch (e: any) {
-        console.error("다이어리 배경 조회 실패:", e);
-        setTabBackgroundColor("#2686a3");
-      }
-    };
-    fetchTabBackGround();
-  }, [id]);
   return (
     <HomeTabStyled>
       <div className="HomeTab_wrap">
