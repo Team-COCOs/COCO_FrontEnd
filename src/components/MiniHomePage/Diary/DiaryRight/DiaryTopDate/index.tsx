@@ -15,16 +15,25 @@ const DiaryTopDate = ({
   return (
     <DiaryTopDateStyle>
       <div className="DiaryTopDate_wrap Gulim">
-        <div className="DiaryTopDate_dateWrap">
-          <span className="DiaryTopDate_dateMM">
-            {format(selectedDate || new Date(), "MM/dd")}
-          </span>
-          <span className="DiaryTopDate_dateEE">
-            {format(selectedDate || new Date(), "EEE")}
-          </span>
+        <div className="DiaryTopDate_page_wrap Gulim">
+          <div className="DiaryTopDate_dateWrap pixelFont">
+            <span className="DiaryTopDate_dateMM logoFont">
+              {format(selectedDate || new Date(), "MM.dd")}
+            </span>
+            <span className="DiaryTopDate_dateEE titleFont">
+              {format(selectedDate || new Date(), "EEE")}
+            </span>
+          </div>
+          <div className="DiaryTopDate_diaryTitleText pixelFont">
+            작은 하루도 소중히 담아보아요❤️
+          </div>
+          <button
+            className="DiaryTopDate_diaryWriteBtn pixelFont"
+            onClick={() => setDiaryWrite(true)}
+          >
+            일기쓰기✏️
+          </button>
         </div>
-        <div>작은 하루도 소중히 담아보아요.</div>
-        <button onClick={() => setDiaryWrite(true)}>글쓰기</button>
       </div>
     </DiaryTopDateStyle>
   );

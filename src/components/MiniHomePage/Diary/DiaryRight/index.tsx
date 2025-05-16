@@ -18,11 +18,16 @@ const DiaryRight = ({ selectedDate, selectedDiaryMenu }: DiaryProps) => {
         <div className="DiaryRight_component_wrap">
           {/* 여기부터 컴포넌트 */}
           {/* 상단 날짜 밑 글쓰기 버튼 */}
-          <DiaryTopDate
-            selectedDate={selectedDate}
-            selectedDiaryMenu={selectedDiaryMenu}
-            setDiaryWrite={setDiaryWrite}
-          />
+          {!diaryWrite ? (
+            <DiaryTopDate
+              selectedDate={selectedDate}
+              selectedDiaryMenu={selectedDiaryMenu}
+              setDiaryWrite={setDiaryWrite}
+            />
+          ) : (
+            ""
+          )}
+
           {selectedDiaryMenu?.title}
           {selectedDiaryMenu?.id}
           <div>
