@@ -41,8 +41,24 @@ const DiaryContent = ({
           <CommentDiary />
         </div>
       </div>
-
+      {/* 구분선 */}
       <span className="DiaryContent_DotLine"></span>
+      <div>
+        <div className="DiaryContent_bottom_wrap">
+          <div className="DiaryContent_btns">
+            <button>▲</button>
+            <button>▼</button>
+          </div>
+          <div className="DiaryContent_allbtn">목록</div>
+        </div>
+        <div className="DiaryContent_findwrap">
+          <select defaultValue="content" className="DiaryContent_select Gulim">
+            <option value="content">내용</option>
+          </select>
+          <input type="text" className="DiaryContent_findInput Gulim" />
+          <button className="DiaryContent_findbtn">🔍 찾기</button>
+        </div>
+      </div>
     </DiaryContentStyle>
   );
 };

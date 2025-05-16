@@ -59,6 +59,75 @@ export const DiaryContentStyle = styled.div`
     width: 100%;
     border-bottom: 1px solid #ddd;
   }
+  /* 페이지 위아래 버튼 */
+  .DiaryContent_btns {
+    border-radius: 5px;
+
+    button {
+      border: 1.5px solid rgb(219, 219, 219);
+      color: ${({ theme }) => theme.colors.mainColor};
+      background-color: rgb(251, 251, 251);
+      padding: 4px 5px;
+      font-size: 8px;
+      border-radius: 3px;
+      margin-left: 3px;
+      cursor: pointer;
+    }
+  }
+  .DiaryContent_bottom_wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+  .DiaryContent_allbtn {
+    border: 1.5px solid rgb(195, 195, 195);
+    background-color: rgb(251, 251, 251);
+    color: #4b4b4b;
+    padding: 2px 5px;
+    font-size: 10px;
+    border-radius: 3px;
+    margin-left: 3px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .DiaryContent_findbtn {
+    border: 1px solid rgb(195, 195, 195);
+    background-color: rgb(251, 251, 251);
+    color: #4b4b4b;
+    padding: 3.5px 5px;
+    font-size: 10px;
+    border-radius: 3px;
+    margin-left: 3px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  /* 다이어리 내용 검색 */
+  .DiaryContent_findwrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0px;
+  } /* 셀렉트 박스 */
+  .DiaryContent_select {
+    border: 1px solid rgb(195, 195, 195);
+    background-color: rgb(251, 251, 251);
+    color: #4b4b4b;
+    padding: 4.5px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+
+  /* 검색 인풋 */
+  .DiaryContent_findInput {
+    border: 1px solid rgb(195, 195, 195);
+    background-color: rgb(251, 251, 251);
+    color: #4b4b4b;
+    padding: 3px 6px;
+    font-size: 12px;
+    width: 120px;
+  }
   /* 반응형 */
   @media (max-width: 830px) {
     .DiaryContent_dateWrap {
