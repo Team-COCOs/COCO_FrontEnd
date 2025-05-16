@@ -133,6 +133,7 @@ const WritePage = () => {
         <p className="WritePage_titleText">제목</p>
         <input
           type="text"
+          className="Gulim"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         ></input>
@@ -175,7 +176,16 @@ const WritePage = () => {
 
       <EditorPage ref={editorRef} onVisibilityChange={setVisibility} />
 
-      <button onClick={photoSave}> 저장 </button>
+      <div className="WritePage_line"></div>
+
+      <div className="WritePage_btns">
+        <button className="Gulim" onClick={() => window.location.reload()}>
+          목록
+        </button>
+        <button className="Gulim" onClick={photoSave}>
+          확인
+        </button>
+      </div>
     </WritePageStyle>
   );
 };

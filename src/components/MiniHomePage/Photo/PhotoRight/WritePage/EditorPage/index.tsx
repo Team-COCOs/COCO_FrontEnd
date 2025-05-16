@@ -77,9 +77,9 @@ const EditorPage = forwardRef<EditorHandle, EditorPageProps>(
     }));
 
     return (
-      <EditorPageStyle className="EditorPage_wrap Gulim">
+      <EditorPageStyle className="EditorPage_wrap">
         <div className="EditorPage_toolbar">
-          <select onChange={handleFontChange} value={font}>
+          <select className="Gulim" onChange={handleFontChange} value={font}>
             {fontList.map((font) => (
               <option key={font.value} value={font.value}>
                 {font.name}
@@ -87,12 +87,42 @@ const EditorPage = forwardRef<EditorHandle, EditorPageProps>(
             ))}
           </select>
 
-          <button onClick={() => execCommand("bold")}>굵게</button>
-          <button onClick={() => execCommand("italic")}>기울임</button>
-          <button onClick={() => execCommand("underline")}>밑줄</button>
-          <button onClick={() => execCommand("justifyLeft")}>왼쪽</button>
-          <button onClick={() => execCommand("justifyCenter")}>가운데</button>
-          <button onClick={() => execCommand("justifyRight")}>오른쪽</button>
+          <button
+            className="EditorPage_btn"
+            onClick={() => execCommand("bold")}
+          >
+            <span className="EditorPage_bold">가</span>
+          </button>
+          <button
+            className="EditorPage_btn Gulim"
+            onClick={() => execCommand("italic")}
+          >
+            <span className="EditorPage_italic">가</span>
+          </button>
+          <button
+            className="EditorPage_btn Gulim"
+            onClick={() => execCommand("underline")}
+          >
+            <span className="EditorPage_underline">가</span>
+          </button>
+          <button
+            className="EditorPage_btn"
+            onClick={() => execCommand("justifyLeft")}
+          >
+            <img src="/icon/alignLeft.png" alt="왼쪽 정렬" />
+          </button>
+          <button
+            className="EditorPage_btn"
+            onClick={() => execCommand("justifyCenter")}
+          >
+            <img src="/icon/alignCenter.png" alt="가운데 정렬" />
+          </button>
+          <button
+            className="EditorPage_btn"
+            onClick={() => execCommand("justifyRight")}
+          >
+            <img src="/icon/alignRight.png" alt="오른쪽 정렬" />
+          </button>
         </div>
 
         <div className="EditorPage_area" ref={editorRef} contentEditable></div>

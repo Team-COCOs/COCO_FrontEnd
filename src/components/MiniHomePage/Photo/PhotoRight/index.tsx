@@ -176,12 +176,14 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                   </div>
                   <div className="PhotoRight_clips">
                     <div>조회수 {data.views.toLocaleString()}</div>
-                    <button
-                      className="PhotoRight_clipBtn Gulim"
-                      onClick={() => clipPhoto(data.id)}
-                    >
-                      스크랩
-                    </button>
+                    {user?.id !== queryUserId && (
+                      <button
+                        className="PhotoRight_clipBtn Gulim"
+                        onClick={() => clipPhoto(data.id)}
+                      >
+                        스크랩
+                      </button>
+                    )}
                   </div>
                 </div>
 
