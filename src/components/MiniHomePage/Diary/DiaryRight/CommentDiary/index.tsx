@@ -1,9 +1,13 @@
 import { CommentDiaryStyle } from "./styled";
+import DiaryComments from "./DiaryComments";
 
 const CommentDiary = () => {
   return (
     <CommentDiaryStyle>
       <div className="CommentDiary_wrap Gulim">
+        <div>
+          <DiaryComments />
+        </div>
         <div className="CommentDiary_inputWrap Gulim">
           <label
             className="CommentDiary_commentLabel"
