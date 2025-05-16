@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ShadowModal from "..";
 import EmptyPage from "@/components/EmptyPage";
-
+import DOMPurify from "dompurify";
 interface ProfileModalProps {
   onClose: () => void;
   data: any;
@@ -40,8 +40,13 @@ const ProfileModal = ({ onClose, data, type, userName }: ProfileModalProps) => {
             data.map((d: any) => (
               <div key={d.id} className="newPost_div">
                 <div className="newPost_texts">
-                  <div className="newPost_title">{d.title}</div>
-                  <div className="newPost_content">{d.content}</div>
+                  <div className="newPost_title">제목 : {d.title}</div>
+                  <div
+                    className="newPost_content"
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(d.content),
+                    }}
+                  />
                 </div>
                 <div className="newPost_date">{d.createdAt}</div>
               </div>
@@ -50,7 +55,7 @@ const ProfileModal = ({ onClose, data, type, userName }: ProfileModalProps) => {
             data.map((d: any) => (
               <div
                 key={d.id}
-                className="newPost_div"
+                className="newFriend_div"
                 onClick={() => newModal(d)}
               >
                 <div className="newPost_title">{d.requester}</div>

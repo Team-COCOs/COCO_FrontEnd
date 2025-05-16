@@ -6,18 +6,28 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import Comment from "./Comment";
 import DOMPurify from "dompurify";
+import { formatKoreanDate } from "@/utils/KrDate/date";
+import axios from "axios";
 interface PhotoProps {
   selectedMenu: { id: number; title: string } | null;
   setWrite: Dispatch<SetStateAction<boolean>>;
 }
 
+interface AuthorData {
+  id: number;
+  name: string;
+}
+
+interface parentData {
+  id: number;
+}
+
 interface CommentData {
   id: number; // PK
   comment: string; // 댓글
-  author: string; // 댓글 작성자
-  authorId: number; // 댓글 작성자 id
-  date: string; // 날짜
-  children: CommentData[]; // 대댓글
+  user: AuthorData; // 댓글 작성자
+  created_at: string; // 날짜
+  parentComment: parentData | null; // 대댓글
 }
 
 interface FolderData {
@@ -76,8 +86,9 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
       setPhotoData(filtered);
     } catch (e: any) {
       if (e.response?.status === 401) {
-        alert("로그인이 필요합니다.");
-        router.push(`/home/${userId}`);
+        const res = await axios.get(`/photos/${queryUserId}`);
+
+        console.log("비로그인일 때 : ", res.data);
       } else {
         console.log("사진첩 불러오기 에러 : ", e);
       }
@@ -140,7 +151,9 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                     {data.writer}
                   </p>
                   <div className="PhotoRight_info">
-                    <p className="PhotoRight_font">{data.created_at}</p>
+                    <p className="PhotoRight_font">
+                      {formatKoreanDate(data.created_at)}
+                    </p>
                     <p>스크랩 {data.use_count}</p>
                   </div>
                 </div>
@@ -189,6 +202,7 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                 <Comment
                   comments={data.comments}
                   onSubmitSuccess={getPhotoData}
+                  postId={data.id}
                 />
               </div>
             ))

@@ -5,27 +5,33 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import axiosInstance from "@/lib/axios";
+import { formatKoreanDate } from "@/utils/KrDate/date";
 
+interface AuthorData {
+  id: number;
+  name: string;
+}
+interface parentData {
+  id: number;
+}
 interface CommentData {
   id: number; // PK
   comment: string; // 댓글
-  author: string; // 댓글 작성자
-  authorId: number; // 댓글 작성자 id
-  date: string; // 날짜
-  children: CommentData[]; // 대댓글
+  user: AuthorData; // 댓글 작성자
+  created_at: string; // 날짜
+  parentComment: parentData | null; // 대댓글
 }
-
 interface CommentProps {
   comments?: CommentData[];
   onSubmitSuccess?: () => void;
+  postId: number;
 }
-
 interface CommentSubmit {
   comment: string;
   parentId?: number | null;
 }
 
-const Comment = ({ comments, onSubmitSuccess }: CommentProps) => {
+const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
   const [replyTargetId, setReplyTargetId] = useState<number | null>(null);
   const [commentInput, setCommentInput] = useState("");
   const [childCommentInput, setChildCommentInput] = useState("");
@@ -47,7 +53,7 @@ const Comment = ({ comments, onSubmitSuccess }: CommentProps) => {
 
     // parentId 는 null일 수 있음. (대댓글이 아닌 경우)
     try {
-      const res = await axios.post("/photos/comments", {
+      const res = await axiosInstance.post(`/photos-comments/${postId}`, {
         comment,
         parentId,
         authorId: user?.id,
@@ -75,66 +81,75 @@ const Comment = ({ comments, onSubmitSuccess }: CommentProps) => {
           아직 댓글이 없어요~ 당신의 한 마디로 이 공간을 채워주세요 💬
         </p>
       ) : (
-        comments?.map((comment) => (
-          <div key={comment.id} className="Comment_parent">
-            <div className="Comment_infos">
-              <span
-                className="Comment_Author"
-                onClick={() => router.push(`/home/${comment.authorId}`)}
-              >
-                {comment.author}
-              </span>
-              <span className="Comment_comment">: {comment.comment}</span>
-              <span className="Comment_date">({comment.date})</span>
-              <div
-                className="Comment_icon"
-                onClick={() => setReplyTargetId(comment.id)}
-              >
-                <Image src="/arrowIcon.png" alt="icon" fill />
-              </div>
-            </div>
-
-            {replyTargetId === comment.id && (
-              <div className="Comment_childInput">
-                <div
-                  className="Comment_closeIcon"
-                  onClick={() => setReplyTargetId(null)}
-                >
-                  ×
-                </div>
-                <p>댓글</p>
-                <input
-                  type="text"
-                  value={childCommentInput}
-                  onChange={(e) => setChildCommentInput(e.target.value)}
-                />
-                <button
-                  onClick={() =>
-                    submitComment({
-                      comment: childCommentInput,
-                      parentId: replyTargetId,
-                    })
-                  }
-                >
-                  확인
-                </button>
-              </div>
-            )}
-
-            {comment.children.map((child) => (
-              <div key={child.id} className="Comment_child">
+        comments
+          ?.filter((comment) => !comment.parentComment)
+          .map((comment) => (
+            <div key={comment.id} className="Comment_parent">
+              <div className="Comment_infos">
                 <span
                   className="Comment_Author"
-                  onClick={() => router.push(`/home/${child.authorId}`)}
+                  onClick={() => router.push(`/home/${comment.user.id}`)}
                 >
-                  {child.author}
+                  {comment.user.name}
                 </span>
-                <span className="Comment_comment">: {child.comment}</span>
-                <span className="Comment_date">({child.date})</span>
+                <span className="Comment_comment">: {comment.comment}</span>
+                <span className="Comment_date">
+                  {formatKoreanDate(comment.created_at)}
+                </span>
+                <div
+                  className="Comment_icon"
+                  onClick={() => setReplyTargetId(comment.id)}
+                >
+                  <Image src="/arrowIcon.png" alt="icon" fill />
+                </div>
               </div>
-            ))}
-          </div>
-        ))
+
+              {replyTargetId === comment.id && (
+                <div className="Comment_childInput">
+                  <div
+                    className="Comment_closeIcon"
+                    onClick={() => setReplyTargetId(null)}
+                  >
+                    ×
+                  </div>
+                  <p>댓글</p>
+                  <input
+                    type="text"
+                    value={childCommentInput}
+                    onChange={(e) => setChildCommentInput(e.target.value)}
+                  />
+                  <button
+                    onClick={() =>
+                      submitComment({
+                        comment: childCommentInput,
+                        parentId: replyTargetId,
+                      })
+                    }
+                  >
+                    확인
+                  </button>
+                </div>
+              )}
+
+              {comments
+                .filter(
+                  (child) =>
+                    child.parentComment && child.parentComment.id === comment.id
+                )
+                .map((child) => (
+                  <div key={child.id} className="Comment_child">
+                    <span
+                      className="Comment_Author"
+                      onClick={() => router.push(`/home/${child.user.id}`)}
+                    >
+                      {child.user.name}
+                    </span>
+                    <span className="Comment_comment">: {child.comment}</span>
+                    <span className="Comment_date">({child.created_at})</span>
+                  </div>
+                ))}
+            </div>
+          ))
       )}
 
       <div className="Comment_input">
