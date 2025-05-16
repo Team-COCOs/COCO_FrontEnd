@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
-export const DiaryWriteEditorStyle = styled.div`
+export const DiaryEditorPageStyle = styled.div`
   width: 100%;
-  height: 100%;
-  &.DiaryWriteEditor_wrap {
-    width: 98%;
+  &.DiaryEditorPage_wrap {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
     border: 1.5px solid rgb(204, 204, 204);
     border-radius: 3px;
 
-    .DiaryWriteEditor_toolbar {
+    .DiaryEditorPage_toolbar {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
@@ -41,24 +41,24 @@ export const DiaryWriteEditorStyle = styled.div`
         }
       }
 
-      .DiaryWriteEditor_btn {
+      .DiaryEditorPage_btn {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 22px;
         height: 22px;
 
-        .DiaryWriteEditor_bold {
+        .DiaryEditorPage_bold {
           font-weight: bold;
         }
 
-        .DiaryWriteEditor_italic {
+        .DiaryEditorPage_italic {
           font-style: italic;
           font-weight: bold;
           margin-right: 2px;
         }
 
-        .DiaryWriteEditor_underline {
+        .DiaryEditorPage_underline {
           font-weight: bold;
           text-decoration: underline;
         }
@@ -70,8 +70,8 @@ export const DiaryWriteEditorStyle = styled.div`
       }
     }
 
-    .DiaryWriteEditor_area {
-      min-height: 200px;
+    .DiaryEditorPage_area {
+      height: 100%;
       border: 1px solid #ddd;
       padding: 12px;
       font-size: 14px;
@@ -79,7 +79,7 @@ export const DiaryWriteEditorStyle = styled.div`
       outline: none;
     }
 
-    .DiaryWriteEditor_isPublic {
+    .DiaryEditorPage_isPublic {
       display: flex;
       align-items: center;
       justify-content: right;

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
+import DiaryEditorPage from "./DiaryEditorPage";
 
 interface FolderItem {
   id: number;
@@ -18,7 +19,7 @@ const DiaryWriteEditor = () => {
 
   return (
     <DiaryWriteEditorStyle className="WritePage_wrap">
-      글쓰기
+      <DiaryEditorPage />
     </DiaryWriteEditorStyle>
   );
 };
