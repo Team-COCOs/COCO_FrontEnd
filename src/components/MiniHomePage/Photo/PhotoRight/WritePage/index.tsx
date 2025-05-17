@@ -71,7 +71,7 @@ const WritePage = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", htmlContent);
-    formData.append("folderId", String(selectedFolder.id));
+    formData.append("folder_name", selectedFolder.title);
     formData.append("visibility", visibility);
     if (file) {
       formData.append("photo", file);
