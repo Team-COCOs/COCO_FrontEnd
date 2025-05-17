@@ -1,5 +1,5 @@
 import { DiaryWriteEditorStyle } from "./styled";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, forwardRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
@@ -11,21 +11,28 @@ interface FolderItem {
   parent_id: number | null;
 }
 
-const DiaryWriteEditor = () => {
-  const router = useRouter();
-  const { id } = router.query;
-  const { user } = useAuth();
-  const [folder, setFolder] = useState<FolderItem[]>([]);
-  // 에디터 html 사용
-  const editorRef = useRef<{ getHtml: () => string }>(null);
-  // 공개 여부
-  const [visibility, setVisibility] = useState("");
+interface DiaryEditorHandle {
+  getHtml: () => string;
+}
 
-  return (
-    <DiaryWriteEditorStyle className="WritePage_wrap">
-      <DiaryEditorPage ref={editorRef} onVisibilityChange={setVisibility} />
-    </DiaryWriteEditorStyle>
-  );
-};
+interface EditorPageProps {
+  onVisibilityChange: (newVisibility: string) => void;
+}
+
+const DiaryWriteEditor = forwardRef<DiaryEditorHandle, EditorPageProps>(
+  (props, ref) => {
+    const router = useRouter();
+    const { id } = router.query;
+    const { user } = useAuth();
+    const [folder, setFolder] = useState<FolderItem[]>([]);
+    const { onVisibilityChange } = props;
+
+    return (
+      <DiaryWriteEditorStyle className="WritePage_wrap">
+        <DiaryEditorPage ref={ref} onVisibilityChange={onVisibilityChange} />
+      </DiaryWriteEditorStyle>
+    );
+  }
+);
 
 export default DiaryWriteEditor;

@@ -10,15 +10,29 @@ interface FolderItem {
   children: FolderItem[] | null;
 }
 
-const DiaryWriteSelect: React.FC<{
+interface DiaryWriteSelectProps {
   folders: FolderItem[];
   setFolder: React.Dispatch<React.SetStateAction<FolderItem[]>>;
-}> = ({ folders, setFolder }) => {
+  selectedWeather: string;
+  setSelectedWeather: React.Dispatch<React.SetStateAction<string>>;
+  selectedFolderId: number | "";
+  setSelectedFolderId: React.Dispatch<React.SetStateAction<number | "">>;
+  selectedMood: string;
+  setSelectedMood: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const DiaryWriteSelect: React.FC<DiaryWriteSelectProps> = ({
+  folders,
+  setFolder,
+  selectedWeather,
+  setSelectedWeather,
+  selectedFolderId,
+  setSelectedFolderId,
+  selectedMood,
+  setSelectedMood,
+}) => {
   const router = useRouter();
   const { user } = useAuth();
-
-  const [selectedWeather, setSelectedWeather] = useState("");
-  const [selectedFolderId, setSelectedFolderId] = useState<number | "">("");
 
   const handleWeatherClick = (weather: string) => {
     setSelectedWeather(weather);
@@ -67,7 +81,11 @@ const DiaryWriteSelect: React.FC<{
 
           {/* 감정 select */}
           <div className="DiaryWritePage_SelectWrapper">
-            <select defaultValue="">
+            <select
+              defaultValue=""
+              value={selectedMood}
+              onChange={(e) => setSelectedMood(e.target.value)}
+            >
               <option value="" disabled>
                 기분 선택
               </option>

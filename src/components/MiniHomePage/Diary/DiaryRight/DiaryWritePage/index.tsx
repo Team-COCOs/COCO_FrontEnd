@@ -1,10 +1,11 @@
 import { DiaryWritePageStyle } from "./styled";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import DiaryWriteEditor from "./DiaryWriteEditor";
 import DiaryWriteSelect from "./DiaryWriteSelect";
+import axiosInstance from "@/lib/axios";
 
 interface FolderItem {
   id: number;
@@ -17,11 +18,29 @@ interface DiaryWritePageProps {
   setDiaryWrite: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+interface EditorPageProps {
+  onVisibilityChange: (newVisibility: string) => void;
+}
+
+export interface DiaryEditorHandle {
+  getHtml: () => string;
+}
+
 const DiaryWritePage = ({ setDiaryWrite }: DiaryWritePageProps) => {
   const router = useRouter();
   const { id } = router.query;
   const { user } = useAuth();
   const [folder, setFolder] = useState<FolderItem[]>([]);
+
+  // 에디터 html 사용
+  const editorRef = useRef<{ getHtml: () => string }>(null);
+  // 공개 여부
+  const [visibility, setVisibility] = useState("");
+
+  // 다이어리 기분, 날씨, 폴더 선택
+  const [selectedWeather, setSelectedWeather] = useState("");
+  const [selectedFolderId, setSelectedFolderId] = useState<number | "">("");
+  const [selectedMood, setSelectedMood] = useState("");
 
   // 기본
   const getDefaultFolder = (): FolderItem[] => [
@@ -50,13 +69,82 @@ const DiaryWritePage = ({ setDiaryWrite }: DiaryWritePageProps) => {
       });
   }, [user?.id]);
 
+  const handleSave = async () => {
+    const content = editorRef.current?.getHtml() || "";
+
+    if (!user?.id) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    if (!selectedFolderId) {
+      alert("폴더를 선택해주세요.");
+      return;
+    }
+
+    if (!selectedWeather) {
+      alert("날씨를 선택해주세요.");
+      return;
+    }
+
+    if (!selectedMood) {
+      alert("기분을 선택해주세요.");
+      return;
+    }
+
+    if (!visibility) {
+      alert("공개 설정을 선택해주세요.");
+      return;
+    }
+
+    if (!content) {
+      alert("내용을 입력해주세요.");
+      return;
+    }
+
+    console.log("전송 데이터:", {
+      folder_id: selectedFolderId,
+      weather: selectedWeather,
+      mood: selectedMood,
+      visibility: visibility,
+      content: content,
+    });
+
+    try {
+      const response = await axiosInstance.post(
+        `/diary/save`, // 실제 API 엔드포인트에 맞게 수정
+        {
+          folder_id: selectedFolderId,
+          weather: selectedWeather,
+          mood: selectedMood,
+          visibility: visibility,
+          content: content,
+        }
+      );
+      console.log(response.data, "다이어리 일기쓰기 저장?");
+      alert("저장 성공!");
+    } catch (error) {
+      console.error("저장 실패:", error);
+      alert("저장에 실패했습니다.");
+    }
+  };
+
   return (
     <DiaryWritePageStyle className="WritePage_wrap">
       <div className="WritePage_wrap_SelectWrap">
-        <DiaryWriteSelect folders={folder} setFolder={setFolder} />
+        <DiaryWriteSelect
+          folders={folder}
+          setFolder={setFolder}
+          selectedWeather={selectedWeather}
+          setSelectedWeather={setSelectedWeather}
+          selectedFolderId={selectedFolderId}
+          setSelectedFolderId={setSelectedFolderId}
+          selectedMood={selectedMood}
+          setSelectedMood={setSelectedMood}
+        />
       </div>
       <div className="WritePage_wrap_EditorWrap">
-        <DiaryWriteEditor />
+        <DiaryWriteEditor ref={editorRef} onVisibilityChange={setVisibility} />
       </div>
       <div className="WritePage_wrap_SaveBtnWrap">
         <button
@@ -65,7 +153,9 @@ const DiaryWritePage = ({ setDiaryWrite }: DiaryWritePageProps) => {
         >
           목록
         </button>
-        <button className="WritePage_SaveBtn">저장</button>
+        <button className="WritePage_SaveBtn" onClick={handleSave}>
+          저장
+        </button>
       </div>
     </DiaryWritePageStyle>
   );
