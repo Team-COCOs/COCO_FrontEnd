@@ -83,10 +83,8 @@ const SettingMyInfo = () => {
 
         {/* 비밀번호 */}
         <span className="pixelFont SettingMyInfo_subTitle">
-          <div className="SettingMyInfo_iconText">
-            <span className="SettingMyInfo_icon">🟧</span>비밀번호 변경
-          </div>
-          <span className="SettingMyInfo_subText">
+          <div className="SettingMyInfo_iconText Gulim">🔸비밀번호 변경</div>
+          <span className="SettingMyInfo_subText Gulim">
             * 10자 이상, 숫자, 특수문자 포함
           </span>
         </span>
@@ -126,9 +124,7 @@ const SettingMyInfo = () => {
 
         {/* 전화번호 */}
         <span className="pixelFont SettingMyInfo_subTitle">
-          <div className="SettingMyInfo_iconText">
-            <span className="SettingMyInfo_icon">🟧</span>전화번호 변경
-          </div>
+          <div className="SettingMyInfo_iconText Gulim">🔸전화번호 변경</div>
         </span>
 
         <div className="SettingMyInfo_password">

@@ -46,6 +46,7 @@ export const SettingMyInfoStyle = styled.div`
           display: flex;
           align-items: center;
           justify-content: flex-end;
+          margin-top: 7px;
           gap: 5px;
           color: rgb(62, 209, 235);
           font-weight: bold;
@@ -72,22 +73,20 @@ export const SettingMyInfoStyle = styled.div`
         }
 
         .SettingMyInfo_iconText {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-        }
-
-        .SettingMyInfo_icon {
-          font-size: 5px;
+          color: black;
+          font-size: 12px;
+          font-weight: bolder;
+          padding-bottom: 7px;
+          padding-top: 7px;
         }
 
         .SettingMyInfo_subText {
-          font-size: 11px;
+          font-size: 9px;
           color: rgb(142, 142, 142);
           margin-left: 5px;
 
           @media (max-width: 520px) {
-            font-size: 10px;
+            font-size: 8px;
           }
         }
       }
