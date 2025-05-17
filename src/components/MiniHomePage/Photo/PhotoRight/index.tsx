@@ -89,6 +89,12 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
 
       console.log("사진첩 : ", res.data);
 
+      res.data.filter((i: PhotoData) =>
+        console.log("폴더 아이디:", i.folder.id)
+      );
+
+      console.log(selectedMenu);
+
       const filtered =
         selectedMenu &&
         res.data.filter(

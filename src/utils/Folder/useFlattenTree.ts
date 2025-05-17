@@ -1,7 +1,6 @@
 import axiosInstance from "@/lib/axios";
 import { TreeNode } from "./types";
-import { useRouter } from "next/router";
-import { useAuth } from "@/context/AuthContext";
+import { NextRouter } from "next/router";
 
 // 데이터 평탄화
 export const flattenTreeData = (treeData: TreeNode[]) => {
@@ -28,7 +27,9 @@ export const flattenTreeData = (treeData: TreeNode[]) => {
 export const saveTreeData = async (
   type: string,
   treeData: TreeNode[],
-  onSave: () => void
+  onSave: () => void,
+  router: NextRouter,
+  userId: string | string[] | undefined
 ) => {
   const flat = flattenTreeData(treeData);
   try {
@@ -38,14 +39,14 @@ export const saveTreeData = async (
     console.log("트리 저장 성공", res.data);
     onSave();
   } catch (e: any) {
-    const router = useRouter();
-    const { user } = useAuth();
-
     if (e.response?.status === 401) {
       alert("로그인이 필요합니다.");
-      router.push(`/home/${user?.id}`);
+      router.push(`/home/${userId}`);
+    } else if (e.response?.status === 500) {
+      alert("동일한 폴더 이름이 존재합니다. 폴더 이름을 수정해주세요.");
     } else {
       console.log("사진첩 불러오기 에러 : ", e);
+      alert("트리 저장 중 오류가 발생했습니다.");
     }
   }
 };

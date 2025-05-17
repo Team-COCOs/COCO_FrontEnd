@@ -44,6 +44,23 @@ const WritePage = () => {
     },
   ];
 
+  const flattenFolderTree = (folders: FolderItem[]): FolderItem[] => {
+    const flatList: FolderItem[] = [];
+
+    const traverse = (items: any[]) => {
+      for (const item of items) {
+        const { children, ...rest } = item;
+        flatList.push(rest);
+        if (children && children.length > 0) {
+          traverse(children);
+        }
+      }
+    };
+
+    traverse(folders);
+    return flatList;
+  };
+
   useEffect(() => {
     // 폴더 불러오기
     axios
@@ -51,7 +68,15 @@ const WritePage = () => {
         params: { userId },
       })
       .then((res) => {
-        setFolder(res.data);
+        const normalizedData: FolderItem[] = res.data.map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          parent_id: item.parent?.id ?? null,
+          children: item.children ?? [],
+        }));
+
+        const flatData = flattenFolderTree(normalizedData);
+        setFolder(flatData);
       })
       .catch((e) => {
         console.log("폴더 데이터 로딩 실패:", e);

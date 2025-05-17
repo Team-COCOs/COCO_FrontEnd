@@ -104,7 +104,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
 
   // 트리 구조 저장 (useFlattenTree.ts 에서 저장)
   const handleSave = () => {
-    saveTreeData(type, treeData, onSave);
+    saveTreeData(type, treeData, onSave, router, userId);
   };
 
   // 확장 및 축소를 위한 함수
@@ -149,7 +149,20 @@ const Folder = ({ type, onSave }: FolderProps) => {
       .then((res) => {
         const fetchedData = res.data;
 
-        const nestedTreeData = fetchedData.map((item: any) => ({
+        console.log(res.data);
+
+        const dataToUse =
+          fetchedData.length === 0
+            ? [
+                {
+                  id: 0,
+                  title: "새 폴더",
+                  children: [],
+                },
+              ]
+            : fetchedData;
+
+        const nestedTreeData = dataToUse.map((item: any) => ({
           key: String(item.id),
           title: item.title,
           isLeaf: false,
@@ -166,6 +179,17 @@ const Folder = ({ type, onSave }: FolderProps) => {
         }
 
         console.log("폴더 데이터 로딩 실패:", e);
+
+        // 에러 발생 시에도 새 폴더 하나는 보장
+        setTreeData([
+          {
+            key: "0",
+            title: "새 폴더",
+            isLeaf: false,
+            children: [],
+          },
+        ]);
+        setExpandedKeys(["0"]);
       });
   }, [type, userId]);
 

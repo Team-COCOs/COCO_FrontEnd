@@ -25,18 +25,18 @@ const DynamicFolder = ({
   const router = useRouter();
   const userId = router.query.id;
 
-  const getDefaultFolder = (): FolderItem[] => [
-    {
-      id: 0,
-      title: "새 폴더",
-      parent_id: null,
-      children: [],
-    },
-  ];
+  // const getDefaultFolder = (): FolderItem[] => [
+  //   {
+  //     id: 0,
+  //     title: "새 폴더",
+  //     parent_id: null,
+  //     children: [],
+  //   },
+  // ];
 
   // 부모, 자식 폴더 구분해서 build
   const buildTree = (data: FolderItem[]): FolderItem[] => {
-    if (!data || data.length === 0) return getDefaultFolder();
+    // if (!data || data.length === 0) return getDefaultFolder();
 
     const idMap = new Map<number, FolderItem>();
     const tree: FolderItem[] = [];
@@ -89,7 +89,7 @@ const DynamicFolder = ({
       .catch((err) => {
         console.log(type);
         console.log("폴더 데이터 로딩 실패:", err);
-        setFolderTree(getDefaultFolder());
+        // setFolderTree(getDefaultFolder());
       });
   }, [type, userId]);
 
