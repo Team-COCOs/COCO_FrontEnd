@@ -112,8 +112,8 @@ const DiaryWriteSelect: React.FC<DiaryWriteSelectProps> = ({
                 기분 선택
               </option>
               <option value="love">❤️</option>
-              <option value="happy">✨</option>
-              <option value="sad">🌧️</option>
+              <option value="happy">🎵</option>
+              <option value="sad">💧</option>
               <option value="angry">🔥</option>
               <option value="calm">🌿</option>
             </select>

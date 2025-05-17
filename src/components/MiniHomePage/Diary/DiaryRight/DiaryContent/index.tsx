@@ -22,10 +22,10 @@ const DiaryContent = ({
         <div className="DiaryContent_dateWrap logoFont">
           <div>
             <span className="DiaryContent_date">{formatted}</span>
-            <span className="DiaryContent_weather">🔅</span>
+            <span className="DiaryContent_weather">☀️</span>
           </div>
           <div>
-            <span className="DiaryContent_now">지금은 🌧️</span>
+            <span className="DiaryContent_now">지금은 🎵</span>
           </div>
         </div>
         <div className="DiaryContent_contentText Gulim">
