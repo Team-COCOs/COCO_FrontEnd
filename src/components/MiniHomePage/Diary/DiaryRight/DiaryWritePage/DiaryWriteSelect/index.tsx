@@ -23,7 +23,7 @@ const DiaryWriteSelect = () => {
   };
 
   return (
-    <DiaryWriteSelectStyle className="DiaryWritePage_wrap">
+    <DiaryWriteSelectStyle className="DiaryWritePage_wrap Gulim">
       <div className="DiaryWritePage_DiaryOptions_wrap">
         {/* 날씨 선택 */}
         <div className="DiaryWritePage_WeatherSelector">
@@ -31,7 +31,9 @@ const DiaryWriteSelect = () => {
           {["☀️", "🌤️", "🌧️", "⛈️", "☃️"].map((weather, index) => (
             <button
               key={index}
-              className="DiaryWritePage_WeatherButton"
+              className={`DiaryWritePage_WeatherButton ${
+                selectedWeather === weather ? "selected" : ""
+              }`}
               onClick={() => handleWeatherClick(weather)}
             >
               {weather}
@@ -41,7 +43,7 @@ const DiaryWriteSelect = () => {
 
         {/* 감정 select */}
         <div className="DiaryWritePage_SelectWrapper">
-          <select defaultValue="">
+          <select defaultValue="" className="Gulim">
             <option value="" disabled>
               기분 선택
             </option>
@@ -56,7 +58,7 @@ const DiaryWriteSelect = () => {
         {/* 카테고리 select */}
         <div className="DiaryWritePage_SelectWrapper">
           <label>폴더 이름 : </label>
-          <select defaultValue="">
+          <select defaultValue="" className="Gulim">
             <option value="" disabled>
               선택하세요
             </option>

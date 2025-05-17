@@ -88,7 +88,6 @@ export const DiaryWriteEditorStyle = styled.div`
 
       p {
         font-size: 12px;
-        font-weight: bold;
         width: 60px;
       }
 
