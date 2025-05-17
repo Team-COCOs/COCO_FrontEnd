@@ -19,15 +19,14 @@ export const DiaryWritePageStyle = styled.div`
   }
   .WritePage_wrap_EditorWrap {
     width: 100%;
-    height: 80%;
+    height: 70%;
+    padding: 10px 0px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: blue;
   }
   .WritePage_wrap_SaveBtnWrap {
     width: 100%;
-    height: 10%;
     display: flex;
     justify-content: space-between;
     align-items: center;

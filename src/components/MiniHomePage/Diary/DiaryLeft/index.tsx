@@ -54,6 +54,7 @@ const DiaryLeft = ({
       <div className="DiaryLeft_Calendar_line">
         <div className="min-w-[250px] DiaryLeft_Calendar_wrap pixelFont">
           <Calendar
+            locale="ko-KR"
             onChange={(date) => setSelectedDate(date as Date)}
             value={selectedDate}
             prev2Label="◀◀" // «

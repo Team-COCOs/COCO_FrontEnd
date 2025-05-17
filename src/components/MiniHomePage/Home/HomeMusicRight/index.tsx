@@ -102,7 +102,6 @@ const HomeMusicRight = () => {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/useritems/bgm/${id}`
         );
-        console.log(res.data, "bgm buy?");
         setPlaylist(res.data);
       } catch (e: any) {
         console.error("BGM 가져오기 오류:", e);
