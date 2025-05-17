@@ -31,11 +31,12 @@ const DiaryWritePage = ({ setDiaryWrite }: DiaryWritePageProps) => {
     },
   ];
 
-  // 폴더 불러오기
   useEffect(() => {
+    if (!user?.id) return; // user id가 없으면 요청 안 함
+
     axios
       .get(
-        `${process.env.NEXT_PUBLIC_API_URL}/diary/folderList?userId=${user?.id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/diary/folderList?userId=${user.id}`
       )
       .then((res) => {
         setFolder(res.data);
@@ -45,12 +46,12 @@ const DiaryWritePage = ({ setDiaryWrite }: DiaryWritePageProps) => {
         console.log("폴더 데이터 로딩 실패:", e);
         setFolder(getDefaultFolder());
       });
-  }, []);
+  }, [user?.id]);
 
   return (
     <DiaryWritePageStyle className="WritePage_wrap">
       <div className="WritePage_wrap_SelectWrap">
-        <DiaryWriteSelect />
+        <DiaryWriteSelect folders={folder} setFolder={setFolder} />
       </div>
       <div className="WritePage_wrap_EditorWrap">
         <DiaryWriteEditor />

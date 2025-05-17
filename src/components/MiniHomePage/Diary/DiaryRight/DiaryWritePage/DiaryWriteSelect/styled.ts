@@ -25,16 +25,21 @@ export const DiaryWriteSelectStyle = styled.div`
     border-radius: 5px;
   }
   .DiaryWritePage_WeatherSelector {
+    display: flex;
+    align-items: center;
     span {
-      font-size: 12px;
+      font-size: 11.5px;
       padding-right: 5px;
       font-weight: bold;
     }
   }
   .DiaryWritePage_SelectWrapper {
+    padding-left: 10px;
+    align-items: center;
     label {
-      font-size: 12px;
+      font-size: 11.5px;
       padding-right: 5px;
+
       font-weight: bold;
     }
   }
@@ -53,5 +58,56 @@ export const DiaryWriteSelectStyle = styled.div`
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 16px 16px;
+  }
+  @media (max-width: 1024px) {
+    .DiaryWritePage_DiaryOptions_wrap {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+  @media (max-width: 768px) {
+    .DiaryWritePage_DiaryOptions_wrap {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .DiaryWritePage_WeatherButton {
+      font-size: 16px;
+      padding: 6px;
+    }
+
+    .DiaryWritePage_WeatherSelector span,
+    .DiaryWritePage_SelectWrapper label {
+      font-size: 10px;
+    }
+
+    .DiaryWritePage_SelectWrapper {
+      padding-left: 0;
+    }
+
+    .DiaryWritePage_SelectWrapper select {
+      font-size: 10px;
+      padding: 5px 28px 5px 8px;
+    }
+  }
+  @media (max-width: 480px) {
+    .DiaryWritePage_DiaryOptions_wrap {
+      flex-direction: column;
+      gap: 8px;
+    }
+    .DiaryWritePage_WeatherButton {
+      font-size: 10px;
+      padding: 3px;
+    }
+  }
+  @media (max-width: 360px) {
+    .DiaryWritePage_DiaryOptions_wrap {
+      flex-direction: column;
+      gap: 6px;
+    }
+    .DiaryWritePage_WeatherButton {
+      font-size: 8px;
+      padding: 1px;
+    }
   }
 `;

@@ -77,6 +77,7 @@ export const DiaryEditorPageStyle = styled.div`
       font-size: 14px;
       white-space: pre-wrap;
       outline: none;
+      min-height: 100px;
     }
 
     .DiaryEditorPage_isPublic {

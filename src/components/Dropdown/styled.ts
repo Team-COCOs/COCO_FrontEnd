@@ -9,13 +9,14 @@ export const DropdownStyle = styled.div`
 
     .Dropdown_default {
       width: 100%;
-      padding: 3px 7px 2px;
-      font-size: 13px;
+      padding: 3px 10px;
+      font-size: 10px;
       cursor: pointer;
       background-color: white;
       border: 1px solid #aaa;
       text-align: left;
       display: flex;
+      align-items: center;
       justify-content: space-between;
 
       &:focus {
