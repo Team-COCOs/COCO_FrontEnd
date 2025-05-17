@@ -10,6 +10,7 @@ interface FolderItem {
   id: number;
   title: string;
   parent_id: number | null;
+  children: FolderItem[] | null;
 }
 
 interface DiaryWritePageProps {
@@ -28,6 +29,7 @@ const DiaryWritePage = ({ setDiaryWrite }: DiaryWritePageProps) => {
       id: 0,
       title: "새 폴더",
       parent_id: null,
+      children: null,
     },
   ];
 

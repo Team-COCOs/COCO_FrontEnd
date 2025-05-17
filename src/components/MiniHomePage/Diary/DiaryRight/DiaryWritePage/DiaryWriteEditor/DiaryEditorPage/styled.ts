@@ -97,6 +97,9 @@ export const DiaryEditorPageStyle = styled.div`
         margin-top: 0;
         width: 90px;
         margin-left: -3px;
+        ul {
+          font-size: 10px;
+        }
       }
     }
   }

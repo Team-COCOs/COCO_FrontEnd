@@ -10,12 +10,6 @@ interface FolderItem {
   children: FolderItem[] | null;
 }
 
-interface FolderNode {
-  id: number;
-  title: string;
-  children: FolderNode[];
-}
-
 const DiaryWriteSelect: React.FC<{
   folders: FolderItem[];
   setFolder: React.Dispatch<React.SetStateAction<FolderItem[]>>;
