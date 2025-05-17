@@ -1,8 +1,67 @@
 import { useRouter } from "next/router";
 import { SettingMyInfoStyle } from "./styled";
+import { useEffect, useState } from "react";
+import { validatePassword, validatePhone } from "@/utils/validation";
+import axiosInstance from "@/lib/axios";
+import useSignForm from "@/utils/SignUp/useSignForm";
+import ShadowModal from "@/components/ShadowModal";
 
 const SettingMyInfo = () => {
   const router = useRouter();
+
+  const {
+    password,
+    passwordCheck,
+    handlePasswordChange,
+    handlePasswordCheckChange,
+    handlePhoneChange,
+    handleDuplicateCheck,
+    passwordError,
+    passwordCheckError,
+    phone,
+    phoneError,
+    type,
+    isOpen,
+    setIsOpen,
+    message,
+  } = useSignForm();
+
+  const isPasswordValid =
+    password.trim() !== "" &&
+    passwordError === "" &&
+    passwordCheck.trim() !== "" &&
+    passwordCheckError === "";
+
+  const isPhoneValid =
+    phone.trim() !== "" &&
+    phoneError.trim() === "" &&
+    type === "success" &&
+    message.trim() === "사용 가능한 전화번호입니다.";
+
+  const handleSubmit = async (type: "password" | "phone") => {
+    try {
+      let data;
+      if (type === "password") {
+        data = { password };
+      } else if (type === "phone") {
+        // phone에서 하이픈 제거
+        const cleanPhone = phone.replace(/-/g, "");
+        data = { phone: cleanPhone };
+      }
+
+      await axiosInstance.patch(`/auth/update/${type}`, data);
+
+      alert(
+        `${
+          type === "password" ? "비밀번호" : "전화번호"
+        }가 성공적으로 변경되었습니다.`
+      );
+    } catch (err) {
+      alert(
+        `${type === "password" ? "비밀번호" : "전화번호"} 변경에 실패했습니다.`
+      );
+    }
+  };
 
   return (
     <SettingMyInfoStyle className="SettingMyInfo_wrap">
@@ -22,6 +81,7 @@ const SettingMyInfo = () => {
           </div>
         </div>
 
+        {/* 비밀번호 */}
         <span className="pixelFont SettingMyInfo_subTitle">
           <div className="SettingMyInfo_iconText">
             <span className="SettingMyInfo_icon">🟧</span>비밀번호 변경
@@ -34,25 +94,37 @@ const SettingMyInfo = () => {
         <div className="SettingMyInfo_password">
           <div className="SettingMyInfo_textBox">
             <div className="SettingMyInfo_text Gulim">비밀번호</div>
-            <p className="SettingMyInfo_error">
-              10자 이상, 숫자, 특수문자를 포함하여주세요.
-            </p>
-            <input type="password"></input>
+            <input
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+            <p className="SettingMyInfo_error">{passwordError}</p>
           </div>
 
           <div className="SettingMyInfo_underLine"></div>
 
           <div className="SettingMyInfo_textBox">
             <div className="SettingMyInfo_text Gulim">비밀번호 확인</div>
-            <input type="password"></input>
-            <p className="SettingMyInfo_error"></p>
+            <input
+              type="password"
+              value={passwordCheck}
+              onChange={handlePasswordCheckChange}
+            />
+            <p className="SettingMyInfo_error">{passwordCheckError}</p>
           </div>
         </div>
 
         <div className="SettingMyInfo_btns">
-          <button>확인</button>
+          <button
+            disabled={!isPasswordValid}
+            onClick={() => handleSubmit("password")}
+          >
+            확인
+          </button>
         </div>
 
+        {/* 전화번호 */}
         <span className="pixelFont SettingMyInfo_subTitle">
           <div className="SettingMyInfo_iconText">
             <span className="SettingMyInfo_icon">🟧</span>전화번호 변경
@@ -62,13 +134,35 @@ const SettingMyInfo = () => {
         <div className="SettingMyInfo_password">
           <div className="SettingMyInfo_textBox">
             <div className="SettingMyInfo_text Gulim">전화번호</div>
-            <input type="text"></input>
+            <input
+              type="text"
+              value={phone}
+              onChange={handlePhoneChange}
+              maxLength={13}
+            />
+            <p className="SettingMyInfo_error">{phoneError}</p>
           </div>
         </div>
+
         <div className="SettingMyInfo_btns">
-          <button>확인</button>
+          <button onClick={() => handleDuplicateCheck("phone")}>
+            중복검사
+          </button>
+          <button
+            disabled={!isPhoneValid}
+            onClick={() => handleSubmit("phone")}
+          >
+            확인
+          </button>
         </div>
       </div>
+
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        message={message}
+      />
     </SettingMyInfoStyle>
   );
 };

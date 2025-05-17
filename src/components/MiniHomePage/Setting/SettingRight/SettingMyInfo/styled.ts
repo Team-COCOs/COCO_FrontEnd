@@ -140,6 +140,7 @@ export const SettingMyInfoStyle = styled.div`
 
             @media (max-width: 588px) {
               width: 90%;
+              margin-bottom: 15px;
             }
           }
 
@@ -151,11 +152,7 @@ export const SettingMyInfoStyle = styled.div`
             color: rgb(255, 105, 105);
             font-size: 12px;
 
-            @media (max-width: 430px) {
-              font-size: 10px;
-            }
-
-            @media (max-width: 370px) {
+            @media (max-width: 580px) {
               font-size: 9px;
             }
           }
@@ -172,6 +169,7 @@ export const SettingMyInfoStyle = styled.div`
         padding: 0 10px;
         display: flex;
         justify-content: flex-end;
+        gap: 10px;
 
         button {
           padding: 4px 5px;
@@ -182,6 +180,10 @@ export const SettingMyInfoStyle = styled.div`
           border-radius: 2px;
           cursor: pointer;
           font-weight: bold;
+
+          &:disabled {
+            cursor: not-allowed;
+          }
         }
       }
     }
