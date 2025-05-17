@@ -7,6 +7,7 @@ interface FolderItem {
   id: number;
   title: string;
   parent_id: number | null;
+  children: FolderItem[] | null;
 }
 
 interface FolderNode {
@@ -15,44 +16,11 @@ interface FolderNode {
   children: FolderNode[];
 }
 
-interface DiaryWriteSelectProps {
+const DiaryWriteSelect: React.FC<{
   folders: FolderItem[];
   setFolder: React.Dispatch<React.SetStateAction<FolderItem[]>>;
-}
-
-const buildFolderTree = (flatFolders: FolderItem[]): FolderNode[] => {
-  const idToNodeMap = new Map<number, FolderNode>();
-
-  flatFolders.forEach((folder) => {
-    idToNodeMap.set(folder.id, {
-      id: folder.id,
-      title: folder.title,
-      children: [],
-    });
-  });
-
-  const tree: FolderNode[] = [];
-
-  flatFolders.forEach((folder) => {
-    if (folder.parent_id === null) {
-      tree.push(idToNodeMap.get(folder.id)!);
-    } else {
-      const parentNode = idToNodeMap.get(folder.parent_id);
-      if (parentNode) {
-        parentNode.children.push(idToNodeMap.get(folder.id)!);
-      }
-    }
-  });
-
-  return tree;
-};
-
-const DiaryWriteSelect: React.FC<DiaryWriteSelectProps> = ({
-  folders,
-  setFolder,
-}) => {
+}> = ({ folders, setFolder }) => {
   const router = useRouter();
-  const { id } = router.query;
   const { user } = useAuth();
 
   const [selectedWeather, setSelectedWeather] = useState("");
@@ -60,7 +28,6 @@ const DiaryWriteSelect: React.FC<DiaryWriteSelectProps> = ({
 
   const handleWeatherClick = (weather: string) => {
     setSelectedWeather(weather);
-    console.log("선택된 날씨:", weather);
   };
 
   const handleFolderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -69,27 +36,25 @@ const DiaryWriteSelect: React.FC<DiaryWriteSelectProps> = ({
   };
 
   const renderFolderOptions = (
-    folders: FolderNode[],
+    folders: FolderItem[],
     depth = 0
   ): React.ReactNode[] => {
     return folders.flatMap((folder) => {
-      const indent = "  ".repeat(depth); // 공백 2칸씩 들여쓰기
+      const prefix = "ㄴ".repeat(depth);
       const currentOption = (
         <option key={folder.id} value={folder.id}>
-          {indent + folder.title}
+          {prefix} {folder.title}
         </option>
       );
-
-      const childrenOptions = renderFolderOptions(folder.children, depth + 1);
+      const childrenOptions = folder.children
+        ? renderFolderOptions(folder.children, depth + 1)
+        : [];
       return [currentOption, ...childrenOptions];
     });
   };
 
-  // 트리 구조로 변환
-  const folderTree = buildFolderTree(folders || []);
-
   return (
-    <DiaryWriteSelectStyle className="DiaryWritePage_wrap ">
+    <DiaryWriteSelectStyle className="DiaryWritePage_wrap">
       <div className="DiaryWritePage_DiaryOptions_wrap">
         {/* 날씨 선택 */}
         <div className="DiaryWritePage_WeatherSelector">
@@ -104,7 +69,8 @@ const DiaryWriteSelect: React.FC<DiaryWriteSelectProps> = ({
             >
               {weather}
             </button>
-          ))}{" "}
+          ))}
+
           {/* 감정 select */}
           <div className="DiaryWritePage_SelectWrapper">
             <select defaultValue="">
@@ -120,14 +86,14 @@ const DiaryWriteSelect: React.FC<DiaryWriteSelectProps> = ({
           </div>
         </div>
 
-        {/* 카테고리 select */}
+        {/* 카테고리 선택 */}
         <div className="DiaryWritePage_SelectWrapper">
           <label>폴더 이름 : </label>
           <select value={selectedFolderId} onChange={handleFolderChange}>
             <option value="" disabled>
               선택하세요
             </option>
-            {renderFolderOptions(folderTree)}
+            {renderFolderOptions(folders)}
           </select>
         </div>
       </div>
