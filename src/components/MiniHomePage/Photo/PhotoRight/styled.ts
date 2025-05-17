@@ -21,24 +21,19 @@ export const PhotoRightStyled = styled.div`
 
     .PhotoRight_header {
       width: 100%;
-      padding: 0 10px;
+      padding: 0 15px;
       display: flex;
       align-items: center;
       justify-content: flex-end;
       margin-bottom: 10px;
 
       .PhotoRight_btn {
-        padding: 3px;
-        width: 75px;
-        font-size: 12px;
-        background: linear-gradient(to bottom, #ffffff, #dddddd);
-        border: 1px solid #000000;
-        border-radius: 3px;
+        background-color: rgb(248, 248, 248);
+        border-radius: 5px;
+        border: 1.5px solid #ddd;
+        padding: 4px 13px;
+        font-size: 10px;
         cursor: pointer;
-
-        &:active {
-          background: linear-gradient(to top, #ffffff, #dddddd);
-        }
       }
     }
 
@@ -214,17 +209,12 @@ export const PhotoRightStyled = styled.div`
           gap: 5px;
 
           button {
-            padding: 2px 3px;
-            width: 35px;
-            font-size: 12px;
-            border: 1px solid rgb(164, 164, 164);
-            color: rgb(61, 61, 61);
-            border-radius: 3px;
+            background-color: rgb(248, 248, 248);
+            border-radius: 5px;
+            border: 1.5px solid #ddd;
+            padding: 4px 8px;
+            font-size: 10px;
             cursor: pointer;
-
-            &:active {
-              background: linear-gradient(to top, #ffffff, #dddddd);
-            }
           }
         }
       }
@@ -233,17 +223,13 @@ export const PhotoRightStyled = styled.div`
         position: relative;
         display: flex;
         align-self: flex-end;
-        padding: 2px 3px;
         width: 45px;
-        font-size: 12px;
-        border: 1px solid rgb(164, 164, 164);
-        color: rgb(61, 61, 61);
-        border-radius: 3px;
+        background-color: rgb(248, 248, 248);
+        border-radius: 5px;
+        border: 1.5px solid #ddd;
+        padding: 4px 13px;
+        font-size: 10px;
         cursor: pointer;
-
-        &:active {
-          background: linear-gradient(to top, #ffffff, #dddddd);
-        }
       }
 
       .PhotoRight_line {

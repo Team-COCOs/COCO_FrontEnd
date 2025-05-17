@@ -91,6 +91,7 @@ export const CommentStyle = styled.div`
 
       p {
         width: 35px;
+        font-size: 10px;
       }
 
       input {
@@ -98,6 +99,8 @@ export const CommentStyle = styled.div`
         height: 23px;
         padding: 2px 5px;
         font-size: 12px;
+        border-radius: 5px;
+        border: 1.5px solid #ddd;
 
         @media (max-width: 650px) {
           & {
@@ -124,18 +127,14 @@ export const CommentStyle = styled.div`
       }
 
       button {
-        padding: 1px 3px;
         width: 40px;
         height: 23px;
-        font-size: 12px;
-        border: 1px solid rgb(84, 84, 84);
-        color: rgb(61, 61, 61);
-        border-radius: 3px;
+        background-color: rgb(248, 248, 248);
+        border-radius: 5px;
+        border: 1.5px solid #ddd;
+        padding: 4px 8px;
+        font-size: 10px;
         cursor: pointer;
-
-        &:active {
-          background: linear-gradient(to top, #ffffff, #dddddd);
-        }
 
         &:focus,
         &:active {

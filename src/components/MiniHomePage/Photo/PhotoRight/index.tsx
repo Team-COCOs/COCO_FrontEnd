@@ -145,7 +145,7 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
         <div className="PhotoRight_header">
           {queryUserId && (
             <button
-              className="PhotoRight_btn Gulim"
+              className="PhotoRight_btn pxielFont"
               onClick={() => setWrite(true)}
             >
               글 작성하기
