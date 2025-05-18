@@ -5,8 +5,8 @@ export const VisitorRightStyled = styled.div`
   &.VisitorRight_wrap {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    gap: 10px;
     width: 98%;
     height: 95%;
     word-wrap: break-word;
@@ -15,11 +15,82 @@ export const VisitorRightStyled = styled.div`
     white-space: normal;
     overflow-y: auto;
     overflow-x: hidden;
+    padding: 20px;
 
     .VisitorRight_header {
       width: 92%;
-      height: 100%;
-      padding-left: 10px;
+
+      .Gulim {
+        font-size: 13px;
+        font-weight: bold;
+      }
+
+      .VisitorRight_headerFlex {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+
+        .VisitorRight_management {
+          width: 90%;
+          height: 20px;
+          padding: 5px;
+          color: rgb(119, 119, 119);
+
+          &:active,
+          &:focus {
+            outline: none;
+          }
+        }
+
+        p {
+          color: rgb(119, 119, 119);
+        }
+
+        .VisitorRight_headerIcon {
+          width: 15px;
+          height: 15px;
+          clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+          background: rgb(255, 231, 110);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          border: 2px solid black;
+          font-size: 10px;
+          padding: 5px;
+        }
+      }
+
+      .VisitorRight_headerBox {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 2px solid rgb(230, 230, 230);
+        padding: 8px 15px;
+        border-radius: 5px;
+
+        .VisitorRight_headerBtn {
+          background-color: rgb(165, 165, 165);
+          color: white;
+          border: none;
+          width: 40px;
+          border-radius: 5px;
+          padding: 3px;
+          cursor: pointer;
+
+          &:active,
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+
+    .VisitorRight_profile,
+    .VisitorRight_guestBook {
+      padding: 0 25px;
+      width: 100%;
     }
 
     @media (max-width: 1024px) {
