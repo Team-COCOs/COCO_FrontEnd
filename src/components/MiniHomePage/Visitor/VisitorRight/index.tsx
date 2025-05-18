@@ -11,7 +11,11 @@ const VisitorRight = () => {
 
   return (
     <VisitorRightStyled className="VisitorRight_wrap">
-      <div className="VisitorRight_header ">Visitor</div>
+      <div className="VisitorRight_header">
+        <div className="VisitorRight_headerBox">
+          <p></p>
+        </div>
+      </div>
     </VisitorRightStyled>
   );
 };

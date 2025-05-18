@@ -169,7 +169,7 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                     className="PhotoRight_user"
                     onClick={() => router.push(`/home/${data.user.id}`)}
                   >
-                    {data.user.name}
+                    {data.origin_author}
                   </p>
                   <div className="PhotoRight_info">
                     <p className="PhotoRight_font">
