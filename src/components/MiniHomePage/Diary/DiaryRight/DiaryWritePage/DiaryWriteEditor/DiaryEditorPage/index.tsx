@@ -1,5 +1,6 @@
 import Dropdown from "@/components/Dropdown";
 import { DiaryEditorPageStyle } from "./styled";
+import { DiaryEditorHandle } from "../../../DiaryWritePage";
 import {
   useRef,
   useState,
@@ -26,22 +27,31 @@ const visibilityOptions = [
 
 interface EditorPageProps {
   onVisibilityChange: (newVisibility: string) => void;
-}
-
-export interface DiaryEditorHandle {
-  getHtml: () => string;
+  initialVisibility?: string; // 추가
+  initialContent?: string; // 추가
 }
 
 const DiaryEditorPage = forwardRef<DiaryEditorHandle, EditorPageProps>(
-  ({ onVisibilityChange }, ref) => {
+  (
+    { onVisibilityChange, initialVisibility = "", initialContent = "" },
+    ref
+  ) => {
     const DiaryEditorRef = useRef<HTMLDivElement>(null);
     const [font, setFont] = useState("Gulim");
+    const [content, setContent] = useState(initialContent);
+    const [visibility, setVisibility] = useState(initialVisibility);
 
     useEffect(() => {
       if (DiaryEditorRef.current) {
         DiaryEditorRef.current.style.fontFamily = `"${font}"`;
       }
     }, [font]);
+
+    useEffect(() => {
+      if (DiaryEditorRef.current) {
+        DiaryEditorRef.current.innerHTML = content;
+      }
+    }, [content]);
 
     const execCommand = (command: string, value?: string) => {
       document.execCommand("styleWithCSS", false, "true");
@@ -86,6 +96,13 @@ const DiaryEditorPage = forwardRef<DiaryEditorHandle, EditorPageProps>(
 
     useImperativeHandle(ref, () => ({
       getHtml: () => DiaryEditorRef.current?.innerHTML || "",
+      setContent: (html: string) => {
+        setContent(html);
+      },
+      setVisibility: (vis: string) => {
+        setVisibility(vis);
+        onVisibilityChange(vis);
+      },
     }));
 
     return (
@@ -140,6 +157,7 @@ const DiaryEditorPage = forwardRef<DiaryEditorHandle, EditorPageProps>(
           className="DiaryEditorPage_area"
           ref={DiaryEditorRef}
           contentEditable
+          suppressContentEditableWarning={true}
         ></div>
 
         <div className="DiaryEditorPage_isPublic">

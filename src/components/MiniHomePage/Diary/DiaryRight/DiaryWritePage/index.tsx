@@ -26,6 +26,8 @@ interface EditorPageProps {
 
 export interface DiaryEditorHandle {
   getHtml: () => string;
+  setContent: (html: string) => void; // 추가
+  setVisibility: (vis: string) => void; // 추가
 }
 
 const DiaryWritePage = ({
@@ -38,10 +40,9 @@ const DiaryWritePage = ({
   const [folder, setFolder] = useState<FolderItem[]>([]);
 
   // 에디터 html 사용
-  const editorRef = useRef<{ getHtml: () => string }>(null);
+  const editorRef = useRef<DiaryEditorHandle>(null);
   // 공개 여부
   const [visibility, setVisibility] = useState("");
-
   // 다이어리 기분, 날씨, 폴더 선택
   const [selectedWeather, setSelectedWeather] = useState("");
   const [selectedFolderId, setSelectedFolderId] = useState<number | "">("");
@@ -74,6 +75,24 @@ const DiaryWritePage = ({
         setFolder(getDefaultFolder());
       });
   }, [user?.id]);
+
+  // 수정 중인 일기가 있으면 초기값 세팅
+  useEffect(() => {
+    if (!editingDiary) return;
+
+    setSelectedFolderName(editingDiary.folder.title);
+    setSelectedWeather(editingDiary.weather);
+    setSelectedMood(editingDiary.mood);
+    setVisibility(editingDiary.visibility);
+    // 폴더 id가 있다면 setSelectedFolderId도
+    if (editingDiary.folder.id) {
+      setSelectedFolderId(editingDiary.id);
+    }
+    // 에디터 내용 초기화
+    if (editorRef.current && editingDiary.content) {
+      editorRef.current.setContent(editingDiary.content);
+    }
+  }, [editingDiary]);
 
   const handleSave = async () => {
     const content = editorRef.current?.getHtml() || "";
@@ -117,6 +136,21 @@ const DiaryWritePage = ({
     });
 
     try {
+      // if (editingDiary) {
+      //   // 수정
+      //   const response = await axiosInstance.patch(
+      //     `/diary/${editingDiary.id}`,
+      //     {
+      //       folder_name: selectedFolderName,
+      //       weather: selectedWeather,
+      //       mood: selectedMood,
+      //       visibility: visibility,
+      //       content: content,
+      //     }
+      //   );
+      //   alert("수정 성공!");
+      // } else {
+      // 신규 저장
       const response = await axiosInstance.post(`/diary/save`, {
         folder_name: selectedFolderName,
         weather: selectedWeather,
@@ -127,6 +161,7 @@ const DiaryWritePage = ({
       console.log(response.data, "다이어리 일기쓰기 저장?");
       alert("저장 성공!");
       router.push(`/home/${id}`);
+      // }
     } catch (error) {
       console.error("저장 실패:", error);
       alert("저장에 실패했습니다.");
