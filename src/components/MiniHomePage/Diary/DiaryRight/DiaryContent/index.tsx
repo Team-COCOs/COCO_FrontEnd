@@ -6,7 +6,7 @@ import axiosInstance from "@/lib/axios";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface DiaryContentProps {
   selectedDate: Date | null;
@@ -30,21 +30,24 @@ const DiaryContent = ({
   const { id } = router.query;
   const { user } = useAuth();
 
-  // 다이어리 조회
-  const fetchDiary = async () => {
-    try {
-      const response = user?.id
-        ? await axiosInstance.get(`/diary/${id}`)
-        : await axios.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/diary/logout/${id}`
-          ); // 비로그인 유저용
-      console.log(response.data, "다이어리 데이터");
-      setDiaryData(response.data);
-    } catch (error) {
-      console.error("다이어리 조회 실패", error);
-      throw error;
-    }
-  };
+  useEffect(() => {
+    // 다이어리 조회
+    const fetchDiary = async () => {
+      try {
+        const response = user?.id
+          ? await axiosInstance.get(`/diary/${id}`)
+          : await axios.get(
+              `${process.env.NEXT_PUBLIC_API_URL}/diary/logout/${id}`
+            ); // 비로그인 유저용
+        console.log(response.data, "다이어리 데이터");
+        setDiaryData(response.data);
+      } catch (error) {
+        console.error("다이어리 조회 실패", error);
+        throw error;
+      }
+    };
+    fetchDiary();
+  }, [user?.id]);
 
   return (
     <DiaryContentStyle>
