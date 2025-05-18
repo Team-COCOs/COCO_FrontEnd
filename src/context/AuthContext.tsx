@@ -76,8 +76,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // ✅ 로그아웃
   const logout = async () => {
     try {
-      Cookies.remove("access_token");
-      Cookies.remove("refresh_token");
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
 
       setUser(null);
       setIsLoggedIn(false);
