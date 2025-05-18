@@ -58,6 +58,7 @@ interface PhotoData {
 const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
   const [photoData, setPhotoData] = useState<PhotoData[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [myPhoto, setMyPhoto] = useState(false);
 
   const itemsPerPage = 5;
 
@@ -143,7 +144,7 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
     <PhotoRightStyled>
       <div className="PhotoRight_wrap">
         <div className="PhotoRight_header">
-          {queryUserId && (
+          {userId === Number(queryUserId) && (
             <button
               className="PhotoRight_btn pxielFont"
               onClick={() => setWrite(true)}

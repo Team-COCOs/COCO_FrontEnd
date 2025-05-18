@@ -14,6 +14,9 @@ export const flattenTreeData = (treeData: TreeNode[]) => {
         ...rest,
         parent_id: parentId,
       };
+
+      console.log(currentNode);
+
       return [
         currentNode,
         ...(children ? flatten(children, currentNode.key) : []),

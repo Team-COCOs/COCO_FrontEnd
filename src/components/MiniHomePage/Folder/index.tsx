@@ -61,6 +61,12 @@ const Folder = ({ type, onSave }: FolderProps) => {
       );
     } else if (action === "delete") {
       checkedKeys.forEach((key) => {
+        const node = findNodeByKey(treeData, key);
+        if (node?.title === "스크랩") {
+          alert("스크랩 폴더는 삭제할 수 없습니다.");
+          return;
+        }
+
         updatedTreeData = deleteNodeByKey(updatedTreeData, key);
       });
     }
@@ -74,6 +80,12 @@ const Folder = ({ type, onSave }: FolderProps) => {
 
   // 수정 시작 -> 노드 제목 input으로
   const handleStartEditing = () => {
+    const node = findNodeByKey(treeData, checkedKeys[0]);
+    if (node?.title === "스크랩") {
+      alert("스크랩 폴더는 수정할 수 없습니다.");
+      return;
+    }
+
     if (checkedKeys.length === 1 && checkedKeys[0] !== editingKey) {
       const findTitle = (nodes: TreeNode[]): string | undefined => {
         for (const node of nodes) {
@@ -95,6 +107,11 @@ const Folder = ({ type, onSave }: FolderProps) => {
 
   // 수정 끝 -> 제목 적용
   const handleFinishEditing = () => {
+    if (editTitle.trim() === "스크랩") {
+      alert("폴더 이름을 '스크랩'으로 지정할 수 없습니다.");
+      return;
+    }
+
     const updatedTree = editNodeByKey(treeData, checkedKeys[0], editTitle);
     setTreeData(updatedTree);
 
@@ -220,7 +237,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
 
       <div className="Folder_componentWrap">
         <Tree
-          draggable
+          draggable={(node) => node.title !== "스크랩"}
           treeData={treeData}
           checkable
           checkStrictly
