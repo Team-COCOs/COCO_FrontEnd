@@ -6,6 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 import DiaryWriteEditor from "./DiaryWriteEditor";
 import DiaryWriteSelect from "./DiaryWriteSelect";
 import axiosInstance from "@/lib/axios";
+import { DiaryType } from "../../DiaryRight";
 
 interface FolderItem {
   id: number;
@@ -16,6 +17,7 @@ interface FolderItem {
 
 interface DiaryWritePageProps {
   setDiaryWrite: React.Dispatch<React.SetStateAction<boolean>>;
+  editingDiary?: DiaryType | null;
 }
 
 interface EditorPageProps {
@@ -26,7 +28,10 @@ export interface DiaryEditorHandle {
   getHtml: () => string;
 }
 
-const DiaryWritePage = ({ setDiaryWrite }: DiaryWritePageProps) => {
+const DiaryWritePage = ({
+  setDiaryWrite,
+  editingDiary,
+}: DiaryWritePageProps) => {
   const router = useRouter();
   const { id } = router.query;
   const { user } = useAuth();

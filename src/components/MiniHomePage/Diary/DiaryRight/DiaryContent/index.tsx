@@ -7,11 +7,23 @@ import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
+// import { DiaryType } from "..";
 
 interface DiaryContentProps {
   selectedDate: Date | null;
   selectedDiaryMenu: { id: number; title: string } | null;
   setDiaryWrite: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditingDiary?: React.Dispatch<React.SetStateAction<DiaryType | null>>;
+}
+
+interface DiaryType {
+  id: number;
+  title: string;
+  content: string;
+  date: string;
+  weather?: string;
+  public: boolean;
+  authorId: number;
 }
 
 const formatted = format(new Date(), "yyyy.MM.dd EEE HH:mm", { locale: ko });
@@ -20,11 +32,25 @@ const DiaryContent = ({
   selectedDate,
   selectedDiaryMenu,
   setDiaryWrite,
+  setEditingDiary,
 }: DiaryContentProps) => {
   const [diaryData, setDiaryData] = useState<[]>([]);
-  const handleFixBtn = () => {};
 
-  const handleDeleteBtn = () => {};
+  const handleFixBtn = (diary: DiaryType) => {
+    // setEditingDiary(diary); // 수정할 다이어리 세팅
+    setDiaryWrite(true); // 수정 페이지 열기
+  };
+
+  const handleDeleteBtn = async (diaryId: number) => {
+    try {
+      const response = axiosInstance.delete(`/diary/delete/${diaryId}`);
+      alert("게시물이 삭제되었습니다!");
+      router.push(`/home/${id}`);
+    } catch (e: any) {
+      console.log(e, "e : 게시물 삭제 실패");
+      alert("게시물 삭제에 실패했습니다.");
+    }
+  };
 
   const router = useRouter();
   const { id } = router.query;
@@ -69,7 +95,7 @@ const DiaryContent = ({
           <div className="DiaryContent_fixDeletebtn Gulim">
             <button
               onClick={() => {
-                handleFixBtn;
+                // handleFixBtn(diary); // diary id 수정 예정
               }}
             >
               수정
@@ -77,7 +103,7 @@ const DiaryContent = ({
             <span>|</span>
             <button
               onClick={() => {
-                handleDeleteBtn;
+                handleDeleteBtn(2000); // diary id 수정 예정
               }}
             >
               삭제

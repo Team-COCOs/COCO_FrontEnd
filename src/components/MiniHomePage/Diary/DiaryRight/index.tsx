@@ -10,8 +10,22 @@ interface DiaryProps {
   selectedDate: Date | null;
 }
 
+export interface DiaryType {
+  id: number;
+  folder_name: string;
+  weather: string;
+  mood: string;
+  visibility: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  authorName: string;
+  authorId: number;
+}
+
 const DiaryRight = ({ selectedDate, selectedDiaryMenu }: DiaryProps) => {
   const [diaryWrite, setDiaryWrite] = useState<boolean>(false);
+  const [editingDiary, setEditingDiary] = useState<DiaryType | null>(null);
 
   return (
     <DiaryRightStyled>
@@ -25,16 +39,21 @@ const DiaryRight = ({ selectedDate, selectedDiaryMenu }: DiaryProps) => {
                 selectedDate={selectedDate}
                 selectedDiaryMenu={selectedDiaryMenu}
                 setDiaryWrite={setDiaryWrite}
+                setEditingDiary={setEditingDiary}
               />
               <DiaryContent
                 selectedDate={selectedDate}
                 selectedDiaryMenu={selectedDiaryMenu}
                 setDiaryWrite={setDiaryWrite}
+                // setEditingDiary={setEditingDiary}
               />
             </div>
           ) : (
             <div className="DiaryWritePage_component_wrap">
-              <DiaryWritePage setDiaryWrite={setDiaryWrite} />
+              <DiaryWritePage
+                setDiaryWrite={setDiaryWrite}
+                editingDiary={editingDiary}
+              />
             </div>
           )}
 
