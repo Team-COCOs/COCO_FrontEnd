@@ -151,6 +151,18 @@ export const DiaryContentStyle = styled.div`
     font-size: 12px;
     width: 120px;
   }
+
+  .DiaryContent_dotori_imgWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50vh;
+    img {
+      width: 35%;
+      object-fit: contain;
+    }
+  }
   /* 반응형 */
   @media (max-width: 830px) {
     .DiaryContent_dateWrap {

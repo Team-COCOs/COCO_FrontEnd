@@ -55,6 +55,7 @@ const DiaryContent = ({
   const { user } = useAuth();
 
   useEffect(() => {
+    if (!id) return;
     // 다이어리 조회
     const fetchDiary = async () => {
       try {
@@ -65,9 +66,12 @@ const DiaryContent = ({
             ); // 비로그인 유저용
         console.log(response.data, "다이어리 데이터");
         setDiaryData(response.data);
-      } catch (error) {
+      } catch (error: any) {
+        if (error.response?.status === 401) {
+          console.log("다이어리 조회 실패 : 로그아웃 됨");
+          return;
+        }
         console.error("다이어리 조회 실패", error);
-        throw error;
       }
     };
     fetchDiary();
@@ -96,15 +100,11 @@ const DiaryContent = ({
                 <div className="DiaryContent_contentText Gulim">
                   <div>{diary.content}</div>
                   <div className="DiaryContent_fixDeletebtn Gulim">
-                    <button
-                      onClick={() => handleFixBtn(diary)} // diary id 수정 예정
-                    >
-                      수정
-                    </button>
+                    <button onClick={() => handleFixBtn(diary)}>수정</button>
                     <span>|</span>
                     <button
                       onClick={() => {
-                        handleDeleteBtn(diary.id); // diary id 수정 예정
+                        handleDeleteBtn(diary.id);
                       }}
                     >
                       삭제
@@ -127,22 +127,31 @@ const DiaryContent = ({
       </>
 
       {/* 구분선까지 map */}
-      <div>
-        <div className="DiaryContent_bottom_wrap">
-          <div className="DiaryContent_btns">
-            <button>▲</button>
-            <button>▼</button>
+      {diaryData.length > 0 ? (
+        <div>
+          <div className="DiaryContent_bottom_wrap">
+            <div className="DiaryContent_btns">
+              <button>▲</button>
+              <button>▼</button>
+            </div>
+            <div className="DiaryContent_allbtn">목록</div>
           </div>
-          <div className="DiaryContent_allbtn">목록</div>
+          <div className="DiaryContent_findwrap">
+            <select
+              defaultValue="content"
+              className="DiaryContent_select Gulim"
+            >
+              <option value="content">내용</option>
+            </select>
+            <input type="text" className="DiaryContent_findInput Gulim" />
+            <button className="DiaryContent_findbtn">🔍 찾기</button>
+          </div>
         </div>
-        <div className="DiaryContent_findwrap">
-          <select defaultValue="content" className="DiaryContent_select Gulim">
-            <option value="content">내용</option>
-          </select>
-          <input type="text" className="DiaryContent_findInput Gulim" />
-          <button className="DiaryContent_findbtn">🔍 찾기</button>
+      ) : (
+        <div className="DiaryContent_dotori_imgWrap">
+          <img src={"/dotori/emptyImg.png"} alt="empty diary" />
         </div>
-      </div>
+      )}
     </DiaryContentStyle>
   );
 };

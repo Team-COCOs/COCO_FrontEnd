@@ -213,6 +213,7 @@ export const DiaryLeftStyled = styled.div`
     font-size: 12px;
     text-align: center;
   }
+
   /* 반응형 */
   @media (max-width: 1024px) {
     .react-calendar {

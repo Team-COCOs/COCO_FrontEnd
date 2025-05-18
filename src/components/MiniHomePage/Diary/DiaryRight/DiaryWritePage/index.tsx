@@ -59,7 +59,7 @@ const DiaryWritePage = ({
   ];
 
   useEffect(() => {
-    if (!user?.id) return; // user id가 없으면 요청 안 함
+    if (!user?.id) return;
 
     axios
       .get(
@@ -125,13 +125,17 @@ const DiaryWritePage = ({
         content: content,
       });
       console.log(response.data, "다이어리 일기쓰기 저장?");
-
       alert("저장 성공!");
+      router.push(`/home/${id}`);
     } catch (error) {
       console.error("저장 실패:", error);
       alert("저장에 실패했습니다.");
     }
   };
+
+  useEffect(() => {
+    console.log(editingDiary, "editingDiary?");
+  }, [editingDiary]);
 
   return (
     <DiaryWritePageStyle className="WritePage_wrap">
