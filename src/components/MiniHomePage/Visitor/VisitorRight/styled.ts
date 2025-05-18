@@ -50,15 +50,6 @@ export const VisitorRightStyled = styled.div`
         .VisitorRight_headerIcon {
           width: 15px;
           height: 15px;
-          clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-          background: rgb(255, 231, 110);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: bold;
-          border: 2px solid black;
-          font-size: 10px;
-          padding: 5px;
         }
       }
 

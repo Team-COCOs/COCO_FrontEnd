@@ -33,7 +33,11 @@ const VisitorRight = () => {
       <div className="VisitorRight_header">
         <div className="VisitorRight_headerBox">
           <div className="VisitorRight_headerFlex">
-            <span className="VisitorRight_headerIcon">!</span>
+            <img
+              className="VisitorRight_headerIcon"
+              src="/icon/volumeIcon.png"
+              alt="volumeIcon"
+            />
             {isEditing ? (
               <input
                 className="VisitorRight_management Gulim"
