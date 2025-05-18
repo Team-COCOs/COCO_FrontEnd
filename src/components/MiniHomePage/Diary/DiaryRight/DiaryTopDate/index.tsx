@@ -1,6 +1,8 @@
 import { DiaryTopDateStyle } from "./styled";
 import { format } from "date-fns";
 import { DiaryType } from "..";
+import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
 
 interface DiaryTopDateProps {
   selectedDate: Date | null;
@@ -13,6 +15,10 @@ const DiaryTopDate = ({
   selectedDiaryMenu,
   setDiaryWrite,
 }: DiaryTopDateProps) => {
+  const router = useRouter();
+  const { id } = router.query;
+  const { user } = useAuth;
+
   return (
     <DiaryTopDateStyle>
       <div className="DiaryTopDate_wrap Gulim">
@@ -28,12 +34,16 @@ const DiaryTopDate = ({
           <div className="DiaryTopDate_diaryTitleText pixelFont">
             작은 하루도 소중히 담아보아요❤️
           </div>
-          <button
-            className="DiaryTopDate_diaryWriteBtn pixelFont"
-            onClick={() => setDiaryWrite(true)}
-          >
-            일기쓰기✏️
-          </button>
+          {user?.id === id ? (
+            <button
+              className="DiaryTopDate_diaryWriteBtn pixelFont"
+              onClick={() => setDiaryWrite(true)}
+            >
+              일기쓰기✏️
+            </button>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
     </DiaryTopDateStyle>

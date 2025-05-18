@@ -30,6 +30,17 @@ const visibilityOptions: { [key: string]: string } = {
   friends: "일촌공개",
 };
 
+// 댓글과 대댓글 구분
+interface Comment {
+  diary_id: number; // 게시글 아이디
+  user_id: number; // 작성자 아이디
+  id: number; // 댓글 아이디
+  content: string; // 댓글 내용
+  name: string; // 작성자 이름
+  parent_comment_id: number | null; // null이면 댓글, 숫자면 대댓글
+  createdAt: string; // 작성 날짜
+}
+
 const formatted = format(new Date(), "yyyy.MM.dd EEE HH:mm", { locale: ko });
 
 const DiaryContent = ({
