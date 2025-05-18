@@ -49,7 +49,7 @@ const SettingMyInfo = () => {
         data = { phone: cleanPhone };
       }
 
-      await axiosInstance.patch(`/auth/update/${type}`, data);
+      await axiosInstance.patch(`/users/update/${type}`, data);
 
       alert(
         `${
