@@ -106,15 +106,21 @@ const DiaryContent = ({
                 <div className="DiaryContent_contentText Gulim">
                   <div>{diary.content}</div>
                   <div className="DiaryContent_fixDeletebtn Gulim">
-                    <button onClick={() => handleFixBtn(diary)}>수정</button>
-                    <span>|</span>
-                    <button
-                      onClick={() => {
-                        handleDeleteBtn(diary.id);
-                      }}
-                    >
-                      삭제
-                    </button>
+                    {user?.id === id ? (
+                      <div>
+                        <button onClick={() => handleFixBtn(diary)}>
+                          수정
+                        </button>
+                        <span>|</span>
+                        <button
+                          onClick={() => {
+                            handleDeleteBtn(diary.id);
+                          }}
+                        >
+                          삭제
+                        </button>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
 
