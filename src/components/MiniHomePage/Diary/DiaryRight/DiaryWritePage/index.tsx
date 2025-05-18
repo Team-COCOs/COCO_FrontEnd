@@ -117,17 +117,15 @@ const DiaryWritePage = ({
     });
 
     try {
-      const response = await axiosInstance.post(
-        `/diary/save`, // 실제 API 엔드포인트에 맞게 수정
-        {
-          folder_name: selectedFolderName,
-          weather: selectedWeather,
-          mood: selectedMood,
-          visibility: visibility,
-          content: content,
-        }
-      );
+      const response = await axiosInstance.post(`/diary/save`, {
+        folder_name: selectedFolderName,
+        weather: selectedWeather,
+        mood: selectedMood,
+        visibility: visibility,
+        content: content,
+      });
       console.log(response.data, "다이어리 일기쓰기 저장?");
+
       alert("저장 성공!");
     } catch (error) {
       console.error("저장 실패:", error);

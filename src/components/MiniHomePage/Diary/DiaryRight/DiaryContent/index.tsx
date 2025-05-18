@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
-// import { DiaryType } from "..";
+import { DiaryType } from "..";
 
 interface DiaryContentProps {
   selectedDate: Date | null;
@@ -16,15 +16,13 @@ interface DiaryContentProps {
   setEditingDiary?: React.Dispatch<React.SetStateAction<DiaryType | null>>;
 }
 
-interface DiaryType {
-  id: number;
-  title: string;
-  content: string;
-  date: string;
-  weather?: string;
-  public: boolean;
-  authorId: number;
-}
+const emotionIcons: { [key: string]: string } = {
+  love: "❤️",
+  happy: "🎵",
+  sad: "💧",
+  angry: "🔥",
+  calm: "🌿",
+};
 
 const formatted = format(new Date(), "yyyy.MM.dd EEE HH:mm", { locale: ko });
 
@@ -34,10 +32,10 @@ const DiaryContent = ({
   setDiaryWrite,
   setEditingDiary,
 }: DiaryContentProps) => {
-  const [diaryData, setDiaryData] = useState<[]>([]);
+  const [diaryData, setDiaryData] = useState<DiaryType[]>([]);
 
   const handleFixBtn = (diary: DiaryType) => {
-    // setEditingDiary(diary); // 수정할 다이어리 세팅
+    setEditingDiary?.(diary); // 수정할 다이어리 세팅
     setDiaryWrite(true); // 수정 페이지 열기
   };
 
@@ -77,49 +75,58 @@ const DiaryContent = ({
 
   return (
     <DiaryContentStyle>
-      <div className="DiaryContent_wrap Gulim">
-        <div className="DiaryContent_dateWrap logoFont">
-          <div>
-            <span className="DiaryContent_date">{formatted}</span>
-            <span className="DiaryContent_weather">☀️</span>
-          </div>
-          <div>
-            <span className="DiaryContent_now">지금은 🎵</span>
-          </div>
-        </div>
-        <div className="DiaryContent_contentText Gulim">
-          <div>
-            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-            내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
-          </div>
-          <div className="DiaryContent_fixDeletebtn Gulim">
-            <button
-              onClick={() => {
-                // handleFixBtn(diary); // diary id 수정 예정
-              }}
-            >
-              수정
-            </button>
-            <span>|</span>
-            <button
-              onClick={() => {
-                handleDeleteBtn(2000); // diary id 수정 예정
-              }}
-            >
-              삭제
-            </button>
-          </div>
-        </div>
+      <>
+        {diaryData.length > 0 &&
+          diaryData.map((diary) => (
+            <div>
+              <div className="DiaryContent_wrap Gulim">
+                <div className="DiaryContent_dateWrap logoFont">
+                  <div>
+                    <span className="DiaryContent_date">{formatted}</span>
+                    <span className="DiaryContent_weather">
+                      {diary.weather}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="DiaryContent_now">
+                      지금은 {emotionIcons[diary.mood]}
+                    </span>
+                  </div>
+                </div>
+                <div className="DiaryContent_contentText Gulim">
+                  <div>{diary.content}</div>
+                  <div className="DiaryContent_fixDeletebtn Gulim">
+                    <button
+                      onClick={() => handleFixBtn(diary)} // diary id 수정 예정
+                    >
+                      수정
+                    </button>
+                    <span>|</span>
+                    <button
+                      onClick={() => {
+                        handleDeleteBtn(diary.id); // diary id 수정 예정
+                      }}
+                    >
+                      삭제
+                    </button>
+                  </div>
+                </div>
 
-        <div className="DiaryContent_Secret Gulim">
-          <div>공개설정 : 전체공개</div>
-        </div>
-        <div>
-          <CommentDiary />
-        </div>
-      </div>
-      {/* 구분선 */}
-      <span className="DiaryContent_DotLine"></span>
+                <div className="DiaryContent_Secret Gulim">
+                  <div>공개설정 : 전체공개</div>
+                </div>
+                <div>
+                  <CommentDiary />
+                </div>
+              </div>
+
+              {/* 구분선 */}
+              <span className="DiaryContent_DotLine"></span>
+            </div>
+          ))}
+      </>
+
+      {/* 구분선까지 map */}
       <div>
         <div className="DiaryContent_bottom_wrap">
           <div className="DiaryContent_btns">

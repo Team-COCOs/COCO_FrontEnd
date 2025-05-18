@@ -6,14 +6,12 @@ interface DiaryTopDateProps {
   selectedDate: Date | null;
   selectedDiaryMenu: { id: number; title: string } | null;
   setDiaryWrite: React.Dispatch<React.SetStateAction<boolean>>;
-  setEditingDiary?: React.Dispatch<React.SetStateAction<DiaryType | null>>;
 }
 
 const DiaryTopDate = ({
   selectedDate,
   selectedDiaryMenu,
   setDiaryWrite,
-  setEditingDiary,
 }: DiaryTopDateProps) => {
   return (
     <DiaryTopDateStyle>

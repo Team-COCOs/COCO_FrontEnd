@@ -12,15 +12,18 @@ interface DiaryProps {
 
 export interface DiaryType {
   id: number;
-  folder_name: string;
+  content: string;
   weather: string;
   mood: string;
   visibility: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  authorName: string;
-  authorId: number;
+  created_at: string;
+  updated_at: string;
+  view_count: number;
+  folder: {
+    id: number;
+    title: string;
+  };
+  comments: any[];
 }
 
 const DiaryRight = ({ selectedDate, selectedDiaryMenu }: DiaryProps) => {
@@ -39,13 +42,12 @@ const DiaryRight = ({ selectedDate, selectedDiaryMenu }: DiaryProps) => {
                 selectedDate={selectedDate}
                 selectedDiaryMenu={selectedDiaryMenu}
                 setDiaryWrite={setDiaryWrite}
-                setEditingDiary={setEditingDiary}
               />
               <DiaryContent
                 selectedDate={selectedDate}
                 selectedDiaryMenu={selectedDiaryMenu}
                 setDiaryWrite={setDiaryWrite}
-                // setEditingDiary={setEditingDiary}
+                setEditingDiary={setEditingDiary}
               />
             </div>
           ) : (
