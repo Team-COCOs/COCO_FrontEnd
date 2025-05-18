@@ -24,6 +24,12 @@ export const DiaryContentStyle = styled.div`
     letter-spacing: 1px;
     color: rgb(51, 161, 194);
   }
+  .DiaryContent_update_date {
+    color: #ddd;
+    padding-left: 5px;
+    font-weight: 400;
+  }
+
   .DiaryContent_weather {
     padding-left: 5px;
     font-size: 15px;

@@ -41,8 +41,6 @@ interface Comment {
   createdAt: string; // 작성 날짜
 }
 
-const formatted = format(new Date(), "yyyy.MM.dd EEE HH:mm", { locale: ko });
-
 const DiaryContent = ({
   selectedDate,
   selectedDiaryMenu,
@@ -51,6 +49,29 @@ const DiaryContent = ({
 }: DiaryContentProps) => {
   const [diaryData, setDiaryData] = useState<DiaryType[]>([]);
 
+  // 페이지네이션
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = diaryData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(diaryData.length / itemsPerPage);
+
+  const handlePrevPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
+
+  // 수정 버튼
   const handleFixBtn = (diary: DiaryType) => {
     setEditingDiary?.(diary); // 수정할 다이어리 세팅
     setDiaryWrite(true); // 수정 페이지 열기
@@ -97,13 +118,37 @@ const DiaryContent = ({
   return (
     <DiaryContentStyle>
       <>
-        {diaryData.length > 0 &&
-          diaryData.map((diary) => (
+        {currentItems.length > 0 &&
+          currentItems.map((diary) => (
             <div>
               <div className="DiaryContent_wrap Gulim">
                 <div className="DiaryContent_dateWrap logoFont">
                   <div>
-                    <span className="DiaryContent_date">{formatted}</span>
+                    <span className="DiaryContent_date">
+                      {format(
+                        new Date(diary.created_at),
+                        "yyyy.MM.dd EEE HH:mm",
+                        {
+                          locale: ko,
+                        }
+                      )}
+                    </span>
+                    <span className="DiaryContent_update_date">
+                      {diary.updated_at !== diary.created_at ? (
+                        <>
+                          <span>수정일: </span>
+                          <span>
+                            {format(
+                              new Date(diary.updated_at),
+                              "yyyy.MM.dd EEE HH:mm",
+                              {
+                                locale: ko,
+                              }
+                            )}
+                          </span>
+                        </>
+                      ) : null}
+                    </span>
                     <span className="DiaryContent_weather">
                       {diary.weather}
                     </span>
@@ -154,8 +199,15 @@ const DiaryContent = ({
         <div>
           <div className="DiaryContent_bottom_wrap">
             <div className="DiaryContent_btns">
-              <button>▲</button>
-              <button>▼</button>
+              <button onClick={handlePrevPage} disabled={currentPage === 1}>
+                ▲
+              </button>
+              <button
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                ▼
+              </button>
             </div>
             <div className="DiaryContent_allbtn">목록</div>
           </div>
