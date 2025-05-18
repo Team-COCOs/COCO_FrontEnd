@@ -24,6 +24,12 @@ const emotionIcons: { [key: string]: string } = {
   calm: "🌿",
 };
 
+const visibilityOptions: { [key: string]: string } = {
+  public: "전체공개",
+  private: "비공개",
+  friends: "일촌공개",
+};
+
 const formatted = format(new Date(), "yyyy.MM.dd EEE HH:mm", { locale: ko });
 
 const DiaryContent = ({
@@ -113,7 +119,7 @@ const DiaryContent = ({
                 </div>
 
                 <div className="DiaryContent_Secret Gulim">
-                  <div>공개설정 : 전체공개</div>
+                  <div>공개설정 : {visibilityOptions[diary.visibility]}</div>
                 </div>
                 <div>
                   <CommentDiary />

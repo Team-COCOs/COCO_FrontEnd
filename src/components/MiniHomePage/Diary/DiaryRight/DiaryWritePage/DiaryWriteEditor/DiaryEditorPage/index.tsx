@@ -165,7 +165,10 @@ const DiaryEditorPage = forwardRef<DiaryEditorHandle, EditorPageProps>(
           <Dropdown
             label="설정하기"
             publicOption={visibilityOptions}
-            onSelect={(selected) => onVisibilityChange(selected.id)}
+            onSelect={(selected) => {
+              setVisibility(selected.id);
+              onVisibilityChange(selected.id);
+            }}
           />
         </div>
       </DiaryEditorPageStyle>
