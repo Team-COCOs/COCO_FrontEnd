@@ -52,16 +52,16 @@ interface profileProps {
 const Profile = ({ setHasToken }: profileProps) => {
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const userRole = user?.role;
 
-  const logout = () => {
-    Cookie.remove("accessToken");
-    Cookie.remove("refreshToken");
-    setHasToken(false);
+  // const logout = () => {
+  //   Cookie.remove("accessToken");
+  //   Cookie.remove("refreshToken");
+  //   setHasToken(false);
 
-    router.push("/");
-  };
+  //   router.push("/");
+  // };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -95,7 +95,13 @@ const Profile = ({ setHasToken }: profileProps) => {
     <ProfileStyle className={clsx("Profile_wrap")}>
       <div className="Profile_header">
         <p className="Profile_name">{userData.name}</p>
-        <button className="Profile_logout" onClick={logout}>
+        <button
+          className="Profile_logout"
+          onClick={() => {
+            logout();
+            setHasToken(false);
+          }}
+        >
           로그아웃
         </button>
       </div>
