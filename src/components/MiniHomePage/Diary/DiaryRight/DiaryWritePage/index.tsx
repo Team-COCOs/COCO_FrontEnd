@@ -40,6 +40,7 @@ const DiaryWritePage = ({ setDiaryWrite }: DiaryWritePageProps) => {
   // 다이어리 기분, 날씨, 폴더 선택
   const [selectedWeather, setSelectedWeather] = useState("");
   const [selectedFolderId, setSelectedFolderId] = useState<number | "">("");
+  const [selectedFolderName, setSelectedFolderName] = useState<string>("");
   const [selectedMood, setSelectedMood] = useState("");
 
   // 기본
@@ -77,7 +78,7 @@ const DiaryWritePage = ({ setDiaryWrite }: DiaryWritePageProps) => {
       return;
     }
 
-    if (!selectedFolderId) {
+    if (!selectedFolderName) {
       alert("폴더를 선택해주세요.");
       return;
     }
@@ -103,7 +104,7 @@ const DiaryWritePage = ({ setDiaryWrite }: DiaryWritePageProps) => {
     }
 
     console.log("전송 데이터:", {
-      folder_id: selectedFolderId,
+      folder_name: selectedFolderName,
       weather: selectedWeather,
       mood: selectedMood,
       visibility: visibility,
@@ -114,7 +115,7 @@ const DiaryWritePage = ({ setDiaryWrite }: DiaryWritePageProps) => {
       const response = await axiosInstance.post(
         `/diary/save`, // 실제 API 엔드포인트에 맞게 수정
         {
-          folder_id: selectedFolderId,
+          folder_name: selectedFolderName,
           weather: selectedWeather,
           mood: selectedMood,
           visibility: visibility,
@@ -137,8 +138,8 @@ const DiaryWritePage = ({ setDiaryWrite }: DiaryWritePageProps) => {
           setFolder={setFolder}
           selectedWeather={selectedWeather}
           setSelectedWeather={setSelectedWeather}
-          selectedFolderId={selectedFolderId}
-          setSelectedFolderId={setSelectedFolderId}
+          selectedFolderName={selectedFolderName}
+          setSelectedFolderName={setSelectedFolderName}
           selectedMood={selectedMood}
           setSelectedMood={setSelectedMood}
         />

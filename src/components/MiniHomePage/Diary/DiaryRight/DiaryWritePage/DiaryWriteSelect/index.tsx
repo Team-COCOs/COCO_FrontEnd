@@ -15,8 +15,8 @@ interface DiaryWriteSelectProps {
   setFolder: React.Dispatch<React.SetStateAction<FolderItem[]>>;
   selectedWeather: string;
   setSelectedWeather: React.Dispatch<React.SetStateAction<string>>;
-  selectedFolderId: number | "";
-  setSelectedFolderId: React.Dispatch<React.SetStateAction<number | "">>;
+  selectedFolderName: string;
+  setSelectedFolderName: React.Dispatch<React.SetStateAction<string>>;
   selectedMood: string;
   setSelectedMood: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -26,8 +26,8 @@ const DiaryWriteSelect: React.FC<DiaryWriteSelectProps> = ({
   setFolder,
   selectedWeather,
   setSelectedWeather,
-  selectedFolderId,
-  setSelectedFolderId,
+  selectedFolderName,
+  setSelectedFolderName,
   selectedMood,
   setSelectedMood,
 }) => {
@@ -39,8 +39,8 @@ const DiaryWriteSelect: React.FC<DiaryWriteSelectProps> = ({
   };
 
   const handleFolderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedId = Number(e.target.value);
-    setSelectedFolderId(selectedId);
+    const selectedName = e.target.value;
+    setSelectedFolderName(selectedName);
   };
 
   const renderFolderOptions = (
@@ -50,7 +50,7 @@ const DiaryWriteSelect: React.FC<DiaryWriteSelectProps> = ({
     return folders.flatMap((folder) => {
       const prefix = "ㄴ".repeat(depth);
       const currentOption = (
-        <option key={folder.id} value={folder.id}>
+        <option key={folder.id} value={folder.title}>
           {prefix} {folder.title}
         </option>
       );
@@ -101,7 +101,7 @@ const DiaryWriteSelect: React.FC<DiaryWriteSelectProps> = ({
         {/* 카테고리 선택 */}
         <div className="DiaryWritePage_SelectWrapper">
           <label>폴더 이름 : </label>
-          <select value={selectedFolderId} onChange={handleFolderChange}>
+          <select value={selectedFolderName} onChange={handleFolderChange}>
             <option value="" disabled>
               선택하세요
             </option>
