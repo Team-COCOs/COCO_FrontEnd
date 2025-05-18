@@ -17,7 +17,7 @@ const DiaryTopDate = ({
 }: DiaryTopDateProps) => {
   const router = useRouter();
   const { id } = router.query;
-  const { user } = useAuth;
+  const { user } = useAuth();
 
   return (
     <DiaryTopDateStyle>
