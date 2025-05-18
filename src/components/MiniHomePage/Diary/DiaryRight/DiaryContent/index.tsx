@@ -2,6 +2,11 @@ import { DiaryContentStyle } from "./styled";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import CommentDiary from "../CommentDiary";
+import axiosInstance from "@/lib/axios";
+import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
+import axios from "axios";
+import { useState } from "react";
 
 interface DiaryContentProps {
   selectedDate: Date | null;
@@ -16,6 +21,31 @@ const DiaryContent = ({
   selectedDiaryMenu,
   setDiaryWrite,
 }: DiaryContentProps) => {
+  const [diaryData, setDiaryData] = useState<[]>([]);
+  const handleFixBtn = () => {};
+
+  const handleDeleteBtn = () => {};
+
+  const router = useRouter();
+  const { id } = router.query;
+  const { user } = useAuth();
+
+  // 다이어리 조회
+  const fetchDiary = async () => {
+    try {
+      const response = user?.id
+        ? await axiosInstance.get(`/diary/${id}`)
+        : await axios.get(
+            `${process.env.NEXT_PUBLIC_API_URL}/diary/logout/${id}`
+          ); // 비로그인 유저용
+      console.log(response.data, "다이어리 데이터");
+      setDiaryData(response.data);
+    } catch (error) {
+      console.error("다이어리 조회 실패", error);
+      throw error;
+    }
+  };
+
   return (
     <DiaryContentStyle>
       <div className="DiaryContent_wrap Gulim">
@@ -34,9 +64,21 @@ const DiaryContent = ({
             내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용
           </div>
           <div className="DiaryContent_fixDeletebtn Gulim">
-            <button>수정</button>
+            <button
+              onClick={() => {
+                handleFixBtn;
+              }}
+            >
+              수정
+            </button>
             <span>|</span>
-            <button>삭제</button>
+            <button
+              onClick={() => {
+                handleDeleteBtn;
+              }}
+            >
+              삭제
+            </button>
           </div>
         </div>
 
