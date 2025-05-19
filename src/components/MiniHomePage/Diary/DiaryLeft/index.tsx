@@ -76,7 +76,9 @@ const DiaryLeft = ({
             }}
           />
           <button
-            onClick={() => setSelectedDate(null)}
+            onClick={() => {
+              setSelectedDate(null), setSelectedDiaryMenu(null);
+            }}
             className="DiaryLeft_Calendar_alldatebtn"
           >
             <span>▶ DIARY | </span>ALL DIARY
