@@ -30,12 +30,6 @@ export const CommentStyle = styled.div`
           font-size: 10px;
         }
       }
-
-      @media (max-width: 430px) {
-        & {
-          font-size: 9px;
-        }
-      }
     }
 
     .Comment_parent,
@@ -45,6 +39,11 @@ export const CommentStyle = styled.div`
       gap: 5px;
       font-weight: bold;
       margin-bottom: 3px;
+
+      .Comment_childarrow {
+        font-size: 12px;
+        color: rgb(170, 170, 170);
+      }
 
       .Comment_icon {
         position: relative;
@@ -74,11 +73,21 @@ export const CommentStyle = styled.div`
       .Comment_infos {
         display: flex;
         gap: 3px;
+        font-size: 10px;
+
+        .Comment_date {
+          font-size: 9.5px;
+        }
       }
     }
 
     .Comment_child {
       margin-left: 20px;
+      font-size: 10px;
+
+      .Comment_date {
+        font-size: 9.5px;
+      }
     }
 
     .Comment_input,
@@ -145,6 +154,18 @@ export const CommentStyle = styled.div`
 
     .Comment_childInput {
       padding-left: 20px;
+
+      @media (max-width: 610px) {
+        button {
+          width: 50px;
+        }
+      }
+
+      @media (max-width: 491px) {
+        input {
+          width: 50%;
+        }
+      }
 
       .Comment_closeIcon {
         width: 10px;

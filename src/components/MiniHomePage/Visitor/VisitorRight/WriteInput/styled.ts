@@ -19,7 +19,7 @@ export const WriteInputStyle = styled.div`
       gap: 10px;
 
       .WriteInput_img {
-        width: 100px;
+        width: 80px;
         height: 100%;
         margin-bottom: 15px;
       }
@@ -39,7 +39,6 @@ export const WriteInputStyle = styled.div`
           font-size: 13px;
           text-align: center;
           font-weight: bold;
-          margin-top: 5px;
         }
       }
     }
@@ -56,7 +55,7 @@ export const WriteInputStyle = styled.div`
         resize: none;
         border: 1px solid rgb(183, 183, 183);
         width: 100%;
-        height: 160px;
+        height: 120px;
         padding: 10px;
 
         &:focus,
@@ -68,15 +67,15 @@ export const WriteInputStyle = styled.div`
       .WriteInput_btns {
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 10px;
 
         span {
-          font-size: 11px;
+          font-size: 10px;
         }
 
         button {
           width: 30px;
-          font-size: 11px;
+          font-size: 10px;
           padding: 2px;
           background-color: rgb(243, 243, 243);
           border: 1px solid rgb(131, 131, 131);

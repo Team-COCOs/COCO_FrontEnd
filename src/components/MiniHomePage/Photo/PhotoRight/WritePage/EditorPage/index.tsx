@@ -1,6 +1,12 @@
 import Dropdown from "@/components/Dropdown";
 import { EditorPageStyle } from "./styled";
-import { useRef, useState, useImperativeHandle, forwardRef } from "react";
+import {
+  useRef,
+  useState,
+  useImperativeHandle,
+  forwardRef,
+  useEffect,
+} from "react";
 
 const fontList = [
   { name: "굴림", value: "Gulim" },
@@ -20,16 +26,34 @@ const visibilityOptions = [
 
 interface EditorPageProps {
   onVisibilityChange: (newVisibility: string) => void;
+  content?: string;
+  isPublic?: string;
 }
 
 export interface EditorHandle {
   getHtml: () => string;
+  setHtml?: (html: string) => void;
 }
 
 const EditorPage = forwardRef<EditorHandle, EditorPageProps>(
-  ({ onVisibilityChange }, ref) => {
+  ({ onVisibilityChange, content, isPublic }, ref) => {
     const editorRef = useRef<HTMLDivElement>(null);
     const [font, setFont] = useState("Gulim");
+
+    // isPublic에 맞는 옵션 찾기
+    const selectedVisibility =
+      visibilityOptions.find((option) => option.id === isPublic) || null;
+
+    // 수정 시 미리 content 넣어두기
+    useEffect(() => {
+      if (editorRef.current && content !== undefined && content !== null) {
+        editorRef.current.innerHTML = content;
+      }
+    }, [content]);
+
+    useImperativeHandle(ref, () => ({
+      getHtml: () => editorRef.current?.innerHTML || "",
+    }));
 
     const execCommand = (command: string, value?: string) => {
       document.execCommand("styleWithCSS", false, "true");
@@ -132,6 +156,7 @@ const EditorPage = forwardRef<EditorHandle, EditorPageProps>(
           <Dropdown
             label="설정하기"
             publicOption={visibilityOptions}
+            selected={selectedVisibility}
             onSelect={(selected) => onVisibilityChange(selected.id)}
           />
         </div>

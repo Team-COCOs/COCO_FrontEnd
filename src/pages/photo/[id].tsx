@@ -8,11 +8,13 @@ import MinihomeLayout from "@/features/Minihome";
 import PhotoLeft from "@/components/MiniHomePage/Photo/PhotoLeft";
 import PhotoRight from "@/components/MiniHomePage/Photo/PhotoRight";
 import WritePage from "@/components/MiniHomePage/Photo/PhotoRight/WritePage";
+import { PhotoData } from "@/utils/Write/interface";
 
 const MinihomePage = () => {
   const router = useRouter();
   const { id } = router.query;
   const [write, setWrite] = useState(false);
+  const [editData, setEditData] = useState<PhotoData | null>(null);
 
   // 공통 폴더/카테고리 선택 상태
   const [selectedMenu, setSelectedMenu] = useState<{
@@ -36,9 +38,13 @@ const MinihomePage = () => {
         }
         children={
           write ? (
-            <WritePage />
+            <WritePage editData={editData} />
           ) : (
-            <PhotoRight selectedMenu={selectedMenu} setWrite={setWrite} />
+            <PhotoRight
+              selectedMenu={selectedMenu}
+              setWrite={setWrite}
+              setEditData={setEditData}
+            />
           )
         }
       />

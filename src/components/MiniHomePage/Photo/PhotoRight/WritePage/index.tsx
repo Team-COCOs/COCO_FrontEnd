@@ -5,21 +5,41 @@ import axios from "axios";
 import { useAuth } from "@/context/AuthContext";
 import axiosInstance from "@/lib/axios";
 import EditorPage from "./EditorPage";
-import { convertHtmlToJsxString } from "@/utils/Photo/convert";
+import { FolderItem, WritePageProps } from "@/utils/Write/interface";
 
-interface FolderItem {
-  id: number;
-  title: string;
-  parent_id: number | null;
-}
-
-const WritePage = () => {
+const WritePage = ({ editData }: WritePageProps) => {
   const { user } = useAuth();
   const userId = user?.id;
+
+  // 수정 시
+  useEffect(() => {
+    if (editData) {
+      setTitle(editData.title);
+      setSelectedFolder({
+        id: editData.folder.id,
+        title: editData.folder.title,
+        parent_id: null,
+      });
+      setVisibility(editData.visibility);
+      setFileName(editData.photo_url.split("/").pop() || ""); // 파일명 추정
+      // 에디터에 초기값 세팅은 EditorPage에서 ref를 통해 가능해야 함
+      // setIsEditMode(true);
+    }
+  }, [editData]);
 
   // 폴더
   const [folder, setFolder] = useState<FolderItem[]>([]);
   const [selectedFolder, setSelectedFolder] = useState<FolderItem | null>(null);
+
+  useEffect(() => {
+    if (editData) {
+      setSelectedFolder({
+        id: editData.folder.id,
+        title: editData.folder.title,
+        parent_id: editData.folder.parent_id ?? null,
+      });
+    }
+  }, [editData]);
 
   // 제목
   const [title, setTitle] = useState("");
@@ -82,15 +102,16 @@ const WritePage = () => {
         console.log("폴더 데이터 로딩 실패:", e);
         setFolder(getDefaultFolder());
       });
+
+    console.log(editData);
   }, []);
 
   // 저장
-  const photoSave = async () => {
+  const submitPhoto = async (isEdit: boolean, postId?: number) => {
     if (!title.trim()) return alert("제목을 입력해주세요.");
     if (!selectedFolder) return alert("폴더를 선택해주세요.");
     if (!visibility) return alert("공개 여부를 선택해주세요.");
 
-    // 에디터 HTML 추출
     const htmlContent = editorRef.current?.getHtml() || "";
 
     const formData = new FormData();
@@ -102,22 +123,23 @@ const WritePage = () => {
       formData.append("photo", file);
     }
 
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
-
     try {
-      const res = await axiosInstance.post("/photos/save", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      alert("저장 완료!");
-
-      console.log("저장 대답 : ", res.data);
+      if (isEdit) {
+        // 수정 - PATCH 요청
+        await axiosInstance.patch(`/photos/${postId}`, formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        alert("수정 완료!");
+      } else {
+        // 저장 - POST 요청
+        await axiosInstance.post("/photos/save", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        alert("저장 완료!");
+      }
       window.location.reload();
     } catch (e) {
-      console.log("저장 실패:", e);
+      console.log("실패:", e);
     }
   };
 
@@ -142,13 +164,14 @@ const WritePage = () => {
         <input
           type="text"
           className="Gulim"
-          value={title}
+          value={editData ? editData.title : title}
           onChange={(e) => setTitle(e.target.value)}
         ></input>
         <div className="WritePage_dropDown">
           <Dropdown
             label="폴더선택"
             folderOption={folder}
+            selected={selectedFolder}
             onSelect={(selected) => setSelectedFolder(selected)}
           />
         </div>
@@ -165,7 +188,7 @@ const WritePage = () => {
 
         <input
           type="text"
-          value={fileName}
+          value={editData ? editData.photo_url : fileName}
           disabled
           placeholder="첨부된 파일 없음"
         />
@@ -182,7 +205,12 @@ const WritePage = () => {
         </div>
       </div>
 
-      <EditorPage ref={editorRef} onVisibilityChange={setVisibility} />
+      <EditorPage
+        content={editData?.content}
+        isPublic={editData?.visibility}
+        ref={editorRef}
+        onVisibilityChange={setVisibility}
+      />
 
       <div className="WritePage_line"></div>
 
@@ -190,8 +218,13 @@ const WritePage = () => {
         <button className="Gulim" onClick={() => window.location.reload()}>
           목록
         </button>
-        <button className="Gulim" onClick={photoSave}>
-          확인
+        <button
+          className="Gulim"
+          onClick={() =>
+            editData ? submitPhoto(true, editData.id) : submitPhoto(false)
+          }
+        >
+          {editData ? "수정" : "확인"}
         </button>
       </div>
     </WritePageStyle>

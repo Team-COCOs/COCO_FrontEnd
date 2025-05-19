@@ -151,7 +151,7 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
                       })
                     }
                   >
-                    확인
+                    답글
                   </button>
                 </div>
               )}
@@ -163,6 +163,7 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
                 )
                 .map((child) => (
                   <div key={child.id} className="Comment_child">
+                    <span className="Comment_childarrow">⤷ </span>
                     <span
                       className="Comment_Author"
                       onClick={() => router.push(`/home/${child.user.id}`)}
@@ -170,7 +171,10 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
                       {child.user.name}
                     </span>
                     <span className="Comment_comment">: {child.comment}</span>
-                    <span className="Comment_date">({child.created_at})</span>
+                    <span className="Comment_date">
+                      ({formatKoreanDate(child.created_at)})
+                    </span>
+
                     {(Number(user?.id) === Number(id) ||
                       Number(user?.id) === Number(child.user.id)) && (
                       <span

@@ -10,6 +10,10 @@ interface DropdownProps {
   folderOption?: { id: number; title: string; parent_id: number | null }[];
   publicOption?: { id: string; title: string }[];
   onSelect?: (selected: any) => void;
+  selected?:
+    | { id: number; title: string; parent_id: number | null }
+    | { id: string; title: string }
+    | null;
 }
 
 const Dropdown = ({
@@ -17,6 +21,7 @@ const Dropdown = ({
   options,
   folderOption,
   publicOption,
+  selected,
   onSelect,
 }: DropdownProps) => {
   const router = useRouter();
@@ -49,6 +54,15 @@ const Dropdown = ({
 
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // 수정 시
+  useEffect(() => {
+    if (selected) {
+      setSelectedLabel(selected.title);
+    } else {
+      setSelectedLabel(label);
+    }
+  }, [selected, label]);
 
   return (
     <DropdownStyle className={clsx("Dropdown_select")} ref={wrapperRef}>

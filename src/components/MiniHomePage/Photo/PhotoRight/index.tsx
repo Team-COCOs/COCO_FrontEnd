@@ -1,5 +1,5 @@
 import { PhotoRightStyled } from "./styled";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import EmptyPage from "@/components/EmptyPage";
 import axiosInstance from "@/lib/axios";
 import { useAuth } from "@/context/AuthContext";
@@ -8,54 +8,9 @@ import Comment from "./Comment";
 import DOMPurify from "dompurify";
 import { formatKoreanDate } from "@/utils/KrDate/date";
 import axios from "axios";
-interface PhotoProps {
-  selectedMenu: { id: number; title: string } | null;
-  setWrite: Dispatch<SetStateAction<boolean>>;
-}
+import { PhotoData, PhotoProps } from "@/utils/Write/interface";
 
-interface AuthorData {
-  id: number;
-  name: string;
-}
-
-interface parentData {
-  id: number;
-}
-
-interface CommentData {
-  id: number; // PK
-  comment: string; // 댓글
-  user: AuthorData; // 댓글 작성자
-  created_at: string; // 날짜
-  parentComment: parentData | null; // 대댓글
-}
-
-interface FolderData {
-  id: number;
-  title: string;
-}
-
-interface UserData {
-  id: number;
-  name: string;
-}
-
-interface PhotoData {
-  id: number; // PK
-  title: string; // 제목
-  photo_url: string; // 이미지
-  content: string; // 내용
-  origin_author: string; // 원작자
-  use_count: number; // 스크랩 수
-  created_at: string; // 날짜
-  visibility: string; // 전체 공개 / 일촌 공개 / 비공개
-  isScripted: boolean; // 스크랩한 글인지 아닌지
-  folder: FolderData; // 폴더
-  comments: CommentData[]; // 댓글
-  user: UserData; // 작성자 정보
-}
-
-const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
+const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
   const [photoData, setPhotoData] = useState<PhotoData[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -145,7 +100,9 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
           {userId === Number(queryUserId) && (
             <button
               className="PhotoRight_btn pxielFont"
-              onClick={() => setWrite(true)}
+              onClick={() => {
+                setWrite(true);
+              }}
             >
               글 작성하기
             </button>
@@ -153,7 +110,10 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
         </div>
         <div className="PhotoRight_content">
           {!photoData || photoData.length == 0 ? (
-            <EmptyPage />
+            <div className="PhotoRight_empty">
+              <EmptyPage type={"Photo_img"} />
+              <p>해당 폴더에 작성된 사진첩이 없습니다.</p>
+            </div>
           ) : (
             currentPhotos.map((data) => (
               <div key={data.id}>
@@ -165,9 +125,15 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                 <div className="PhotoRight_infos Gulim">
                   <p
                     className="PhotoRight_user"
-                    onClick={() => router.push(`/home/${data.user.id}`)}
+                    onClick={() =>
+                      router.push(
+                        `/home/${
+                          data.isScripted ? data.origin_author.id : data.user.id
+                        }`
+                      )
+                    }
                   >
-                    {data.isScripted ? data.origin_author : data.user.name}
+                    {data.isScripted ? data.origin_author.name : data.user.name}
                   </p>
                   <div className="PhotoRight_info">
                     <p className="PhotoRight_font">
@@ -209,7 +175,15 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                         !data.isScripted ? (
                         // 로그인한 내가 쓴 글
                         <div className="PhotoRight_btns">
-                          <button className="Gulim">수정</button>
+                          <button
+                            className="Gulim"
+                            onClick={() => {
+                              setEditData(data);
+                              setWrite(true);
+                            }}
+                          >
+                            수정
+                          </button>
                           <button
                             className="Gulim"
                             onClick={() => deletePhoto(data.id)}
