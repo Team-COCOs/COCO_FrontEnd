@@ -14,7 +14,14 @@ const WriteInput = () => {
   return (
     <WriteInputStyle className="WtireInput_wrap">
       <div className="WriteInput_left">
-        <img src={miniProfile} alt="profile" className="WriteInput_img" />
+        <img
+          src={miniProfile}
+          alt="profile"
+          className={`WriteInput_img ${
+            miniProfile.endsWith(".png") && "WriteInput_png"
+          }`}
+        />
+
         <div className="WriteInput_profile">
           <p className="Gulim">{user?.name}</p>
         </div>
@@ -22,8 +29,10 @@ const WriteInput = () => {
       <div className="WriteInput_right">
         <textarea />
         <div className="WriteInput_btns">
-          <input type="checkbox" />
-          <span className="Gulim">비밀로 하기</span>
+          <div className="WriteInput_boxBtn">
+            <input type="checkbox" />
+            <span className="Gulim">비밀로 하기</span>
+          </div>
           <button className="Gulim">확인</button>
         </div>
       </div>

@@ -109,7 +109,11 @@ const Profile = ({ setHasToken }: profileProps) => {
 
       <div className="Profile_userInfos">
         <div className="Profile_userImgBack">
-          <div className="Profile_userImg">
+          <div
+            className={`Profile_userImg ${
+              userData.profile_image.endsWith(".png") && "Profile_userImgPng"
+            }`}
+          >
             <Image src={userData.profile_image} alt="avatar" fill />
           </div>
         </div>

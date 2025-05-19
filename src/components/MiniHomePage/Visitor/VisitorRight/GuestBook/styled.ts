@@ -7,8 +7,19 @@ export const GuestBookStyle = styled.div`
     flex-direction: column;
     gap: 10px;
 
-    .Gulim {
-      font-size: 11px;
+    .GuestBook_div {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .GuestBook_empty {
+      p {
+        text-align: center;
+        font-size: 11.5px;
+        font-weight: bold;
+        color: #4b4b4b;
+      }
     }
 
     .GuestBook_header {
@@ -18,10 +29,21 @@ export const GuestBookStyle = styled.div`
       border-top: 2.5px solid rgb(223, 223, 223);
       padding: 5px 10px;
 
+      @media (max-width: 470px) {
+        flex-direction: column;
+        gap: 5px;
+      }
+
       .GuestBook_info {
         display: flex;
         align-items: center;
         gap: 10px;
+
+        @media (max-width: 470px) {
+          flex-direction: column;
+          align-items: start;
+          gap: 5px;
+        }
 
         .GuestBook_num {
           font-size: 9px;
@@ -29,7 +51,7 @@ export const GuestBookStyle = styled.div`
 
         .GuestBook_name {
           cursor: pointer;
-          font-size: 12px;
+          font-size: 11px;
         }
 
         .GuestBook_date {
@@ -42,6 +64,7 @@ export const GuestBookStyle = styled.div`
         display: flex;
         align-items: center;
         gap: 7px;
+        font-size: 9px;
         color: rgb(126, 126, 126);
 
         div {
@@ -62,21 +85,41 @@ export const GuestBookStyle = styled.div`
       align-items: center;
       gap: 10px;
       width: 100%;
-      padding: 10px 20px;
+      padding: 10px 0px 10px 30px;
+
+      @media (max-width: 470px) {
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        padding: 10px;
+      }
 
       .GuestBook_left {
         display: flex;
         justify-content: center;
         width: 15%;
 
-        img {
+        .GuestBook_gif {
           width: 100%;
+        }
+
+        img {
+          width: 43px;
         }
       }
 
       .GuestBook_right {
-        font-size: 13.5px;
-        padding: 0px 40px;
+        font-size: 12px;
+        padding-left: 40px;
+
+        @media (max-width: 900px) {
+          padding-left: 20px;
+        }
+
+        @media (max-width: 470px) {
+          padding-left: 0px;
+          text-align: center;
+        }
       }
     }
   }

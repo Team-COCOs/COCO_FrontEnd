@@ -55,6 +55,10 @@ export const ProfileStyle = styled.div`
           width: 55px;
           height: 65px;
         }
+
+        .Profile_userImgPng {
+          width: 43px;
+        }
       }
 
       .Profile_userInfo {

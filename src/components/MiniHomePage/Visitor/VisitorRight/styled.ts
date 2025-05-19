@@ -20,6 +20,10 @@ export const VisitorRightStyled = styled.div`
     .VisitorRight_header {
       width: 92%;
 
+      @media (max-width: 540px) {
+        width: 100%;
+      }
+
       .Gulim {
         font-size: 10px;
         font-weight: bold;
@@ -83,6 +87,10 @@ export const VisitorRightStyled = styled.div`
     .VisitorRight_guestBook {
       padding: 0 25px;
       width: 100%;
+
+      @media (max-width: 540px) {
+        padding: 0;
+      }
     }
 
     @media (max-width: 1024px) {

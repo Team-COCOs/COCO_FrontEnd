@@ -11,17 +11,25 @@ export const WriteInputStyle = styled.div`
     border-bottom: 2.5px solid rgb(223, 223, 223);
     padding: 10px 20px;
 
+    @media (max-width: 540px) {
+      padding: 10px;
+    }
+
     .WriteInput_left {
       width: 30%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 5px;
 
       .WriteInput_img {
         width: 80px;
         height: 100%;
         margin-bottom: 15px;
+      }
+
+      .WriteInput_png {
+        width: 50px;
       }
 
       .WriteInput_homeImg {
@@ -36,7 +44,7 @@ export const WriteInputStyle = styled.div`
         position: relative;
 
         .Gulim {
-          font-size: 13px;
+          font-size: 12px;
           text-align: center;
           font-weight: bold;
         }
@@ -68,6 +76,19 @@ export const WriteInputStyle = styled.div`
         display: flex;
         align-items: center;
         gap: 10px;
+
+        @media (max-width: 500px) {
+          & {
+            flex-direction: column;
+            align-items: end;
+          }
+        }
+
+        .WriteInput_boxBtn {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
 
         span {
           font-size: 10px;

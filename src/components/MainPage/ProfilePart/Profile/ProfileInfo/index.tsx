@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { ProfileInfoStyle } from "./styled";
 import ShadowModal from "@/components/ShadowModal";
-import axiosInstance from "@/lib/axios";
 import { useAuth } from "@/context/AuthContext";
 
 interface ProfileInfoProps {
