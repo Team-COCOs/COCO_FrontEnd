@@ -34,13 +34,15 @@ const DiaryTopDate = ({
           <div className="DiaryTopDate_diaryTitleText pixelFont">
             작은 하루도 소중히 담아보아요❤️
           </div>
-          {user?.id === id ? (
-            <button
-              className="DiaryTopDate_diaryWriteBtn pixelFont"
-              onClick={() => setDiaryWrite(true)}
-            >
-              일기쓰기✏️
-            </button>
+          {Number(user?.id) === Number(id) ? (
+            <>
+              <button
+                className="DiaryTopDate_diaryWriteBtn pixelFont"
+                onClick={() => setDiaryWrite(true)}
+              >
+                일기쓰기✏️
+              </button>
+            </>
           ) : (
             <div></div>
           )}
