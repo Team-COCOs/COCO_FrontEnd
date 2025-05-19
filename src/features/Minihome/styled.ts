@@ -1,6 +1,40 @@
 import styled from "styled-components";
 
 export const MinihomeStyle = styled.div`
+  .Minihome_withDrawn_imgWrap {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    gap: 20px;
+    img {
+      width: 40%;
+      height: auto;
+      cursor: pointer;
+    }
+  }
+
+  /* 모바일, 작은 화면 대응 */
+  @media (max-width: 768px) {
+    .Minihome_withDrawn_imgWrap {
+      flex-direction: column;
+      height: auto;
+      padding: 40px 10px;
+    }
+
+    .Minihome_withDrawn_imgLeft {
+      max-width: 45%;
+      padding-top: 40px;
+    }
+    .Minihome_withDrawn_imgRight {
+      max-width: 65%;
+      padding-top: 40px;
+    }
+  }
   // 전체
   &.Minihome_wrap {
     display: flex;
