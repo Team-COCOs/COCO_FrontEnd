@@ -41,7 +41,7 @@ export const CommentDiaryStyle = styled.div`
     font-size: 11px;
   }
   .DiaryComments_author {
-    color: navy;
+    color: rgb(10, 69, 152);
     font-size: 11px;
     letter-spacing: 1px;
     font-weight: bold;
@@ -66,15 +66,20 @@ export const CommentDiaryStyle = styled.div`
   }
   .DiaryComments_parentComment {
     padding: 3px;
+    padding-bottom: 5px;
     img {
       width: 10px;
       margin-left: 5px;
-      padding-top: 10px;
+      padding-top: 3px;
       cursor: pointer;
     }
   }
   .DiaryComments_childrenComment {
-    padding: 3px 0px 3px 55px;
+    padding: 3px 0px 3px 30px;
+  }
+  .DiaryComments_childrenComment_wrap {
+    padding: 3px 0px 3px 30px;
+    margin-top: 5px;
   }
   .DiaryComments_childarrow {
     color: gray;
@@ -97,7 +102,7 @@ export const CommentDiaryStyle = styled.div`
   .DiaryComments_commentInput {
     padding: 0px 5px;
     margin: 0px 5px;
-    width: 65%;
+    width: 78%;
   }
   /* 버튼 */
   .DiaryComments_commentBtn {
@@ -114,22 +119,45 @@ export const CommentDiaryStyle = styled.div`
     .CommentDiary_commentInput {
       width: 75%;
     }
+    .DiaryComments_commentInput {
+      width: 73%;
+    }
   }
-  @media (max-width: 769px) {
-  }
+
   @media (max-width: 600px) {
     .CommentDiary_commentInput {
-      width: 65%;
+      width: 62%;
+    }
+    .DiaryComments_commentInput {
+      width: 58%;
     }
   }
   @media (max-width: 480px) {
     .CommentDiary_commentInput {
-      width: 60%;
+      width: 54%;
+    }
+    .DiaryComments_commentInput {
+      width: 52%;
+    }
+    .DiaryComments_childrenComment {
+      padding: 3px 0px 3px 25px;
     }
   }
   @media (max-width: 420px) {
     .CommentDiary_commentInput {
-      width: 50%;
+      width: 80%;
+    }
+    .DiaryComments_commentInput {
+      width: 80%;
+    }
+    .DiaryComments_author {
+      font-size: 9px;
+    }
+    .DiaryComments_content {
+      font-size: 9px;
+    }
+    .DiaryComments_childrenComment {
+      padding: 3px 0px 3px 0px;
     }
   }
   @media (max-width: 380px) {
@@ -137,12 +165,39 @@ export const CommentDiaryStyle = styled.div`
       font-size: 8px;
       padding-left: 5px;
     }
-    .CommentDiary_commentInput {
-      width: 85%;
-    }
+
     .CommentDiary_commentBtn {
       font-size: 8px;
       margin-left: 5px;
+    }
+    .CommentDiary_commentInput {
+      width: 80%;
+    }
+    .DiaryComments_commentInput {
+      width: 80%;
+    }
+    .DiaryComments_author {
+      font-size: 8px;
+    }
+    .DiaryComments_content {
+      font-size: 8px;
+    }
+    .DiaryComments_date {
+      font-size: 7px;
+    }
+    .DiaryComments_childrenComment_wrap {
+      padding: 3px 0px 3px 15px;
+    }
+    .DiaryComments_commentLabel {
+      font-size: 8px;
+      padding-left: 5px;
+    }
+    .DiaryComments_commentBtn {
+      margin-left: 5px;
+      margin-top: 5px;
+    }
+    .DiaryComments_commentInput {
+      margin-top: 5px;
     }
   }
 `;

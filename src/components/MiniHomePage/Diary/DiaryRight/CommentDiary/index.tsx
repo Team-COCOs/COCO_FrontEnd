@@ -164,11 +164,11 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
                       .map((child) => (
                         <div
                           key={child.id}
-                          className="DiaryComments_childrenComment"
+                          className="DiaryComments_childrenComment_wrap"
                         >
                           <span className="DiaryComments_childarrow">⤷ </span>
                           <span className="DiaryComments_author">
-                            {child.user.name} :
+                            {child.user.name} :{" "}
                           </span>
                           <span className="DiaryComments_content">
                             {child.content}

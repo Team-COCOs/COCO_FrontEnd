@@ -178,6 +178,9 @@ export const DiaryContentStyle = styled.div`
     .DiaryContent_dotori_imgWrap {
       font-size: 8.5px;
     }
+    .DiaryContent_Secret {
+      font-size: 8px;
+    }
   }
   @media (max-width: 420px) {
     .DiaryContent_page_wrap {
