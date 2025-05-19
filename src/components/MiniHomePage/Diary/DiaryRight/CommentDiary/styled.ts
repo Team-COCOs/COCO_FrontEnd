@@ -45,6 +45,7 @@ export const CommentDiaryStyle = styled.div`
     font-size: 11px;
     letter-spacing: 1px;
     font-weight: bold;
+    cursor: pointer;
   }
 
   .DiaryComments_content {
@@ -75,7 +76,7 @@ export const CommentDiaryStyle = styled.div`
     }
   }
   .DiaryComments_childrenComment {
-    padding: 3px 0px 3px 30px;
+    padding: 8px 0px 3px 30px;
   }
   .DiaryComments_childrenComment_wrap {
     padding: 3px 0px 3px 30px;

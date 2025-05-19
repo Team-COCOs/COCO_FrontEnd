@@ -61,7 +61,6 @@ const DiaryWritePage = ({
 
   useEffect(() => {
     if (!user?.id) return;
-
     axios
       .get(
         `${process.env.NEXT_PUBLIC_API_URL}/diary/folderList?userId=${user.id}`
@@ -136,32 +135,33 @@ const DiaryWritePage = ({
     });
 
     try {
-      // if (editingDiary) {
-      //   // 수정
-      //   const response = await axiosInstance.patch(
-      //     `/diary/${editingDiary.id}`,
-      //     {
-      //       folder_name: selectedFolderName,
-      //       weather: selectedWeather,
-      //       mood: selectedMood,
-      //       visibility: visibility,
-      //       content: content,
-      //     }
-      //   );
-      //   alert("수정 성공!");
-      // } else {
-      // 신규 저장
-      const response = await axiosInstance.post(`/diary/save`, {
-        folder_name: selectedFolderName,
-        weather: selectedWeather,
-        mood: selectedMood,
-        visibility: visibility,
-        content: content,
-      });
-      console.log(response.data, "다이어리 일기쓰기 저장?");
-      alert("저장 성공!");
-      router.push(`/home/${id}`);
-      // }
+      if (editingDiary) {
+        // 수정
+        const response = await axiosInstance.patch(
+          `/diary/${editingDiary.id}`,
+          {
+            folder_name: selectedFolderName,
+            weather: selectedWeather,
+            mood: selectedMood,
+            visibility: visibility,
+            content: content,
+          }
+        );
+        alert("수정 성공!");
+        router.push(`/home/${id}`);
+      } else {
+        // 신규 저장
+        const response = await axiosInstance.post(`/diary/save`, {
+          folder_name: selectedFolderName,
+          weather: selectedWeather,
+          mood: selectedMood,
+          visibility: visibility,
+          content: content,
+        });
+        console.log(response.data, "다이어리 일기쓰기 저장?");
+        alert("저장 성공!");
+        router.push(`/home/${id}`);
+      }
     } catch (error) {
       console.error("저장 실패:", error);
       alert("저장에 실패했습니다.");

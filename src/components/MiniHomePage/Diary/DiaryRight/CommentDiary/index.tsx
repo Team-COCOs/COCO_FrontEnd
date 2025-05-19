@@ -105,14 +105,28 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
                 .filter((comment) => comment.parentComment === null) // 부모 댓글만
                 .map((comment) => (
                   <div key={comment.id} className="DiaryComments_parentComment">
-                    <span className="DiaryComments_author">
+                    <span
+                      className="DiaryComments_author"
+                      onClick={() => router.push(`/home/${comment.user?.id}`)}
+                    >
                       {comment.user.name} :{" "}
                     </span>
                     <span className="DiaryComments_content">
                       {comment.content}
                     </span>
                     <span className="DiaryComments_date">
-                      ({new Date(comment.created_at).toLocaleDateString()})
+                      <span className="DiaryComments_date">
+                        (
+                        {new Date(comment.created_at).toLocaleString("ko-KR", {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: false,
+                        })}
+                        )
+                      </span>
                     </span>
                     <img
                       src="/arrowIcon.png"
@@ -167,14 +181,31 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
                           className="DiaryComments_childrenComment_wrap"
                         >
                           <span className="DiaryComments_childarrow">⤷ </span>
-                          <span className="DiaryComments_author">
+                          <span
+                            className="DiaryComments_author"
+                            onClick={() =>
+                              router.push(`/home/${child.user?.id}`)
+                            }
+                          >
                             {child.user.name} :{" "}
                           </span>
                           <span className="DiaryComments_content">
                             {child.content}
                           </span>
                           <span className="DiaryComments_date">
-                            ({new Date(child.created_at).toLocaleDateString()})
+                            (
+                            {new Date(comment.created_at).toLocaleString(
+                              "ko-KR",
+                              {
+                                year: "numeric",
+                                month: "2-digit",
+                                day: "2-digit",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: false,
+                              }
+                            )}
+                            )
                           </span>
                           {(Number(user?.id) === Number(child.user.id) ||
                             Number(user?.id) === Number(id)) && (
