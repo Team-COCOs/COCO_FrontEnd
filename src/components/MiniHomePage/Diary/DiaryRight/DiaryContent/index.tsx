@@ -12,6 +12,9 @@ import { DiaryType } from "..";
 interface DiaryContentProps {
   selectedDate: Date | null;
   selectedDiaryMenu: { id: number; title: string } | null;
+  setSelectedDiaryMenu: React.Dispatch<
+    React.SetStateAction<{ id: number; title: string } | null>
+  >;
   setDiaryWrite: React.Dispatch<React.SetStateAction<boolean>>;
   setEditingDiary?: React.Dispatch<React.SetStateAction<DiaryType | null>>;
   setSelectedDate: React.Dispatch<React.SetStateAction<Date | null>>;
@@ -45,12 +48,13 @@ interface Comment {
 const DiaryContent = ({
   selectedDate,
   selectedDiaryMenu,
+  setSelectedDiaryMenu,
   setSelectedDate,
   setDiaryWrite,
   setEditingDiary,
 }: DiaryContentProps) => {
   const [diaryData, setDiaryData] = useState<DiaryType[]>([]);
-
+  console.log(selectedDiaryMenu, "?");
   // selectedDate가 있을 경우 해당 날짜의 게시글만 필터링
   const filteredDiary = selectedDate
     ? diaryData.filter(
@@ -243,9 +247,10 @@ const DiaryContent = ({
           </div>
         </div>
       ) : (
-        <div className="DiaryContent_dotori_imgWrap">
-          <img src={"/dotori/emptyImg.png"} alt="empty diary" />
-        </div>
+        // <div className="DiaryContent_dotori_imgWrap">
+        //   <img src={"/dotori/emptyImg.png"} alt="empty diary" />
+        // </div>
+        <div></div>
       )}
     </DiaryContentStyle>
   );

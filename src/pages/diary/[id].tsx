@@ -37,6 +37,7 @@ const MinihomePage = () => {
             selectedDiaryMenu={selectedDiaryMenu}
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
+            setSelectedDiaryMenu={setSelectediaryMenu}
           />
         }
       />
