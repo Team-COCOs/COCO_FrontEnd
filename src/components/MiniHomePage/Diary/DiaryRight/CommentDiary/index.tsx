@@ -13,7 +13,7 @@ export interface Comment {
   };
   content: string;
   created_at: string;
-  parentComment: number | null;
+  parentComment: Comment | { id: number } | null;
 }
 
 interface CommentDiaryprops {
