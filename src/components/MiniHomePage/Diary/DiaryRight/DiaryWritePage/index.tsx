@@ -138,8 +138,8 @@ const DiaryWritePage = ({
             content: content,
           }
         );
-        alert("수정 성공!");
-        router.push(`/home/${id}`);
+        alert("다이어리 수정이 완료되었습니다!");
+        window.location.reload();
       } else {
         // 신규 저장
         const response = await axiosInstance.post(`/diary/save`, {
@@ -149,9 +149,8 @@ const DiaryWritePage = ({
           visibility: visibility,
           content: content,
         });
-        console.log(response.data, "다이어리 일기쓰기 저장?");
-        alert("저장 성공!");
-        router.push(`/home/${id}`);
+        alert("다이어리 저장이 완료되었습니다!");
+        window.location.reload();
       }
     } catch (error: any) {
       console.error("저장 실패:", error);

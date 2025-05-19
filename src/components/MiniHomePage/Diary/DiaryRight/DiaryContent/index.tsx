@@ -60,10 +60,12 @@ const DiaryContent = ({
   // selectedDate가 있을 경우 해당 날짜의 게시글만 필터링
   const filteredDiary = diaryData.filter((diary) => {
     // 날짜 필터
-    const isSameDate = selectedDate
-      ? format(new Date(diary.created_at), "yyyy-MM-dd") ===
-        format(selectedDate, "yyyy-MM-dd")
-      : true;
+    let isSameDate = true;
+    if (selectedDate instanceof Date && !isNaN(selectedDate.getTime())) {
+      isSameDate =
+        format(new Date(diary.created_at), "yyyy-MM-dd") ===
+        format(selectedDate, "yyyy-MM-dd");
+    }
 
     // 내용 필터 (대소문자 구분 없이)
     const includesSearchTerm = searchTerm
