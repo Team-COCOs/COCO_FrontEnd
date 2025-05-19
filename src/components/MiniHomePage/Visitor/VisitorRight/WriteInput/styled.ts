@@ -41,43 +41,6 @@ export const WriteInputStyle = styled.div`
           font-weight: bold;
           margin-top: 5px;
         }
-
-        .WriteInput_choice {
-          position: absolute;
-          left: 50px;
-          top: 2px;
-          font-size: 11px;
-          width: 50px;
-          color: ${({ theme }) => theme.colors.mainColor};
-          cursor: pointer;
-
-          span {
-            position: absolute;
-            font-size: 8px;
-            left: -3px;
-            bottom: 4px;
-          }
-        }
-
-        .WriteInput_dropdown {
-          position: absolute;
-          top: 20px;
-          left: 45px;
-          width: 50px;
-          background-color: white;
-          border: 1px solid rgb(170, 170, 170);
-          font-size: 12px;
-          padding: 5px;
-
-          .WriteInput_line {
-            border-bottom: 1px dotted rgb(195, 195, 195);
-            margin: 5px 0;
-          }
-
-          div {
-            cursor: pointer;
-          }
-        }
       }
     }
 
@@ -102,17 +65,28 @@ export const WriteInputStyle = styled.div`
         }
       }
 
-      button {
-        width: 35px;
-        padding: 2px;
-        background-color: rgb(243, 243, 243);
-        border: 1px solid rgb(131, 131, 131);
-        border-radius: 5px;
-        cursor: pointer;
+      .WriteInput_btns {
+        display: flex;
+        align-items: center;
+        gap: 5px;
 
-        &:focus,
-        &:active {
-          outline: none;
+        span {
+          font-size: 11px;
+        }
+
+        button {
+          width: 30px;
+          font-size: 11px;
+          padding: 2px;
+          background-color: rgb(243, 243, 243);
+          border: 1px solid rgb(131, 131, 131);
+          border-radius: 3px;
+          cursor: pointer;
+
+          &:focus,
+          &:active {
+            outline: none;
+          }
         }
       }
     }

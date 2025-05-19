@@ -108,12 +108,12 @@ export const PhotoRightStyled = styled.div`
         .PhotoRight_info {
           display: flex;
           gap: 15px;
-          font-size: 12px;
+          font-size: 11px;
           align-items: center;
 
           @media (max-width: 768px) {
             & {
-              font-size: 11px;
+              font-size: 10px;
             }
           }
 
@@ -121,13 +121,13 @@ export const PhotoRightStyled = styled.div`
             & {
               flex-direction: column;
               gap: 5px;
-              font-size: 10px;
+              font-size: 9px;
             }
           }
 
           @media (max-width: 430px) {
             & {
-              font-size: 9px;
+              font-size: 8.5px;
             }
           }
 

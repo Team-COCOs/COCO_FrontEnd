@@ -213,11 +213,13 @@ const useSignForm = () => {
       birth_date: "",
     },
     onSubmit: (values) => {
-      const cleanedPhone = values.phone.replace(/[^\d]/g, "");
+      const cleanedPhone = values.phone.replace(/[^\d]/g, "").slice(0, 11);
       const birthday = `${birthYear}-${birthMonth.padStart(
         2,
         "0"
       )}-${birthDay.padStart(2, "0")}`;
+
+      console.log(cleanedPhone);
 
       const data = {
         email: values.email,

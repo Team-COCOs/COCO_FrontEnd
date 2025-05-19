@@ -37,6 +37,7 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
   const [childCommentInput, setChildCommentInput] = useState("");
   const router = useRouter();
   const { user } = useAuth();
+  const { id } = router.query;
 
   const submitComment = async ({ comment, parentId }: CommentSubmit) => {
     if (!comment.trim()) {
@@ -74,6 +75,21 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
     }
   };
 
+  const handleDeleteComment = (photoId: number) => {
+    try {
+      axiosInstance.delete(`/photos-comments/${photoId}`);
+      alert("댓글이 삭제되었습니다.");
+      window.location.reload();
+    } catch (e: any) {
+      if (e.response.status === 401) {
+        alert("로그인이 필요합니다.");
+      } else {
+        alert("댓글 삭제 중 오류가 발생했습니다.");
+        console.log(e, ": 댓글 삭제 중 오류");
+      }
+    }
+  };
+
   return (
     <CommentStyle className="Comment_wrap Gulim">
       {comments?.length === 0 || !comments ? (
@@ -102,6 +118,15 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
                 >
                   <Image src="/arrowIcon.png" alt="icon" fill />
                 </div>
+                {(Number(user?.id) === Number(id) ||
+                  Number(user?.id) === Number(comment.user.id)) && (
+                  <span
+                    className="Comment_deleteBtn"
+                    onClick={() => handleDeleteComment(comment.id)}
+                  >
+                    ☒
+                  </span>
+                )}
               </div>
 
               {replyTargetId === comment.id && (
@@ -146,6 +171,15 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
                     </span>
                     <span className="Comment_comment">: {child.comment}</span>
                     <span className="Comment_date">({child.created_at})</span>
+                    {(Number(user?.id) === Number(id) ||
+                      Number(user?.id) === Number(child.user.id)) && (
+                      <span
+                        className="Comment_deleteBtn"
+                        onClick={() => handleDeleteComment(child.id)}
+                      >
+                        ☒
+                      </span>
+                    )}
                   </div>
                 ))}
             </div>

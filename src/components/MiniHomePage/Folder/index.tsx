@@ -60,6 +60,11 @@ const Folder = ({ type, onSave }: FolderProps) => {
         editTitle
       );
     } else if (action === "delete") {
+      const confirmed = window.confirm(
+        "해당 폴더의 게시글이 모두 삭제됩니다. 삭제하시겠습니까?"
+      );
+      if (!confirmed) return;
+
       checkedKeys.forEach((key) => {
         const node = findNodeByKey(treeData, key);
         if (node?.title === "스크랩") {

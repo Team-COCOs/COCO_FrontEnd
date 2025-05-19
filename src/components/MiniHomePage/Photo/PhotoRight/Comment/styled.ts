@@ -152,5 +152,11 @@ export const CommentStyle = styled.div`
         color: rgb(157, 157, 157);
       }
     }
+
+    .Comment_deleteBtn {
+      color: #aaa;
+      padding-left: 5px;
+      cursor: pointer;
+    }
   }
 `;

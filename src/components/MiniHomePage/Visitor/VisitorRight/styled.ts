@@ -21,7 +21,7 @@ export const VisitorRightStyled = styled.div`
       width: 92%;
 
       .Gulim {
-        font-size: 13px;
+        font-size: 11px;
         font-weight: bold;
       }
 
@@ -65,8 +65,9 @@ export const VisitorRightStyled = styled.div`
           background-color: rgb(165, 165, 165);
           color: white;
           border: none;
-          width: 40px;
+          width: 35px;
           border-radius: 5px;
+          font-size: 10px;
           padding: 3px;
           cursor: pointer;
 
