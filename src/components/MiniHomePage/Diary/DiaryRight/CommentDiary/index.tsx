@@ -70,10 +70,8 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
   const [replyingCommentId, setReplyingCommentId] = useState<number | null>(
     null
   );
-
   // 답글 텍스트 상태
   const [replyText, setReplyText] = useState("");
-  const [replying, setReplying] = useState(false);
 
   const handleReplyClick = (commentId: number) => {
     setReplyingCommentId((prevId) => (prevId === commentId ? null : commentId));
@@ -98,7 +96,6 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
     <CommentDiaryStyle>
       <div className="CommentDiary_wrap Gulim">
         <div>
-          {/* 다이컴포  */}
           <div className="DiaryComments_wrap Gulim">
             <div className="DiaryComments_mapwrap Gulim">
               {allComments
@@ -222,8 +219,6 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
                 ))}
             </div>
           </div>
-          {/* 다이컴포 */}
-          {/* <DiaryComments diaryId={diaryId} comments={comments} /> */}
         </div>
         <div className="CommentDiary_inputWrap Gulim">
           <label

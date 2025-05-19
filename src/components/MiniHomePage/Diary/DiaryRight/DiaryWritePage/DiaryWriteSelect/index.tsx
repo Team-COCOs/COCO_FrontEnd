@@ -50,7 +50,7 @@ const DiaryWriteSelect: React.FC<DiaryWriteSelectProps> = ({
     return folders.flatMap((folder) => {
       const prefix = "ㄴ".repeat(depth);
       const currentOption = (
-        <option key={folder.id} value={folder.title}>
+        <option key={folder.id} value={folder.id}>
           {prefix} {folder.title}
         </option>
       );

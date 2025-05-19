@@ -78,7 +78,6 @@ const DiaryWritePage = ({
   // 수정 중인 일기가 있으면 초기값 세팅
   useEffect(() => {
     if (!editingDiary) return;
-
     setSelectedFolderName(editingDiary.folder.title);
     setSelectedWeather(editingDiary.weather);
     setSelectedMood(editingDiary.mood);
@@ -125,14 +124,6 @@ const DiaryWritePage = ({
       alert("내용을 입력해주세요.");
       return;
     }
-
-    console.log("전송 데이터:", {
-      folder_name: selectedFolderName,
-      weather: selectedWeather,
-      mood: selectedMood,
-      visibility: visibility,
-      content: content,
-    });
 
     try {
       if (editingDiary) {
