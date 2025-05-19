@@ -12,6 +12,13 @@ export const GuestBookStyle = styled.div`
       justify-content: space-between;
       background-color: rgb(247, 247, 247);
       border-top: 2.5px solid rgb(223, 223, 223);
+      padding: 5px 10px;
+
+      .GuestBook_info {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
     }
   }
 `;

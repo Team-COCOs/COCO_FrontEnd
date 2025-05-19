@@ -56,6 +56,8 @@ const SettingMyInfo = () => {
           type === "password" ? "비밀번호" : "전화번호"
         }가 성공적으로 변경되었습니다.`
       );
+
+      window.location.reload();
     } catch (err) {
       alert(
         `${type === "password" ? "비밀번호" : "전화번호"} 변경에 실패했습니다.`

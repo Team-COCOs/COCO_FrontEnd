@@ -58,7 +58,6 @@ interface PhotoData {
 const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
   const [photoData, setPhotoData] = useState<PhotoData[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [myPhoto, setMyPhoto] = useState(false);
 
   const itemsPerPage = 5;
 
@@ -122,13 +121,12 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
   };
 
   // delete
-  const deletePhoto = async (photoId: number, isScripted: boolean) => {
+  const deletePhoto = async (photoId: number) => {
+    const confirmed = window.confirm("해당 게시글을 삭제하시겠습니까?");
+    if (!confirmed) return;
+
     try {
-      if (isScripted) {
-        await axiosInstance.delete(`/photos/${photoId}/unscrap`);
-      } else {
-        await axiosInstance.delete(`/photos/${photoId}`);
-      }
+      await axiosInstance.delete(`/photos/${photoId}`);
       alert("삭제되었습니다.");
       getPhotoData();
     } catch (err) {
@@ -169,7 +167,7 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                     className="PhotoRight_user"
                     onClick={() => router.push(`/home/${data.user.id}`)}
                   >
-                    {data.origin_author}
+                    {data.isScripted ? data.origin_author : data.user.name}
                   </p>
                   <div className="PhotoRight_info">
                     <p className="PhotoRight_font">
@@ -212,12 +210,22 @@ const PhotoRight = ({ selectedMenu, setWrite }: PhotoProps) => {
                         // 로그인한 내가 쓴 글
                         <div className="PhotoRight_btns">
                           <button className="Gulim">수정</button>
-                          <button className="Gulim">삭제</button>
+                          <button
+                            className="Gulim"
+                            onClick={() => deletePhoto(data.id)}
+                          >
+                            삭제
+                          </button>
                         </div>
                       ) : data.isScripted ? (
                         // 로그인한 남이 스크랩한 글
                         <div className="PhotoRight_btns">
-                          <button className="Gulim">삭제</button>
+                          <button
+                            className="Gulim"
+                            onClick={() => deletePhoto(data.id)}
+                          >
+                            삭제
+                          </button>
                         </div>
                       ) : (
                         // 로그인한 남이 본 글
