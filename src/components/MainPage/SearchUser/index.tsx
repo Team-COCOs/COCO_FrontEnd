@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
 
 interface UserSearch {
   id: number;
@@ -62,7 +63,11 @@ const SearchUser = () => {
             <li
               key={index}
               className="SearchUser_item"
-              onClick={() => router.push(`/home/${item.id}`)}
+              onClick={() => {
+                if (item.role !== "withdrawn") {
+                  router.push(`/home/${item.id}`);
+                }
+              }}
             >
               <div className="SearchUser_userInfo">
                 <div className="SearchUser_image">
@@ -73,16 +78,25 @@ const SearchUser = () => {
                   />
                 </div>
                 <div className="SearchUser_info">
-                  <p className="SearchUser_name"> {item.name} </p>
+                  <p
+                    className={clsx(
+                      "SearchUser_name",
+                      item.role === "withdrawn" && "SearchUser_delete"
+                    )}
+                  >
+                    {item.name}
+                  </p>
                   <p className="SearchUser_sub">
                     성별: {item.gender === "man" ? "남성" : "여성"}
                   </p>
                   <p className="SearchUser_sub"> 생일: {item.birthday} </p>
                 </div>
               </div>
-              <span>
-                보러가기 <span className="SearchUser_link">&gt;</span>
-              </span>
+              {item.role !== "withdrawn" && (
+                <span>
+                  보러가기 <span className="SearchUser_link">&gt;</span>
+                </span>
+              )}
             </li>
           ))}
         </ul>
