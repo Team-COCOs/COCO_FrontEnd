@@ -1,6 +1,8 @@
 import { useAuth } from "@/context/AuthContext";
 import { GuestBookStyle } from "./styled";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const GuestBook = () => {
   const router = useRouter();
@@ -8,11 +10,21 @@ const GuestBook = () => {
   const userId = user?.id;
   const { id } = router.query;
 
+  const [visitData, setVisitData] = useState();
+
   const miniProfile = !user?.profile_image
     ? user?.gender === "woman"
       ? "/avatarImg/woman_avatar1.png"
       : "/avatarImg/man_avatar1.png"
     : user?.profile_image;
+
+  useEffect(() => {
+    const visit = axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/guestbooks/${id}`
+    );
+  }, []);
+
+  // 관리 : guestbook/management
 
   return (
     <GuestBookStyle className="GuestBook_wrap">

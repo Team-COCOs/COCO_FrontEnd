@@ -45,13 +45,17 @@ export const SearchUserStyle = styled.div`
             flex-direction: column;
 
             .SearchUser_name {
-              font-size: 18px;
+              font-size: 13px;
               font-weight: bold;
               margin-bottom: 5px;
             }
 
+            .SearchUser_delete {
+              color: rgb(190, 190, 190);
+            }
+
             .SearchUser_sub {
-              font-size: 14px;
+              font-size: 11px;
               color: #666;
             }
           }
@@ -63,7 +67,7 @@ export const SearchUserStyle = styled.div`
 
         span {
           color: rgb(175, 175, 175);
-          font-size: 12px;
+          font-size: 11px;
           font-weight: bold;
 
           .SearchUser_link {

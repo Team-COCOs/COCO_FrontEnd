@@ -65,7 +65,9 @@ const SettingMyInfo = () => {
   };
 
   const deleteUser = async () => {
-    const confirmed = confirm("탈퇴 시 복구가 불가능합니다. 탈퇴하시겠습니까?");
+    const confirmed = confirm(
+      "탈퇴 시 복구가 불가능하며, 게시글 및 댓글은 따로 삭제되지 않습니다. 탈퇴하시겠습니까?"
+    );
 
     if (!confirmed) return;
 

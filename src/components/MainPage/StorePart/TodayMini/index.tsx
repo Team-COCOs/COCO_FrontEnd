@@ -18,7 +18,11 @@ const TodayMini = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/users/getPopularUser`
         );
 
-        setUserInfo(res.data);
+        const filteredUsers = res.data.filter(
+          (user: any) => user.user_role !== "withdrawn"
+        );
+
+        setUserInfo(filteredUsers);
 
         console.log("인기 미니홈피 데이터 : ", res.data);
       } catch (e) {
@@ -59,7 +63,7 @@ const TodayMini = () => {
               >
                 <span className="rank_num">{idx + 1}</span>
                 <span className="rank_name">{user.name}</span>
-                <span className="rank_count">+{user.todayVisitCount}</span>
+                <span className="rank_count">+{user.totalVisitCount}</span>
               </li>
             ))}
           </ul>
