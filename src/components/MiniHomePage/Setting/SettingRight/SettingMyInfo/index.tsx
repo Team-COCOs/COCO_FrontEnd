@@ -169,7 +169,9 @@ const SettingMyInfo = () => {
         </div>
       </div>
 
-      <p className="SettingMyInfo_delete">탈퇴하기</p>
+      <p className="SettingMyInfo_delete" onClick={deleteUser}>
+        탈퇴하기
+      </p>
 
       <ShadowModal
         type={type}
