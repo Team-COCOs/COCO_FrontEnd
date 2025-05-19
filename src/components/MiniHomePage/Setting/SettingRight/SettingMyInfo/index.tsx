@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { SettingMyInfoStyle } from "./styled";
-import { useEffect, useState } from "react";
-import { validatePassword, validatePhone } from "@/utils/validation";
+import Cookies from "js-cookie";
 import axiosInstance from "@/lib/axios";
 import useSignForm from "@/utils/SignUp/useSignForm";
 import ShadowModal from "@/components/ShadowModal";
@@ -73,7 +72,11 @@ const SettingMyInfo = () => {
     try {
       await axiosInstance.patch("/users/delete");
 
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+
       alert("탈퇴되었습니다.");
+      router.push("/");
     } catch (e) {
       console.log("탈퇴 실패 : ", e);
     }
