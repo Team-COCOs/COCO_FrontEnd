@@ -21,7 +21,7 @@ export const VisitorRightStyled = styled.div`
       width: 92%;
 
       .Gulim {
-        font-size: 11px;
+        font-size: 10px;
         font-weight: bold;
       }
 

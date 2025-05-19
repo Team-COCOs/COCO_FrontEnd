@@ -28,5 +28,12 @@ export const EmptyPageStyle = styled.div`
       width: 200px;
       height: 200px;
     }
+
+    .Photo_img {
+      margin-top: 20px;
+      position: relative;
+      width: 250px;
+      height: 250px;
+    }
   }
 `;

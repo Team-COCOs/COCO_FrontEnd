@@ -10,7 +10,7 @@ const VisitorRight = () => {
   const router = useRouter();
   const { user } = useAuth();
   const userId = user?.id;
-  const queryId = router.query.id;
+  const { id } = router.query;
   const token = Cookies.get("accessToken");
 
   const [management, setManagement] = useState("관리");
@@ -49,12 +49,14 @@ const VisitorRight = () => {
               <p className="Gulim">{quote}</p>
             )}
           </div>
-          <button
-            className="VisitorRight_headerBtn Gulim"
-            onClick={handleManageClick}
-          >
-            {management}
-          </button>
+          {userId === id && (
+            <button
+              className="VisitorRight_headerBtn Gulim"
+              onClick={handleManageClick}
+            >
+              {management}
+            </button>
+          )}
         </div>
       </div>
 

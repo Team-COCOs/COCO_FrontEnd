@@ -8,6 +8,15 @@ export const PhotoRightStyled = styled.div`
   display: flex;
   align-items: center;
 
+  .PhotoRight_empty {
+    p {
+      text-align: center;
+      font-size: 11.5px;
+      font-weight: bold;
+      color: #4b4b4b;
+    }
+  }
+
   .PhotoRight_wrap {
     display: flex;
     flex-direction: column;
@@ -77,7 +86,7 @@ export const PhotoRightStyled = styled.div`
         display: flex;
         justify-content: space-between;
         padding: 0 10px;
-        font-size: 12px;
+        font-size: 10px;
         font-weight: bold;
         margin-top: 5px;
 
@@ -108,7 +117,7 @@ export const PhotoRightStyled = styled.div`
         .PhotoRight_info {
           display: flex;
           gap: 15px;
-          font-size: 11px;
+          font-size: 10px;
           align-items: center;
 
           @media (max-width: 768px) {
@@ -175,7 +184,7 @@ export const PhotoRightStyled = styled.div`
       justify-content: space-between;
       align-items: center;
       padding: 0 5px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: bold;
       color: rgb(169, 169, 169);
 
@@ -189,13 +198,12 @@ export const PhotoRightStyled = styled.div`
         & {
           flex-direction: column;
           gap: 10px;
-          font-size: 9px;
         }
       }
 
       @media (max-width: 430px) {
         & {
-          font-size: 8px;
+          font-size: 9px;
         }
       }
 
