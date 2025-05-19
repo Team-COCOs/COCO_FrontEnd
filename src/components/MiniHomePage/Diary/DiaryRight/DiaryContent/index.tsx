@@ -141,7 +141,7 @@ const DiaryContent = ({
       }
     };
     fetchDiary();
-  }, [user?.id]);
+  }, [user?.id, id]);
 
   return (
     <DiaryContentStyle>

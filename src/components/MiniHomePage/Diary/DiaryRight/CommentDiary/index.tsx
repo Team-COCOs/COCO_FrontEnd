@@ -26,28 +26,6 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
   const [comment, setComment] = useState("");
   const { user } = useAuth();
 
-  // const handleCommentSave = async () => {
-  //   if (!comment.trim()) {
-  //     alert("댓글을 입력해주세요.");
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axiosInstance.post(`/diary-comments/${diaryId}`, {
-  //       content: comment,
-  //       parentCommentId: null,
-  //     });
-  //     alert("댓글이 등록되었습니다.");
-  //     setComment(""); // 입력창 초기화
-  //     // router.replace(router.asPath);
-  //     router.push(`/diary/${id}`);
-  //   } catch (e: any) {
-  //     if (e.response?.status === 401) {
-  //       alert("로그인이 필요합니다.");
-  //     } else {
-  //       alert("댓글 등록 중 오류가 발생했습니다.");
-  //     }
-  //   }
-  // };
   const handleSaveComment = async (
     content: string,
     parentCommentId: number | null
@@ -73,7 +51,7 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
       setComment(""); // 댓글 입력창 초기화
       setReplyText(""); // 답글 입력창 초기화
       setReplyingCommentId(null); // 답글 입력창 닫기
-      router.push(`/diary/${id}`);
+      window.location.reload();
     } catch (e: any) {
       if (e.response?.status === 401) {
         alert("로그인이 필요합니다.");
@@ -99,16 +77,6 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
 
   const handleReplyClick = (commentId: number) => {
     setReplyingCommentId((prevId) => (prevId === commentId ? null : commentId));
-  };
-
-  const handleSubmitReply = () => {
-    // if (!replyText.trim()) {
-    //   alert("답글을 입력하세요");
-    //   return;
-    // }
-    // alert(`답글 등록: ${replyText}`);
-    // setReplyText("");
-    setReplying(false);
   };
 
   const handleDeleteComment = async (commentId: number) => {
@@ -192,7 +160,7 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
 
                     {/* 자식 댓글들 */}
                     {allComments
-                      .filter((child) => child.parentComment === comment.id)
+                      .filter((child) => child.parentComment?.id === comment.id)
                       .map((child) => (
                         <div
                           key={child.id}
