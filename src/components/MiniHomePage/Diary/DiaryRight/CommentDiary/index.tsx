@@ -1,37 +1,127 @@
 import { CommentDiaryStyle } from "./styled";
-import DiaryComments from "./DiaryComments";
 import axiosInstance from "@/lib/axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
+
+export interface Comment {
+  id: number;
+  diaryId: number;
+  user: {
+    id: number;
+    name: string;
+  };
+  content: string;
+  created_at: string;
+  parentComment: number | null;
+}
 
 interface CommentDiaryprops {
   diaryId: number;
+  allComments: Comment[];
 }
-
-const CommentDiary = ({ diaryId }: CommentDiaryprops) => {
+const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
   const router = useRouter();
   const { id } = router.query;
   const [comment, setComment] = useState("");
+  const { user } = useAuth();
 
-  const handleCommentSave = async () => {
-    if (!comment.trim()) {
-      alert("댓글을 입력해주세요.");
+  // const handleCommentSave = async () => {
+  //   if (!comment.trim()) {
+  //     alert("댓글을 입력해주세요.");
+  //     return;
+  //   }
+  //   try {
+  //     const response = await axiosInstance.post(`/diary-comments/${diaryId}`, {
+  //       content: comment,
+  //       parentCommentId: null,
+  //     });
+  //     alert("댓글이 등록되었습니다.");
+  //     setComment(""); // 입력창 초기화
+  //     // router.replace(router.asPath);
+  //     router.push(`/diary/${id}`);
+  //   } catch (e: any) {
+  //     if (e.response?.status === 401) {
+  //       alert("로그인이 필요합니다.");
+  //     } else {
+  //       alert("댓글 등록 중 오류가 발생했습니다.");
+  //     }
+  //   }
+  // };
+  const handleSaveComment = async (
+    content: string,
+    parentCommentId: number | null
+  ) => {
+    if (!content.trim()) {
+      alert(
+        parentCommentId === null
+          ? "댓글을 입력해주세요."
+          : "답글을 입력해주세요."
+      );
       return;
     }
     try {
-      const response = await axiosInstance.post(`/diary-comments/${diaryId}`, {
-        content: comment,
-        parentCommentId: null,
+      await axiosInstance.post(`/diaryComments/${diaryId}`, {
+        content,
+        parentCommentId,
       });
-      alert("댓글이 등록되었습니다.");
-      setComment(""); // 입력창 초기화
-      router.replace(router.asPath);
-      // router.push(`/diary/${id}`);
+      alert(
+        parentCommentId === null
+          ? "댓글이 등록되었습니다."
+          : "답글이 등록되었습니다."
+      );
+      setComment(""); // 댓글 입력창 초기화
+      setReplyText(""); // 답글 입력창 초기화
+      setReplyingCommentId(null); // 답글 입력창 닫기
+      router.push(`/diary/${id}`);
     } catch (e: any) {
       if (e.response?.status === 401) {
         alert("로그인이 필요합니다.");
       } else {
-        alert("댓글 등록 중 오류가 발생했습니다.");
+        alert(
+          parentCommentId === null
+            ? "댓글 등록 중 오류가 발생했습니다."
+            : "답글 등록 중 오류가 발생했습니다."
+        );
+      }
+    }
+  };
+
+  // 다이어리 댓글
+  // 답글 작성 중인 댓글 id 상태
+  const [replyingCommentId, setReplyingCommentId] = useState<number | null>(
+    null
+  );
+
+  // 답글 텍스트 상태
+  const [replyText, setReplyText] = useState("");
+  const [replying, setReplying] = useState(false);
+
+  const handleReplyClick = (commentId: number) => {
+    setReplyingCommentId((prevId) => (prevId === commentId ? null : commentId));
+  };
+
+  const handleSubmitReply = () => {
+    // if (!replyText.trim()) {
+    //   alert("답글을 입력하세요");
+    //   return;
+    // }
+    // alert(`답글 등록: ${replyText}`);
+    // setReplyText("");
+    setReplying(false);
+  };
+
+  const handleDeleteComment = async (commentId: number) => {
+    try {
+      const response = axiosInstance.delete(`/diaryComments/${commentId}`);
+      alert("댓글이 삭제되었습니다.");
+      window.location.reload();
+    } catch (e: any) {
+      if (e.response.status === 401) {
+        alert("로그인이 필요합니다.");
+      } else {
+        alert("댓글 삭제 중 오류가 발생했습니다.");
+        console.log(e, ": 댓글 삭제 중 오류");
       }
     }
   };
@@ -40,7 +130,101 @@ const CommentDiary = ({ diaryId }: CommentDiaryprops) => {
     <CommentDiaryStyle>
       <div className="CommentDiary_wrap Gulim">
         <div>
-          <DiaryComments diaryId={diaryId} />
+          {/* 다이컴포  */}
+          <div className="DiaryComments_wrap Gulim">
+            <div className="DiaryComments_mapwrap Gulim">
+              {allComments
+                .filter((comment) => comment.parentComment === null) // 부모 댓글만
+                .map((comment) => (
+                  <div key={comment.id} className="DiaryComments_parentComment">
+                    <span className="DiaryComments_author">
+                      {comment.user.name} :{" "}
+                    </span>
+                    <span className="DiaryComments_content">
+                      {comment.content}
+                    </span>
+                    <span className="DiaryComments_date">
+                      ({new Date(comment.created_at).toLocaleDateString()})
+                    </span>
+                    <img
+                      src="/arrowIcon.png"
+                      alt="arrow-icon"
+                      className="DiaryComments_arrowicon"
+                      onClick={() => handleReplyClick(comment.id)}
+                    />
+                    {(Number(comment.user.id) === Number(user?.id) ||
+                      Number(user?.id) === Number(id)) && (
+                      <span
+                        className="DiaryComments_comment_deletebtn"
+                        onClick={() => handleDeleteComment(comment.id)}
+                      >
+                        ☒
+                      </span>
+                    )}
+
+                    {replyingCommentId === comment.id && (
+                      <div className="DiaryComments_childrenComment">
+                        <div className="DiaryComments_inputWrap">
+                          <label
+                            className="DiaryComments_commentLabel"
+                            htmlFor={`reply-input-${comment.id}`}
+                          >
+                            답글
+                          </label>
+                          <input
+                            className="DiaryComments_commentInput"
+                            id={`reply-input-${comment.id}`}
+                            type="text"
+                            value={replyText}
+                            onChange={(e) => setReplyText(e.target.value)}
+                          />
+                          <button
+                            className="DiaryComments_commentBtn"
+                            onClick={() => {
+                              handleSaveComment(replyText, Number(comment.id));
+                            }}
+                          >
+                            확인
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* 자식 댓글들 */}
+                    {allComments
+                      .filter((child) => child.parentComment === comment.id)
+                      .map((child) => (
+                        <div
+                          key={child.id}
+                          className="DiaryComments_childrenComment"
+                        >
+                          <span className="DiaryComments_childarrow">⤷ </span>
+                          <span className="DiaryComments_author">
+                            {child.user.name} :
+                          </span>
+                          <span className="DiaryComments_content">
+                            {child.content}
+                          </span>
+                          <span className="DiaryComments_date">
+                            ({new Date(child.created_at).toLocaleDateString()})
+                          </span>
+                          {(Number(user?.id) === Number(child.user.id) ||
+                            Number(user?.id) === Number(id)) && (
+                            <span
+                              className="DiaryComments_comment_deletebtn"
+                              onClick={() => handleDeleteComment(child.id)}
+                            >
+                              ☒
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                  </div>
+                ))}
+            </div>
+          </div>
+          {/* 다이컴포 */}
+          {/* <DiaryComments diaryId={diaryId} comments={comments} /> */}
         </div>
         <div className="CommentDiary_inputWrap Gulim">
           <label
@@ -58,7 +242,9 @@ const CommentDiary = ({ diaryId }: CommentDiaryprops) => {
           />
           <button
             className="CommentDiary_commentBtn"
-            onClick={handleCommentSave}
+            onClick={() => {
+              handleSaveComment(comment, null);
+            }}
           >
             확인
           </button>

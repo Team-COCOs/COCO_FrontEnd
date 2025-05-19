@@ -146,8 +146,8 @@ const DiaryContent = ({
   return (
     <DiaryContentStyle>
       <>
-        {filteredDiary.length > 0 ? (
-          filteredDiary.map((diary) => (
+        {currentItems.length > 0 ? (
+          currentItems.map((diary) => (
             <div key={diary.id}>
               <div className="DiaryContent_wrap Gulim">
                 <div className="DiaryContent_dateWrap logoFont">
@@ -203,7 +203,10 @@ const DiaryContent = ({
                   <div>공개설정 : {visibilityOptions[diary.visibility]}</div>
                 </div>
                 <div>
-                  <CommentDiary diaryId={diary.id} />
+                  <CommentDiary
+                    diaryId={diary.id}
+                    allComments={diary.comments}
+                  />
                 </div>
               </div>
               {/* 구분선 */}

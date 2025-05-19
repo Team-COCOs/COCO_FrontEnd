@@ -165,7 +165,7 @@ export const DiaryContentStyle = styled.div`
     flex-direction: column;
     width: 100%;
     height: 50vh;
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: bold;
     color: #4b4b4b;
     img {
