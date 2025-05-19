@@ -14,6 +14,7 @@ interface DiaryContentProps {
   selectedDiaryMenu: { id: number; title: string } | null;
   setDiaryWrite: React.Dispatch<React.SetStateAction<boolean>>;
   setEditingDiary?: React.Dispatch<React.SetStateAction<DiaryType | null>>;
+  setSelectedDate: React.Dispatch<React.SetStateAction<Date | null>>;
 }
 
 const emotionIcons: { [key: string]: string } = {
@@ -44,20 +45,30 @@ interface Comment {
 const DiaryContent = ({
   selectedDate,
   selectedDiaryMenu,
+  setSelectedDate,
   setDiaryWrite,
   setEditingDiary,
 }: DiaryContentProps) => {
   const [diaryData, setDiaryData] = useState<DiaryType[]>([]);
 
+  // selectedDate가 있을 경우 해당 날짜의 게시글만 필터링
+  const filteredDiary = selectedDate
+    ? diaryData.filter(
+        (diary) =>
+          format(new Date(diary.created_at), "yyyy-MM-dd") ===
+          format(selectedDate, "yyyy-MM-dd")
+      )
+    : diaryData;
+
   // 페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
+  // 페이지네이션 관련 계산
+  const totalPages = Math.ceil(filteredDiary.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = diaryData.slice(indexOfFirstItem, indexOfLastItem);
-
-  const totalPages = Math.ceil(diaryData.length / itemsPerPage);
+  const currentItems = filteredDiary.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePrevPage = () => {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
@@ -66,10 +77,15 @@ const DiaryContent = ({
   const handleNextPage = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
-
+  // 페이지 이동 후 맨 위로
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentPage]);
+
+  // 날짜 클릭 시 1페이지로
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedDate]);
 
   // 수정 버튼
   const handleFixBtn = (diary: DiaryType) => {
@@ -118,9 +134,9 @@ const DiaryContent = ({
   return (
     <DiaryContentStyle>
       <>
-        {currentItems.length > 0 &&
-          currentItems.map((diary) => (
-            <div>
+        {filteredDiary.length > 0 ? (
+          filteredDiary.map((diary) => (
+            <div key={diary.id}>
               <div className="DiaryContent_wrap Gulim">
                 <div className="DiaryContent_dateWrap logoFont">
                   <div>
@@ -128,9 +144,7 @@ const DiaryContent = ({
                       {format(
                         new Date(diary.created_at),
                         "yyyy.MM.dd EEE HH:mm",
-                        {
-                          locale: ko,
-                        }
+                        { locale: ko }
                       )}
                     </span>
                     <span className="DiaryContent_update_date">
@@ -141,9 +155,7 @@ const DiaryContent = ({
                             {format(
                               new Date(diary.updated_at),
                               "yyyy.MM.dd EEE HH:mm",
-                              {
-                                locale: ko,
-                              }
+                              { locale: ko }
                             )}
                           </span>
                         </>
@@ -168,18 +180,13 @@ const DiaryContent = ({
                           수정
                         </button>
                         <span>|</span>
-                        <button
-                          onClick={() => {
-                            handleDeleteBtn(diary.id);
-                          }}
-                        >
+                        <button onClick={() => handleDeleteBtn(diary.id)}>
                           삭제
                         </button>
                       </div>
                     ) : null}
                   </div>
                 </div>
-
                 <div className="DiaryContent_Secret Gulim">
                   <div>공개설정 : {visibilityOptions[diary.visibility]}</div>
                 </div>
@@ -187,11 +194,17 @@ const DiaryContent = ({
                   <CommentDiary />
                 </div>
               </div>
-
               {/* 구분선 */}
               <span className="DiaryContent_DotLine"></span>
             </div>
-          ))}
+          ))
+        ) : (
+          // ✅ 일기 없을 때 안내 문구
+          <div className="DiaryContent_dotori_imgWrap">
+            <img src={"/dotori/emptyImg.png"} alt="empty diary" />
+            해당 날짜에 작성된 일기가 없습니다.
+          </div>
+        )}
       </>
 
       {/* 구분선까지 map */}
@@ -209,7 +222,14 @@ const DiaryContent = ({
                 ▼
               </button>
             </div>
-            <div className="DiaryContent_allbtn">목록</div>
+            <div
+              className="DiaryContent_allbtn"
+              onClick={() => {
+                setSelectedDate(null);
+              }}
+            >
+              목록
+            </div>
           </div>
           <div className="DiaryContent_findwrap">
             <select

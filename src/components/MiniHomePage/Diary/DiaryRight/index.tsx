@@ -8,6 +8,7 @@ import DiaryContent from "./DiaryContent";
 interface DiaryProps {
   selectedDiaryMenu: { id: number; title: string } | null;
   selectedDate: Date | null;
+  setSelectedDate: React.Dispatch<React.SetStateAction<Date | null>>;
 }
 
 export interface DiaryType {
@@ -26,7 +27,11 @@ export interface DiaryType {
   comments: any[];
 }
 
-const DiaryRight = ({ selectedDate, selectedDiaryMenu }: DiaryProps) => {
+const DiaryRight = ({
+  selectedDate,
+  selectedDiaryMenu,
+  setSelectedDate,
+}: DiaryProps) => {
   const [diaryWrite, setDiaryWrite] = useState<boolean>(false);
   const [editingDiary, setEditingDiary] = useState<DiaryType | null>(null);
 
@@ -45,6 +50,7 @@ const DiaryRight = ({ selectedDate, selectedDiaryMenu }: DiaryProps) => {
               />
               <DiaryContent
                 selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
                 selectedDiaryMenu={selectedDiaryMenu}
                 setDiaryWrite={setDiaryWrite}
                 setEditingDiary={setEditingDiary}

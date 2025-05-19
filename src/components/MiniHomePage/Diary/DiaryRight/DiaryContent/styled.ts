@@ -162,35 +162,26 @@ export const DiaryContentStyle = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     width: 100%;
     height: 50vh;
+    font-size: 11.5px;
+    font-weight: bold;
+    color: #4b4b4b;
     img {
       width: 35%;
       object-fit: contain;
     }
   }
   /* 반응형 */
-  @media (max-width: 830px) {
-    .DiaryContent_dateWrap {
-    }
-  }
-  @media (max-width: 769px) {
-    .DiaryContent_dateWrap {
-    }
-  }
-  @media (max-width: 600px) {
-    .DiaryContent_dateWrap {
-    }
-  }
   @media (max-width: 480px) {
-    .DiaryContent_dateWrap {
+    .DiaryContent_dotori_imgWrap {
+      font-size: 8.5px;
     }
   }
   @media (max-width: 420px) {
     .DiaryContent_page_wrap {
       padding: 3px 10px;
-    }
-    .DiaryContent_dateWrap {
     }
   }
 `;
