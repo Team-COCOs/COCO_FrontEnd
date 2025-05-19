@@ -26,6 +26,11 @@ interface MinihomeLayoutProps {
   id: string;
 }
 
+type UserInfoType = {
+  id: string;
+  role: string;
+};
+
 const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
   const { user } = useAuth();
   const isOwner = String(user?.id) === id;
@@ -68,7 +73,7 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
   }, [id, fetchSkin]);
 
   // 탈퇴 회원 여부
-  const [isWithDrawn, setIsWithDrawn] = useState([]);
+  const [isWithDrawn, setIsWithDrawn] = useState<UserInfoType | null>(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -77,7 +82,7 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
           `${process.env.NEXT_PUBLIC_API_URL}/users/role/${id}`
         );
         setIsWithDrawn(response.data);
-        console.log(response.data, "탈퇴 회원 여부?");
+        console.log(response.data.role, "탈퇴 회원 여부?");
       } catch (e: any) {
         console.log(e, "탈퇴 회원 조회 실패");
       }
@@ -141,81 +146,98 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
     countVisit();
   }, [id]);
 
+  const goHome = () => {
+    router.push("/");
+  };
+
   return (
     <MinihomeStyle className="Minihome_wrap">
-      <div
-        className="Minihome_container"
-        style={{
-          backgroundImage: backgroundUrl ? `url("/background.jpg")` : "",
-          backgroundColor: backgroundColor || "transparent",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <div className="Minihome_left">
-            <div className="Minihome_book_wrap">
-              {/* 왼쪽 */}
-              <div
-                className="Minihome_book_left"
-                style={{
-                  backgroundColor: diaryBackgroundColor || "#a6cfdb",
-                }}
-              >
-                <div className="Minihome_bookLeft_line">
-                  <div className="Minihome_bookLeft_paper">
-                    <div className="Minihome_bookLeft_todayWrap">
-                      <HomeTodayTitle />
+      {/* 탈퇴한 회원인 경우 메시지 출력 */}
+      {isWithDrawn?.role === "withdrawn" ? (
+        <div className="Minihome_withDrawn">
+          <div className="Minihome_withDrawn_imgWrap">
+            <img
+              src="/withdrawn.png"
+              onClick={goHome}
+              className="Minihome_withDrawn_button"
+            ></img>
+          </div>
+        </div>
+      ) : (
+        <div
+          className="Minihome_container"
+          style={{
+            backgroundImage: backgroundUrl ? `url("/background.jpg")` : "",
+            backgroundColor: backgroundColor || "transparent",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <div className="Minihome_left">
+              <div className="Minihome_book_wrap">
+                {/* 왼쪽 */}
+                <div
+                  className="Minihome_book_left"
+                  style={{
+                    backgroundColor: diaryBackgroundColor || "#a6cfdb",
+                  }}
+                >
+                  <div className="Minihome_bookLeft_line">
+                    <div className="Minihome_bookLeft_paper">
+                      <div className="Minihome_bookLeft_todayWrap">
+                        <HomeTodayTitle />
+                      </div>
+                      <div className="Minihome_diary_left">{tapChildren}</div>
                     </div>
-                    <div className="Minihome_diary_left">{tapChildren}</div>
                   </div>
                 </div>
-              </div>
 
-              {/* 오른쪽 */}
-              <div
-                className="Minihome_book_right"
-                style={{
-                  backgroundColor: diaryBackgroundColor || "#a6cfdb",
-                }}
-              >
-                <div className="Minihome_bookRight_line">
-                  <div className="Minihome_bookRight_paper">
-                    <div className="Minihome_bookRight_todayWrap">
-                      {/* 미니홈피 이름, 모달 등 */}
-                      <DiaryTitle setIsOpen={setIsOpen} />
-                      {/* 일촌 신청 모달 */}
-                      <FriendModal
-                        type="add"
-                        isOpen={isOpen}
-                        onClose={() => setIsOpen(false)}
-                        requesterName={requesterName}
-                        receiverName={receiverName}
-                        requesterImage={requesterImage}
-                        requesterGender={requesterGender}
-                        receiverUserId={id}
-                      />
-                    </div>
-                    <div className="Minihome_diary_Right">
-                      {children}
-                      <HomeMusicRight />
-                      <span className="Minihome_span1"></span>
-                      <span className="Minihome_span2"></span>
-                      <span className="Minihome_span3"></span>
-                      <span className="Minihome_span4"></span>
+                {/* 오른쪽 */}
+                <div
+                  className="Minihome_book_right"
+                  style={{
+                    backgroundColor: diaryBackgroundColor || "#a6cfdb",
+                  }}
+                >
+                  <div className="Minihome_bookRight_line">
+                    <div className="Minihome_bookRight_paper">
+                      <div className="Minihome_bookRight_todayWrap">
+                        {/* 미니홈피 이름, 모달 등 */}
+                        <DiaryTitle setIsOpen={setIsOpen} />
+                        {/* 일촌 신청 모달 */}
+                        <FriendModal
+                          type="add"
+                          isOpen={isOpen}
+                          onClose={() => setIsOpen(false)}
+                          requesterName={requesterName}
+                          receiverName={receiverName}
+                          requesterImage={requesterImage}
+                          requesterGender={requesterGender}
+                          receiverUserId={id}
+                        />
+                      </div>
+                      <div className="Minihome_diary_Right">
+                        {children}
+                        <HomeMusicRight />
+                        <span className="Minihome_span1"></span>
+                        <span className="Minihome_span2"></span>
+                        <span className="Minihome_span3"></span>
+                        <span className="Minihome_span4"></span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="Minihome_Tab_Wrap">
-                <HomeTab activeTab={activeTab} isOwner={isOwner} />
+                <div className="Minihome_Tab_Wrap">
+                  <HomeTab activeTab={activeTab} isOwner={isOwner} />
+                </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </MinihomeStyle>
   );
 };
