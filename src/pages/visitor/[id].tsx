@@ -13,6 +13,7 @@ import VisitorRight from "@/components/MiniHomePage/Visitor/VisitorRight";
 
 import { useAuth } from "@/context/AuthContext";
 import axiosInstance from "@/lib/axios";
+import axios from "axios";
 
 const MinihomePage = () => {
   // 탭 상태 관리
@@ -52,7 +53,6 @@ const MinihomePage = () => {
     title: string;
   } | null>(null);
 
-  // 페이지가 처음 로드될 때 로딩 상태 종료
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);

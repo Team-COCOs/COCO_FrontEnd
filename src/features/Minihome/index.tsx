@@ -67,6 +67,25 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
     }
   }, [id, fetchSkin]);
 
+  // 탈퇴 회원 여부
+  const [isWithDrawn, setIsWithDrawn] = useState([]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/users/role/${id}`
+        );
+        setIsWithDrawn(response.data);
+        console.log(response.data, "탈퇴 회원 여부?");
+      } catch (e: any) {
+        console.log(e, "탈퇴 회원 조회 실패");
+      }
+    };
+
+    fetchUserData();
+  }, [id, user?.id]);
+
   // 이름
   useEffect(() => {
     const fetchNames = async () => {

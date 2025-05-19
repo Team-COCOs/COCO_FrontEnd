@@ -36,7 +36,6 @@ const HomeProfile = () => {
 
         setUserData(res.data);
         setMinihompi_image(res.data.minihompi_image);
-        console.log(res.data, "res.data??");
       } catch (e) {
         console.error("에러 발생:", e);
       }
