@@ -65,6 +65,20 @@ const SettingMyInfo = () => {
     }
   };
 
+  const deleteUser = async () => {
+    const confirmed = confirm("탈퇴 시 복구가 불가능합니다. 탈퇴하시겠습니까?");
+
+    if (!confirmed) return;
+
+    try {
+      await axiosInstance.patch("/users/delete");
+
+      alert("탈퇴되었습니다.");
+    } catch (e) {
+      console.log("탈퇴 실패 : ", e);
+    }
+  };
+
   return (
     <SettingMyInfoStyle className="SettingMyInfo_wrap">
       <div className="SettingMyInfo_header">
@@ -154,6 +168,8 @@ const SettingMyInfo = () => {
           </button>
         </div>
       </div>
+
+      <p className="SettingMyInfo_delete">탈퇴하기</p>
 
       <ShadowModal
         type={type}
