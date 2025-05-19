@@ -54,15 +54,24 @@ const DiaryContent = ({
   setEditingDiary,
 }: DiaryContentProps) => {
   const [diaryData, setDiaryData] = useState<DiaryType[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   console.log(selectedDiaryMenu, "?");
   // selectedDate가 있을 경우 해당 날짜의 게시글만 필터링
-  const filteredDiary = selectedDate
-    ? diaryData.filter(
-        (diary) =>
-          format(new Date(diary.created_at), "yyyy-MM-dd") ===
-          format(selectedDate, "yyyy-MM-dd")
-      )
-    : diaryData;
+  const filteredDiary = diaryData.filter((diary) => {
+    // 날짜 필터
+    const isSameDate = selectedDate
+      ? format(new Date(diary.created_at), "yyyy-MM-dd") ===
+        format(selectedDate, "yyyy-MM-dd")
+      : true;
+
+    // 내용 필터 (대소문자 구분 없이)
+    const includesSearchTerm = searchTerm
+      ? diary.content.toLowerCase().includes(searchTerm.toLowerCase())
+      : true;
+
+    return isSameDate && includesSearchTerm;
+  });
 
   // 페이지네이션
   const [currentPage, setCurrentPage] = useState(1);
@@ -242,8 +251,19 @@ const DiaryContent = ({
             >
               <option value="content">내용</option>
             </select>
-            <input type="text" className="DiaryContent_findInput Gulim" />
-            <button className="DiaryContent_findbtn">🔍 찾기</button>
+            <input
+              type="text"
+              className="DiaryContent_findInput Gulim"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button
+              className="DiaryContent_findbtn"
+              onClick={() => {
+                setCurrentPage(1);
+              }}
+            >
+              🔍 찾기
+            </button>
           </div>
         </div>
       ) : (

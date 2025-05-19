@@ -69,16 +69,6 @@ const DiaryRight = ({
               />
             </div>
           )}
-
-          {/* {selectedDiaryMenu?.title}
-          {selectedDiaryMenu?.id}
-          <div>
-            {selectedDate ? (
-              <p>{format(selectedDate, "yyyy-MM-dd")}</p>
-            ) : (
-              <p>날짜를 선택하지 않았습니다.</p>
-            )}
-          </div> */}
         </div>
       </div>
     </DiaryRightStyled>
