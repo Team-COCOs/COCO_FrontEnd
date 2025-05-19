@@ -139,7 +139,6 @@ const DiaryContent = ({
           : await axios.get(
               `${process.env.NEXT_PUBLIC_API_URL}/diary/logout/${id}`
             ); // 비로그인 유저용
-        console.log(response.data, "다이어리 데이터");
         setDiaryData(response.data);
       } catch (error: any) {
         if (error.response?.status === 401) {
@@ -249,7 +248,7 @@ const DiaryContent = ({
             <div
               className="DiaryContent_allbtn"
               onClick={() => {
-                setSelectedDate(null);
+                setSelectedDate(null), setSelectedDiaryMenu(null);
               }}
             >
               목록

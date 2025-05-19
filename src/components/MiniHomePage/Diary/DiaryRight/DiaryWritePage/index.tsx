@@ -162,10 +162,6 @@ const DiaryWritePage = ({
     }
   };
 
-  useEffect(() => {
-    console.log(editingDiary, "editingDiary?");
-  }, [editingDiary]);
-
   return (
     <DiaryWritePageStyle className="WritePage_wrap">
       <div className="WritePage_wrap_SelectWrap">
