@@ -6,6 +6,14 @@ import axios from "axios";
 import axiosInstance from "@/lib/axios";
 import EmptyPage from "@/components/EmptyPage";
 import { formatKoreanDate } from "@/utils/KrDate/date";
+import GuestComment from "./GuestComment";
+
+interface commentVisit {
+  id: number; // PK
+  comment: string; // 댓글
+  userId: number; // 댓글 작성자 아이디
+  userName: string; // 댓글 작성자 이름
+}
 
 interface visitDatas {
   id: number; // PK
@@ -15,6 +23,7 @@ interface visitDatas {
   authorGender: string; // 작성자 성별
   content: string; // 방명록 글
   status: boolean; // 비밀글 유무
+  comment: commentVisit[]; // 댓글
   created_at: string;
 }
 
@@ -24,6 +33,7 @@ const GuestBook = () => {
   const userId = user?.id;
   const { id } = router.query;
 
+  const [comment, setCommnet] = useState<commentVisit[]>([]);
   const [visitData, setVisitData] = useState<visitDatas[]>([]);
 
   const miniProfile = !user?.profile_image
@@ -45,6 +55,7 @@ const GuestBook = () => {
 
         // 비밀글 status에 따라 filter 돌려서 넣기
         setVisitData(res.data);
+        setCommnet(res.data.comment);
       } catch (e) {
         console.log("방명록 오류:", e);
       }
@@ -82,6 +93,40 @@ const GuestBook = () => {
     <GuestBookStyle className="GuestBook_wrap">
       {/* header부터 map 돌리기 */}
       <div className="GuestBook_div">
+        <div className="GuestBook_header">
+          <div className="GuestBook_info Gulim">
+            <span className="GuestBook_num">NO.9</span>
+            <span className="GuestBook_name">이름</span>
+            <span className="GuestBook_date">(2006.09.13 22:16)</span>
+          </div>
+
+          <div className="GuestBook_btns">
+            <div className="Gulim">비밀로 하기</div>
+            <span>|</span>
+            <div className="Gulim">삭제</div>
+          </div>
+        </div>
+
+        <div className="GuestBook_body">
+          <div className="GuestBook_left">
+            <img
+              src={miniProfile}
+              alt="profile image"
+              className={`GuestBook_png ${
+                miniProfile?.endsWith(".gif") && "GuestBook_gif"
+              }`}
+            />
+          </div>
+
+          <div className="GuestBook_right Gulim">
+            내가 쓴 일촌평 맘에 들어?!
+            <br />
+            ㅋㅋㅋㅋ
+          </div>
+        </div>
+
+        <GuestComment comment={comment} />
+
         {visitData.length === 0 || !visitData ? (
           <div className="GuestBook_empty">
             <EmptyPage type="Photo_img" />
