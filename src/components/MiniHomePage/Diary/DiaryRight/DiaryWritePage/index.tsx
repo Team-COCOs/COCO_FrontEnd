@@ -153,8 +153,12 @@ const DiaryWritePage = ({
         alert("저장 성공!");
         router.push(`/home/${id}`);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("저장 실패:", error);
+      if (error.response.status === 401) {
+        alert("로그인이 필요합니다.");
+        router.push(`/home/${id}`);
+      }
       alert("저장에 실패했습니다.");
     }
   };
