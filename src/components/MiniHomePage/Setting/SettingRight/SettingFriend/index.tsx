@@ -57,7 +57,10 @@ const SettingFriend = () => {
 
       <div className="SettingFriend_body">
         {!friend || friend.length === 0 ? (
-          <EmptyPage />
+          <div className="SettingFriend_empty">
+            <EmptyPage type={"Photo_img"} />
+            <p>등록된 일촌이 없습니다.</p>
+          </div>
         ) : (
           <div className="Friend_grid">
             {friend.map((d) => (

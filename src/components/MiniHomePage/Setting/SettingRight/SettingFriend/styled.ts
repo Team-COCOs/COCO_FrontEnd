@@ -24,6 +24,15 @@ export const SettingFriendStyle = styled.div`
       justify-content: center;
       margin-top: 15px;
 
+      .SettingFriend_empty {
+        p {
+          text-align: center;
+          font-size: 11.5px;
+          font-weight: bold;
+          color: #4b4b4b;
+        }
+      }
+
       .Friend_grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));

@@ -7,6 +7,15 @@ export const SettingMyInfoStyle = styled.div`
     flex-direction: column;
     gap: 10px;
 
+    .SettingMyInfo_delete {
+      font-size: 9.5px;
+      margin: 0 0 5px 5px;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      color: rgb(175, 175, 175);
+      cursor: pointer;
+    }
+
     .SettingMyInfo_header {
       color: #4b4b4b;
       font-size: 12px;
@@ -29,17 +38,17 @@ export const SettingMyInfoStyle = styled.div`
 
       .SettingMyInfo_myBase {
         padding: 10px 15px;
-        font-size: 13px;
+        font-size: 11px;
         border-top: 1.5px solid rgb(177, 177, 177);
         border-bottom: 1.5px solid rgb(194, 194, 194);
         background-color: rgb(249, 249, 249);
 
         @media (max-width: 1003px) {
-          font-size: 11px;
+          font-size: 10px;
         }
 
         @media (max-width: 890px) {
-          font-size: 10px;
+          font-size: 9px;
         }
 
         .SettingMyInfo_myBaseText {
@@ -63,18 +72,18 @@ export const SettingMyInfoStyle = styled.div`
         display: flex;
         gap: 5px;
         align-items: center;
-        font-size: 13.5px;
+        font-size: 12px;
 
         @media (max-width: 520px) {
           flex-direction: column;
           align-items: start;
           justify-content: center;
-          font-size: 13px;
+          font-size: 12px;
         }
 
         .SettingMyInfo_iconText {
           color: black;
-          font-size: 12px;
+          font-size: 11px;
           font-weight: bolder;
           padding-bottom: 7px;
           padding-top: 7px;
@@ -113,7 +122,7 @@ export const SettingMyInfoStyle = styled.div`
           .SettingMyInfo_text {
             width: 20%;
             display: flex;
-            font-size: 13px;
+            font-size: 12px;
             justify-content: center;
 
             @media (max-width: 1003px) {
