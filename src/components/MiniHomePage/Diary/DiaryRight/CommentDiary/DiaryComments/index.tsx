@@ -1,7 +1,18 @@
+import axiosInstance from "@/lib/axios";
 import { DiaryCommentsStyle } from "./styled";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
 
-const DiaryComments = () => {
+interface CommentDiaryprops {
+  diaryId: number;
+}
+
+const DiaryComments = ({ diaryId }: CommentDiaryprops) => {
+  const router = useRouter();
+  const { id } = router.query;
+  const { user } = useAuth();
+
   const [replying, setReplying] = useState(false);
 
   const handleReplyClick = () => {
@@ -17,6 +28,22 @@ const DiaryComments = () => {
     // setReplyText("");
     setReplying(false);
   };
+
+  const handleDeleteComment = () => {
+    try {
+      const response = axiosInstance.delete(`/diaryComments/${diaryId}`);
+      alert("댓글이 삭제되었습니다.");
+      window.location.reload();
+    } catch (e: any) {
+      if (e.response.status === 401) {
+        alert("로그인이 필요합니다.");
+      } else {
+        alert("댓글 삭제 중 오류가 발생했습니다.");
+        console.log(e, ": 댓글 삭제 중 오류");
+      }
+    }
+  };
+
   return (
     <DiaryCommentsStyle>
       <div className="DiaryComments_wrap Gulim">
@@ -30,7 +57,9 @@ const DiaryComments = () => {
               alt="arrow-icon"
               className="DiaryComments_arrowicon"
             />
-            <span className="DiaryComments_comment_deletebtn">☒</span>
+            {Number(user?.id) === Number(id) && (
+              <span className="DiaryComments_comment_deletebtn">☒</span>
+            )}
           </div>
 
           <div className="DiaryComments_childrenComment">
@@ -52,7 +81,9 @@ const DiaryComments = () => {
             <span className="DiaryComments_author">김하나 : </span>
             <span className="DiaryComments_content">내용</span>
             <span className="DiaryComments_date">(2025.01.01)</span>
-            <span className="DiaryComments_comment_deletebtn">☒</span>
+            {Number(user?.id) === Number(id) && (
+              <span className="DiaryComments_comment_deletebtn">☒</span>
+            )}
           </div>
         </div>
       </div>

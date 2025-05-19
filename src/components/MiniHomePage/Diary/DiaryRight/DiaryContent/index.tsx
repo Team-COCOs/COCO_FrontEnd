@@ -56,7 +56,6 @@ const DiaryContent = ({
   const [diaryData, setDiaryData] = useState<DiaryType[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  console.log(selectedDiaryMenu, "?");
   // selectedDate가 있을 경우 해당 날짜의 게시글만 필터링
   const filteredDiary = diaryData.filter((diary) => {
     // 날짜 필터
@@ -108,7 +107,7 @@ const DiaryContent = ({
 
   const handleDeleteBtn = async (diaryId: number) => {
     try {
-      const response = axiosInstance.delete(`/diary/delete/${diaryId}`);
+      const response = await axiosInstance.delete(`/diary/delete/${diaryId}`);
       alert("게시물이 삭제되었습니다!");
       router.push(`/home/${id}`);
     } catch (e: any) {
@@ -204,7 +203,7 @@ const DiaryContent = ({
                   <div>공개설정 : {visibilityOptions[diary.visibility]}</div>
                 </div>
                 <div>
-                  <CommentDiary />
+                  <CommentDiary diaryId={diary.id} />
                 </div>
               </div>
               {/* 구분선 */}
