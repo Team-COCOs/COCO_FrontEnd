@@ -107,7 +107,7 @@ const DiaryContent = ({
 
   const handleDeleteBtn = async (diaryId: number) => {
     try {
-      const response = await axiosInstance.delete(`/diary/delete/${diaryId}`);
+      const response = await axiosInstance.delete(`/diary/${diaryId}`);
       alert("게시물이 삭제되었습니다!");
       router.push(`/home/${id}`);
     } catch (e: any) {

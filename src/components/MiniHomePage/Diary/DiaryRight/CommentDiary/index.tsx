@@ -19,7 +19,7 @@ const CommentDiary = ({ diaryId }: CommentDiaryprops) => {
       return;
     }
     try {
-      const response = await axiosInstance.post(`/diaryComments/${diaryId}`, {
+      const response = await axiosInstance.post(`/diary-comments/${diaryId}`, {
         content: comment,
         parentCommentId: null,
       });
