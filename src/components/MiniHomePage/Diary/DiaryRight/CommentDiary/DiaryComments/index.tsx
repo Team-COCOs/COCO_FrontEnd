@@ -1,6 +1,22 @@
 import { DiaryCommentsStyle } from "./styled";
+import { useState } from "react";
 
 const DiaryComments = () => {
+  const [replying, setReplying] = useState(false);
+
+  const handleReplyClick = () => {
+    setReplying(true);
+  };
+
+  const handleSubmitReply = () => {
+    // if (!replyText.trim()) {
+    //   alert("답글을 입력하세요");
+    //   return;
+    // }
+    // alert(`답글 등록: ${replyText}`);
+    // setReplyText("");
+    setReplying(false);
+  };
   return (
     <DiaryCommentsStyle>
       <div className="DiaryComments_wrap Gulim">

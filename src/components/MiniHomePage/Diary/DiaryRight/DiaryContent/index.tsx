@@ -162,8 +162,8 @@ const DiaryContent = ({
                 <div className="DiaryContent_contentText Gulim">
                   <div>{diary.content}</div>
                   <div className="DiaryContent_fixDeletebtn Gulim">
-                    {user?.id === id ? (
-                      <div>
+                    {Number(user?.id) === Number(id) ? (
+                      <div className="DiaryContent_fixDeletebtn">
                         <button onClick={() => handleFixBtn(diary)}>
                           수정
                         </button>
