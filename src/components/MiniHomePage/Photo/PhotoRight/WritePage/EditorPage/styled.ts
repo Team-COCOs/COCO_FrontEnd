@@ -85,9 +85,9 @@ export const EditorPageStyle = styled.div`
       padding: 5px 8px;
 
       p {
-        font-size: 12px;
+        font-size: 10px;
         font-weight: bold;
-        width: 60px;
+        width: 55px;
       }
 
       .Dropdown_select {

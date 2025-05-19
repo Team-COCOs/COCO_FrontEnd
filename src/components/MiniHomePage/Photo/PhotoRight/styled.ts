@@ -50,25 +50,25 @@ export const PhotoRightStyled = styled.div`
         gap: 5px;
         width: 100%;
         padding: 7px;
-        font-size: 13.5px;
+        font-size: 12px;
         font-weight: bold;
         background-color: rgb(241, 241, 241);
         border-top: 1.5px solid rgb(209, 209, 209);
 
         @media (max-width: 768px) {
-          font-size: 12px;
+          font-size: 11px;
         }
 
         @media (max-width: 530px) {
           & {
             flex-direction: column;
-            font-size: 11px;
+            font-size: 10px;
           }
         }
 
         @media (max-width: 430px) {
           & {
-            font-size: 10px;
+            font-size: 9px;
           }
         }
       }
@@ -77,26 +77,26 @@ export const PhotoRightStyled = styled.div`
         display: flex;
         justify-content: space-between;
         padding: 0 10px;
-        font-size: 14px;
+        font-size: 12px;
         font-weight: bold;
         margin-top: 5px;
 
         @media (max-width: 768px) {
           & {
-            font-size: 12px;
+            font-size: 10px;
           }
         }
 
         @media (max-width: 530px) {
           & {
             align-items: center;
-            font-size: 11px;
+            font-size: 9px;
           }
         }
 
         @media (max-width: 430px) {
           & {
-            font-size: 10px;
+            font-size: 8px;
           }
         }
 
@@ -108,12 +108,12 @@ export const PhotoRightStyled = styled.div`
         .PhotoRight_info {
           display: flex;
           gap: 15px;
-          font-size: 13px;
+          font-size: 12px;
           align-items: center;
 
           @media (max-width: 768px) {
             & {
-              font-size: 12px;
+              font-size: 11px;
             }
           }
 
@@ -121,13 +121,13 @@ export const PhotoRightStyled = styled.div`
             & {
               flex-direction: column;
               gap: 5px;
-              font-size: 11px;
+              font-size: 10px;
             }
           }
 
           @media (max-width: 430px) {
             & {
-              font-size: 10px;
+              font-size: 9px;
             }
           }
 
@@ -175,13 +175,13 @@ export const PhotoRightStyled = styled.div`
       justify-content: space-between;
       align-items: center;
       padding: 0 5px;
-      font-size: 13px;
+      font-size: 11px;
       font-weight: bold;
       color: rgb(169, 169, 169);
 
       @media (max-width: 768px) {
         & {
-          font-size: 12px;
+          font-size: 10px;
         }
       }
 
@@ -189,13 +189,13 @@ export const PhotoRightStyled = styled.div`
         & {
           flex-direction: column;
           gap: 10px;
-          font-size: 11px;
+          font-size: 9px;
         }
       }
 
       @media (max-width: 430px) {
         & {
-          font-size: 10px;
+          font-size: 8px;
         }
       }
 

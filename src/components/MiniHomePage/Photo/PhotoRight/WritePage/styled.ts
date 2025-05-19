@@ -30,8 +30,8 @@ export const WritePageStyle = styled.div`
 
       .WritePage_titleText {
         margin-top: 5px;
-        width: 40px;
-        font-size: 13px;
+        width: 50px;
+        font-size: 11px;
         font-weight: bold;
 
         @media (max-width: 768px) {
@@ -66,7 +66,7 @@ export const WritePageStyle = styled.div`
       }
 
       .WritePage_dropDown {
-        width: 20%;
+        width: 18%;
         white-space: nowrap;
         text-overflow: ellipsis;
 
@@ -82,6 +82,7 @@ export const WritePageStyle = styled.div`
           width: 100%;
           height: 27px;
           margin-top: 5px;
+          font-size: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -93,7 +94,7 @@ export const WritePageStyle = styled.div`
           cursor: pointer;
 
           @media (max-width: 1180px) {
-            font-size: 12px;
+            font-size: 11px;
           }
 
           &:active {
@@ -102,7 +103,7 @@ export const WritePageStyle = styled.div`
 
           .WritePage_plus {
             font-weight: bold;
-            font-size: 15px;
+            font-size: 12px;
             margin-top: 2px;
             color: ${({ theme }) => theme.colors.mainColor};
           }
@@ -126,11 +127,12 @@ export const WritePageStyle = styled.div`
 
       button {
         width: 40px;
-        height: 27px;
+        height: 25px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: bold;
+        font-size: 10px;
         background: linear-gradient(to bottom, #ffffff, #dddddd);
         border: 1px solid rgb(161, 161, 161);
         border-radius: 3px;

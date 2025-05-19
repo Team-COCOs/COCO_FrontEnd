@@ -11,29 +11,29 @@ export const CommentStyle = styled.div`
     margin-top: 10px;
     margin-bottom: 30px;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 12px;
     width: 100%;
 
     .handFont {
-      font-size: 15px;
+      font-size: 13px;
       color: rgb(80, 80, 80);
       padding: 5px;
 
       @media (max-width: 768px) {
         & {
-          font-size: 13px;
+          font-size: 11px;
         }
       }
 
       @media (max-width: 530px) {
         & {
-          font-size: 12px;
+          font-size: 10px;
         }
       }
 
       @media (max-width: 430px) {
         & {
-          font-size: 11px;
+          font-size: 9px;
         }
       }
     }
@@ -127,7 +127,7 @@ export const CommentStyle = styled.div`
       }
 
       button {
-        width: 40px;
+        width: 45px;
         height: 23px;
         background-color: rgb(248, 248, 248);
         border-radius: 5px;
