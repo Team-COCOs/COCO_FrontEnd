@@ -40,6 +40,11 @@ export const SearchUserStyle = styled.div`
             margin: 0 15px;
           }
 
+          .SearchUser_png {
+            width: 30px;
+            margin: 0 22px;
+          }
+
           .SearchUser_info {
             display: flex;
             flex-direction: column;

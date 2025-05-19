@@ -70,7 +70,11 @@ const SearchUser = () => {
               }}
             >
               <div className="SearchUser_userInfo">
-                <div className="SearchUser_image">
+                <div
+                  className={`SearchUser_image ${
+                    item.profile_image?.endsWith(".png") && "SearchUser_png"
+                  }`}
+                >
                   <Image
                     src={item.profile_image}
                     alt={`${item.name}의 이미지`}

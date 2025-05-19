@@ -1,15 +1,43 @@
 import { useAuth } from "@/context/AuthContext";
 import { WriteInputStyle } from "./styled";
 import { useState } from "react";
+import axiosInstance from "@/lib/axios";
 
 const WriteInput = () => {
   const { user } = useAuth();
+  const [content, setContent] = useState("");
+  const [isSecret, setIsSecret] = useState(false);
 
   const miniProfile = !user?.profile_image
     ? user?.gender === "woman"
       ? "/avatarImg/woman_avatar1.png"
       : "/avatarImg/man_avatar1.png"
     : user?.profile_image;
+
+  // 저장
+  const handleSubmit = async () => {
+    if (!content.trim()) {
+      alert("내용을 입력해주세요.");
+      return;
+    }
+
+    try {
+      const res = await axiosInstance.post("/guestbooks", {
+        content,
+        isSecret,
+        authorId: user?.id,
+        authorRealName: user?.name,
+        authorImg: user?.profile_image,
+        authorGender: user?.gender,
+      });
+
+      console.log("방명록 등록 성공:", res.data);
+      setContent(""); // 초기화
+      setIsSecret(false); // 초기화
+    } catch (err) {
+      console.error("방명록 등록 실패:", err);
+    }
+  };
 
   return (
     <WriteInputStyle className="WtireInput_wrap">
@@ -27,13 +55,23 @@ const WriteInput = () => {
         </div>
       </div>
       <div className="WriteInput_right">
-        <textarea />
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+        />
+
         <div className="WriteInput_btns">
           <div className="WriteInput_boxBtn">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              checked={isSecret}
+              onChange={(e) => setIsSecret(e.target.checked)}
+            />
             <span className="Gulim">비밀로 하기</span>
           </div>
-          <button className="Gulim">확인</button>
+          <button className="Gulim" onClick={handleSubmit}>
+            확인
+          </button>
         </div>
       </div>
     </WriteInputStyle>
