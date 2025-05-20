@@ -104,7 +104,7 @@ const GuestBook = ({
   // 비밀로 하기
   const secretVisit = async (visitId: number) => {
     try {
-      await axiosInstance.patch(`/status/${visitId}`);
+      await axiosInstance.patch(`/guestbooks/status/${visitId}`);
 
       alert("완료되었습니다.");
       onRefresh();
