@@ -34,9 +34,16 @@ interface visitDatas {
 interface GuestBookProps {
   refresh: boolean;
   onRefresh: () => void;
+  onSuccess: () => void;
+  setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
+const GuestBook = ({
+  refresh,
+  onRefresh,
+  onSuccess,
+  setRefresh,
+}: GuestBookProps) => {
   const router = useRouter();
   const { user } = useAuth();
   const userId = user?.id;
@@ -46,6 +53,8 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
   const [visitData, setVisitData] = useState<visitDatas[]>([]);
 
   useEffect(() => {
+    if (!id) return;
+
     const visit = async () => {
       try {
         const res = await axios.get(
@@ -66,6 +75,8 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
           return item;
         });
 
+        console.log("방명록 정보 : ", processedData);
+
         setVisitData(processedData);
         setCommnet(res.data.data.comment);
       } catch (e) {
@@ -73,7 +84,7 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
       }
     };
     visit();
-  }, [refresh]);
+  }, [id, refresh, userId]);
 
   // 삭제
   const deleteVisit = async (visitId: number) => {
@@ -127,7 +138,7 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
                   </span>
                 </div>
 
-                {(userId === Number(id) || v.isMine) && (
+                {userId === Number(id) ? (
                   <div className="GuestBook_btns">
                     <div className="Gulim" onClick={() => secretVisit(v.id)}>
                       {v.status ? "공개로 하기" : "비밀로 하기"}
@@ -137,6 +148,15 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
                       삭제
                     </div>
                   </div>
+                ) : (
+                  userId !== Number(id) &&
+                  v.isMine && (
+                    <div className="GuestBook_btns">
+                      <div className="Gulim" onClick={() => deleteVisit(v.id)}>
+                        삭제
+                      </div>
+                    </div>
+                  )
                 )}
               </div>
 
@@ -154,7 +174,10 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
                 <div className="GuestBook_right Gulim">{v.content}</div>
               </div>
 
-              <GuestComment comment={comment} />
+              <GuestComment
+                comment={comment}
+                onSuccess={() => setRefresh((prev) => !prev)}
+              />
             </div>
           ))
         )}

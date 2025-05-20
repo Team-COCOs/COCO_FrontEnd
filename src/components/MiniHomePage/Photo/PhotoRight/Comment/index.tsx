@@ -55,7 +55,7 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
 
     // parentId 는 null일 수 있음. (대댓글이 아닌 경우)
     try {
-      const res = await axiosInstance.post(`//${postId}`, {
+      const res = await axiosInstance.post(`/photos-comments/${postId}`, {
         comment,
         parentId,
         authorId: user?.id,

@@ -37,6 +37,9 @@ const VisitorRight = () => {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/management/${id}`
         );
+
+        console.log("관리 정보 : ", res.data);
+
         setQuote(res.data?.content || "");
       } catch (err) {
         console.error("관리 가져오기 실패: ", err);
@@ -97,6 +100,8 @@ const VisitorRight = () => {
         <GuestBook
           refresh={refresh}
           onRefresh={() => setRefresh((prev) => !prev)}
+          onSuccess={() => setRefresh((prev) => !prev)}
+          setRefresh={setRefresh}
         />
       </div>
     </VisitorRightStyled>
