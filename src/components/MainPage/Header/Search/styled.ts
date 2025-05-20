@@ -47,7 +47,7 @@ export const SearchStyle = styled.div`
           font-size: 13px;
 
           &::placeholder {
-            font-size: 13px;
+            font-size: 13.5px;
             margin-top: 2px;
             color: rgb(177, 177, 177);
             font-weight: bold;

@@ -79,7 +79,7 @@ const VisitorRight = () => {
               <p className="Gulim">{quote}</p>
             )}
           </div>
-          {userId === id && (
+          {userId === Number(id) && (
             <button
               className="VisitorRight_headerBtn Gulim"
               onClick={handleManageClick}
