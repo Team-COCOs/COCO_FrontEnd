@@ -30,14 +30,13 @@ const VisitorRight = () => {
   };
 
   useEffect(() => {
+    // 관리 가져오기
     const getQuote = async () => {
       try {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/management/${id}`
         );
         setQuote(res.data?.content || "");
-
-        console.log("관리 잘 와? ", res.data);
       } catch (err) {
         console.error("관리 가져오기 실패: ", err);
       }
@@ -46,13 +45,12 @@ const VisitorRight = () => {
     getQuote();
   }, []);
 
-  // 관리
+  // 관리 저장
   const saveQuote = async () => {
     try {
-      const res = await axiosInstance.patch("/minihomepis/management", {
+      await axiosInstance.patch("/minihomepis/management", {
         quote: quote,
       });
-      console.log("관리 저장 성공 : ", res.data);
     } catch (e) {
       console.error("관리 저장 실패 : ", e);
     }

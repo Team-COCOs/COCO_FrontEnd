@@ -68,23 +68,21 @@ const GuestBook = () => {
     : user?.profile_image;
 
   useEffect(() => {
-    // const visit = async () => {
-    //   try {
-    //     const res = await axios.get(
-    //       `${process.env.NEXT_PUBLIC_API_URL}/guestbooks/${id}`
-    //     );
-    //     // const res = await axiosInstance.get(`/guestbooks/${id}`);
-    //     console.log("방명록 정보 : ", res.data);
-    //     // 비밀글 status에 따라 filter 돌려서 넣기
-    //     setVisitData(res.data);
-    //     setCommnet(res.data.comment);
-    //   } catch (e) {
-    //     console.log("방명록 오류:", e);
-    //   }
-    // };
-    // visit();
-
-    setCommnet(dummyComments);
+    const visit = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/guestbooks/${id}`
+        );
+        // const res = await axiosInstance.get(`/guestbooks/${id}`);
+        console.log("방명록 정보 : ", res.data);
+        // 비밀글 status에 따라 filter 돌려서 넣기
+        setVisitData(res.data);
+        setCommnet(res.data.comment);
+      } catch (e) {
+        console.log("방명록 오류:", e);
+      }
+    };
+    visit();
   }, []);
 
   // 삭제
@@ -116,40 +114,6 @@ const GuestBook = () => {
     <GuestBookStyle className="GuestBook_wrap">
       {/* header부터 map 돌리기 */}
       <div className="GuestBook_div">
-        <div className="GuestBook_header">
-          <div className="GuestBook_info Gulim">
-            <span className="GuestBook_num">NO.9</span>
-            <span className="GuestBook_name">이름</span>
-            <span className="GuestBook_date">(2006.09.13 22:16)</span>
-          </div>
-
-          <div className="GuestBook_btns">
-            <div className="Gulim">비밀로 하기</div>
-            <span>|</span>
-            <div className="Gulim">삭제</div>
-          </div>
-        </div>
-
-        <div className="GuestBook_body">
-          <div className="GuestBook_left">
-            <img
-              src={miniProfile}
-              alt="profile image"
-              className={`GuestBook_png ${
-                miniProfile?.endsWith(".gif") && "GuestBook_gif"
-              }`}
-            />
-          </div>
-
-          <div className="GuestBook_right Gulim">
-            내가 쓴 일촌평 맘에 들어?!
-            <br />
-            ㅋㅋㅋㅋ
-          </div>
-        </div>
-
-        <GuestComment comment={comment} />
-
         {visitData.length === 0 || !visitData ? (
           <div className="GuestBook_empty">
             <EmptyPage type="Photo_img" />
