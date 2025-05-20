@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { Field, Form, Formik } from "formik";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 interface UserData {
   title: string;
@@ -18,8 +19,10 @@ const MiniStatus = () => {
     "/avatarImg/defaultProfile.png"
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
   const { user } = useAuth();
   const userId = user?.id;
+  const { id } = router.query;
   const [userData, setUserData] = useState<UserData | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -53,6 +56,12 @@ const MiniStatus = () => {
 
   // 데이터 저장 함수
   const saveData = async (values: UserData) => {
+    if (!userId) {
+      alert("로그인이 필요합니다.");
+      router.push(`/home/${id}`);
+      return;
+    }
+
     const formData = new FormData();
 
     formData.append("name", values.title);
