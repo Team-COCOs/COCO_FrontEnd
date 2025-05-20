@@ -19,9 +19,10 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
   const router = useRouter();
   const { id } = router.query;
   const [photoTitles, setPhotoTitles] = useState("");
+  const [newBoards, setNewBoards] = useState("");
+
   // 최근 올린 사진첩 제목 2개
   // get minihomepis/photo/:userId
-
   useEffect(() => {
     const updatedPhotos = async () => {
       try {
@@ -29,7 +30,7 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/photo/${id}`
         );
         setPhotoTitles(response.data.titles);
-        console.log(response.data.titles);
+        console.log(response.data.titles, "PhotoTitles");
       } catch (e: any) {
         if (e.response.status === 401) {
         } else {
@@ -38,6 +39,26 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
       }
     };
     updatedPhotos();
+  }, [id]);
+
+  // 개수
+  // get minihomepis/postCount/:userId
+  useEffect(() => {
+    const updatedNewBoards = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/postCount/${id}`
+        );
+        setNewBoards(response.data.titles);
+        console.log(response.data.titles, "NewBoards");
+      } catch (e: any) {
+        if (e.response.status === 401) {
+        } else {
+          console.log("Updated photos 업데이트 실패");
+        }
+      }
+    };
+    updatedNewBoards();
   }, [id]);
 
   return (
