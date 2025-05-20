@@ -26,6 +26,7 @@ interface visitDatas {
   status: boolean; // 비밀글 유무
   comment: commentVisit[]; // 댓글
   created_at: string;
+  isMine: boolean;
 }
 
 interface GuestBookProps {
@@ -122,7 +123,7 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
                   </span>
                 </div>
 
-                {(userId === Number(id) || userId === v.authorId) && (
+                {(userId === Number(id) || v.isMine) && (
                   <div className="GuestBook_btns">
                     <div className="Gulim" onClick={() => secretVisit(v.id)}>
                       비밀로 하기
