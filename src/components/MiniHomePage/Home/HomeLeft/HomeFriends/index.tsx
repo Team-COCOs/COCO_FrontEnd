@@ -10,6 +10,7 @@ const HomeFriends = () => {
   const { id } = router.query;
   const { user } = useAuth();
   const [profile, setProfile] = useState<any>(null);
+  const [selectedValue, setSelectedValue] = useState("");
 
   useEffect(() => {
     const homepiProfile = async () => {
@@ -40,6 +41,10 @@ const HomeFriends = () => {
       router.push(`/home/${friendId}`);
     }
   };
+
+  // const waveSelect = async () => {
+  //   const;
+  // };
 
   return (
     <HomeFriendsStyled>

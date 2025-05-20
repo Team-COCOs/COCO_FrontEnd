@@ -98,6 +98,7 @@ const DiaryContent = ({
   const handleNextPage = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
+
   // 페이지 이동 후 맨 위로
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });

@@ -80,6 +80,10 @@ export const DiaryContentStyle = styled.div`
       cursor: pointer;
     }
   }
+  .DiaryContent_btns button:disabled {
+    color: gray;
+    cursor: not-allowed;
+  }
   .DiaryContent_bottom_wrap {
     display: flex;
     justify-content: space-between;
