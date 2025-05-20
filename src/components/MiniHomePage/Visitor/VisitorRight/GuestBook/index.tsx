@@ -26,33 +26,15 @@ interface visitDatas {
   status: boolean; // 비밀글 유무
   comment: commentVisit[]; // 댓글
   created_at: string;
+  isMine: boolean;
 }
 
-const dummyComments: commentVisit[] = [
-  {
-    id: 1,
-    comment: "정말 좋은 글이네요! 잘 보고 갑니다 :)",
-    userId: 101,
-    userName: "김철수",
-    created_at: "2025-05-18T10:15:00",
-  },
-  {
-    id: 2,
-    comment: "ㅋㅋㅋㅋ 이거 너무 웃겨요",
-    userId: 102,
-    userName: "박영희",
-    created_at: "2025-05-19T08:42:00",
-  },
-  {
-    id: 3,
-    comment: "추억 돋네요~ 그 시절 감성 그대로!",
-    userId: 103,
-    userName: "이민수",
-    created_at: "2025-05-20T14:05:00",
-  },
-];
+interface GuestBookProps {
+  refresh: boolean;
+  onRefresh: () => void;
+}
 
-const GuestBook = () => {
+const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
   const router = useRouter();
   const { user } = useAuth();
   const userId = user?.id;
@@ -60,6 +42,7 @@ const GuestBook = () => {
 
   const [comment, setCommnet] = useState<commentVisit[]>([]);
   const [visitData, setVisitData] = useState<visitDatas[]>([]);
+  const [profile, setProfile] = useState("");
 
   const miniProfile = !user?.profile_image
     ? user?.gender === "woman"
@@ -72,22 +55,20 @@ const GuestBook = () => {
       try {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/guestbooks/${id}`,
-          {
-            params: { viewer: userId },
-          }
+          userId ? { params: { viewer: userId } } : undefined
         );
 
         // const res = await axiosInstance.get(`/guestbooks/${id}`);
-        console.log("방명록 정보 : ", res.data);
+        console.log("방명록 정보 : ", res.data.data);
         // 비밀글 status에 따라 filter 돌려서 넣기
-        setVisitData(res.data);
-        setCommnet(res.data.comment);
+        setVisitData(res.data.data);
+        setCommnet(res.data.data.comment);
       } catch (e) {
         console.log("방명록 오류:", e);
       }
     };
     visit();
-  }, []);
+  }, [refresh]);
 
   // 삭제
   const deleteVisit = async (visitId: number) => {
@@ -98,6 +79,7 @@ const GuestBook = () => {
       await axios.delete(`/${visitId}`);
 
       alert("삭제 완료되었습니다.");
+      onRefresh();
     } catch (e) {
       console.log("방명록 삭제 실패 : ", e);
     }
@@ -109,6 +91,7 @@ const GuestBook = () => {
       await axios.patch(`/status/${visitId}`);
 
       alert("방명록 비밀로 하기가 완료되었습니다.");
+      onRefresh();
     } catch (e) {
       console.log("방명록 비밀 실패 : ", e);
     }
@@ -140,7 +123,7 @@ const GuestBook = () => {
                   </span>
                 </div>
 
-                {(userId === Number(id) || userId === v.authorId) && (
+                {(userId === Number(id) || v.isMine) && (
                   <div className="GuestBook_btns">
                     <div className="Gulim" onClick={() => secretVisit(v.id)}>
                       비밀로 하기

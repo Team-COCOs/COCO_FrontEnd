@@ -4,7 +4,11 @@ import { useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { useRouter } from "next/router";
 
-const WriteInput = () => {
+interface GuestWriteProps {
+  onSuccess: () => void;
+}
+
+const WriteInput = ({ onSuccess }: GuestWriteProps) => {
   const router = useRouter();
   const { user } = useAuth();
   const { id } = router.query;
@@ -35,6 +39,7 @@ const WriteInput = () => {
       console.log("방명록 등록 성공:", res.data);
       setContent(""); // 초기화
       setIsSecret(false); // 초기화
+      onSuccess();
     } catch (err) {
       console.error("방명록 등록 실패:", err);
     }

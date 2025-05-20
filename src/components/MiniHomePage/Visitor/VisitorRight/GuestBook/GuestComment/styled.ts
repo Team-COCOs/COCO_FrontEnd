@@ -8,8 +8,7 @@ export const GuestCommentStyle = styled.div`
     gap: 5px;
     padding: 10px 15px;
     background-color: rgb(241, 241, 241);
-    margin-top: 10px;
-    margin-bottom: 30px;
+    margin: 10px 0;
     font-weight: bold;
     font-size: 12px;
     width: 100%;
