@@ -20,6 +20,8 @@ const useSignForm = () => {
 
   const fullEmail = `${localPart}@${useCustomDomain ? customDomain : domain}`;
 
+  const predefinedDomains = ["cocoworld.com", "naver.com", "gmail.com"];
+
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [name, setName] = useState("");
@@ -248,6 +250,7 @@ const useSignForm = () => {
     setUseCustomDomain,
     email,
     setEmail,
+    predefinedDomains,
     password,
     setPassword,
     passwordCheck,

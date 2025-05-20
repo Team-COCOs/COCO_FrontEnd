@@ -1,5 +1,4 @@
 import { SignFormStyled } from "./styled";
-import clsx from "clsx";
 
 import Logo from "@/components/MainPage/Header/Logo";
 import ShadowModal from "@/components/ShadowModal";
@@ -52,12 +51,13 @@ const SignPage = () => {
     handleBirthYearChange,
     handleBirthMonthChange,
     handleBirthDayChange,
+    predefinedDomains,
   } = form;
 
   const fullEmail = `${localPart}@${useCustomDomain ? customDomain : domain}`;
 
   return (
-    <SignFormStyled className={clsx("Sign_wrap")}>
+    <SignFormStyled className="Sign_wrap">
       <Logo type="sign" />
 
       <b className="Sign_text"> 프로필 입력</b>
@@ -104,7 +104,12 @@ const SignPage = () => {
                       }
                     }}
                   >
-                    <option value="cocoworld.com">cocoworld.com</option>
+                    {predefinedDomains.map((d) => (
+                      <option key={d} value={d}>
+                        {d}
+                      </option>
+                    ))}
+                    <option value="custom">직접 입력</option>
                   </select>
                 </div>
               </div>

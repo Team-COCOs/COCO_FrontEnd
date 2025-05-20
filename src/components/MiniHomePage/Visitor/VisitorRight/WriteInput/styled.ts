@@ -28,8 +28,14 @@ export const WriteInputStyle = styled.div`
         margin-bottom: 15px;
       }
 
+      .WriteInput_man {
+        width: 50px !important;
+        margin-bottom: 5px !important;
+      }
+
       .WriteInput_png {
-        width: 50px;
+        width: 75px !important;
+        margin-bottom: 5px !important;
       }
 
       .WriteInput_homeImg {
