@@ -1,17 +1,3 @@
-// import { useRouter } from "next/router";
-// import { CocoRightStyled } from "./styled";
-// import { useEffect } from "react";
-
-// const CocoRight = () => {
-//   return (
-//     <CocoRightStyled>
-//       <div className="CocoRight_wrap">
-//         <div className="CocoRight_component_wrap">코코 오른쪽</div>
-//       </div>
-//     </CocoRightStyled>
-//   );
-// };
-// export default CocoRight;
 "use client";
 import { useEffect } from "react";
 
@@ -30,19 +16,19 @@ const BotpressChat = () => {
     script.async = true;
 
     script.onload = () => {
-      console.log("Botpress script loaded");
-
       if (window.botpressWebChat) {
-        console.log("Initializing botpress...");
         window.botpressWebChat.init({
-          configUrl:
-            "https://files.bpcontent.cloud/2025/05/14/05/20250514055041-YVN1F9QQ.json",
-          showWidget: true, // 챗봇 위젯 바로 표시
+          botId: "7d9faaf2-c025-4617-a734-39fad6ad26a6",
+          clientId: "bf1698e9-73c3-4bb4-8836-178cdb6a49ce",
+          hostUrl: "https://cdn.botpress.cloud/webchat/v0",
+          messagingUrl: "https://messaging.botpress.cloud",
+          botName: "COCO봇",
+          avatarUrl: "https://cdn-icons-png.flaticon.com/512/4712/4712106.png",
+          stylesheet:
+            "https://mediafiles.botpress.cloud/webchat/v0/css/theme.css",
+          showWidget: true,
           enableReset: true,
         });
-        window.botpressWebChat.open(); // 수동으로 열기
-      } else {
-        console.error("window.botpressWebChat is not available");
       }
     };
 

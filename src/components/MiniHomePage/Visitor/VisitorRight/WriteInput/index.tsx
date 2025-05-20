@@ -27,7 +27,7 @@ const WriteInput = () => {
     try {
       const res = await axiosInstance.post("/guestbooks", {
         content,
-        isSecret,
+        status: isSecret ? "private" : "public",
         authorId: user?.id,
         miniUserId: id,
       });
