@@ -35,16 +35,27 @@ const HomeFriends = () => {
     return <Loading />;
   }
 
-  const handleFriendSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const friendId = Number(event.target.value);
-    if (friendId) {
-      router.push(`/home/${friendId}`);
+  const handleFriendSelect = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const value = e.target.value;
+    setSelectedValue(value);
+    if (value === "파도타기") {
+      try {
+        // axios 요청
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/users/wave/${id}`
+        );
+        const newId = response.data.id;
+        // 페이지 이동
+        router.push(`/home/${newId}`);
+      } catch (error) {
+        console.error("파도타기 아이디를 불러오는 중 오류", error);
+      }
+    } else {
+      router.push(`/home/${value}`);
     }
   };
-
-  // const waveSelect = async () => {
-  //   const;
-  // };
 
   return (
     <HomeFriendsStyled>
@@ -57,7 +68,8 @@ const HomeFriends = () => {
         </div>
         <div className="HomeFriends_email">{profile.email}</div>
         <select onChange={handleFriendSelect}>
-          <option>파도타기</option>
+          <option value={id}>일촌 파도타기</option>
+          <option value="파도타기">파도타기</option>
           {user?.id && Number(user?.id) !== Number(id) && (
             <option value={user?.id}>내 홈피 가기</option>
           )}
