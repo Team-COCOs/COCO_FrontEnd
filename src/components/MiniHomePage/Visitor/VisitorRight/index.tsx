@@ -18,6 +18,7 @@ const VisitorRight = () => {
   const [management, setManagement] = useState("관리");
   const [isEditing, setIsEditing] = useState(false);
   const [quote, setQuote] = useState("");
+  const [refresh, setRefresh] = useState(false);
 
   const handleManageClick = () => {
     if (isEditing) {
@@ -88,10 +89,15 @@ const VisitorRight = () => {
         </div>
       </div>
 
-      <div className="VisitorRight_profile">{token && <WriteInput />}</div>
+      <div className="VisitorRight_profile">
+        {token && <WriteInput onSuccess={() => setRefresh((prev) => !prev)} />}
+      </div>
 
       <div className="VisitorRight_guestBook">
-        <GuestBook />
+        <GuestBook
+          refresh={refresh}
+          onRefresh={() => setRefresh((prev) => !prev)}
+        />
       </div>
     </VisitorRightStyled>
   );
