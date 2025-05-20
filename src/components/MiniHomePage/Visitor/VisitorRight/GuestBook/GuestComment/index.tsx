@@ -15,11 +15,11 @@ interface commentVisit {
 
 interface GuestCommentProps {
   comment: commentVisit[];
-  onSuccess: () => void;
+  onRefresh: () => void;
   postId: number;
 }
 
-const GuestComment = ({ comment, onSuccess, postId }: GuestCommentProps) => {
+const GuestComment = ({ comment, onRefresh, postId }: GuestCommentProps) => {
   const router = useRouter();
   const { user } = useAuth();
   const { id } = router.query;
@@ -31,7 +31,7 @@ const GuestComment = ({ comment, onSuccess, postId }: GuestCommentProps) => {
       axiosInstance.delete(`/guestbooks-comments/${photoId}`);
 
       alert("댓글이 삭제되었습니다.");
-      onSuccess();
+      window.location.reload();
     } catch (e: any) {
       if (e.response.status === 401) {
         alert("로그인이 필요합니다.");
@@ -68,7 +68,7 @@ const GuestComment = ({ comment, onSuccess, postId }: GuestCommentProps) => {
       });
 
       setCommentInput("");
-      onSuccess();
+      onRefresh();
       console.log("댓글 등록 : ", res.data);
     } catch (e) {
       console.log("댓글 등록 실패 : ", e);
