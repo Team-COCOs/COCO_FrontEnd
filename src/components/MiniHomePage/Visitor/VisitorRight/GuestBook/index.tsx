@@ -10,9 +10,9 @@ import GuestComment from "./GuestComment";
 
 interface commentVisit {
   id: number; // PK
-  comment: string; // 댓글
-  userId: number; // 댓글 작성자 아이디
-  userName: string; // 댓글 작성자 이름
+  content: string; // 댓글
+  authorId: number; // 댓글 작성자 아이디
+  authorName: string; // 댓글 작성자 이름
   created_at: string;
 }
 
@@ -25,8 +25,8 @@ interface visitDatas {
   hostId: number; // 방명록 주인 아이디
   hostRealName: string; // 방명록 주인 이름
   content: string; // 방명록 글
-  status: boolean; // 비밀글 여부
-  comment: commentVisit[]; // 댓글
+  status: string; // 비밀글 여부
+  comments: commentVisit[]; // 댓글
   created_at: string;
   isMine: boolean; // 내 글인지 여부
 }
@@ -34,22 +34,15 @@ interface visitDatas {
 interface GuestBookProps {
   refresh: boolean;
   onRefresh: () => void;
-  onSuccess: () => void;
   setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const GuestBook = ({
-  refresh,
-  onRefresh,
-  onSuccess,
-  setRefresh,
-}: GuestBookProps) => {
+const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
   const router = useRouter();
   const { user } = useAuth();
   const userId = user?.id;
   const { id } = router.query;
 
-  const [comment, setCommnet] = useState<commentVisit[]>([]);
   const [visitData, setVisitData] = useState<visitDatas[]>([]);
 
   useEffect(() => {
@@ -78,7 +71,6 @@ const GuestBook = ({
         console.log("방명록 정보 : ", processedData);
 
         setVisitData(processedData);
-        setCommnet(res.data.data.comment);
       } catch (e) {
         console.log("방명록 오류:", e);
       }
@@ -141,7 +133,7 @@ const GuestBook = ({
                 {userId === Number(id) ? (
                   <div className="GuestBook_btns">
                     <div className="Gulim" onClick={() => secretVisit(v.id)}>
-                      {v.status ? "공개로 하기" : "비밀로 하기"}
+                      {v.status === "private" ? "공개로 하기" : "비밀로 하기"}
                     </div>
                     <span>|</span>
                     <div className="Gulim" onClick={() => deleteVisit(v.id)}>
@@ -175,7 +167,8 @@ const GuestBook = ({
               </div>
 
               <GuestComment
-                comment={comment}
+                comment={v.comments}
+                postId={v.id}
                 onSuccess={() => setRefresh((prev) => !prev)}
               />
             </div>

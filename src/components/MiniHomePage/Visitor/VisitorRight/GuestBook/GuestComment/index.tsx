@@ -3,22 +3,23 @@ import { GuestCommentStyle } from "./styled";
 import { formatKoreanDate } from "@/utils/KrDate/date";
 import { useAuth } from "@/context/AuthContext";
 import axiosInstance from "@/lib/axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface commentVisit {
   id: number; // PK
-  comment: string; // 댓글
-  userId: number; // 댓글 작성자 아이디
-  userName: string; // 댓글 작성자 이름
+  content: string; // 댓글
+  authorId: number; // 댓글 작성자 아이디
+  authorName: string; // 댓글 작성자 이름
   created_at: string;
 }
 
 interface GuestCommentProps {
   comment: commentVisit[];
   onSuccess: () => void;
+  postId: number;
 }
 
-const GuestComment = ({ comment, onSuccess }: GuestCommentProps) => {
+const GuestComment = ({ comment, onSuccess, postId }: GuestCommentProps) => {
   const router = useRouter();
   const { user } = useAuth();
   const { id } = router.query;
@@ -27,9 +28,10 @@ const GuestComment = ({ comment, onSuccess }: GuestCommentProps) => {
 
   const handleDeleteComment = (photoId: number) => {
     try {
-      axiosInstance.delete(`/guestbooks/${photoId}`);
+      axiosInstance.delete(`/guestbooks-comments/${photoId}`);
+
       alert("댓글이 삭제되었습니다.");
-      window.location.reload();
+      onSuccess();
     } catch (e: any) {
       if (e.response.status === 401) {
         alert("로그인이 필요합니다.");
@@ -54,23 +56,18 @@ const GuestComment = ({ comment, onSuccess }: GuestCommentProps) => {
 
     if (!user?.id) {
       alert("로그인 후 작성해주세요~");
+      setCommentInput("");
       return;
     }
 
     // parentId 는 null일 수 있음. (대댓글이 아닌 경우)
     try {
-      const res = await axiosInstance.post(`/guestbooks/${postId}`, {
-        comment,
+      const res = await axiosInstance.post(`/guestbooks-comments/${postId}`, {
+        content: comment,
         authorId: user?.id,
       });
 
-      // if (parentId) {
-      //   setChildCommentInput("");
-      //   setReplyTargetId(null);
-      // } else {
-      //   setCommentInput("");
-      // }
-
+      setCommentInput("");
       onSuccess();
       console.log("댓글 등록 : ", res.data);
     } catch (e) {
@@ -91,17 +88,17 @@ const GuestComment = ({ comment, onSuccess }: GuestCommentProps) => {
               <div className="GuestComment_infos">
                 <span
                   className="GuestComment_Author"
-                  onClick={() => router.push(`/home/${c.userId}`)}
+                  onClick={() => router.push(`/home/${c.authorId}`)}
                 >
-                  {c.userName}
+                  {c.authorName}
                 </span>
-                <span className="GuestComment_comment">: {c.comment}</span>
+                <span className="GuestComment_comment">: {c.content}</span>
                 <span className="GuestComment_date">
                   {formatKoreanDate(c.created_at)}
                 </span>
 
                 {(Number(user?.id) === Number(id) ||
-                  Number(user?.id) === Number(c.userId)) && (
+                  Number(user?.id) === Number(c.authorId)) && (
                   <span
                     className="GuestComment_deleteBtn"
                     onClick={() => handleDeleteComment(c.id)}
@@ -111,25 +108,23 @@ const GuestComment = ({ comment, onSuccess }: GuestCommentProps) => {
                 )}
               </div>
             </div>
-
-            <div className="GuestComment_input">
-              <p>댓글</p>
-              <input
-                type="text"
-                value={commentInput}
-                onChange={(e) => setCommentInput(e.target.value)}
-              />
-              <button
-                onClick={() =>
-                  submitComment({ comment: commentInput, postId: c.id })
-                }
-              >
-                확인
-              </button>
-            </div>
           </>
         ))
       )}
+
+      <div className="GuestComment_input">
+        <p>댓글</p>
+        <input
+          type="text"
+          value={commentInput}
+          onChange={(e) => setCommentInput(e.target.value)}
+        />
+        <button
+          onClick={() => submitComment({ comment: commentInput, postId })}
+        >
+          확인
+        </button>
+      </div>
     </GuestCommentStyle>
   );
 };
