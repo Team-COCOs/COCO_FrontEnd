@@ -201,7 +201,7 @@ a {
   left: 28px;
   width: 88%;
   height: 60%;
-  margin-bottom: 55px;
+  margin-bottom: 53px;
 }
 .bpFab {
   z-index: 9998;
@@ -226,8 +226,8 @@ a {
     position: absolute !important;
     left: 25px;
     width: 87%;
-    height: 60%;
-    margin-bottom: 50px;
+    height: 57%;
+    margin-bottom: 40px;
   }
   .bpFab {
     z-index: 9998;
@@ -250,8 +250,8 @@ a {
     position: absolute;
     left: 25px;
     width: 85%;
-    height: 60%;
-    margin-bottom: 50px;
+    height: 55%;
+    margin-bottom: 30px;
   }
   .bpFab {
     z-index: 9998;
@@ -267,14 +267,15 @@ a {
 }
 @media (max-width: 769px) {
   :has(.bpOpen) {
-    overflow: unset;
+    overflow: unset !important;
   }
+
   .bpOpen.bpWebchat.bpReset {
-    position: absolute;
+    position: fixed !important;
     left: 20px;
-    width: 90%;
-    height: 90% !important;
-    margin-bottom: 15px;
+    width: 95%;
+    height: 75% !important;
+    margin-bottom: 15px !important;
   }
   .bpFab {
     z-index: 9998;
@@ -294,7 +295,7 @@ a {
   }
   .bpOpen.bpWebchat.bpReset {
     position: fixed !important;
-    left: 20px;
+    left: 8px;
     width: 95%;
     height: 95% !important;
     margin-bottom: 15px;
