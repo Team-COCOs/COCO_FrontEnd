@@ -35,7 +35,7 @@ const VisitorRight = () => {
     const getQuote = async () => {
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/guestbook/management/${id}`
+          `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/management/${id}`
         );
         setQuote(res.data?.quote || "");
       } catch (err) {
@@ -49,7 +49,7 @@ const VisitorRight = () => {
   // 관리
   const saveQuote = async () => {
     try {
-      const res = await axiosInstance.post("/guestbook/management", {
+      const res = await axiosInstance.post("/minihomepis/management", {
         quote: quote,
       });
       console.log("관리 저장 성공 : ", res.data);
