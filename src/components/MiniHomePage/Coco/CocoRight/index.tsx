@@ -9,6 +9,21 @@ const CocoRight = () => {
     <CocoRightStyled>
       <div className="CocoRight_wrap">
         <div className="CocoRight_component_wrap">
+          <div className="CocoRight_component_spanWrap pixelFont">
+            <div className="CocoRight_imgWrap">
+              <img src="/nate.png"></img>
+              <div className="CocoRight_titleText">COCO랑 대화하기</div>
+            </div>
+            <span>
+              ❝ 안녕...? 여긴, 네 마음속 깊은 곳에 숨겨둔 궁금증을 꺼내는
+              곳이야... 뭐든지 물어봐. 내가... 꼭 대답해줄게. 단, 내 말투는 좀
+              치명적일지도...? ❞
+            </span>
+            <span>
+              오른쪽 하단의 말풍선 모양 버튼을 눌러봐. 그럼, 나와 대화를 시작할
+              수 있어... (속닥)
+            </span>
+          </div>
           <BotpressChat />
         </div>
       </div>

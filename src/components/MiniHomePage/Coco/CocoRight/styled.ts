@@ -7,6 +7,7 @@ export const CocoRightStyled = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   .CocoRight_wrap {
     display: flex;
     justify-content: center;
@@ -67,6 +68,100 @@ export const CocoRightStyled = styled.div`
     &::-webkit-scrollbar-button:vertical:start:increment,
     &::-webkit-scrollbar-button:vertical:end:decrement {
       display: none;
+    }
+
+    .CocoRight_component_spanWrap {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      background: linear-gradient(to right, #e0f4ff, #f5fbff);
+      border: 1px solid #d0e7f7;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.1);
+      color: #1e2d3e;
+      max-width: 480px;
+      margin: 20px auto;
+    }
+
+    .CocoRight_component_spanWrap span {
+      padding: 12px 20px;
+      margin-top: 10px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #e0ecf3;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #374151;
+      font-family: "Inter", sans-serif;
+    }
+
+    .CocoRight_imgWrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .CocoRight_imgWrap img {
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    .CocoRight_titleText {
+      font-size: 20px;
+      font-weight: 600;
+      color: #0078d4;
+      letter-spacing: 2.5px;
+    }
+    /* 반응형 스타일 */
+    @media (max-width: 768px) {
+      .CocoRight_component_spanWrap {
+        padding: 16px;
+        margin: 10px auto;
+      }
+
+      .CocoRight_imgWrap {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .CocoRight_imgWrap img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .CocoRight_titleText {
+        font-size: 18px;
+        letter-spacing: 1px;
+      }
+
+      .CocoRight_component_spanWrap span {
+        font-size: 14px;
+        padding: 10px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .CocoRight_component_spanWrap {
+        padding: 12px;
+      }
+
+      .CocoRight_imgWrap img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .CocoRight_titleText {
+        font-size: 16px;
+      }
+
+      .CocoRight_component_spanWrap span {
+        font-size: 13px;
+        padding: 8px 12px;
+      }
     }
   }
 `;
