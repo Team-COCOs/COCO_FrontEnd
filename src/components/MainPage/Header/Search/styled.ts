@@ -28,14 +28,15 @@ export const SearchStyle = styled.div`
           width: 13%;
           color: ${({ theme }) => theme.colors.mainColor};
           font-weight: bold;
+          font-size: 13.5px;
           margin-bottom: 2px;
 
           @media (max-width: 1240px) {
-            font-size: 15px;
+            font-size: 12px;
           }
 
           @media (max-width: 1200px) {
-            font-size: 13px;
+            font-size: 11px;
           }
         }
 
@@ -43,10 +44,10 @@ export const SearchStyle = styled.div`
           width: 100%;
           height: 95%;
           border: none;
-          font-size: 16px;
+          font-size: 13px;
 
           &::placeholder {
-            font-size: 16px;
+            font-size: 13.5px;
             margin-top: 2px;
             color: rgb(177, 177, 177);
             font-weight: bold;
@@ -62,7 +63,7 @@ export const SearchStyle = styled.div`
           border: 1px solid rgb(207, 207, 207);
           border-radius: 2px;
           padding: 5px;
-          margin-right: 10px;
+          margin: 0 10px;
           display: flex;
           justify-content: center;
           cursor: pointer;
@@ -77,7 +78,10 @@ export const SearchStyle = styled.div`
     }
 
     .Search_btn {
-      width: 13%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 85px;
       height: 55px;
       margin-left: 2px;
       border-radius: 50px;
@@ -85,8 +89,7 @@ export const SearchStyle = styled.div`
       padding: 13px;
       cursor: pointer;
 
-      text-align: center;
-      font-size: 18px;
+      font-size: 15px;
       font-weight: bold;
       color: white;
 

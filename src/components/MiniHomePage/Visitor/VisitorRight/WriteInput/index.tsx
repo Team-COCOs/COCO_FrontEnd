@@ -2,9 +2,12 @@ import { useAuth } from "@/context/AuthContext";
 import { WriteInputStyle } from "./styled";
 import { useState } from "react";
 import axiosInstance from "@/lib/axios";
+import { useRouter } from "next/router";
 
 const WriteInput = () => {
+  const router = useRouter();
   const { user } = useAuth();
+  const { id } = router.query;
   const [content, setContent] = useState("");
   const [isSecret, setIsSecret] = useState(false);
 
@@ -26,9 +29,7 @@ const WriteInput = () => {
         content,
         isSecret,
         authorId: user?.id,
-        authorRealName: user?.name,
-        authorImg: user?.profile_image,
-        authorGender: user?.gender,
+        miniUserId: id,
       });
 
       console.log("방명록 등록 성공:", res.data);

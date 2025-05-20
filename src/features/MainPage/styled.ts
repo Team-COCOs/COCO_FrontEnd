@@ -8,6 +8,10 @@ export const MainPageStyled = styled.div`
     margin: 0 auto;
     padding: 10px 25px 0 25px;
 
+    @media (max-width: 1024px) {
+      padding: 10px 70px 0 70px;
+    }
+
     .MainPage_container {
       display: flex;
       gap: 5px;

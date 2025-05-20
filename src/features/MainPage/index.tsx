@@ -7,19 +7,20 @@ import Header from "@/components/MainPage/Header";
 
 const MainPage = () => {
   return (
-    <MainPageStyled className={clsx("MainPage_wrap")}>
-      <Header />
-      <div className="MainPage_container">
-        <div className="MainPage_profile">
-          <ProfilePart />
+    <>
+      <MainPageStyled className={clsx("MainPage_wrap")}>
+        <Header />
+        <div className="MainPage_container">
+          <div className="MainPage_profile">
+            <ProfilePart />
+          </div>
+          <div className="MainPage_store">
+            <StorePart />
+          </div>
         </div>
-        <div className="MainPage_store">
-          <StorePart />
-        </div>
-      </div>
-
+      </MainPageStyled>
       <Footer />
-    </MainPageStyled>
+    </>
   );
 };
 
