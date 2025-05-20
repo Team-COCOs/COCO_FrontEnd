@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 import { useEffect } from "react";
-
+import { useRouter } from "next/router";
 declare global {
   interface Window {
     botpress: {
@@ -14,8 +14,9 @@ declare global {
 }
 
 export default function BotpressChat() {
+  const router = useRouter();
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && window.botpress) {
       window.botpress?.init?.({
         botId: "7d9faaf2-c025-4617-a734-39fad6ad26a6",
         clientId: "bf1698e9-73c3-4bb4-8836-178cdb6a49ce",
@@ -52,7 +53,7 @@ export default function BotpressChat() {
         window.botpress.open();
       });
     }
-  }, []);
+  }, [router.asPath, router.pathname]);
 
   return (
     <>

@@ -289,13 +289,13 @@ a {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 }
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   :has(.bpOpen) {
     overflow: unset !important;
   }
   .bpOpen.bpWebchat.bpReset {
     position: fixed !important;
-    left: 8px;
+    left: 18px;
     width: 95%;
     height: 95% !important;
     margin-bottom: 15px;
@@ -321,5 +321,8 @@ a {
 @media (max-width: 480px) {
   .react-scroll-to-bottom--css-ujaox-1n7m0yu.bpMessageListViewport {
     font-size: 8px !important;
+  }
+  .bpOpen.bpWebchat.bpReset {
+    left: 8px;
   }
 }
