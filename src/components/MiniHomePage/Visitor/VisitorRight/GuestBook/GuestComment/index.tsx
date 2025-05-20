@@ -15,9 +15,10 @@ interface commentVisit {
 
 interface GuestCommentProps {
   comment: commentVisit[];
+  onSuccess: () => void;
 }
 
-const GuestComment = ({ comment }: GuestCommentProps) => {
+const GuestComment = ({ comment, onSuccess }: GuestCommentProps) => {
   const router = useRouter();
   const { user } = useAuth();
   const { id } = router.query;
@@ -39,7 +40,43 @@ const GuestComment = ({ comment }: GuestCommentProps) => {
     }
   };
 
-  const submitComment = ({ comment }: { comment: string }) => {};
+  const submitComment = async ({
+    comment,
+    postId,
+  }: {
+    comment: string;
+    postId: number;
+  }) => {
+    if (!comment.trim()) {
+      alert("댓글을 작성해주세요~");
+      return;
+    }
+
+    if (!user?.id) {
+      alert("로그인 후 작성해주세요~");
+      return;
+    }
+
+    // parentId 는 null일 수 있음. (대댓글이 아닌 경우)
+    try {
+      const res = await axiosInstance.post(`/guestbooks/${postId}`, {
+        comment,
+        authorId: user?.id,
+      });
+
+      // if (parentId) {
+      //   setChildCommentInput("");
+      //   setReplyTargetId(null);
+      // } else {
+      //   setCommentInput("");
+      // }
+
+      onSuccess();
+      console.log("댓글 등록 : ", res.data);
+    } catch (e) {
+      console.log("댓글 등록 실패 : ", e);
+    }
+  };
 
   return (
     <GuestCommentStyle className="GuestComment_wrap">
@@ -49,44 +86,50 @@ const GuestComment = ({ comment }: GuestCommentProps) => {
         </p>
       ) : (
         comment.map((c) => (
-          <div className="GuestComment_parent">
-            <div className="GuestComment_infos" key={c.id}>
-              <span
-                className="GuestComment_Author"
-                onClick={() => router.push(`/home/${c.userId}`)}
-              >
-                {c.userName}
-              </span>
-              <span className="GuestComment_comment">: {c.comment}</span>
-              <span className="GuestComment_date">
-                {formatKoreanDate(c.created_at)}
-              </span>
-
-              {(Number(user?.id) === Number(id) ||
-                Number(user?.id) === Number(c.userId)) && (
+          <>
+            <div key={c.id} className="GuestComment_parent">
+              <div className="GuestComment_infos">
                 <span
-                  className="GuestComment_deleteBtn"
-                  onClick={() => handleDeleteComment(c.id)}
+                  className="GuestComment_Author"
+                  onClick={() => router.push(`/home/${c.userId}`)}
                 >
-                  ☒
+                  {c.userName}
                 </span>
-              )}
+                <span className="GuestComment_comment">: {c.comment}</span>
+                <span className="GuestComment_date">
+                  {formatKoreanDate(c.created_at)}
+                </span>
+
+                {(Number(user?.id) === Number(id) ||
+                  Number(user?.id) === Number(c.userId)) && (
+                  <span
+                    className="GuestComment_deleteBtn"
+                    onClick={() => handleDeleteComment(c.id)}
+                  >
+                    ☒
+                  </span>
+                )}
+              </div>
             </div>
-          </div>
+
+            <div className="GuestComment_input">
+              <p>댓글</p>
+              <input
+                type="text"
+                value={commentInput}
+                onChange={(e) => setCommentInput(e.target.value)}
+              />
+              <button
+                onClick={() =>
+                  submitComment({ comment: commentInput, postId: c.id })
+                }
+              >
+                확인
+              </button>
+            </div>
+          </>
         ))
       )}
-
-      <div className="GuestComment_input">
-        <p>댓글</p>
-        <input
-          type="text"
-          value={commentInput}
-          onChange={(e) => setCommentInput(e.target.value)}
-        />
-        <button onClick={() => submitComment({ comment: commentInput })}>
-          확인
-        </button>
-      </div>
     </GuestCommentStyle>
   );
 };

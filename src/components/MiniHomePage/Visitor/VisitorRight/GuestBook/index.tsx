@@ -18,23 +18,32 @@ interface commentVisit {
 
 interface visitDatas {
   id: number; // PK
-  authorImg: string; // 작성자 미니미 이미지
+  authorProfile: string; // 작성자 미니미 이미지
   authorRealName: string; // 작성자 이름
   authorId: number; // 작성자 아이디
   authorGender: string; // 작성자 성별
+  hostId: number; // 방명록 주인 아이디
+  hostRealName: string; // 방명록 주인 이름
   content: string; // 방명록 글
-  status: boolean; // 비밀글 유무
+  status: boolean; // 비밀글 여부
   comment: commentVisit[]; // 댓글
   created_at: string;
-  isMine: boolean;
+  isMine: boolean; // 내 글인지 여부
 }
 
 interface GuestBookProps {
   refresh: boolean;
   onRefresh: () => void;
+  onSuccess: () => void;
+  setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
+const GuestBook = ({
+  refresh,
+  onRefresh,
+  onSuccess,
+  setRefresh,
+}: GuestBookProps) => {
   const router = useRouter();
   const { user } = useAuth();
   const userId = user?.id;
@@ -42,15 +51,10 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
 
   const [comment, setCommnet] = useState<commentVisit[]>([]);
   const [visitData, setVisitData] = useState<visitDatas[]>([]);
-  const [profile, setProfile] = useState("");
-
-  const miniProfile = !user?.profile_image
-    ? user?.gender === "woman"
-      ? "/avatarImg/woman_avatar1.png"
-      : "/avatarImg/man_avatar1.png"
-    : user?.profile_image;
 
   useEffect(() => {
+    if (!id) return;
+
     const visit = async () => {
       try {
         const res = await axios.get(
@@ -58,17 +62,29 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
           userId ? { params: { viewer: userId } } : undefined
         );
 
-        // const res = await axiosInstance.get(`/guestbooks/${id}`);
-        console.log("방명록 정보 : ", res.data.data);
-        // 비밀글 status에 따라 filter 돌려서 넣기
-        setVisitData(res.data.data);
+        const processedData = res.data.data.map((item: visitDatas) => {
+          if (!item.authorProfile) {
+            return {
+              ...item,
+              authorProfile:
+                item.authorGender === "man"
+                  ? "/avatarImg/man_avatar1.png"
+                  : "/avatarImg/woman_avatar1.png",
+            };
+          }
+          return item;
+        });
+
+        console.log("방명록 정보 : ", processedData);
+
+        setVisitData(processedData);
         setCommnet(res.data.data.comment);
       } catch (e) {
         console.log("방명록 오류:", e);
       }
     };
     visit();
-  }, [refresh]);
+  }, [id, refresh, userId]);
 
   // 삭제
   const deleteVisit = async (visitId: number) => {
@@ -76,7 +92,7 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
     if (!confirmed) return;
 
     try {
-      await axios.delete(`/${visitId}`);
+      await axiosInstance.delete(`/guestbooks/${visitId}`);
 
       alert("삭제 완료되었습니다.");
       onRefresh();
@@ -88,9 +104,9 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
   // 비밀로 하기
   const secretVisit = async (visitId: number) => {
     try {
-      await axios.patch(`/status/${visitId}`);
+      await axiosInstance.patch(`/guestbooks/status/${visitId}`);
 
-      alert("방명록 비밀로 하기가 완료되었습니다.");
+      alert("완료되었습니다.");
       onRefresh();
     } catch (e) {
       console.log("방명록 비밀 실패 : ", e);
@@ -99,7 +115,6 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
 
   return (
     <GuestBookStyle className="GuestBook_wrap">
-      {/* header부터 map 돌리기 */}
       <div className="GuestBook_div">
         {visitData.length === 0 || !visitData ? (
           <div className="GuestBook_empty">
@@ -123,32 +138,35 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
                   </span>
                 </div>
 
-                {(userId === Number(id) || v.isMine) && (
+                {userId === Number(id) ? (
                   <div className="GuestBook_btns">
                     <div className="Gulim" onClick={() => secretVisit(v.id)}>
-                      비밀로 하기
+                      {v.status ? "공개로 하기" : "비밀로 하기"}
                     </div>
                     <span>|</span>
                     <div className="Gulim" onClick={() => deleteVisit(v.id)}>
                       삭제
                     </div>
                   </div>
+                ) : (
+                  userId !== Number(id) &&
+                  v.isMine && (
+                    <div className="GuestBook_btns">
+                      <div className="Gulim" onClick={() => deleteVisit(v.id)}>
+                        삭제
+                      </div>
+                    </div>
+                  )
                 )}
               </div>
 
               <div className="GuestBook_body">
                 <div className="GuestBook_left">
                   <img
-                    src={
-                      !v.authorImg
-                        ? v.authorGender === "man"
-                          ? "/avatarImg/man_avatar1.png"
-                          : "/avatarImg/woman_avatar1.png"
-                        : v.authorImg
-                    }
+                    src={v.authorProfile}
                     alt="profile image"
                     className={`GuestBook_png ${
-                      v.authorImg?.endsWith(".gif") && "GuestBook_gif"
+                      v.authorProfile?.endsWith(".gif") && "GuestBook_gif"
                     }`}
                   />
                 </div>
@@ -156,7 +174,10 @@ const GuestBook = ({ refresh, onRefresh }: GuestBookProps) => {
                 <div className="GuestBook_right Gulim">{v.content}</div>
               </div>
 
-              <GuestComment comment={comment} />
+              <GuestComment
+                comment={comment}
+                onSuccess={() => setRefresh((prev) => !prev)}
+              />
             </div>
           ))
         )}
