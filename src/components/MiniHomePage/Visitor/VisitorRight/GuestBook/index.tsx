@@ -43,24 +43,20 @@ const GuestBook = () => {
     : user?.profile_image;
 
   useEffect(() => {
-    const visit = async () => {
-      try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/guestbooks/${id}`
-        );
-
-        // const res = await axiosInstance.get(`/guestbooks/${id}`);
-
-        console.log("방명록 정보 : ", res.data);
-
-        // 비밀글 status에 따라 filter 돌려서 넣기
-        setVisitData(res.data);
-        setCommnet(res.data.comment);
-      } catch (e) {
-        console.log("방명록 오류:", e);
-      }
-    };
-
+    // const visit = async () => {
+    //   try {
+    //     const res = await axios.get(
+    //       `${process.env.NEXT_PUBLIC_API_URL}/guestbooks/${id}`
+    //     );
+    //     // const res = await axiosInstance.get(`/guestbooks/${id}`);
+    //     console.log("방명록 정보 : ", res.data);
+    //     // 비밀글 status에 따라 filter 돌려서 넣기
+    //     setVisitData(res.data);
+    //     setCommnet(res.data.comment);
+    //   } catch (e) {
+    //     console.log("방명록 오류:", e);
+    //   }
+    // };
     // visit();
   }, []);
 
