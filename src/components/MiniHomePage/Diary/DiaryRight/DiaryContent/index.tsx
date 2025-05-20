@@ -115,16 +115,18 @@ const DiaryContent = ({
   };
 
   const handleDeleteBtn = async (diaryId: number) => {
+    const confirmDelete = window.confirm("정말 이 일기를 삭제하시겠습니까?");
+    if (!confirmDelete) return;
+
     try {
       const response = await axiosInstance.delete(`/diary/${diaryId}`);
       alert("게시물이 삭제되었습니다!");
-      router.push(`/home/${id}`);
+      window.location.reload();
     } catch (e: any) {
       console.log(e, "e : 게시물 삭제 실패");
       alert("게시물 삭제에 실패했습니다.");
     }
   };
-
   const router = useRouter();
   const { id } = router.query;
   const { user } = useAuth();

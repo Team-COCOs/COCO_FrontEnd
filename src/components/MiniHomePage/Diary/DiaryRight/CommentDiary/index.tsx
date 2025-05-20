@@ -78,12 +78,17 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
   };
 
   const handleDeleteComment = async (commentId: number) => {
+    const confirmDelete = window.confirm("정말 이 댓글을 삭제하시겠습니까?");
+    if (!confirmDelete) return;
+
     try {
-      const response = axiosInstance.delete(`/diaryComments/${commentId}`);
+      const response = await axiosInstance.delete(
+        `/diaryComments/${commentId}`
+      );
       alert("댓글이 삭제되었습니다.");
       window.location.reload();
     } catch (e: any) {
-      if (e.response.status === 401) {
+      if (e.response?.status === 401) {
         alert("로그인이 필요합니다.");
       } else {
         alert("댓글 삭제 중 오류가 발생했습니다.");
