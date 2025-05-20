@@ -68,7 +68,7 @@ const HomeFriends = () => {
         </div>
         <div className="HomeFriends_email">{profile.email}</div>
         <select onChange={handleFriendSelect}>
-          <option value={id}>일촌 파도타기</option>
+          <option value={id}>선택하세요</option>
           <option value="파도타기">파도타기</option>
           {user?.id && Number(user?.id) !== Number(id) && (
             <option value={user?.id}>내 홈피 가기</option>
