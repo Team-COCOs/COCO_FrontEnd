@@ -19,7 +19,9 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
   const router = useRouter();
   const { id } = router.query;
   const [photoTitles, setPhotoTitles] = useState("");
-  const [newBoards, setNewBoards] = useState("");
+  const [newBoards, setNewBoards] = useState<{
+    [key: string]: { count: number; total: number };
+  }>({});
 
   // 최근 올린 사진첩 제목 2개
   // get minihomepis/photo/:userId
@@ -43,14 +45,47 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
 
   // 개수
   // get minihomepis/postCount/:userId
+
+  // cocoCount
+  // cocoTotalCount
+  // diaryCount
+  // diaryTotalCount
+  // guestBookCount
+  // guestBookTotalCount
+  // photoCount
+  // photoTotalCount
+
   useEffect(() => {
     const updatedNewBoards = async () => {
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/postCount/${id}`
         );
-        setNewBoards(response.data.titles);
-        console.log(response.data.titles, "NewBoards");
+
+        const data = response.data;
+
+        const counts = {
+          photo: {
+            count: data.photoCount,
+            total: data.photoTotalCount,
+          },
+          diary: {
+            count: data.diaryCount,
+            total: data.diaryTotalCount,
+          },
+          guestBook: {
+            count: data.guestBookCount,
+            total: data.guestBookTotalCount,
+          },
+          coco: {
+            count: data.cocoCount,
+            total: data.cocoTotalCount,
+          },
+        };
+
+        setNewBoards(counts);
+
+        console.log(counts, "NewBoards");
       } catch (e: any) {
         if (e.response.status === 401) {
         } else {
@@ -77,8 +112,12 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
                 onClick={() => router.push(`/${key}/${id}`)}
               >
                 <div className="tab">{TAB_LABELS[key]}</div>
-                <span>0/10</span>
-                <span className="RecentPhoto_new_alert">N</span>
+                <span>
+                  {newBoards[key]?.count ?? 0}/{newBoards[key]?.total ?? 0}
+                </span>
+                {newBoards[key]?.count > 0 && (
+                  <span className="RecentPhoto_new_alert">N</span>
+                )}
               </div>
             ))}
           </div>
