@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import axiosInstance from "@/lib/axios";
 import { formatKoreanDate } from "@/utils/KrDate/date";
+import { handleDeleteComment } from "@/utils/Comment/management";
 
 interface AuthorData {
   id: number;
@@ -54,7 +55,7 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
 
     // parentId 는 null일 수 있음. (대댓글이 아닌 경우)
     try {
-      const res = await axiosInstance.post(`/photos-comments/${postId}`, {
+      const res = await axiosInstance.post(`//${postId}`, {
         comment,
         parentId,
         authorId: user?.id,
@@ -72,21 +73,6 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
       console.log("댓글 등록 : ", res.data);
     } catch (e) {
       console.log("댓글 등록 실패 : ", e);
-    }
-  };
-
-  const handleDeleteComment = (photoId: number) => {
-    try {
-      axiosInstance.delete(`/photos-comments/${photoId}`);
-      alert("댓글이 삭제되었습니다.");
-      window.location.reload();
-    } catch (e: any) {
-      if (e.response.status === 401) {
-        alert("로그인이 필요합니다.");
-      } else {
-        alert("댓글 삭제 중 오류가 발생했습니다.");
-        console.log(e, ": 댓글 삭제 중 오류");
-      }
     }
   };
 
@@ -122,7 +108,9 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
                   Number(user?.id) === Number(comment.user.id)) && (
                   <span
                     className="Comment_deleteBtn"
-                    onClick={() => handleDeleteComment(comment.id)}
+                    onClick={() =>
+                      handleDeleteComment("photos-comments", comment.id)
+                    }
                   >
                     ☒
                   </span>
@@ -179,7 +167,9 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
                       Number(user?.id) === Number(child.user.id)) && (
                       <span
                         className="Comment_deleteBtn"
-                        onClick={() => handleDeleteComment(child.id)}
+                        onClick={() =>
+                          handleDeleteComment("photos-comments", child.id)
+                        }
                       >
                         ☒
                       </span>

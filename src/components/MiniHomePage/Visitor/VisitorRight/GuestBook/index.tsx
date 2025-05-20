@@ -13,6 +13,7 @@ interface commentVisit {
   comment: string; // 댓글
   userId: number; // 댓글 작성자 아이디
   userName: string; // 댓글 작성자 이름
+  created_at: string;
 }
 
 interface visitDatas {
@@ -26,6 +27,30 @@ interface visitDatas {
   comment: commentVisit[]; // 댓글
   created_at: string;
 }
+
+const dummyComments: commentVisit[] = [
+  {
+    id: 1,
+    comment: "정말 좋은 글이네요! 잘 보고 갑니다 :)",
+    userId: 101,
+    userName: "김철수",
+    created_at: "2025-05-18T10:15:00",
+  },
+  {
+    id: 2,
+    comment: "ㅋㅋㅋㅋ 이거 너무 웃겨요",
+    userId: 102,
+    userName: "박영희",
+    created_at: "2025-05-19T08:42:00",
+  },
+  {
+    id: 3,
+    comment: "추억 돋네요~ 그 시절 감성 그대로!",
+    userId: 103,
+    userName: "이민수",
+    created_at: "2025-05-20T14:05:00",
+  },
+];
 
 const GuestBook = () => {
   const router = useRouter();
@@ -58,6 +83,8 @@ const GuestBook = () => {
     //   }
     // };
     // visit();
+
+    setCommnet(dummyComments);
   }, []);
 
   // 삭제
@@ -177,6 +204,8 @@ const GuestBook = () => {
 
                 <div className="GuestBook_right Gulim">{v.content}</div>
               </div>
+
+              <GuestComment comment={comment} />
             </div>
           ))
         )}
