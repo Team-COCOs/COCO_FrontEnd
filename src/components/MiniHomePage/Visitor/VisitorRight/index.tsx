@@ -17,9 +17,7 @@ const VisitorRight = () => {
 
   const [management, setManagement] = useState("관리");
   const [isEditing, setIsEditing] = useState(false);
-  const [quote, setQuote] = useState(
-    "왜 내가 아는 노래중에는 연가가 이리도 많을까."
-  );
+  const [quote, setQuote] = useState("");
 
   const handleManageClick = () => {
     if (isEditing) {
@@ -37,9 +35,11 @@ const VisitorRight = () => {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/management/${id}`
         );
-        setQuote(res.data?.quote || "");
+        setQuote(res.data?.content || "");
+
+        console.log("관리 잘 와? ", res.data);
       } catch (err) {
-        console.error("quote 가져오기 실패: ", err);
+        console.error("관리 가져오기 실패: ", err);
       }
     };
 
@@ -49,7 +49,7 @@ const VisitorRight = () => {
   // 관리
   const saveQuote = async () => {
     try {
-      const res = await axiosInstance.post("/minihomepis/management", {
+      const res = await axiosInstance.patch("/minihomepis/management", {
         quote: quote,
       });
       console.log("관리 저장 성공 : ", res.data);
