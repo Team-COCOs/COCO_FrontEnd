@@ -88,12 +88,14 @@ const WritePage = ({ editData }: WritePageProps) => {
         params: { userId },
       })
       .then((res) => {
-        const normalizedData: FolderItem[] = res.data.map((item: any) => ({
-          id: item.id,
-          title: item.title,
-          parent_id: item.parent?.id ?? null,
-          children: item.children ?? [],
-        }));
+        const normalizedData: FolderItem[] = res.data
+          .map((item: any) => ({
+            id: item.id,
+            title: item.title,
+            parent_id: item.parent?.id ?? null,
+            children: item.children ?? [],
+          }))
+          .filter((item: any) => item.title !== "스크랩");
 
         const flatData = flattenFolderTree(normalizedData);
         setFolder(flatData);

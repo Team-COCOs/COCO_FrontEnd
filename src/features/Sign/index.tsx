@@ -52,6 +52,8 @@ const SignPage = () => {
     handleBirthMonthChange,
     handleBirthDayChange,
     predefinedDomains,
+    isPhoneChecked,
+    isEmailChecked,
   } = form;
 
   const fullEmail = `${localPart}@${useCustomDomain ? customDomain : domain}`;
@@ -311,7 +313,13 @@ const SignPage = () => {
             <button
               className="Sign-PhoneCheck"
               type="submit"
-              disabled={!isFormValid || isEmailDuplicate || isPhoneDuplicate}
+              disabled={
+                !isFormValid ||
+                !isEmailChecked ||
+                !isPhoneChecked ||
+                isEmailDuplicate ||
+                isPhoneDuplicate
+              }
             >
               가입하기
             </button>
