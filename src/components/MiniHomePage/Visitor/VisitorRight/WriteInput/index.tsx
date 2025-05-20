@@ -51,9 +51,13 @@ const WriteInput = ({ onSuccess }: GuestWriteProps) => {
         <img
           src={miniProfile}
           alt="profile"
-          className={`WriteInput_img ${
-            miniProfile.endsWith(".png") && "WriteInput_png"
-          }`}
+          className={`WriteInput_img 
+            ${
+              miniProfile.endsWith(".png") &&
+              !miniProfile.includes("man") &&
+              "WriteInput_png"
+            }  
+            ${miniProfile.includes("man") && "WriteInput_man"}`}
         />
 
         <div className="WriteInput_profile">

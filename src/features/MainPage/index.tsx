@@ -2,24 +2,25 @@ import { MainPageStyled } from "./styled";
 import ProfilePart from "@/components/MainPage/ProfilePart";
 import StorePart from "@/components/MainPage/StorePart";
 import Footer from "@/components/MainPage/Footer";
-import clsx from "clsx";
 import Header from "@/components/MainPage/Header";
 
 const MainPage = () => {
   return (
     <>
-      <MainPageStyled className={clsx("MainPage_wrap")}>
-        <Header />
-        <div className="MainPage_container">
-          <div className="MainPage_profile">
-            <ProfilePart />
+      <MainPageStyled>
+        <div className="MainPage_wrap">
+          <Header />
+          <div className="MainPage_container">
+            <div className="MainPage_profile">
+              <ProfilePart />
+            </div>
+            <div className="MainPage_store">
+              <StorePart />
+            </div>
           </div>
-          <div className="MainPage_store">
-            <StorePart />
-          </div>
+          <Footer />
         </div>
       </MainPageStyled>
-      <Footer />
     </>
   );
 };

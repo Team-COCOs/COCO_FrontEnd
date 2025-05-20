@@ -47,7 +47,7 @@ export const LoginStyle = styled.div`
         box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.7),
           inset 0 -2px 4px rgba(0, 0, 0, 0.2);
 
-        font-size: 17px;
+        font-size: 15px;
         font-weight: bold;
         color: white;
 

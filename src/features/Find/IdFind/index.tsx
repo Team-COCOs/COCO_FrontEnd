@@ -27,6 +27,7 @@ const IdFind = () => {
         })
         .then((res) => {
           setUserId(res.data.email);
+          formik.resetForm();
         })
         .catch((e) => {
           if (e.response.status === 404) {

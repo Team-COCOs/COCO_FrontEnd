@@ -20,6 +20,8 @@ const useSignForm = () => {
 
   const fullEmail = `${localPart}@${useCustomDomain ? customDomain : domain}`;
 
+  const predefinedDomains = ["cocoworld.com", "naver.com", "gmail.com"];
+
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [name, setName] = useState("");
@@ -43,8 +45,13 @@ const useSignForm = () => {
   const [nameError, setNameError] = useState("");
   const [birthError, setBirthError] = useState("");
 
+  // 중복 여부
   const [isEmailDuplicate, setIsEmailDuplicate] = useState(false);
   const [isPhoneDuplicate, setIsPhoneDuplicate] = useState(false);
+
+  // 중복 체크 여부
+  const [isEmailChecked, setIsEmailChecked] = useState(false);
+  const [isPhoneChecked, setIsPhoneChecked] = useState(false);
 
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
@@ -158,6 +165,9 @@ const useSignForm = () => {
         data
       );
 
+      if (type === "email") setIsEmailChecked(true);
+      else setIsPhoneChecked(true);
+
       if (response.data.exists) {
         if (type === "email") {
           setIsEmailDuplicate(true);
@@ -169,8 +179,13 @@ const useSignForm = () => {
           setPhoneError("이미 사용된 전화번호입니다.");
         }
       } else {
-        if (type === "email") setIsEmailDuplicate(false);
-        else setIsPhoneDuplicate(false);
+        if (type === "email") {
+          setIsEmailDuplicate(false);
+          setEmailError("");
+        } else {
+          setIsPhoneDuplicate(false);
+          setPhoneError("");
+        }
 
         setIsOpen(true);
         setType("success");
@@ -248,6 +263,7 @@ const useSignForm = () => {
     setUseCustomDomain,
     email,
     setEmail,
+    predefinedDomains,
     password,
     setPassword,
     passwordCheck,
@@ -289,6 +305,8 @@ const useSignForm = () => {
     handleBirthYearChange,
     handleBirthMonthChange,
     handleBirthDayChange,
+    isEmailChecked,
+    isPhoneChecked,
   };
 };
 

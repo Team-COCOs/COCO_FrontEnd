@@ -25,19 +25,8 @@ const DynamicFolder = ({
   const router = useRouter();
   const userId = router.query.id;
 
-  const getDefaultFolder = (): FolderItem[] => [
-    {
-      id: 0,
-      title: "새 폴더",
-      parent_id: null,
-      children: [],
-    },
-  ];
-
   // 부모, 자식 폴더 구분해서 build
   const buildTree = (data: FolderItem[]): FolderItem[] => {
-    if (!data || data.length === 0) return getDefaultFolder();
-
     const idMap = new Map<number, FolderItem>();
     const tree: FolderItem[] = [];
 
@@ -82,6 +71,8 @@ const DynamicFolder = ({
           parent_id: item.parent?.id ?? null,
           children: item.children ?? [],
         }));
+
+        console.log("폴더 전체 정보 : ", normalizedData);
 
         const treeData = buildTree(normalizedData);
         setFolderTree(treeData);

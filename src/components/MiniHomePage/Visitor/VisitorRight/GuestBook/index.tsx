@@ -169,7 +169,7 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
               <GuestComment
                 comment={v.comments}
                 postId={v.id}
-                onSuccess={() => setRefresh((prev) => !prev)}
+                onRefresh={onRefresh}
               />
             </div>
           ))

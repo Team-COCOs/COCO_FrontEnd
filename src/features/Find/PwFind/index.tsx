@@ -45,6 +45,7 @@ const PwFind = () => {
           setIsOpen(true);
           setType("success");
           setMessage("비밀번호가 변경되었습니다. 메인에서 로그인해주세요.");
+          PwFormik.resetForm();
         })
         .catch((e) => {
           if (e.response.status === 404) {
