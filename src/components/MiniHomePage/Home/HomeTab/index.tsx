@@ -52,7 +52,13 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
   ${currentTab === key && tabBackgroundColor === "black" ? "black" : ""}
 `}
             onClick={() => {
-              router.push(`/${key}/${id}`);
+              const targetPath = `/${key}/${id}`;
+
+              if (router.asPath === targetPath) {
+                router.reload();
+              } else {
+                router.push(targetPath);
+              }
             }}
             style={
               currentTab === key
