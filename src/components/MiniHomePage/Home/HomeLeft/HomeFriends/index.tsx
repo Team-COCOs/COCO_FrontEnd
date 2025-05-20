@@ -46,7 +46,8 @@ const HomeFriends = () => {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/users/wave/${id}`
         );
-        const newId = response.data.id;
+        const newId = response.data.userId;
+
         // 페이지 이동
         router.push(`/home/${newId}`);
       } catch (error) {
