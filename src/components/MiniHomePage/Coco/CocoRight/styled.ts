@@ -68,15 +68,36 @@ export const CocoRightStyled = styled.div`
     &::-webkit-scrollbar-button:vertical:end:decrement {
       display: none;
     }
-    .CocoRight_component_wrap {
+    /* .CocoRight_component_wrap {
       width: 92%;
       height: 100%;
       padding-left: 10px;
+      #custom-bot-container {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 360px;
+        height: 500px;
+        z-index: 10;
+      }
     }
     @media (max-width: 1024px) {
       .CocoRight_component_wrap {
         padding-left: 0px;
       }
-    }
+    } */
+    /* .Minihome_diary_Right {
+      .bpFab {
+        z-index: 9998;
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        height: 4rem;
+        width: 4rem;
+        border-radius: 9999px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+    } */
   }
 `;
