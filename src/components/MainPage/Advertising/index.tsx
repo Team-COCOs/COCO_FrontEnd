@@ -1,7 +1,8 @@
 import clsx from "clsx";
 import { AdvertisingStyle } from "./styled";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import Skeleton from "@mui/material/Skeleton";
+import { useState } from "react";
 
 type AdvertisingProps = {
   type: string;
@@ -9,13 +10,27 @@ type AdvertisingProps = {
 
 const Advertising = ({ type }: AdvertisingProps) => {
   const borderAd = type === "Advertising4";
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <AdvertisingStyle className={clsx("Advertising_wrap")}>
       {/* 특정 광고만 클래스 추가 */}
       <div className={clsx(borderAd && "Advertising_border")}>
         <div className={type}>
-          <Image src={`/advertising/${type}.jpg`} alt={type} fill />
+          {!loaded && (
+            <Skeleton
+              variant="rectangular"
+              width="100%"
+              height="100%"
+              sx={{ position: "absolute", top: 0, left: 0, zIndex: 1 }}
+            />
+          )}
+          <Image
+            src={`/advertising/${type}.jpg`}
+            alt={type}
+            fill
+            onLoad={() => setLoaded(true)}
+          />
         </div>
 
         {borderAd && (

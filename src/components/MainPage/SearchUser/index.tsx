@@ -91,7 +91,8 @@ const SearchUser = () => {
                     {item.name}
                   </p>
                   <p className="SearchUser_sub">
-                    성별: {item.gender === "man" ? "남성" : "여성"}
+                    성별:{" "}
+                    {item.gender && item.gender === "man" ? "남성" : "여성"}
                   </p>
                   <p className="SearchUser_sub"> 생일: {item.birthday} </p>
                 </div>
