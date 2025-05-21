@@ -48,7 +48,7 @@ export const saveTreeData = async (
     } else if (e.response?.status === 500) {
       alert("동일한 폴더 이름이 존재합니다. 폴더 이름을 수정해주세요.");
     } else if (e.response?.status === 404) {
-      alert("스크랩 중첩은 불가능합니다.");
+      alert("스크랩 중첩 혹은 동일한 이름은 불가능합니다.");
     } else {
       console.log("사진첩 불러오기 에러 : ", e);
       alert("트리 저장 중 오류가 발생했습니다.");
