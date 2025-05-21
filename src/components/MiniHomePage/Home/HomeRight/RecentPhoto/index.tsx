@@ -43,12 +43,12 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
 
   // 새로운 게시글 개수
   useEffect(() => {
+    if (!id) return;
     const updatedNewBoards = async () => {
       try {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/postCount/${id}`
         );
-
         const data = response.data;
 
         const counts = {
