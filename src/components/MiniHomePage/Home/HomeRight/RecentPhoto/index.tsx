@@ -25,6 +25,7 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
 
   // 최근 올린 사진첩 제목 2개
   useEffect(() => {
+    if (!id) return;
     const updatedPhotos = async () => {
       try {
         const response = await axios.get(
