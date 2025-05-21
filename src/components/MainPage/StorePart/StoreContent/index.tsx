@@ -59,6 +59,8 @@ const StoreContent = () => {
       categories.includes(item.category)
     );
 
+    console.log("상품 : ", filteredItems);
+
     setStoreProduct(filteredItems);
     setCurrentPage(1);
   }, [product, storeItems]);
