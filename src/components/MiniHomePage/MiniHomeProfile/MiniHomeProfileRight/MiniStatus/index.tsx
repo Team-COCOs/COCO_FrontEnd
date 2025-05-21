@@ -62,6 +62,11 @@ const MiniStatus = () => {
       return;
     }
 
+    if (values.introduction.length > 50) {
+      alert("소개글은 50자 이내로 작성해주세요.");
+      return;
+    }
+
     const formData = new FormData();
 
     formData.append("name", values.title);
