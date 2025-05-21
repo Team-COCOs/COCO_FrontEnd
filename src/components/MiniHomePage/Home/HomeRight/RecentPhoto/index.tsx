@@ -72,6 +72,8 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
         };
 
         setNewBoards(counts);
+        console.log(response.data, "response.data : 홈, 전체 카운트");
+        console.log(counts, "counts : 홈, 카운트 분리 데이터");
       } catch (e: any) {
         if (e.response.status === 401) {
         } else {

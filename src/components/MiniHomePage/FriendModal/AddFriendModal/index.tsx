@@ -42,8 +42,8 @@ const AddFriendModal = ({
     const payload = {
       receiverId: Number(receiverUserId),
       message,
-      requester_name: fromLabelType === "직접입력" ? fromInput : fromLabelType,
-      receiver_name: toLabelType === "직접입력" ? toInput : toLabelType,
+      requester_name: toLabelType === "직접입력" ? toInput : toLabelType,
+      receiver_name: fromLabelType === "직접입력" ? fromInput : fromLabelType,
     };
 
     try {
