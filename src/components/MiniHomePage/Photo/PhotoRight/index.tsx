@@ -90,10 +90,8 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
   };
 
   useEffect(() => {
-    if (!router.isReady || typeof queryUserId !== "string") return;
-
-    getPhotoData();
-  }, [router.isReady, selectedMenu, queryUserId]);
+    queryUserId && getPhotoData();
+  }, [selectedMenu, queryUserId]);
 
   return (
     <PhotoRightStyled>
