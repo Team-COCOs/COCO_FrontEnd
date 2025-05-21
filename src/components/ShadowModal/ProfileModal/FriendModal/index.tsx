@@ -12,7 +12,7 @@ interface FriendModalProps {
 const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
-  console.log(data, "data?");
+
   const frienRequest = async (type: string) => {
     try {
       const res = await axiosInstance.post(`/friends/${type}`, {
