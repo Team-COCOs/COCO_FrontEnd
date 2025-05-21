@@ -23,8 +23,8 @@ const PayModal = ({ onClose }: PayModalProps) => {
         amount,
         orderId,
         orderName,
-        successUrl: `/payment/success?&dotori=${dotori}`,
-        failUrl: `/payment/fail`,
+        successUrl: `http://34.236.72.45/payment/success?&dotori=${dotori}`,
+        failUrl: `http://34.236.72.45/payment/fail`,
       });
     } catch (err) {
       console.error("결제 요청 중 오류:", err);
