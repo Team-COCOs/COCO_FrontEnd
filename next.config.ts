@@ -45,7 +45,7 @@ module.exports = {
   },
 
   images: {
-    domains: ["localhost", "http://13.210.0.140/"], // 외부 접속을 위한 IP 추가
+    domains: ["localhost", "http://13.210.0.140"], // 외부 접속을 위한 IP 추가
   },
 
   // src/pages 디렉토리로 경로 설정
