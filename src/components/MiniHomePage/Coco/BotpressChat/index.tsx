@@ -15,6 +15,7 @@ declare global {
 
 export default function BotpressChat() {
   const router = useRouter();
+
   useEffect(() => {
     if (typeof window !== "undefined" && window.botpress) {
       window.botpress?.init?.({
