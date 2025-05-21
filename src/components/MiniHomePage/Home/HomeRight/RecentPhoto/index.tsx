@@ -61,7 +61,7 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
             count: data.diaryCount,
             total: data.diaryTotalCount,
           },
-          guestBook: {
+          visitor: {
             count: data.guestBookCount,
             total: data.guestBookTotalCount,
           },
@@ -95,7 +95,11 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
                 <span>사진첩</span> {photoTitles[0]}
               </div>
               <div className="RecentPhoto_new_phototitle">
-                <span>사진첩</span> {photoTitles[1]}
+                {photoTitles && (
+                  <>
+                    <span>사진첩</span> {photoTitles[1]}
+                  </>
+                )}
               </div>
             </div>
           ) : (
