@@ -42,12 +42,13 @@ npm run dev
 
 ### 🖼️ 미리보기
 ![image](https://github.com/user-attachments/assets/fe091143-4bb0-4665-8577-2c18c3f60d79)
+<img src="https://github.com/user-attachments/assets/061ddae4-e3a4-40fe-8ad5-f084c14354e1" width="80%"/>
+![image](https://github.com/user-attachments/assets/2d75f56e-5cb2-40d8-963a-244b2c031351)
+![image](https://github.com/user-attachments/assets/78a186a0-e3ba-4268-92cd-1128a480f0b5)
 
 ## 🧩 주요 기능
 
 ### 🏠 메인 페이지
-![image](https://github.com/user-attachments/assets/061ddae4-e3a4-40fe-8ad5-f084c14354e1)
-
 - 메인 페이지에서는 화제의 미니홈피, 미니홈피 검색, 도토리 충전(토스 API), 스킨 및 아이템 구매, 미니홈피 이동이 가능합니다. 
 - 새 게시물, 일촌 신청 확인이 가능합니다.
 - 회원가입 및 로그인이 가능합니다.
@@ -56,12 +57,11 @@ npm run dev
 - 스킨, 미니미, 가구, 배경 음악 등 다양한 아이템을 구매할 수 있습니다.
 
 ### 🛠 admin
-![image](https://github.com/user-attachments/assets/2d75f56e-5cb2-40d8-963a-244b2c031351)
+
 - 관리자 전용 페이지입니다.
 - 상품을 등록 및 삭제할 수 있습니다
 
 ### 🧸 미니홈피 (홈)
-![image](https://github.com/user-attachments/assets/78a186a0-e3ba-4268-92cd-1128a480f0b5)
 - 방문자 수(Today / Total), 프로필, 일촌 확인이 가능합니다.
 - 최근 사진첩 게시물 확인이 가능합니다.
 - 일촌평 작성 및 확인이 가능합니다.
