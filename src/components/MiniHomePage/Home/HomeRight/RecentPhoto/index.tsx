@@ -95,10 +95,12 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
                 <span>사진첩</span> {photoTitles[0]}
               </div>
               <div className="RecentPhoto_new_phototitle">
-                {photoTitles && (
+                {photoTitles[1] ? (
                   <>
                     <span>사진첩</span> {photoTitles[1]}
                   </>
+                ) : (
+                  <span style={{ backgroundColor: "transparent" }}></span>
                 )}
               </div>
             </div>
