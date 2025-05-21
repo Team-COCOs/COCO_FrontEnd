@@ -75,8 +75,8 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
           <div className="Friend_nickName">
             <p> 해당 일촌명으로 신청하셨습니다. </p>
             <p>
-              {data.requester}({data.requester_name}) - {userName}(
-              {data.receiver_name})
+              {data.requester}({data.receiver_name}) - {userName}(
+              {data.requester_name})
             </p>
           </div>
           <b className="Friend_bold">일촌을 맺으시겠습니까?</b>
