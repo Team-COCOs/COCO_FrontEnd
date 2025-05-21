@@ -146,7 +146,7 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
                 <div className="PhotoRight_imgBox">
                   <div className="PhotoRight_img">
                     <img
-                      src={`http://localhost:5001${data.photo_url}`}
+                      src={`${process.env.NEXT_PUBLIC_API_URL}${data.photo_url}`}
                       alt="photo"
                     />
                   </div>
