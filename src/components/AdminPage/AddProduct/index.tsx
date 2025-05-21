@@ -65,7 +65,7 @@ const AddProduct: React.FC<AddProductProps> = ({
       formData.append("name", values.name);
       formData.append("price", values.price);
       formData.append("category", values.category);
-      if (values.file) formData.append("file", values.file);
+      if (values.file) formData.append("storeItem", values.file);
       if (type === "music") {
         formData.append("artist", values.artist);
         formData.append("duration", values.duration);

@@ -76,7 +76,7 @@ const VisitorRight = () => {
                 onChange={(e) => setQuote(e.target.value)}
               />
             ) : (
-              <p className="Gulim">{quote}</p>
+              <p className="Gulim">{quote || "한 마디를 남겨보세요."}</p>
             )}
           </div>
           {userId === Number(id) && (
