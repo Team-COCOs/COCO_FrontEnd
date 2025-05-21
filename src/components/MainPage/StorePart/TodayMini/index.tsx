@@ -23,8 +23,6 @@ const TodayMini = () => {
         );
 
         setUserInfo(filteredUsers);
-
-        console.log("인기 미니홈피 데이터 : ", res.data);
       } catch (e) {
         console.log("인기 미니홈피 가져오기 에러 : ", e);
       }

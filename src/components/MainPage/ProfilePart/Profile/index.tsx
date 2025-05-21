@@ -77,9 +77,6 @@ const Profile = ({ setHasToken }: profileProps) => {
               ? "/avatarImg/man_avatar1.png"
               : "/avatarImg/woman_avatar1.png",
         };
-
-        console.log("유저 데이터들 : ", res.data);
-
         setUserData(updatedData);
       } catch (err) {
         console.error("유저 정보 불러오기 실패", err);
