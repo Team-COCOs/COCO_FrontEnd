@@ -81,7 +81,7 @@ const Login = () => {
           <input
             type="text"
             name="email"
-            placeholder="이메일"
+            placeholder="coco123@cocoworld.com"
             value={formik.values.email}
             onChange={formik.handleChange}
           />
