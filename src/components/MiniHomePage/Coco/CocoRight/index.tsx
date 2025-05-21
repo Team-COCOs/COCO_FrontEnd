@@ -21,7 +21,10 @@ const CocoRight = () => {
             </span>
             <span>
               오른쪽 하단의 말풍선 모양 버튼을 눌러봐. 그럼, 나와 대화를 시작할
-              수 있어... (속닥)
+              수 있어... (속닥){" "}
+              <span className="CocoRight_reloadText pixelFont">
+                말풍선이 안보이면 새로고침을 눌러줘!
+              </span>
             </span>
           </div>
           <BotpressChat />

@@ -93,6 +93,13 @@ export const CocoRightStyled = styled.div`
       line-height: 1.6;
       color: #374151;
       font-family: "Inter", sans-serif;
+      .CocoRight_reloadText {
+        color: gray;
+        border: none;
+        padding: none;
+        background-color: none;
+        font-size: 10px;
+      }
     }
 
     .CocoRight_imgWrap {
