@@ -82,6 +82,10 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
     updatedNewBoards();
   }, [id]);
 
+  const handlePhoto = () => {
+    router.push(`/photo/${id}`);
+  };
+
   return (
     <RecentPhotoStyled>
       <div className="RecentPhoto_wrap">
@@ -89,10 +93,10 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
         <div className="RecentPhoto_new">
           {photoTitles.length > 0 ? (
             <div className="RecentPhoto_new_photo Gulim">
-              <div className="RecentPhoto_new_phototitle">
+              <div className="RecentPhoto_new_phototitle" onClick={handlePhoto}>
                 <span>사진첩</span> {photoTitles[0]}
               </div>
-              <div className="RecentPhoto_new_phototitle">
+              <div className="RecentPhoto_new_phototitle" onClick={handlePhoto}>
                 {photoTitles[1] ? (
                   <>
                     <span>사진첩</span> {photoTitles[1]}
