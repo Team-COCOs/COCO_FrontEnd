@@ -11,6 +11,10 @@ export const CommentDiaryStyle = styled.div`
   }
   .CommentDiary_inputWrap {
     margin: 10px 0px;
+    input {
+      border: 1px solid gray;
+      padding: 1.8px;
+    }
   }
   .CommentDiary_commentLabel {
     font-size: 11px;

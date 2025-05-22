@@ -198,5 +198,8 @@ export const DiaryContentStyle = styled.div`
     .DiaryContent_page_wrap {
       padding: 3px 10px;
     }
+    .DiaryContent_findInput {
+      width: 50px;
+    }
   }
 `;
