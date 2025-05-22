@@ -3,10 +3,11 @@ import { CustomAudioStyle } from "./styled";
 
 interface AudioProps {
   src: string;
+  isPlayingGlobal: boolean;
   handlePlay: (isPlaying: boolean) => void;
 }
 
-const CustomAudio = ({ src, handlePlay }: AudioProps) => {
+const CustomAudio = ({ src, isPlayingGlobal, handlePlay }: AudioProps) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -48,6 +49,16 @@ const CustomAudio = ({ src, handlePlay }: AudioProps) => {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (!isPlayingGlobal && isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+    }
+  }, [isPlayingGlobal]);
 
   // 슬라이더로 재생 위치 변경
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
