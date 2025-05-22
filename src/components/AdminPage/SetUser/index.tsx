@@ -20,8 +20,8 @@ const SetUser: React.FC<SetUserProps> = ({ title }) => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axiosInstance.get("/users/allusers");
-      setUsers(res.data);
+      const res = await axiosInstance.get("admin/users");
+      setUsers(res.data.users);
     } catch (error) {
       console.error("유저 불러오기 실패", error);
     }
@@ -29,7 +29,7 @@ const SetUser: React.FC<SetUserProps> = ({ title }) => {
 
   const handleDelete = async (id: number) => {
     try {
-      await axiosInstance.delete(`/users/${id}`);
+      await axiosInstance.delete(`admin/users/${id}`);
       alert("유저 삭제 성공!");
       fetchUsers(); // 삭제 후 다시 데이터 불러오기
     } catch (error) {
@@ -65,8 +65,8 @@ const SetUser: React.FC<SetUserProps> = ({ title }) => {
     },
     {
       title: "가입일",
-      dataIndex: "createdAt",
-      key: "createdAt",
+      dataIndex: "joinDate",
+      key: "joinDate",
     },
     {
       title: "삭제",
