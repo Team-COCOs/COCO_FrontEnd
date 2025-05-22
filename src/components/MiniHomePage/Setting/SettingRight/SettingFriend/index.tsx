@@ -79,17 +79,19 @@ const SettingFriend = () => {
                   ✕
                 </button>
 
-                <img
-                  src={
-                    d.profile_image === "/avatarImg/default.png"
-                      ? d.friend_gender === "man"
-                        ? "/avatarImg/man_avatar1.png"
-                        : "/avatarImg/woman_avatar1.png"
-                      : d.profile_image
-                  }
-                  alt="프로필"
-                  className="Friend_img"
-                />
+                <div className="Friend_imgDiv">
+                  <img
+                    src={
+                      d.profile_image === "/avatarImg/default.png"
+                        ? d.friend_gender === "man"
+                          ? "/avatarImg/man_avatar1.png"
+                          : "/avatarImg/woman_avatar1.png"
+                        : d.profile_image
+                    }
+                    alt="프로필"
+                    className="Friend_img"
+                  />
+                </div>
 
                 <div className="Friend_text">
                   <div className="Friend_name pixelFont">{d.friend}</div>

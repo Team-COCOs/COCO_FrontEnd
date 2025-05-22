@@ -57,7 +57,9 @@ body {
 input,
 button,
 select,
-textarea {
+textarea,
+input[type="checkbox"],
+input[type="radio"] {
   background-color: white;
   color: black;
 }
