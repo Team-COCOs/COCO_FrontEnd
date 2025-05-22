@@ -74,6 +74,10 @@ const Folder = ({ type, onSave }: FolderProps) => {
 
         updatedTreeData = deleteNodeByKey(updatedTreeData, key);
       });
+
+      setCheckedKeys([]);
+      setEditingKey(null);
+      setEditTitle("");
     }
 
     setTreeData(updatedTreeData);
