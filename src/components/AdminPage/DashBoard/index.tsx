@@ -47,14 +47,11 @@ const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
         axiosInstance.get("admin/payments/daily"),
         axiosInstance.get("admin/payments/count"),
       ]);
-      console.log("userTotal", userTotal.data);
-      console.log("userMonthly", userMonthly.data);
-      console.log("paymentDaily", paymentDaily.data.daily);
 
       setUserStats({
         total: userTotal.data.count,
         daily: userDaily.data.daily,
-        monthly: userMonthly.data,
+        monthly: userMonthly.data.data,
       });
 
       setPaymentStats({
@@ -66,9 +63,6 @@ const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
 
     fetchStats();
   }, []);
-
-  console.log(userStats, "userStats");
-  console.log(paymentStats, "PaymentStats");
 
   return (
     <DashBoardStyled>
@@ -104,7 +98,7 @@ const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
 
         <h3 style={{ marginTop: 30 }}>월별 가입자 수</h3>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={userStats.monthly.data}>
+          <BarChart data={userStats.monthly}>
             <XAxis dataKey="month" />
             <YAxis />
             <Tooltip />
