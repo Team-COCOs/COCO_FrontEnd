@@ -13,7 +13,9 @@ export const DiaryContentStyle = styled.div`
     background-color: white;
     padding: 0px 25px;
   }
-
+  .DiaryContent_date {
+    color: rgb(51, 161, 194) !important;
+  }
   .DiaryContent_dateWrap {
     display: flex;
     align-items: center;
@@ -28,6 +30,9 @@ export const DiaryContentStyle = styled.div`
     color: #ddd;
     padding-left: 5px;
     font-weight: 400;
+    span {
+      color: #ddd !important;
+    }
   }
 
   .DiaryContent_weather {
@@ -64,6 +69,9 @@ export const DiaryContentStyle = styled.div`
     letter-spacing: 1px;
     width: 100%;
     border-bottom: 1px solid #ddd;
+    div {
+      color: #aaa;
+    }
   }
   /* 페이지 위아래 버튼 */
   .DiaryContent_btns {
