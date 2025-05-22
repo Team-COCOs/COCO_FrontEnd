@@ -2,6 +2,7 @@ import axiosInstance from "@/lib/axios";
 import Image from "next/image";
 import { useState } from "react";
 import ShadowModal from "../..";
+import Skeleton from "@mui/material/Skeleton";
 
 interface FriendModalProps {
   onClose: () => void;
@@ -12,6 +13,7 @@ interface FriendModalProps {
 const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [loaded, setLoaded] = useState(false);
 
   const frienRequest = async (type: string) => {
     try {
@@ -52,6 +54,14 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
 
           <div className="Friend_info">
             <div className="Friend_img">
+              {!loaded && (
+                <Skeleton
+                  variant="rectangular"
+                  width="100%"
+                  height="100%"
+                  sx={{ position: "absolute", top: 0, left: 0, zIndex: 1 }}
+                />
+              )}
               <Image
                 src={
                   data.profileImg === null
@@ -61,6 +71,7 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
                     : data.profileImg
                 }
                 alt="friend image"
+                onLoad={() => setLoaded(true)}
                 fill
               />
             </div>

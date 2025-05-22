@@ -9,10 +9,12 @@ import DOMPurify from "dompurify";
 import { formatKoreanDate } from "@/utils/KrDate/date";
 import axios from "axios";
 import { PhotoData, PhotoProps } from "@/utils/Write/interface";
+import Skeleton from "@mui/material/Skeleton";
 
 const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
   const [photoData, setPhotoData] = useState<PhotoData[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loaded, setLoaded] = useState(false);
 
   const itemsPerPage = 5;
 
@@ -145,9 +147,23 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
 
                 <div className="PhotoRight_imgBox">
                   <div className="PhotoRight_img">
+                    {!loaded && (
+                      <Skeleton
+                        variant="rectangular"
+                        width="100%"
+                        height="auto"
+                        sx={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          zIndex: 1,
+                        }}
+                      />
+                    )}
                     <img
                       src={`${process.env.NEXT_PUBLIC_API_URL}${data.photo_url}`}
                       alt="photo"
+                      onLoad={() => setLoaded(true)}
                     />
                   </div>
                 </div>

@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 import axios from "axios";
+import { useState } from "react";
+import Skeleton from "@mui/material/Skeleton";
 
 interface PayModalProps {
   onClose: () => void;
@@ -32,6 +34,8 @@ const PayModal = ({ onClose }: PayModalProps) => {
     }
   };
 
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <>
       <div className="title-bar">
@@ -48,7 +52,25 @@ const PayModal = ({ onClose }: PayModalProps) => {
         <div className="Pay_dotoriImgs">
           <div className="Pay_dotori">
             <div className="Pay_img">
-              <Image src="/dotori/dotori10.png" alt="dotori image" fill />
+              {!loaded && (
+                <Skeleton
+                  variant="rectangular"
+                  width="100%"
+                  height="100%"
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    zIndex: 1,
+                  }}
+                />
+              )}
+              <Image
+                src="/dotori/dotori10.png"
+                alt="dotori image"
+                fill
+                onLoad={() => setLoaded(true)}
+              />
             </div>
             <button
               className="Pay_btn"
@@ -59,7 +81,25 @@ const PayModal = ({ onClose }: PayModalProps) => {
           </div>
           <div className="Pay_dotori">
             <div className="Pay_img">
-              <Image src="/dotori/dotori30.png" alt="dotori image" fill />
+              {!loaded && (
+                <Skeleton
+                  variant="rectangular"
+                  width="100%"
+                  height="100%"
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    zIndex: 1,
+                  }}
+                />
+              )}
+              <Image
+                src="/dotori/dotori30.png"
+                alt="dotori image"
+                fill
+                onLoad={() => setLoaded(true)}
+              />
             </div>
             <button
               className="Pay_btn"
@@ -70,7 +110,25 @@ const PayModal = ({ onClose }: PayModalProps) => {
           </div>
           <div className="Pay_dotori">
             <div className="Pay_img">
-              <Image src="/dotori/dotori50.png" alt="dotori image" fill />
+              {!loaded && (
+                <Skeleton
+                  variant="rectangular"
+                  width="100%"
+                  height="100%"
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    zIndex: 1,
+                  }}
+                />
+              )}
+              <Image
+                src="/dotori/dotori50.png"
+                alt="dotori image"
+                fill
+                onLoad={() => setLoaded(true)}
+              />
             </div>
             <button
               className="Pay_btn"
@@ -81,7 +139,25 @@ const PayModal = ({ onClose }: PayModalProps) => {
           </div>
           <div className="Pay_dotori">
             <div className="Pay_img">
-              <Image src="/dotori/dotori100.png" alt="dotori image" fill />
+              {!loaded && (
+                <Skeleton
+                  variant="rectangular"
+                  width="100%"
+                  height="100%"
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    zIndex: 1,
+                  }}
+                />
+              )}
+              <Image
+                src="/dotori/dotori100.png"
+                alt="dotori image"
+                fill
+                onLoad={() => setLoaded(true)}
+              />
             </div>
             <button
               className="Pay_btn"

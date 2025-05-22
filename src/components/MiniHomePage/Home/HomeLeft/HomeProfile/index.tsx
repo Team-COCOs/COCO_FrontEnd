@@ -2,6 +2,7 @@ import { HomeProfileStyled } from "./styled";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Skeleton from "@mui/material/Skeleton";
 
 interface UserData {
   title: string;
@@ -26,6 +27,7 @@ const HomeProfile = () => {
   const userId = router.query.id;
 
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -53,9 +55,18 @@ const HomeProfile = () => {
           <span className="pixelFont">TODAY IS...</span> {moodText}
         </div>
         <div className="HomeProfile_imgWrap">
+          {!loaded && (
+            <Skeleton
+              variant="rectangular"
+              width="100%"
+              height="100%"
+              sx={{ position: "absolute", top: 0, left: 0, zIndex: 1 }}
+            />
+          )}
           <img
             src={userData?.minihomepi_image || "/avatarImg/defaultProfile.png"}
             alt="Profile img"
+            onLoad={() => setLoaded(true)}
           />
         </div>
         <div className="HomeProfile_textarea Gulim">
