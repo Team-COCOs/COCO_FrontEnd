@@ -154,12 +154,6 @@ const DiaryContent = ({
     fetchDiary();
   }, [user?.id, id]);
 
-  const stripHtml = (html: string) => {
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = html;
-    return tempDiv.textContent || tempDiv.innerText || "";
-  };
-
   return (
     <DiaryContentStyle>
       <>
@@ -201,8 +195,10 @@ const DiaryContent = ({
                   </div>
                 </div>
                 <div className="DiaryContent_contentText Gulim">
-                  <div>{stripHtml(diary.content)}</div>
-
+                  {/* <div>{stripHtml(diary.content)}</div> */}
+                  <div
+                    dangerouslySetInnerHTML={{ __html: diary.content }}
+                  ></div>
                   <div className="DiaryContent_fixDeletebtn Gulim">
                     {Number(user?.id) === Number(id) ? (
                       <div className="DiaryContent_fixDeletebtn">
