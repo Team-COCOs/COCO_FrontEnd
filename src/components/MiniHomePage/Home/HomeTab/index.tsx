@@ -33,9 +33,11 @@ const HomeTab: React.FC<HomeTabProps> = ({ activeTab, isOwner }) => {
   // 홈 탭 필터
   const filteredTabs = Object.entries(TAB_LABELS).filter(([key]) => {
     const isHomeTab = key === "home";
-    const isOwnerTab = isOwner && (key === "setting" || key === "profile");
+    const isOwnerTab =
+      isOwner && (key === "setting" || key === "profile" || key === "coco");
     const allowed = userTabs.includes(key);
-    const isOtherVisibleTab = key !== "setting" && key !== "profile";
+    const isOtherVisibleTab =
+      key !== "setting" && key !== "profile" && key !== "coco";
     return isHomeTab || isOwnerTab || (allowed && isOtherVisibleTab);
   });
 

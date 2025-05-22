@@ -26,6 +26,7 @@ export const DragMiniroomStyled = styled.div`
       padding: 6px 8px;
       cursor: pointer;
       margin-top: 5px;
+      margin-bottom: 15px;
     }
   }
   .DragMiniroom_miniroomtext {
