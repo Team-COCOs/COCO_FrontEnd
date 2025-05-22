@@ -25,8 +25,6 @@ const SetProduct: React.FC<SetProductProps> = ({ title, items }) => {
     }
   };
 
-  console.log(items, "items");
-
   const columns = [
     {
       title: "ID",
@@ -73,14 +71,14 @@ const SetProduct: React.FC<SetProductProps> = ({ title, items }) => {
       ),
     },
   ];
-
+  console.log(items, "items");
   const dataSource = items.map((item: any) => ({
     key: item.id.toString(),
     id: item.id,
     name: item.name,
     category: item.category,
     price: item.price,
-    file: item.full_url,
+    file: item.category === "bgm" ? item.full_url : item.file,
   }));
 
   return (
