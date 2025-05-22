@@ -22,6 +22,7 @@ export const RecentPhotoStyled = styled.div`
       font-size: 12px;
       padding: 5px 2px;
       color: #4b4b4b;
+      cursor: pointer;
       span {
         background-color: rgb(255, 129, 129);
         border-radius: 3px;

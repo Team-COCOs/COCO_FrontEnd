@@ -117,7 +117,6 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
       }
     });
 
-    console.log(layoutData, "최종 layoutData");
     onDragComplete(
       layoutData.map((item) => {
         const base = {
@@ -260,7 +259,6 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
           `${process.env.NEXT_PUBLIC_API_URL}/minirooms/${id}/layout`
         );
         const data = response.data;
-        console.log(data, "data??");
         // 서버에서 받아온 데이터를 state에 적용
         const formattedItems = data.map((item: any) => ({
           id: item.id,
@@ -270,7 +268,6 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
           top: item.top,
           storeItems: { file: item?.file },
         }));
-        console.log(formattedItems, "formattedItems??");
         setSelectedMinimi(formattedItems);
         setItems(formattedItems);
         setInitialItems(formattedItems);

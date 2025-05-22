@@ -50,8 +50,9 @@ export const AdminPageStyled = styled.div`
       width: 256px;
       position: fixed;
       left: 0;
-      height: 100vh;
+      /* height: 100vh; */
       z-index: 100;
+      overflow-y: auto;
     }
     .Admin_content_right {
       width: calc(100vw - 256px);

@@ -1,5 +1,4 @@
-// src/features/Admin/components/AdminNav.tsx
-import React from "react";
+import React, { useState } from "react";
 import { Menu, ConfigProvider } from "antd";
 import { PlusCircleOutlined, SettingOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -7,6 +6,15 @@ import type { MenuProps } from "antd";
 const items: MenuProps["items"] = [
   {
     key: "sub1",
+    label: "대쉬보드",
+    icon: <PlusCircleOutlined style={{ color: "#f87013" }} />,
+    children: [
+      { key: "9", label: "통계" },
+      { key: "10", label: "유저관리" },
+    ],
+  },
+  {
+    key: "sub3",
     label: "상품 추가",
     icon: <PlusCircleOutlined style={{ color: "#f87013" }} />,
     children: [
@@ -29,14 +37,21 @@ const items: MenuProps["items"] = [
   },
 ];
 
-// 타입 지정
 interface AdminNavProps {
   onSelectKey: (key: string) => void;
 }
 
 const AdminNav: React.FC<AdminNavProps> = ({ onSelectKey }) => {
+  const [selectedKeys, setSelectedKeys] = useState(["9"]); // 통계
+  const [openKeys, setOpenKeys] = useState(["sub1"]); // 대쉬보드
+
   const onClick = (e: any) => {
+    setSelectedKeys([e.key]);
     onSelectKey(e.key);
+  };
+
+  const onOpenChange = (keys: string[]) => {
+    setOpenKeys(keys);
   };
 
   return (
@@ -49,11 +64,12 @@ const AdminNav: React.FC<AdminNavProps> = ({ onSelectKey }) => {
     >
       <Menu
         onClick={onClick}
+        onOpenChange={onOpenChange}
         style={{ width: 256, height: "calc(100vh - 80px)" }}
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
         mode="inline"
         items={items}
+        selectedKeys={selectedKeys}
+        openKeys={openKeys}
       />
     </ConfigProvider>
   );

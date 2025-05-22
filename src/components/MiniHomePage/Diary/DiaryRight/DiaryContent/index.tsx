@@ -55,8 +55,6 @@ const DiaryContent = ({
 }: DiaryContentProps) => {
   const [diaryData, setDiaryData] = useState<DiaryType[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  console.log(selectedDiaryMenu, "selectedDiaryMenu?");
-  console.log(diaryData, "diaryData??");
   // selectedDate가 있을 경우 해당 날짜의 게시글만 필터링
   const filteredDiary = diaryData.filter((diary) => {
     // 날짜 필터
@@ -195,7 +193,10 @@ const DiaryContent = ({
                   </div>
                 </div>
                 <div className="DiaryContent_contentText Gulim">
-                  <div>{diary.content}</div>
+                  {/* <div>{stripHtml(diary.content)}</div> */}
+                  <div
+                    dangerouslySetInnerHTML={{ __html: diary.content }}
+                  ></div>
                   <div className="DiaryContent_fixDeletebtn Gulim">
                     {Number(user?.id) === Number(id) ? (
                       <div className="DiaryContent_fixDeletebtn">

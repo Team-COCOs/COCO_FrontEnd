@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { AdminRightStyled } from "./styled";
 import AddProduct from "../AddProduct";
 import SetProduct from "../SetProduct";
+import SetUser from "../SetUser";
+import DashBoard from "../DashBoard";
 
 // 가져오기
 import { useDispatch, useSelector } from "react-redux";
@@ -82,6 +84,12 @@ const AdminRight: React.FC<AdminRightProps> = ({ selectedKey }) => {
         );
       case "8":
         return <SetProduct title="노래" items={filterItemsByType("bgm")} />;
+      case "9":
+        return (
+          <DashBoard title="통계" items={filterItemsByType("dashboard")} />
+        );
+      case "10":
+        return <SetUser title="유저관리" />;
 
       default:
         return <div>선택된 항목이 없습니다.</div>;

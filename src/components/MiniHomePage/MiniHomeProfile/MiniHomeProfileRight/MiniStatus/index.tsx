@@ -10,13 +10,13 @@ import Skeleton from "@mui/material/Skeleton";
 
 interface UserData {
   title: string;
-  minihompi_image: string;
+  minihomepi_image: string;
   mood: string;
   introduction: string;
 }
 
 const MiniStatus = () => {
-  const [minihompi_image, setMinihompi_image] = useState<string>(
+  const [minihomepi_image, setMinihomepi_image] = useState<string>(
     "/avatarImg/defaultProfile.png"
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -38,7 +38,7 @@ const MiniStatus = () => {
         console.log("userData : ", res.data);
 
         setUserData(res.data);
-        setMinihompi_image(res.data.minihompi_image);
+        setMinihomepi_image(res.data.minihomepi_image);
       } catch (e) {
         console.error("에러 발생:", e);
       }
@@ -51,7 +51,7 @@ const MiniStatus = () => {
     const file = e.target.files?.[0];
     if (file) {
       const fileUrl = URL.createObjectURL(file);
-      setMinihompi_image(fileUrl);
+      setMinihomepi_image(fileUrl);
       setSelectedFile(file);
     }
   };
@@ -73,9 +73,9 @@ const MiniStatus = () => {
 
     formData.append("name", values.title);
     if (selectedFile) {
-      formData.append("minihompi_image", selectedFile);
+      formData.append("minihomepi_image", selectedFile);
     } else {
-      formData.append("minihompi_image_url", values.minihompi_image);
+      formData.append("minihomepi_image_url", values.minihomepi_image);
     }
     formData.append("status", values.mood);
     formData.append("introduction", values.introduction);
@@ -95,8 +95,8 @@ const MiniStatus = () => {
   // 초기 데이터
   const initialValues: UserData = {
     title: userData?.title || "",
-    minihompi_image:
-      userData?.minihompi_image || "/avatarImg/defaultProfile.png",
+    minihomepi_image:
+      userData?.minihomepi_image || "/avatarImg/defaultProfile.png",
     mood: userData?.mood || "happy",
     introduction: userData?.introduction || "",
   };
@@ -123,7 +123,7 @@ const MiniStatus = () => {
                   />
                 )}
                 <Image
-                  src={minihompi_image || "/avatarImg/defaultProfile.png"}
+                  src={minihomepi_image || "/avatarImg/defaultProfile.png"}
                   alt="profile"
                   fill
                   onLoad={() => setLoaded(true)}
