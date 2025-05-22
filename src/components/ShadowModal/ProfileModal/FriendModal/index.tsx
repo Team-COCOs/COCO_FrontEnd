@@ -22,7 +22,11 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
       });
       setMessage(res.data.message);
       setIsOpen(true);
-    } catch (e) {
+    } catch (e: any) {
+      if (e.response?.status === 401) {
+        alert("로그인이 필요합니다.");
+        window.location.reload();
+      }
       console.log(e);
     }
   };
