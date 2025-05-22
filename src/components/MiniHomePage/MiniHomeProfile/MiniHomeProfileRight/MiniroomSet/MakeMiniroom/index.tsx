@@ -185,6 +185,27 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
         ...layoutDataFromUntouched,
       ];
 
+      // 말풍선이 fullLayoutData에 없으면 추가
+      const hasSpeechBubble = fullLayoutData.some(
+        (item) => item.type === "speechBubble"
+      );
+
+      if (!hasSpeechBubble) {
+        const speechBubble = initialItems.find(
+          (item) => item.type === "speechBubble"
+        );
+        if (speechBubble) {
+          fullLayoutData.push({
+            id: speechBubble.id,
+            text: speechBubble.text || "",
+            left: speechBubble.left,
+            top: speechBubble.top,
+            type: "speechBubble",
+            created_at: new Date().toISOString(),
+          });
+        }
+      }
+
       // 저장 요청
       await axiosInstance.post("/minirooms/background", {
         purchaseId: backgroundPayload,

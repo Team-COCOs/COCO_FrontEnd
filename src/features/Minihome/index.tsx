@@ -154,6 +154,9 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
           hostId: Number(id),
         });
       } catch (err: any) {
+        if (err.response?.status === 401) {
+          return;
+        }
         console.error("방문자 수 기록 실패:", err);
         if (err.response?.status === 404) {
           alert("존재하지 않는 페이지입니다.");
