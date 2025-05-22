@@ -40,12 +40,15 @@ export const saveTreeData = async (
     const res = await axiosInstance.patch(`/${type}/saveTree`, {
       folders: flat,
     });
+
+    console.log("트리 저장 성공", res.data);
+
     if (res.data.message) {
       alert(res.data.message);
       return;
+    } else {
+      onSave();
     }
-    console.log("트리 저장 성공", res.data);
-    onSave();
   } catch (e: any) {
     if (e.response?.status === 401) {
       alert("로그인이 필요합니다.");
