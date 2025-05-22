@@ -47,7 +47,9 @@ const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
         axiosInstance.get("admin/payments/daily"),
         axiosInstance.get("admin/payments/count"),
       ]);
-
+      const sortedPaymentDaily = [...paymentDaily.data.daily].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
       setUserStats({
         total: userTotal.data.count,
         daily: userDaily.data.daily[0].count,
@@ -57,7 +59,7 @@ const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
       setPaymentStats({
         totalCount: countTotal.data.count,
         totalAmount: paymentTotal.data.amount,
-        daily: paymentDaily.data.daily,
+        daily: sortedPaymentDaily,
       });
     };
 
