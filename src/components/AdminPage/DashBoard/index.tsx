@@ -18,13 +18,44 @@ interface SetProductProps {
   items: any[];
 }
 
+// 👉 일별 가입자 수
+interface DailyUserStat {
+  date: string;
+  count: number;
+}
+
+// 👉 월별 가입자 수
+interface MonthlyUserStat {
+  month: string;
+  count: number;
+}
+
+// 👉 일별 결제 금액
+interface DailyPaymentStat {
+  date: string;
+  total: number;
+}
+
+interface UserStats {
+  total: number;
+  daily: DailyUserStat[]; // 👈 수정
+  monthly: MonthlyUserStat[];
+}
+
+interface PaymentStats {
+  totalCount: number;
+  totalAmount: number;
+  daily: DailyPaymentStat[]; // 👈 수정
+}
+
 const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
-  const [userStats, setUserStats] = useState({
+  const [userStats, setUserStats] = useState<UserStats>({
     total: 0,
     daily: [],
     monthly: [],
   });
-  const [paymentStats, setPaymentStats] = useState({
+
+  const [paymentStats, setPaymentStats] = useState<PaymentStats>({
     totalCount: 0,
     totalAmount: 0,
     daily: [],
