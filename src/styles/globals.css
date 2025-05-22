@@ -337,3 +337,8 @@ a {
     left: 8px;
   }
 }
+
+/* 다이어리 글씨색 */
+.DiaryContent_dateWrap {
+  color: rgb(51, 161, 194) !important;
+}
