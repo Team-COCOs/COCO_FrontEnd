@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const FindStyle = styled.div`
+  background-color: white;
+  color: black;
+
   &.Find_wrap {
     display: flex;
     flex-direction: column;
