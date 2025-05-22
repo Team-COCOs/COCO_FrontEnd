@@ -50,7 +50,7 @@ const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
 
       setUserStats({
         total: userTotal.data.count,
-        daily: userDaily.data.daily,
+        daily: userDaily.data.daily[0].count,
         monthly: userMonthly.data.data,
       });
 
