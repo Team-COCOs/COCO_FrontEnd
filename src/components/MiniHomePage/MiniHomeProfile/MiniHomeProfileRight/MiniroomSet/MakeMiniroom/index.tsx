@@ -45,12 +45,12 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
 
   // 모바일 여부 확인
   const isMobile = useIsMobile();
-
   const DND_BACKEND = isMobile ? TouchBackend : HTML5Backend;
-
   const backendOptions = isMobile ? { enableMouseEvents: true } : undefined;
-
   if (typeof window === "undefined") return null;
+
+  // 미니미, 말풍선 초기 데이터
+  const [initialItems, setInitialItems] = useState<any[]>([]);
 
   // 기본 미니미 미니룸
   const defaultMiniroom = {
@@ -152,32 +152,46 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
       const isBackgroundChanged =
         String(backgroundPayload) !== String(miniroomBackgroundId);
 
-      // 레이아웃 저장 여부 체크
-      const hasLayoutChanged = draggedData.some(
-        (item) =>
-          item.x !== item.originalX ||
-          item.y !== item.originalY ||
-          item.text !== item.originalText
-      );
-
-      // 미니미 데이터로 변경된 레이아웃 만들기
-      const layoutData = draggedData.map((item) => ({
+      // 드래그된 미니미 데이터 → 서버에 저장할 형식으로 변환
+      const layoutDataFromDragged = draggedData.map((item) => ({
         id: item.id,
-        text: item.type !== "speechBubble" ? null : item.text, // 'speechBubble'만 텍스트 포함
+        text: item.type !== "speechBubble" ? null : item.text,
         left: item.x,
         top: item.y,
-        type: item.type === "speechBubble" ? "speechBubble" : "minimi", // 타입에 맞게 구분
+        type: item.type === "speechBubble" ? "speechBubble" : "minimi",
         created_at: new Date().toISOString(),
       }));
 
-      // 배경 저장 (변경 여부와 관계없이 저장)
+      // 드래그하지 않은 미니미를 찾아 기존 좌표로 추가
+      const draggedIds = draggedData.map((item) => item.id);
+      const untouchedMinimi = selectedMinimi.filter(
+        (minimi) => !draggedIds.includes(minimi.id)
+      );
+
+      const layoutDataFromUntouched = untouchedMinimi.map((minimi) => {
+        const initialItem = initialItems.find((item) => item.id === minimi.id);
+        return {
+          id: minimi.id,
+          text: null,
+          left: initialItem?.left || 0,
+          top: initialItem?.top || 0,
+          type: "minimi",
+          created_at: new Date().toISOString(),
+        };
+      });
+
+      const fullLayoutData = [
+        ...layoutDataFromDragged,
+        ...layoutDataFromUntouched,
+      ];
+
+      // 저장 요청
       await axiosInstance.post("/minirooms/background", {
         purchaseId: backgroundPayload,
       });
 
-      // 레이아웃 저장 (변경 여부와 관계없이 저장)
       await axiosInstance.post("/minirooms/save-layout", {
-        items: layoutData,
+        items: fullLayoutData,
       });
 
       alert("미니룸 레이아웃이 저장되었습니다!");
@@ -192,6 +206,62 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
       }
     }
   };
+
+  // const handleLayoutSave = async () => {
+  //   try {
+  //     const isDefaultMiniroom = selectedMiniroom?.id === defaultMiniroom.id;
+
+  //     const backgroundPayload = selectedMiniroom
+  //       ? isDefaultMiniroom
+  //         ? "default-miniroom"
+  //         : selectedMiniroom.id
+  //       : "default-miniroom";
+
+  //     const isBackgroundChanged =
+  //       String(backgroundPayload) !== String(miniroomBackgroundId);
+
+  //     // 레이아웃 저장 여부 체크
+  //     const hasLayoutChanged = draggedData.some(
+  //       (item) =>
+  //         item.x !== item.originalX ||
+  //         item.y !== item.originalY ||
+  //         item.text !== item.originalText
+  //     );
+  //     console.log(hasLayoutChanged, "haslayoutchanged?");
+  //     // 미니미 데이터로 변경된 레이아웃 만들기
+  //     const layoutData = draggedData.map((item) => ({
+  //       id: item.id,
+  //       text: item.type !== "speechBubble" ? null : item.text, // 'speechBubble'만 텍스트 포함
+  //       left: item.x,
+  //       top: item.y,
+  //       type: item.type === "speechBubble" ? "speechBubble" : "minimi", // 타입에 맞게 구분
+  //       created_at: new Date().toISOString(),
+  //     }));
+
+  //     console.log(draggedData, "???미니미데이터");
+
+  //     // 배경 저장 (변경 여부와 관계없이 저장)
+  //     await axiosInstance.post("/minirooms/background", {
+  //       purchaseId: backgroundPayload,
+  //     });
+
+  //     // 레이아웃 저장 (변경 여부와 관계없이 저장)
+  //     await axiosInstance.post("/minirooms/save-layout", {
+  //       items: layoutData,
+  //     });
+
+  //     alert("미니룸 레이아웃이 저장되었습니다!");
+  //     router.push(`/home/${id}`);
+  //   } catch (error: any) {
+  //     if (error.response?.status === 401) {
+  //       alert("로그인이 필요합니다.");
+  //       router.push(`/home/${id}`);
+  //     } else {
+  //       console.error("미니룸 레이아웃 저장 실패:", error.message || error);
+  //       alert("서버와의 연결에 문제가 발생했습니다. 다시 시도해주세요.");
+  //     }
+  //   }
+  // };
   // 미니룸 배경
   useEffect(() => {
     if (!id) return;
@@ -243,6 +313,8 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
                 selectedMinimi={selectedMinimi}
                 setSelectedMinimi={setSelectedMinimi}
                 onDragComplete={(draggedItems) => setDraggedData(draggedItems)}
+                initialItems={initialItems}
+                setInitialItems={setInitialItems}
               />
             </div>
 

@@ -13,6 +13,8 @@ interface DragMiniroomProps {
   selectedMinimi: any[];
   onDragComplete: (draggedItems: any[]) => void;
   setSelectedMinimi: React.Dispatch<React.SetStateAction<any[]>>;
+  initialItems: any[];
+  setInitialItems: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 const DragMiniroom: React.FC<DragMiniroomProps> = ({
@@ -20,6 +22,8 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
   selectedMinimi,
   onDragComplete,
   setSelectedMinimi,
+  initialItems,
+  setInitialItems,
 }) => {
   const { query } = useRouter();
   const { id } = query;
@@ -29,7 +33,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
   const [layoutItems, setLayoutItems] = useState<
     { id: string; type: "minimi" | "miniroom"; x: number; y: number }[]
   >([]);
-  const [initialItems, setInitialItems] = useState<any[]>([]);
+  // const [initialItems, setInitialItems] = useState<any[]>([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -105,14 +109,27 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
       })),
     ];
 
+    // selectedMinimi.forEach((minimi) => {
+    //   const alreadyExists = updatedItems.some((item) => item.id === minimi.id);
+    //   if (!alreadyExists) {
+    //     layoutData.push({
+    //       id: minimi.id,
+    //       type: "minimi",
+    //       x: 0,
+    //       y: 0,
+    //     });
+    //   }
+    // });
+
     selectedMinimi.forEach((minimi) => {
       const alreadyExists = updatedItems.some((item) => item.id === minimi.id);
       if (!alreadyExists) {
+        const initialItem = initialItems.find((item) => item.id === minimi.id);
         layoutData.push({
           id: minimi.id,
           type: "minimi",
-          x: 0,
-          y: 0,
+          x: initialItem?.left || 0,
+          y: initialItem?.top || 0,
         });
       }
     });
