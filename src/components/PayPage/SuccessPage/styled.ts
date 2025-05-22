@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
 export const PaymentSuccessStyled = styled.div`
-  &.main-wrap-success {
+  background-color: white;
+  color: black;
+
+  .main-wrap-success {
     width: 100%;
     height: 100vh;
     display: flex;

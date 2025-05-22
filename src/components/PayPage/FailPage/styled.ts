@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
 export const PaymentFailStyled = styled.div`
-  &.main-wrap-error {
+  background-color: white;
+  color: black;
+
+  .main-wrap-error {
     width: 100%;
     height: 100vh;
     display: flex;

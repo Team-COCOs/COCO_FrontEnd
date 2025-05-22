@@ -5,6 +5,7 @@ import { ModalStyle } from "./styled";
 import PayModal from "./PayModal";
 import ProfileModal from "./ProfileModal";
 import FriendModal from "./ProfileModal/FriendModal";
+import ConfirmModal from "./ConfirmModal";
 
 interface ModalProps {
   type: string;
@@ -13,6 +14,7 @@ interface ModalProps {
   message?: string;
   data?: any;
   userName?: string;
+  onConfirm?: () => void;
 }
 
 const ShadowModal = ({
@@ -22,6 +24,7 @@ const ShadowModal = ({
   message,
   data,
   userName,
+  onConfirm,
 }: ModalProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -64,6 +67,8 @@ const ShadowModal = ({
       root.render(
         <FriendModal onClose={onClose} data={data} userName={userName!} />
       );
+    } else if (type === "confirm") {
+      root.render(<ConfirmModal onClose={onClose} onConfirm={onConfirm!} />);
     } else {
       root.render(
         <ProfileModal
