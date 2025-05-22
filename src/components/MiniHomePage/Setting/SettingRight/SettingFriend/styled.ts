@@ -74,12 +74,18 @@ export const SettingFriendStyle = styled.div`
             }
           }
 
-          .Friend_img {
+          .Friend_imgDiv {
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            object-fit: cover;
             margin-bottom: 10px;
+            overflow: hidden;
+          }
+
+          .Friend_img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
           }
 
           .Friend_text {
