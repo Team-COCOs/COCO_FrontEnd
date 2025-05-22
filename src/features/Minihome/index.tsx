@@ -118,10 +118,7 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
 
       try {
         const token = Cookies.get("accessToken");
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/visit/${
-          token ? "auth" : "guest"
-        }`;
-
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/visit/auth`;
         await axios.post(
           url,
           { hostId: Number(id) },
