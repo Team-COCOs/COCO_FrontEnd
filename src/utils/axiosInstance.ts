@@ -2,6 +2,21 @@ import axios from "axios";
 import Router from "next/router";
 import Cookies from "js-cookie";
 
+// 👇 axiosInstance.ts 파일 맨 위에 추가
+let isRefreshing = false;
+let failedQueue: any[] = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL, // 환경변수 사용
   withCredentials: true,
@@ -28,6 +43,22 @@ axiosInstance.interceptors.response.use(
     // access_token 만료로 401 에러가 발생하고, 아직 재시도 안한 경우
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
+      // 👇 리프레시 진행 중이면 큐에 추가하고 기다림
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({
+            resolve: (token: string) => {
+              originalRequest.headers["Authorization"] = `Bearer ${token}`;
+              resolve(axiosInstance(originalRequest));
+            },
+            reject: (err: any) => reject(err),
+          });
+        });
+      }
+
+      // 👇 리프레시 시작
+      isRefreshing = true;
+
       const baseURL = process.env.NEXT_PUBLIC_API_URL;
       try {
         const refreshToken = Cookies.get("refreshToken");
@@ -52,6 +83,7 @@ axiosInstance.interceptors.response.use(
           Cookies.remove("accessToken");
           Cookies.remove("refreshToken");
           Router.push("/");
+          processQueue(new Error("No new token"), null);
           return Promise.reject(error);
         }
 
@@ -60,17 +92,18 @@ axiosInstance.interceptors.response.use(
           path: "/",
           sameSite: "Strict",
         });
-
+        processQueue(null, newAccessToken);
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
         // 원래 요청을 재시도
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         Cookies.remove("accessToken");
         Cookies.remove("refreshToken");
-
         Router.push("/");
-
+        processQueue(refreshError, null); // 👈 추가
         return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false; // 👈 꼭 필요
       }
     }
     return Promise.reject(error);
