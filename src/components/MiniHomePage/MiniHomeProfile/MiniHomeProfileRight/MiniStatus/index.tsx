@@ -6,6 +6,7 @@ import axiosInstance from "@/lib/axios";
 import { Field, Form, Formik } from "formik";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Skeleton from "@mui/material/Skeleton";
 
 interface UserData {
   title: string;
@@ -25,6 +26,7 @@ const MiniStatus = () => {
   const { id } = router.query;
   const [userData, setUserData] = useState<UserData | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -112,10 +114,19 @@ const MiniStatus = () => {
           <div className="MiniStatus_top">
             <div className="MiniStatus_left">
               <div className="MiniStatus_img">
+                {!loaded && (
+                  <Skeleton
+                    variant="rectangular"
+                    width="100%"
+                    height="100%"
+                    sx={{ position: "absolute", top: 0, left: 0, zIndex: 1 }}
+                  />
+                )}
                 <Image
                   src={minihompi_image || "/avatarImg/defaultProfile.png"}
                   alt="profile"
                   fill
+                  onLoad={() => setLoaded(true)}
                 />
               </div>
 
