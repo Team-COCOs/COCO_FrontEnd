@@ -43,7 +43,7 @@ export const saveTreeData = async (
 
     console.log("트리 저장 성공", res.data);
 
-    if (res.data.message) {
+    if (res.data.message !== "폴더 트리 저장 완료") {
       alert(res.data.message);
       return;
     } else {
