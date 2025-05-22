@@ -169,6 +169,7 @@ export const FriendCommentStyled = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 3px;
   }
 
   .FriendComment_delete {
