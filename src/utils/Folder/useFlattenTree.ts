@@ -1,6 +1,7 @@
 import axiosInstance from "@/lib/axios";
 import { TreeNode } from "./types";
 import { NextRouter } from "next/router";
+import { resolveSoa } from "dns";
 
 // 데이터 평탄화
 export const flattenTreeData = (treeData: TreeNode[]) => {
@@ -39,6 +40,10 @@ export const saveTreeData = async (
     const res = await axiosInstance.patch(`/${type}/saveTree`, {
       folders: flat,
     });
+    if (res.data.message) {
+      alert(res.data.message);
+      return;
+    }
     console.log("트리 저장 성공", res.data);
     onSave();
   } catch (e: any) {
