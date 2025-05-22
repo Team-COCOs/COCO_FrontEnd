@@ -53,5 +53,6 @@ export const saveTreeData = async (
       console.log("사진첩 불러오기 에러 : ", e);
       alert("트리 저장 중 오류가 발생했습니다.");
     }
+    return null;
   }
 };
