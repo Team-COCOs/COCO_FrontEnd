@@ -139,6 +139,7 @@ const MinimiSet = () => {
                 checked={String(selectedMinimiId) === String(minimi.id)}
                 onChange={() => handleChange(minimi.id)}
               />
+
               <div className="MinimiSet_minimi_imgWrap">
                 <img
                   src={minimi.storeItems.file}
