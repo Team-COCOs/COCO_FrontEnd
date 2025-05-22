@@ -58,7 +58,6 @@ export const MusicPlayerProvider = ({
       audio.pause();
     }
   }, [isPlaying, currentTrack]);
-
   useEffect(() => {
     const onFirstUserInteraction = () => {
       if (!hasPlayedOnce && playlist.length > 0) {
@@ -66,14 +65,17 @@ export const MusicPlayerProvider = ({
       }
       window.removeEventListener("click", onFirstUserInteraction);
       window.removeEventListener("keydown", onFirstUserInteraction);
+      window.removeEventListener("touchstart", onFirstUserInteraction);
     };
 
     window.addEventListener("click", onFirstUserInteraction);
     window.addEventListener("keydown", onFirstUserInteraction);
+    window.addEventListener("touchstart", onFirstUserInteraction);
 
     return () => {
       window.removeEventListener("click", onFirstUserInteraction);
       window.removeEventListener("keydown", onFirstUserInteraction);
+      window.removeEventListener("touchstart", onFirstUserInteraction);
     };
   }, [hasPlayedOnce, playlist]);
 
