@@ -25,6 +25,8 @@ const SetProduct: React.FC<SetProductProps> = ({ title, items }) => {
     }
   };
 
+  console.log(items, "items");
+
   const columns = [
     {
       title: "ID",
@@ -78,7 +80,7 @@ const SetProduct: React.FC<SetProductProps> = ({ title, items }) => {
     name: item.name,
     category: item.category,
     price: item.price,
-    file: item.file,
+    file: item.full_url,
   }));
 
   return (
