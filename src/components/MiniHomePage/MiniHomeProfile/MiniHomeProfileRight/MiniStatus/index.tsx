@@ -126,6 +126,7 @@ const MiniStatus = () => {
                   src={minihomepi_image || "/avatarImg/defaultProfile.png"}
                   alt="profile"
                   fill
+                  style={{ objectFit: "cover" }}
                   onLoad={() => setLoaded(true)}
                 />
               </div>
