@@ -25,7 +25,6 @@ interface StoresProps {
 const Stores = ({ currentItems }: StoresProps) => {
   const token = Cookies.get("accessToken");
   const [isOpen, setIsOpen] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
   const [pendingBuyId, setPendingBuyId] = useState<number | null>(null);
   const [message, setMessage] = useState("");
   const [type, setType] = useState("");
@@ -46,8 +45,9 @@ const Stores = ({ currentItems }: StoresProps) => {
 
   const confirmBuy = () => {
     if (!pendingBuyId) return;
+
     axiosInstance
-      .post("/purchases", { pendingBuyId })
+      .post("/purchases", { storeItemId: pendingBuyId })
       .then((res) => {
         console.log("상품 구매 : ", res.data);
 
