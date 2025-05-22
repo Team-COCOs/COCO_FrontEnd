@@ -38,6 +38,7 @@ const WritePage = ({ editData }: WritePageProps) => {
         title: editData.folder.title,
         parent_id: editData.folder.parent_id ?? null,
       });
+      setTitle(editData.title);
     }
   }, [editData]);
 
@@ -166,9 +167,9 @@ const WritePage = ({ editData }: WritePageProps) => {
         <input
           type="text"
           className="Gulim"
-          value={editData ? editData.title : title}
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
-        ></input>
+        />
         <div className="WritePage_dropDown">
           <Dropdown
             label="폴더선택"

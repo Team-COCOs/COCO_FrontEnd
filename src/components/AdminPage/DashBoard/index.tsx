@@ -34,11 +34,11 @@ const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
     const fetchStats = async () => {
       const [userTotal, userDaily, userMonthly, paymentTotal, paymentDaily] =
         await Promise.all([
-          axiosInstance.get("/users/total"),
-          axiosInstance.get("/users/daily"),
-          axiosInstance.get("/users/monthly"),
-          axiosInstance.get("/payments/total"),
-          axiosInstance.get("/payments/daily"),
+          axiosInstance.get("admin/users/total"),
+          axiosInstance.get("admin/users/daily"),
+          axiosInstance.get("admin/users/monthly"),
+          axiosInstance.get("admin/payments/total"),
+          axiosInstance.get("admin/payments/daily"),
         ]);
 
       setUserStats({
