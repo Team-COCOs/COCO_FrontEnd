@@ -12,6 +12,8 @@ import Loading from "@/components/Loading";
 import { useRouter } from "next/router";
 import { SkinProvider } from "@/context/SkinContext";
 import { TabsProvider } from "@/context/TabsContext";
+import { MusicPlayerProvider } from "@/context/MusicPlayerContext";
+import MusicPlayerController from "@/context/MusicPlayerController";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -66,13 +68,16 @@ export default function App({ Component, pageProps }: AppProps) {
       <Provider store={store}>
         <AuthProvider>
           <SkinProvider>
-            <LanguageProvider>
-              <TabsProvider>
-                <ThemeProvider theme={theme}>
-                  {loading ? <Loading /> : <Component {...pageProps} />}
-                </ThemeProvider>
-              </TabsProvider>
-            </LanguageProvider>
+            <MusicPlayerProvider>
+              <MusicPlayerController />
+              <LanguageProvider>
+                <TabsProvider>
+                  <ThemeProvider theme={theme}>
+                    {loading ? <Loading /> : <Component {...pageProps} />}
+                  </ThemeProvider>
+                </TabsProvider>
+              </LanguageProvider>
+            </MusicPlayerProvider>
           </SkinProvider>
         </AuthProvider>
       </Provider>

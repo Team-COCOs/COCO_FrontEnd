@@ -69,8 +69,6 @@ const MinimiSet = () => {
       );
       setMyMinimi(data.file || "");
       setSelectedMinimiId(data.id);
-      console.log(data.file, "setMyMinimi");
-      console.log(data.id, "setSelectedMinimiId");
     } catch (e: any) {
       console.log(e, "대표미니미 e");
       setMyMinimi("default");
@@ -116,7 +114,11 @@ const MinimiSet = () => {
             <input
               type="radio"
               name="minimi"
-              checked={selectedMinimiId === null || myMinimi === null}
+              checked={
+                selectedMinimiId === "default-minimi" ||
+                selectedMinimiId === null ||
+                myMinimi === null
+              }
               onChange={() => handleChange("default-minimi")}
             />
             <div className="MinimiSet_minimi_imgWrap">

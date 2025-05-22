@@ -1,101 +1,38 @@
-import { HomeMusicRightStyled } from "./styled";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-// const playlist = [
-//   { title: "Y - 프리스타일", url: "/bgm/y-freestyle.mp3" },
-//   { title: "12월 32일 - 별", url: "/bgm/12-32.mp3" },
-// ];
-interface Track {
-  name: string;
-  url: string;
-  artist: string;
-}
+import { useMusicPlayer } from "@/context/MusicPlayerContext";
+import { HomeMusicRightStyled } from "./styled";
+
 const HomeMusicRight = () => {
   const router = useRouter();
   const { id } = router.query;
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [currentTrack, setCurrentTrack] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
-  const [volume, setVolume] = useState(1);
-  const [playlist, setPlaylist] = useState<any[]>([]);
+  const {
+    playlist,
+    currentTrack,
+    isPlaying,
+    hasPlayedOnce,
+    volume,
+    setPlaylist,
+    togglePlay,
+    stop,
+    nextTrack,
+    prevTrack,
+    setVolume,
+  } = useMusicPlayer();
 
-  const clickShop = () => {
-    router.push("/");
-  };
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (audio) {
-      if (isPlaying) {
-        audio
-          .play()
-          .then(() => {
-            setHasPlayedOnce(true);
-          })
-          .catch((err) => {
-            console.warn("자동 재생 실패:", err);
-            setIsPlaying(false);
-            setHasPlayedOnce(false);
-          });
-      } else {
-        audio.pause();
-      }
-    }
-  }, [isPlaying, currentTrack]);
-
-  const nextTrack = () => {
-    setCurrentTrack((prev) => (prev + 1) % playlist.length);
-  };
-
-  const prevTrack = () => {
-    setCurrentTrack((prev) => (prev === 0 ? playlist.length - 1 : prev - 1));
-  };
+  const clickShop = () => router.push("/");
+  const handleHomeClick = () => router.push("/");
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume = Number(e.target.value);
-    setVolume(newVolume);
-
-    const audio = audioRef.current;
-    if (audio) {
-      audio.volume = newVolume; // 오디오 볼륨을 변경
-    }
-  };
-  const stop = () => {
-    const audio = audioRef.current;
-    if (audio) {
-      audio.pause();
-      audio.currentTime = 0;
-      setIsPlaying(false);
-      setHasPlayedOnce(false);
-    }
-  };
-
-  const togglePlay = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      audio.play().catch((e) => {
-        console.warn("자동 재생이 차단되었습니다.", e);
-      });
-    }
-    setIsPlaying((prev) => !prev);
+    setVolume(Number(e.target.value));
   };
 
   const getVolumeBackground = (value: number) => {
-    const percentage = (value / 1) * 100; // max volume is 1
+    const percentage = (value / 1) * 100;
     return `linear-gradient(to right, #ee6700 0%, #ee6700 ${percentage}%, #ececec ${percentage}%, #ececec 100%)`;
   };
 
-  const handleHomeClick = () => {
-    router.push("/");
-  };
-
-  // 구매한 음악 불러오기
   useEffect(() => {
     const fetchBuyBgm = async () => {
       try {
@@ -103,18 +40,14 @@ const HomeMusicRight = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/useritems/bgm/${id}`
         );
         setPlaylist(res.data);
-      } catch (e: any) {
+      } catch (e) {
         console.error("BGM 가져오기 오류:", e);
       }
     };
-    fetchBuyBgm();
+
+    if (id) fetchBuyBgm();
   }, [id]);
 
-  useEffect(() => {
-    if (playlist.length > 0) {
-      setIsPlaying(true);
-    }
-  }, [playlist]);
   return (
     <HomeMusicRightStyled>
       <div className="HomeMusicRight_wrap">
@@ -124,18 +57,10 @@ const HomeMusicRight = () => {
               <span>선물가게 / 추천 BGM</span>
               <div className="HomeMusicRight_shop_imgallwrap">
                 <div>
-                  <img
-                    src="/bgm/noon.jpg"
-                    onClick={clickShop}
-                    alt="click minimishop"
-                  ></img>
+                  <img src="/bgm/noon.jpg" onClick={clickShop} />
                 </div>
                 <div>
-                  <img
-                    src="/bgm/12_32.jpg"
-                    onClick={clickShop}
-                    alt="click minimishop"
-                  ></img>
+                  <img src="/bgm/12_32.jpg" onClick={clickShop} />
                 </div>
               </div>
               <div
@@ -144,19 +69,15 @@ const HomeMusicRight = () => {
               >
                 <div className="HomeMusicRight_homebtn_white_wrap">
                   <div className="HomeMusicRight_homebtn_imgwrap">
-                    <img src="/cocoworld.png"></img>
+                    <img src="/cocoworld.png" />
                   </div>
                   &nbsp;홈으로 가기
                 </div>
               </div>
             </div>
           </div>
+
           <div className="HomeMusicRight_player">
-            <audio
-              ref={audioRef}
-              src={playlist[currentTrack]?.file || null}
-              onEnded={nextTrack}
-            />
             <div className="HomeMusicRight_title">
               <span className="HomeMusicRight_cd-icon">💿</span>
               {playlist.length === 0 ? (
@@ -167,15 +88,13 @@ const HomeMusicRight = () => {
                 <div
                   className={`scroll-text ${isPlaying ? "playing" : "paused"}`}
                 >
-                  🎵 {playlist[currentTrack].name} -{" "}
-                  {playlist[currentTrack].artist}
+                  🎵 {playlist[currentTrack]?.name} -{" "}
+                  {playlist[currentTrack]?.artist}
                 </div>
               )}
             </div>
 
-            {/* 볼륨 조절 */}
             <div className="HomeMusicRight_volume-control">
-              {/* 버튼들 */}
               <div className="control-buttons">
                 <button
                   className="HomeMusicRight_startbtn"
@@ -197,9 +116,7 @@ const HomeMusicRight = () => {
                   step="0.01"
                   value={volume}
                   onChange={handleVolumeChange}
-                  style={{
-                    background: getVolumeBackground(volume),
-                  }}
+                  style={{ background: getVolumeBackground(volume) }}
                 />
               </div>
             </div>
