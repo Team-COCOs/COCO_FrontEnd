@@ -39,6 +39,13 @@ const Stores = ({ currentItems }: StoresProps) => {
     axiosInstance
       .post("/purchases", { storeItemId })
       .then((res) => {
+        if (res.data.message) {
+          setIsOpen(true);
+          setType("error");
+          setMessage(res.data.message);
+          return;
+        }
+
         setIsOpen(true);
         setType("success");
         setMessage("구매를 성공했습니다!");
