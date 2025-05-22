@@ -124,6 +124,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
     const updatedTree = editNodeByKey(treeData, checkedKeys[0], editTitle);
     setTreeData(updatedTree);
 
+    setEditTitle("");
     setEditingKey(null);
     setCheckedKeys([]);
   };
