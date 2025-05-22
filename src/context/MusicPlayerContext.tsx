@@ -94,7 +94,7 @@ export const MusicPlayerProvider = ({
       audio.pause();
       audio.currentTime = 0;
       setIsPlaying(false);
-      setHasPlayedOnce(false);
+      //   setHasPlayedOnce(false);
     }
   };
 
