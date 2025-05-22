@@ -25,7 +25,10 @@ const ProfileInfo = ({
 
   return (
     <ProfileInfoStyle
-      className={clsx("Profile_infos")}
+      className={clsx(
+        "Profile_infos",
+        label !== "일촌신청" && "Profile_clickable"
+      )}
       onClick={label !== "일촌신청" ? undefined : () => setIsOpen(true)}
     >
       <span className="Profile_infoText">{label}</span>

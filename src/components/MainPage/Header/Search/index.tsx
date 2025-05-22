@@ -19,13 +19,6 @@ const Search = () => {
     router.push(`?keyword=${encodeURIComponent(search.trim())}`);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      userSearch();
-      setSearch("");
-    }
-  };
-
   return (
     <SearchStyle className={clsx("Search_wrap")}>
       <div className="Search_inputBack">
@@ -39,7 +32,6 @@ const Search = () => {
             placeholder="다른 미니홈피를 검색해보세요."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={handleKeyDown}
           />
         </div>
       </div>

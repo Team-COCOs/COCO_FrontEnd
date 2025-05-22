@@ -28,54 +28,38 @@ const ProfilePart = () => {
       {/* 광고 */}
       <div className="ProfilePart_eventHeader">
         <b className="ProfilePart_text"> 공지사항 </b>
-        <b
-          className="ProfilePart_addText"
-          onClick={() => {
-            router.push("https://www.cyworld.com/");
-          }}
-        >
-          ‣ 더보기
-        </b>
+        <a href="https://www.cyworld.com/" target="_blank">
+          <b className="ProfilePart_addText">‣ 더보기</b>
+        </a>
       </div>
       <div className="ProfilePart_line"></div>
-      <div
-        className="ProfilePart_Texts"
-        onClick={() => {
-          router.push("https://www.cyworld.com/");
-        }}
-      >
-        <b className="ProfilePart_addText">‣ 싸이월드 메인 개편</b>
-        <b className="ProfilePart_addText">‣ 새 단장한 미니싸이월드</b>
+      <div className="ProfilePart_Texts">
+        <a href="https://www.cyworld.com/" target="_blank">
+          <b className="ProfilePart_addText">‣ 싸이월드 메인 개편</b>
+          <b className="ProfilePart_addText">‣ 새 단장한 미니싸이월드</b>
+        </a>
       </div>
 
       {/* 이벤트 */}
       <div className="ProfilePart_eventHeader">
         <b className="ProfilePart_text"> 이벤트 </b>
-        <b
-          className="ProfilePart_addText"
-          onClick={() => {
-            router.push("https://www.cyworld.com/");
-          }}
-        >
-          ‣ 더보기
-        </b>
+        <a href="https://www.cyworld.com/" target="_blank">
+          <b className="ProfilePart_addText">‣ 더보기</b>
+        </a>
       </div>
       <div className="ProfilePart_line"></div>
       <div className="ProfilePart_eventImg">
         <Advertising type="Advertising8" />
       </div>
-      <div
-        className="ProfilePart_Texts"
-        onClick={() => {
-          router.push("https://www.cyworld.com/");
-        }}
-      >
-        <b className="ProfilePart_addText">‣ 감성 한 스푼, 담아갈래?</b>
-        <b className="ProfilePart_addText">
-          ‣ 미니홈피 BGM처럼 마음을 채워줄 공간
-        </b>
-        <b className="ProfilePart_addText">‣ 감성 한 스푼, 담아갈래?</b>
-      </div>
+      <a href="https://www.cyworld.com/" target="_blank">
+        <div className="ProfilePart_Texts">
+          <b className="ProfilePart_addText">‣ 감성 한 스푼, 담아갈래?</b>
+          <b className="ProfilePart_addText">
+            ‣ 미니홈피 BGM처럼 마음을 채워줄 공간
+          </b>
+          <b className="ProfilePart_addText">‣ 감성 한 스푼, 담아갈래?</b>
+        </div>
+      </a>
     </ProfilePartStyle>
   );
 };

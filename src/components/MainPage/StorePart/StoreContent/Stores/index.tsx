@@ -59,7 +59,6 @@ const Stores = ({ currentItems }: StoresProps) => {
 
   const [playingId, setPlayingId] = useState<number | null>(null);
 
-  // 재생 중인 이미지만 썸네일 돌아가게 해야 함
   const handlePlay = (status: boolean, id: number) => {
     setPlayingId(status ? id : null);
   };
@@ -96,6 +95,7 @@ const Stores = ({ currentItems }: StoresProps) => {
                   </div>
                   <CustomAudio
                     src={item.preview_url!}
+                    isPlayingGlobal={playingId === item.id}
                     handlePlay={(status) => handlePlay(status, item.id)}
                   />
                 </div>

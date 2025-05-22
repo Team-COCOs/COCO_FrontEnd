@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const MainPageStyled = styled.div`
   width: 100%;
   overflow-x: auto;
+  background-color: white;
+  color: black;
 
   .MainPage_wrap {
     display: flex;
