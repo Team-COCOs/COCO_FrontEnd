@@ -56,7 +56,7 @@ const PayModal = ({ onClose }: PayModalProps) => {
                 <Skeleton
                   variant="rectangular"
                   width="100%"
-                  height="auto"
+                  height="100%"
                   sx={{
                     position: "absolute",
                     top: 0,
@@ -85,7 +85,7 @@ const PayModal = ({ onClose }: PayModalProps) => {
                 <Skeleton
                   variant="rectangular"
                   width="100%"
-                  height="auto"
+                  height="100%"
                   sx={{
                     position: "absolute",
                     top: 0,
@@ -114,7 +114,7 @@ const PayModal = ({ onClose }: PayModalProps) => {
                 <Skeleton
                   variant="rectangular"
                   width="100%"
-                  height="auto"
+                  height="100%"
                   sx={{
                     position: "absolute",
                     top: 0,
@@ -143,7 +143,7 @@ const PayModal = ({ onClose }: PayModalProps) => {
                 <Skeleton
                   variant="rectangular"
                   width="100%"
-                  height="auto"
+                  height="100%"
                   sx={{
                     position: "absolute",
                     top: 0,
