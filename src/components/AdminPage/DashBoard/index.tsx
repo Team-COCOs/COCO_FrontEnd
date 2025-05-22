@@ -32,34 +32,43 @@ const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
 
   useEffect(() => {
     const fetchStats = async () => {
-      const [userTotal, userDaily, userMonthly, paymentTotal, paymentDaily] =
-        await Promise.all([
-          axiosInstance.get("admin/users/total"),
-          axiosInstance.get("admin/users/daily"),
-          axiosInstance.get("admin/users/monthly"),
-          axiosInstance.get("admin/payments/total"),
-          axiosInstance.get("admin/payments/daily"),
-        ]);
+      const [
+        userTotal,
+        userDaily,
+        userMonthly,
+        paymentTotal,
+        paymentDaily,
+        countTotal,
+      ] = await Promise.all([
+        axiosInstance.get("admin/users/total"),
+        axiosInstance.get("admin/users/daily"),
+        axiosInstance.get("admin/users/monthly"),
+        axiosInstance.get("admin/payments/total"),
+        axiosInstance.get("admin/payments/daily"),
+        axiosInstance.get("admin/payments/count"),
+      ]);
       console.log("userTotal", userTotal.data);
-      console.log("userDaily", userDaily.data);
       console.log("userMonthly", userMonthly.data);
-      console.log("paymentTotal", paymentTotal.data);
-      console.log("paymentDaily", paymentDaily.data);
+      console.log("paymentDaily", paymentDaily.data.daily);
+
       setUserStats({
-        total: userTotal.data.total,
-        daily: userDaily.data,
+        total: userTotal.data.count,
+        daily: userDaily.data.daily,
         monthly: userMonthly.data,
       });
 
       setPaymentStats({
-        totalCount: paymentTotal.data.count,
+        totalCount: countTotal.data.count,
         totalAmount: paymentTotal.data.amount,
-        daily: paymentDaily.data,
+        daily: paymentDaily.data.daily,
       });
     };
 
     fetchStats();
   }, []);
+
+  console.log(userStats, "userStats");
+  console.log(paymentStats, "PaymentStats");
 
   return (
     <DashBoardStyled>
@@ -95,7 +104,7 @@ const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
 
         <h3 style={{ marginTop: 30 }}>월별 가입자 수</h3>
         <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={userStats.monthly}>
+          <BarChart data={userStats.monthly.data}>
             <XAxis dataKey="month" />
             <YAxis />
             <Tooltip />
@@ -109,7 +118,7 @@ const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
             <XAxis dataKey="date" />
             <YAxis />
             <Tooltip />
-            <Line type="monotone" dataKey="amount" stroke="#ffc658" />
+            <Line type="monotone" dataKey="total" stroke="#ffc658" />
           </LineChart>
         </ResponsiveContainer>
       </div>
