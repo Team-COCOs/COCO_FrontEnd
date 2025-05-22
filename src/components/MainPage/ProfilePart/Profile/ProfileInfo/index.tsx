@@ -21,8 +21,6 @@ const ProfileInfo = ({
   const { user } = useAuth();
   const userName = user?.name;
 
-  console.log(data);
-
   const type = label === "새게시물" ? "newPost" : "newFriend";
 
   return (

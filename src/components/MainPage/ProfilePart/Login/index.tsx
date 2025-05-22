@@ -53,8 +53,6 @@ const Login = () => {
             expires: 1 / 24,
           });
 
-          console.log("로그인 대답: ", res.data);
-
           dispatch(setReduxUser(res.data));
 
           window.location.href = "/";

@@ -32,8 +32,6 @@ const SearchUser = () => {
           }
         );
 
-        console.log("검색 요청 대답 : ", res.data);
-
         if (Array.isArray(res.data)) {
           const modifiedResults = res.data.map((d: any) => ({
             ...d,
