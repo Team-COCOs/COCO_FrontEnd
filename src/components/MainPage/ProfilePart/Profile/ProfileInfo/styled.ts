@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const ProfileInfoStyle = styled.div`
+  &.Profile_infos.Profile_clickable {
+    cursor: default;
+  }
   &.Profile_infos {
     position: relative;
     display: flex;
