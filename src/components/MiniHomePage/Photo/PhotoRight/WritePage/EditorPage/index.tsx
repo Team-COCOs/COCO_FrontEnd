@@ -100,6 +100,34 @@ const EditorPage = forwardRef<EditorHandle, EditorPageProps>(
       getHtml: () => editorRef.current?.innerHTML || "",
     }));
 
+    // a 태그
+    function Link() {
+      const selection = window.getSelection();
+      if (!selection || selection.rangeCount === 0) return;
+
+      const selectedText = selection.toString().trim();
+
+      if (!/^https?:\/\//.test(selectedText)) {
+        // URL이 아니면 아무것도 안 함
+        return;
+      }
+
+      const range = selection.getRangeAt(0);
+
+      // 새 a 태그 생성
+      const a = document.createElement("a");
+      a.href = selectedText;
+      a.rel = "noopener noreferrer";
+      a.textContent = selectedText;
+
+      // 선택된 내용 삭제 후 a 태그로 대체
+      range.deleteContents();
+      range.insertNode(a);
+
+      // 선택 해제
+      selection.removeAllRanges();
+    }
+
     return (
       <EditorPageStyle className="EditorPage_wrap">
         <div className="EditorPage_toolbar">
@@ -146,6 +174,15 @@ const EditorPage = forwardRef<EditorHandle, EditorPageProps>(
             onClick={() => execCommand("justifyRight")}
           >
             <img src="/icon/alignRight.png" alt="오른쪽 정렬" />
+          </button>
+
+          <button
+            className="EditorPage_btn"
+            onClick={() => {
+              Link();
+            }}
+          >
+            <img src="/icon/link.png" alt="링크 삽입" />
           </button>
         </div>
 

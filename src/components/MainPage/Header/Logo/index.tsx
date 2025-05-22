@@ -15,7 +15,7 @@ const Logo = ({ type }: LogoProps) => {
   return (
     <LogoStyle className={!isHeader ? "Logo_sign" : "Logo_wrap"}>
       {isHeader && (
-        <div className="mainFont Logo_topText">지금 가입하면 도토리가?!</div>
+        <div className="mainFont Logo_topText">지금 가입하면 도토리 지급!</div>
       )}
 
       <div

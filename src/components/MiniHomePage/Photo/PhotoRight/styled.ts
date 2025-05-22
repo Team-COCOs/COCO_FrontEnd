@@ -177,6 +177,10 @@ export const PhotoRightStyled = styled.div`
 
     .PhotoRight_text {
       margin: 30px 10px;
+
+      a {
+        text-decoration: underline;
+      }
     }
 
     .PhotoRight_isPublic {

@@ -75,6 +75,10 @@ export const EditorPageStyle = styled.div`
       font-size: 14px;
       white-space: pre-wrap;
       outline: none;
+
+      a {
+        text-decoration: underline;
+      }
     }
 
     .EditorPage_isPublic {
