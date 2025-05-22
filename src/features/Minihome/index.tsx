@@ -111,26 +111,48 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
     }
   }, [isOpen, id]);
 
+  // useEffect(() => {
+  //   if (!user) return;
+  //   const countVisit = async () => {
+  //     if (!id || Array.isArray(id)) return;
+
+  //     try {
+  //       const token = Cookies.get("accessToken");
+  //       const url = `${process.env.NEXT_PUBLIC_API_URL}/visit/auth`;
+  //       await axios.post(
+  //         url,
+  //         { hostId: Number(id) },
+  //         token
+  //           ? {
+  //               headers: {
+  //                 Authorization: `Bearer ${token}`,
+  //               },
+  //               withCredentials: true,
+  //             }
+  //           : undefined
+  //       );
+  //     } catch (err: any) {
+  //       console.error("방문자 수 기록 실패:", err);
+  //       if (err.response?.status === 404) {
+  //         alert("존재하지 않는 페이지입니다.");
+  //         router.push("/");
+  //       }
+  //     }
+  //   };
+
+  //   countVisit();
+  // }, [id]);
+
   useEffect(() => {
     if (!user) return;
+
     const countVisit = async () => {
       if (!id || Array.isArray(id)) return;
 
       try {
-        const token = Cookies.get("accessToken");
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/visit/auth`;
-        await axios.post(
-          url,
-          { hostId: Number(id) },
-          token
-            ? {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-                withCredentials: true,
-              }
-            : undefined
-        );
+        await axiosInstance.post("/visit/auth", {
+          hostId: Number(id),
+        });
       } catch (err: any) {
         console.error("방문자 수 기록 실패:", err);
         if (err.response?.status === 404) {
