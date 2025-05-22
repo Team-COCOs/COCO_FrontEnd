@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 interface UserData {
   title: string;
-  minihompi_image: string;
+  minihomepi_image: string;
   mood: string;
   introduction: string;
 }
@@ -19,7 +19,7 @@ const moods = [
 ];
 
 const HomeProfile = () => {
-  const [minihompi_image, setMinihompi_image] = useState<string>(
+  const [minihomepi_image, setMinihomepi_image] = useState<string>(
     "/avatarImg/defaultProfile.png"
   );
   const router = useRouter();
@@ -35,7 +35,7 @@ const HomeProfile = () => {
         );
 
         setUserData(res.data);
-        setMinihompi_image(res.data.minihompi_image);
+        setMinihomepi_image(res.data.minihomepi_image);
       } catch (e) {
         console.error("에러 발생:", e);
       }
@@ -54,7 +54,7 @@ const HomeProfile = () => {
         </div>
         <div className="HomeProfile_imgWrap">
           <img
-            src={userData?.minihompi_image || "/avatarImg/defaultProfile.png"}
+            src={userData?.minihomepi_image || "/avatarImg/defaultProfile.png"}
             alt="Profile img"
           />
         </div>
