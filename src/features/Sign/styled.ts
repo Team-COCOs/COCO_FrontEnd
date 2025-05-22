@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
 export const SignFormStyled = styled.div`
-  &.Sign_wrap {
+  background-color: white;
+  color: black;
+
+  .Sign_wrap {
     display: flex;
     flex-direction: column;
     max-width: 1000px;

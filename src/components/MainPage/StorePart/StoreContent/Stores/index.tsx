@@ -25,10 +25,12 @@ interface StoresProps {
 const Stores = ({ currentItems }: StoresProps) => {
   const token = Cookies.get("accessToken");
   const [isOpen, setIsOpen] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [pendingBuyId, setPendingBuyId] = useState<number | null>(null);
   const [message, setMessage] = useState("");
   const [type, setType] = useState("");
 
-  const buyItem = (storeItemId: number) => {
+  const handleBuyClick = (storeItemId: number) => {
     if (!token) {
       setIsOpen(true);
       setType("error");
@@ -36,9 +38,19 @@ const Stores = ({ currentItems }: StoresProps) => {
       return;
     }
 
+    console.log("클릭됨");
+    setPendingBuyId(storeItemId);
+    setIsOpen(true);
+    setType("confirm");
+  };
+
+  const confirmBuy = () => {
+    if (!pendingBuyId) return;
     axiosInstance
-      .post("/purchases", { storeItemId })
+      .post("/purchases", { pendingBuyId })
       .then((res) => {
+        console.log("상품 구매 : ", res.data);
+
         if (res.data.message) {
           setIsOpen(true);
           setType("error");
@@ -101,7 +113,10 @@ const Stores = ({ currentItems }: StoresProps) => {
                 </div>
                 <div className="Stores_itemPrice">도토리 {item.price}개</div>
                 <div className="Stores_btnWrap">
-                  <button className="mainFont" onClick={() => buyItem(item.id)}>
+                  <button
+                    className="mainFont"
+                    onClick={() => handleBuyClick(item.id)}
+                  >
                     구입
                   </button>
                 </div>
@@ -127,7 +142,10 @@ const Stores = ({ currentItems }: StoresProps) => {
 
                 <div className="Stores_itemPrice">도토리 {item.price}개</div>
                 <div className="Stores_btnWrap">
-                  <button className="mainFont" onClick={() => buyItem(item.id)}>
+                  <button
+                    className="mainFont"
+                    onClick={() => handleBuyClick(item.id)}
+                  >
                     구입
                   </button>
                 </div>
@@ -147,6 +165,7 @@ const Stores = ({ currentItems }: StoresProps) => {
           }
         }}
         message={message}
+        onConfirm={confirmBuy}
       />
     </StoresStyle>
   );
