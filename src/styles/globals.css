@@ -55,7 +55,9 @@ body {
 }
 
 input,
-button {
+button,
+select,
+textarea {
   background-color: white;
   color: black;
 }
