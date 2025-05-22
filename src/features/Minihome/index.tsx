@@ -113,6 +113,7 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
   }, [isOpen, id]);
 
   useEffect(() => {
+    if (!user) return;
     const countVisit = async () => {
       if (!id || Array.isArray(id)) return;
 
