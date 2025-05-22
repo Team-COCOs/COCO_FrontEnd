@@ -18,6 +18,27 @@ const moods = [
   { value: "angry", text: "💢 화남" },
 ];
 
+const convertTextToLinks = (text: string) => {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const parts = text.split(urlRegex);
+
+  return parts.map((part, index) =>
+    urlRegex.test(part) ? (
+      <a
+        key={index}
+        href={part}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ color: "blue" }}
+      >
+        {part}
+      </a>
+    ) : (
+      <span key={index}>{part}</span>
+    )
+  );
+};
+
 const HomeProfile = () => {
   const [minihomepi_image, setMinihomepi_image] = useState<string>(
     "/avatarImg/defaultProfile.png"
@@ -60,7 +81,7 @@ const HomeProfile = () => {
         </div>
         <div className="HomeProfile_textarea Gulim">
           {userData?.introduction
-            ? userData?.introduction
+            ? convertTextToLinks(userData.introduction)
             : "자기소개가 아직 없어요!"}
         </div>
         <span className="HomeProfile_history">
