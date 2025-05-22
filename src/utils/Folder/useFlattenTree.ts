@@ -1,6 +1,7 @@
 import axiosInstance from "@/lib/axios";
 import { TreeNode } from "./types";
 import { NextRouter } from "next/router";
+import { resolveSoa } from "dns";
 
 // 데이터 평탄화
 export const flattenTreeData = (treeData: TreeNode[]) => {
@@ -39,8 +40,15 @@ export const saveTreeData = async (
     const res = await axiosInstance.patch(`/${type}/saveTree`, {
       folders: flat,
     });
+
     console.log("트리 저장 성공", res.data);
-    onSave();
+
+    if (res.data.message !== "폴더 트리 저장 완료") {
+      alert(res.data.message);
+      return;
+    } else {
+      onSave();
+    }
   } catch (e: any) {
     if (e.response?.status === 401) {
       alert("로그인이 필요합니다.");
@@ -53,5 +61,6 @@ export const saveTreeData = async (
       console.log("사진첩 불러오기 에러 : ", e);
       alert("트리 저장 중 오류가 발생했습니다.");
     }
+    return null;
   }
 };

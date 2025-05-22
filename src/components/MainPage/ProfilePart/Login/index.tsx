@@ -43,6 +43,12 @@ const Login = () => {
           },
         }) // 서버 URL
         .then((res) => {
+          if (res.data.message) {
+            setMessage(res.data.message);
+            setIsOpen(true);
+            return;
+          }
+
           Cookie.set("accessToken", res.data.access_token, {
             path: "/", // 모든 페이지에서 접근 가능
             expires: 1 / 24,
@@ -52,8 +58,6 @@ const Login = () => {
             path: "/",
             expires: 1 / 24,
           });
-
-          console.log("로그인 대답: ", res.data);
 
           dispatch(setReduxUser(res.data));
 

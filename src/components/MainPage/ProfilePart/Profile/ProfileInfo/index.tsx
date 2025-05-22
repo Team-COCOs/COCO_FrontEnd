@@ -21,14 +21,12 @@ const ProfileInfo = ({
   const { user } = useAuth();
   const userName = user?.name;
 
-  console.log(data);
-
   const type = label === "새게시물" ? "newPost" : "newFriend";
 
   return (
     <ProfileInfoStyle
       className={clsx("Profile_infos")}
-      onClick={label === "일촌신청" ? undefined : () => setIsOpen(true)}
+      onClick={label !== "일촌신청" ? undefined : () => setIsOpen(true)}
     >
       <span className="Profile_infoText">{label}</span>
       <span className={clsx(value > 0 && showBadge && "Profile_newText")}>

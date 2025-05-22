@@ -65,7 +65,7 @@ const CustomAudio = ({ src, handlePlay }: AudioProps) => {
         setIsPlaying(false);
         handlePlay(false); // 부모 이미지 움직여야 해서
       } else {
-        audioRef.current.play().catch((e) => console.warn("재생 실패:", e));
+        audioRef.current.play().catch((e) => console.log("재생 실패:", e));
         setIsPlaying(true);
         handlePlay(true);
       }
