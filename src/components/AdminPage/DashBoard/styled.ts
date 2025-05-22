@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const DashBoardStyled = styled.div`
+  width: 65%;
   .DashBoard_wrap {
     margin-bottom: 10px;
     h2 {

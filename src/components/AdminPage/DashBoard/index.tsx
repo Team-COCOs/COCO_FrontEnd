@@ -32,29 +32,34 @@ const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
 
   useEffect(() => {
     const fetchStats = async () => {
-      const [userTotal, userDaily, userMonthly, paymentTotal, paymentDaily] =
-        await Promise.all([
-          axiosInstance.get("admin/users/total"),
-          axiosInstance.get("admin/users/daily"),
-          axiosInstance.get("admin/users/monthly"),
-          axiosInstance.get("admin/payments/total"),
-          axiosInstance.get("admin/payments/daily"),
-        ]);
-      console.log("userTotal", userTotal.data);
-      console.log("userDaily", userDaily.data);
-      console.log("userMonthly", userMonthly.data);
-      console.log("paymentTotal", paymentTotal.data);
-      console.log("paymentDaily", paymentDaily.data);
+      const [
+        userTotal,
+        userDaily,
+        userMonthly,
+        paymentTotal,
+        paymentDaily,
+        countTotal,
+      ] = await Promise.all([
+        axiosInstance.get("admin/users/total"),
+        axiosInstance.get("admin/users/daily"),
+        axiosInstance.get("admin/users/monthly"),
+        axiosInstance.get("admin/payments/total"),
+        axiosInstance.get("admin/payments/daily"),
+        axiosInstance.get("admin/payments/count"),
+      ]);
+      const sortedPaymentDaily = [...paymentDaily.data.daily].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
       setUserStats({
-        total: userTotal.data.total,
-        daily: userDaily.data,
-        monthly: userMonthly.data,
+        total: userTotal.data.count,
+        daily: userDaily.data.daily[0].count,
+        monthly: userMonthly.data.data,
       });
 
       setPaymentStats({
-        totalCount: paymentTotal.data.count,
+        totalCount: countTotal.data.count,
         totalAmount: paymentTotal.data.amount,
-        daily: paymentDaily.data,
+        daily: sortedPaymentDaily,
       });
     };
 
@@ -109,7 +114,7 @@ const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
             <XAxis dataKey="date" />
             <YAxis />
             <Tooltip />
-            <Line type="monotone" dataKey="amount" stroke="#ffc658" />
+            <Line type="monotone" dataKey="total" stroke="#ffc658" />
           </LineChart>
         </ResponsiveContainer>
       </div>
