@@ -7,7 +7,7 @@ import AdminRoute from "@/components/Routes/AdminRoute";
 
 const Admin = () => {
   // nav 바 key 값 저장
-  const [selectedKey, setSelectedKey] = useState("1");
+  const [selectedKey, setSelectedKey] = useState("9");
   const router = useRouter();
 
   // 관리자 홈으로 이동
