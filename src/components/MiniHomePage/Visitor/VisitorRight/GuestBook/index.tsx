@@ -118,7 +118,9 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
             <div key={v.id || idx}>
               <div className="GuestBook_header">
                 <div className="GuestBook_info Gulim">
-                  <span className="GuestBook_num">NO.{idx + 1}</span>
+                  <span className="GuestBook_num">
+                    NO.{visitData.length - idx}
+                  </span>
                   <span
                     className="GuestBook_name"
                     onClick={() => router.push(`/home/${v.authorId}`)}
