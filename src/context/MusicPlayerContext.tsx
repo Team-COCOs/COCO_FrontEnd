@@ -59,6 +59,24 @@ export const MusicPlayerProvider = ({
     }
   }, [isPlaying, currentTrack]);
 
+  useEffect(() => {
+    const onFirstUserInteraction = () => {
+      if (!hasPlayedOnce && playlist.length > 0) {
+        setIsPlaying(true);
+      }
+      window.removeEventListener("click", onFirstUserInteraction);
+      window.removeEventListener("keydown", onFirstUserInteraction);
+    };
+
+    window.addEventListener("click", onFirstUserInteraction);
+    window.addEventListener("keydown", onFirstUserInteraction);
+
+    return () => {
+      window.removeEventListener("click", onFirstUserInteraction);
+      window.removeEventListener("keydown", onFirstUserInteraction);
+    };
+  }, [hasPlayedOnce, playlist]);
+
   const togglePlay = () => {
     const audio = audioRef.current;
     if (!audio) return;
