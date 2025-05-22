@@ -38,6 +38,7 @@ const WritePage = ({ editData }: WritePageProps) => {
         title: editData.folder.title,
         parent_id: editData.folder.parent_id ?? null,
       });
+      setTitle(editData.title);
     }
   }, [editData]);
 
