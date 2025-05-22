@@ -38,12 +38,6 @@ const AdminRight: React.FC<AdminRightProps> = ({ selectedKey }) => {
     return items.filter((item: StoreItem) => item.category === type);
   };
 
-  useEffect(() => {
-    if (items.length > 0) {
-      console.log("백엔드에서 받아온 storeItems:", items);
-    }
-  }, [items]);
-
   const renderContent = () => {
     switch (selectedKey) {
       case "1":

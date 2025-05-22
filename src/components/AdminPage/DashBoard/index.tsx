@@ -40,7 +40,11 @@ const AnalyticsDashboard = ({ title, items }: SetProductProps) => {
           axiosInstance.get("admin/payments/total"),
           axiosInstance.get("admin/payments/daily"),
         ]);
-
+      console.log("userTotal", userTotal.data);
+      console.log("userDaily", userDaily.data);
+      console.log("userMonthly", userMonthly.data);
+      console.log("paymentTotal", paymentTotal.data);
+      console.log("paymentDaily", paymentDaily.data);
       setUserStats({
         total: userTotal.data.total,
         daily: userDaily.data,
