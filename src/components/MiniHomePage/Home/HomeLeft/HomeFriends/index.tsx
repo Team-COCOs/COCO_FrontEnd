@@ -20,6 +20,7 @@ const HomeFriends = () => {
         );
 
         setProfile(response.data);
+        console.log(response.data, "홈 프로필 data,?");
       } catch (err: any) {
         if (err.response?.status === 404) {
           alert("존재하지 않는 페이지입니다.");
@@ -76,7 +77,7 @@ const HomeFriends = () => {
           )}
           {profile.friends?.map((friend: any) => (
             <option key={friend.userId} value={friend.userId}>
-              {friend.myNaming} ({friend.friend})
+              {friend.theirNaming} ({friend.friend})
             </option>
           ))}
         </select>
