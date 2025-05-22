@@ -29,7 +29,10 @@ const HomeFriends = () => {
       }
     };
 
-    if (id) homepiProfile();
+    if (id) {
+      homepiProfile();
+      setSelectedValue("");
+    }
   }, [id]);
 
   if (!profile) {
@@ -69,7 +72,7 @@ const HomeFriends = () => {
           </div>
         </div>
         <div className="HomeFriends_email">{profile.email}</div>
-        <select onChange={handleFriendSelect}>
+        <select value={selectedValue} onChange={handleFriendSelect}>
           <option value={id}>선택하세요</option>
           <option value="파도타기">파도타기</option>
           {user?.id && Number(user?.id) !== Number(id) && (

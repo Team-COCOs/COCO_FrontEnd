@@ -14,7 +14,6 @@ import DiaryTitle from "@/components/MiniHomePage/Home/DiaryTitle";
 import HomeTab from "@/components/MiniHomePage/Home/HomeTab";
 // 미니홈피 쥬크박스
 import HomeMusicRight from "@/components/MiniHomePage/Home/HomeMusicRight";
-
 // 일촌신청 모달
 import FriendModal from "@/components/MiniHomePage/FriendModal";
 // 로딩 중
