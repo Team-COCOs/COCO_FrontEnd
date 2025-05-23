@@ -5,6 +5,11 @@ export const HomeMiniroomStyled = styled.div`
   border-radius: 5px;
   width: 100%;
   height: 100%;
+  .HomeMiniroom_number {
+    span {
+      color: rgb(38, 134, 163);
+    }
+  }
   .HomeMiniroom_wrap {
     display: flex;
     flex-direction: column;
