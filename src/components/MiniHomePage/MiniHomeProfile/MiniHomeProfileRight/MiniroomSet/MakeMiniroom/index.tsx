@@ -164,8 +164,12 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
 
       // 드래그하지 않은 미니미를 찾아 기존 좌표로 추가
       const draggedIds = draggedData.map((item) => item.id);
+
+      // 말풍선 제외한 진짜 minimi만 선택
       const untouchedMinimi = selectedMinimi.filter(
-        (minimi) => !draggedIds.includes(minimi.id)
+        (minimi) =>
+          !draggedIds.includes(minimi.id) &&
+          initialItems.find((item) => item.id === minimi.id)?.type === "minimi"
       );
 
       const layoutDataFromUntouched = untouchedMinimi.map((minimi) => {
@@ -180,31 +184,31 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
         };
       });
 
-      const fullLayoutData = [
-        ...layoutDataFromDragged,
-        ...layoutDataFromUntouched,
-      ];
-
-      // 말풍선이 fullLayoutData에 없으면 추가
-      const hasSpeechBubble = fullLayoutData.some(
+      // 드래그 안된 말풍선 처리
+      const initialSpeechBubbles = initialItems.filter(
         (item) => item.type === "speechBubble"
       );
 
-      if (!hasSpeechBubble) {
-        const speechBubble = initialItems.find(
-          (item) => item.type === "speechBubble"
-        );
-        if (speechBubble) {
-          fullLayoutData.push({
-            id: speechBubble.id,
-            text: speechBubble.text || "",
-            left: speechBubble.left,
-            top: speechBubble.top,
-            type: "speechBubble",
-            created_at: new Date().toISOString(),
-          });
-        }
-      }
+      const untouchedSpeechBubbles = initialSpeechBubbles.filter(
+        (bubble) => !draggedIds.includes(bubble.id)
+      );
+
+      const layoutDataFromUntouchedBubbles = untouchedSpeechBubbles.map(
+        (bubble) => ({
+          id: bubble.id,
+          text: bubble.text || "",
+          left: bubble.left,
+          top: bubble.top,
+          type: "speechBubble",
+          created_at: new Date().toISOString(),
+        })
+      );
+
+      const fullLayoutData = [
+        ...layoutDataFromDragged,
+        ...layoutDataFromUntouched,
+        ...layoutDataFromUntouchedBubbles,
+      ];
 
       // 저장 요청
       await axiosInstance.post("/minirooms/background", {
@@ -228,61 +232,6 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
     }
   };
 
-  // const handleLayoutSave = async () => {
-  //   try {
-  //     const isDefaultMiniroom = selectedMiniroom?.id === defaultMiniroom.id;
-
-  //     const backgroundPayload = selectedMiniroom
-  //       ? isDefaultMiniroom
-  //         ? "default-miniroom"
-  //         : selectedMiniroom.id
-  //       : "default-miniroom";
-
-  //     const isBackgroundChanged =
-  //       String(backgroundPayload) !== String(miniroomBackgroundId);
-
-  //     // 레이아웃 저장 여부 체크
-  //     const hasLayoutChanged = draggedData.some(
-  //       (item) =>
-  //         item.x !== item.originalX ||
-  //         item.y !== item.originalY ||
-  //         item.text !== item.originalText
-  //     );
-  //     console.log(hasLayoutChanged, "haslayoutchanged?");
-  //     // 미니미 데이터로 변경된 레이아웃 만들기
-  //     const layoutData = draggedData.map((item) => ({
-  //       id: item.id,
-  //       text: item.type !== "speechBubble" ? null : item.text, // 'speechBubble'만 텍스트 포함
-  //       left: item.x,
-  //       top: item.y,
-  //       type: item.type === "speechBubble" ? "speechBubble" : "minimi", // 타입에 맞게 구분
-  //       created_at: new Date().toISOString(),
-  //     }));
-
-  //     console.log(draggedData, "???미니미데이터");
-
-  //     // 배경 저장 (변경 여부와 관계없이 저장)
-  //     await axiosInstance.post("/minirooms/background", {
-  //       purchaseId: backgroundPayload,
-  //     });
-
-  //     // 레이아웃 저장 (변경 여부와 관계없이 저장)
-  //     await axiosInstance.post("/minirooms/save-layout", {
-  //       items: layoutData,
-  //     });
-
-  //     alert("미니룸 레이아웃이 저장되었습니다!");
-  //     router.push(`/home/${id}`);
-  //   } catch (error: any) {
-  //     if (error.response?.status === 401) {
-  //       alert("로그인이 필요합니다.");
-  //       router.push(`/home/${id}`);
-  //     } else {
-  //       console.error("미니룸 레이아웃 저장 실패:", error.message || error);
-  //       alert("서버와의 연결에 문제가 발생했습니다. 다시 시도해주세요.");
-  //     }
-  //   }
-  // };
   // 미니룸 배경
   useEffect(() => {
     if (!id) return;

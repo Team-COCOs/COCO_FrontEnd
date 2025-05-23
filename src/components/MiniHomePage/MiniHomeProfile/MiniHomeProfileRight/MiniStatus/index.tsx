@@ -35,8 +35,6 @@ const MiniStatus = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/${userId}/my-status`
         );
 
-        console.log("userData : ", res.data);
-
         setUserData(res.data);
         setMinihomepi_image(res.data.minihomepi_image);
       } catch (e) {

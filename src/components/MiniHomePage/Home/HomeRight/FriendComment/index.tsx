@@ -68,7 +68,7 @@ const FriendComment = () => {
           withCredentials: true,
         }
       );
-      console.log(res.data.data);
+
       setFriendComments(res.data.data);
     } catch (error: any) {
       if (error.response?.status !== 401) {

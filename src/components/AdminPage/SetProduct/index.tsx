@@ -71,7 +71,6 @@ const SetProduct: React.FC<SetProductProps> = ({ title, items }) => {
       ),
     },
   ];
-  console.log(items, "items");
   const dataSource = items.map((item: any) => ({
     key: item.id.toString(),
     id: item.id,
