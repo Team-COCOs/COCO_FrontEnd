@@ -2,6 +2,7 @@ import { SetUserStyled } from "./styled";
 import { useState, useEffect } from "react";
 import { Table } from "antd";
 import axiosInstance from "@/utils/axiosInstance";
+import Swal from "sweetalert2";
 
 interface User {
   id: number; // 아이디값
@@ -30,10 +31,16 @@ const SetUser: React.FC<SetUserProps> = ({ title }) => {
   const handleDelete = async (id: number) => {
     try {
       await axiosInstance.delete(`admin/users/${id}`);
-      alert("유저 삭제 성공!");
+      await Swal.fire({
+        title: "유저 삭제 성공!",
+        icon: "success",
+      });
       fetchUsers(); // 삭제 후 다시 데이터 불러오기
     } catch (error) {
-      alert("유저 삭제 실패");
+      Swal.fire({
+        title: "유저 삭제 실패!",
+        icon: "error",
+      });
       console.error(error);
     }
   };

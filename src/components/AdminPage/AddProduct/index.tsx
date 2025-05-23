@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import axiosInstance from "@/utils/axiosInstance";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 interface AddProductProps {
   title: string;
@@ -90,12 +91,19 @@ const AddProduct: React.FC<AddProductProps> = ({
         // duration 값 수동 초기화
         formik.setFieldValue("duration", "");
 
-        alert("상품이 성공적으로 등록되었습니다!");
+        await Swal.fire({
+          title: "상품이 성공적으로 등록되었습니다!",
+          icon: "success",
+        });
+
         window.location.reload();
       } catch (err) {
         // 에러 로그 찍기
         console.error(err);
-        alert("상품 등록에 실패했습니다. 다시 시도해 주세요.");
+        Swal.fire({
+          title: "상품 등록에 실패했습니다. 다시 시도해 주세요.",
+          icon: "error",
+        });
       }
     },
   });

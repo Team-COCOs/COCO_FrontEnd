@@ -5,6 +5,7 @@ import axiosInstance from "@/utils/axiosInstance";
 import { useDispatch } from "react-redux";
 import { fetchStoreItems } from "@/store/reducers/storeItemSlice";
 import type { AppDispatch } from "@/store/store";
+import Swal from "sweetalert2";
 
 interface SetProductProps {
   title: string;
@@ -17,10 +18,16 @@ const SetProduct: React.FC<SetProductProps> = ({ title, items }) => {
   const handleDelete = async (id: number) => {
     try {
       await axiosInstance.delete(`/storeitems/${id}`);
-      alert("삭제 성공!");
+      await Swal.fire({
+        title: "삭제 성공!",
+        icon: "success",
+      });
       dispatch(fetchStoreItems());
     } catch (error) {
-      alert("삭제 실패");
+      Swal.fire({
+        title: "삭제 실패!",
+        icon: "error",
+      });
       console.error(error);
     }
   };
