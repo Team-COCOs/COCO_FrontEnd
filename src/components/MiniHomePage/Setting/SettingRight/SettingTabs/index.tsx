@@ -4,6 +4,8 @@ import { useRouter } from "next/router";
 import axiosInstance from "@/lib/axios";
 import { useLanguage } from "@/context/LanguageContext";
 import { useTabs } from "@/context/TabsContext";
+import ShadowModal from "@/components/ShadowModal";
+
 const tabOptions = ["diary", "visitor", "photo", "coco"];
 const languageOptions = [
   { label: "한국어", value: "ko" },
@@ -15,6 +17,8 @@ const SettingTabs = () => {
   const { id } = router.query;
   const { language, setLanguage } = useLanguage();
   const { userTabs, setUserTabs, fetchUserTabs } = useTabs();
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
   // 탭 불러오기
   useEffect(() => {
@@ -22,9 +26,6 @@ const SettingTabs = () => {
       fetchUserTabs(id);
     }
   }, [id]);
-  useEffect(() => {
-    console.log("현재 userTabs 상태:", userTabs);
-  }, [userTabs]);
 
   // 탭 체크박스 변경
   const handleCheckboxChange = (tab: string) => {
@@ -40,8 +41,8 @@ const SettingTabs = () => {
         tabs: userTabs,
       });
       console.log(userTabs, "저장하는 탭 데이터");
-      alert("탭 설정이 저장되었습니다.");
-      router.push(`/home/${id}`);
+      setIsOpen(true);
+      setMessage("탭 설정이 저장되었습니다.");
     } catch (error) {
       console.error("탭 설정 저장 실패:", error);
     }
@@ -53,9 +54,9 @@ const SettingTabs = () => {
       await axiosInstance.patch(`/useritems/set-language`, {
         language,
       });
-      console.log(language, "저장하는 언어 설정 데이터");
-      alert("언어 설정이 저장되었습니다.");
-      router.push(`/home/${id}`);
+      setIsOpen(true);
+      setMessage("언어 설정이 저장되었습니다.");
+      // alert("언어 설정이 저장되었습니다.");
     } catch (error) {
       console.error("언어 설정 저장 실패:", error);
     }
@@ -112,6 +113,15 @@ const SettingTabs = () => {
           </div>
         </div>
       </div>
+      <ShadowModal
+        type="success"
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          router.push(`/home/${id}`);
+        }}
+        message={message}
+      ></ShadowModal>
     </SettingTabsStyled>
   );
 };
