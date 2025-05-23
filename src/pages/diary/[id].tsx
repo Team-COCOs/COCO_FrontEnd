@@ -17,6 +17,7 @@ const MinihomePage = () => {
     title: string;
   } | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [diaryWrite, setDiaryWrite] = useState<boolean>(false);
   return (
     <>
       <Head>
@@ -30,6 +31,8 @@ const MinihomePage = () => {
             setSelectedDate={setSelectedDate}
             selectedDiaryMenu={selectedDiaryMenu}
             setSelectedDiaryMenu={setSelectediaryMenu}
+            diaryWrite={diaryWrite}
+            setDiaryWrite={setDiaryWrite}
           />
         }
         children={
@@ -38,6 +41,8 @@ const MinihomePage = () => {
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
             setSelectedDiaryMenu={setSelectediaryMenu}
+            diaryWrite={diaryWrite}
+            setDiaryWrite={setDiaryWrite}
           />
         }
       />

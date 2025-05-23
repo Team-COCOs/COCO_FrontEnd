@@ -15,6 +15,8 @@ interface DiaryProps {
   >;
   selectedDate: Date | null;
   setSelectedDate: React.Dispatch<React.SetStateAction<Date | null>>;
+  diaryWrite: boolean;
+  setDiaryWrite: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DiaryLeft = ({
@@ -22,6 +24,8 @@ const DiaryLeft = ({
   setSelectedDate,
   selectedDiaryMenu,
   setSelectedDiaryMenu,
+  diaryWrite,
+  setDiaryWrite,
 }: DiaryProps) => {
   // Folder 또는 DynamicFolder 전환용
   const [editMode, setEditMode] = useState(false);
@@ -55,7 +59,10 @@ const DiaryLeft = ({
         <div className="min-w-[250px] DiaryLeft_Calendar_wrap pixelFont">
           <Calendar
             locale="ko-KR"
-            onChange={(date) => setSelectedDate(date as Date)}
+            onChange={(date) => {
+              setSelectedDate(date as Date);
+              setDiaryWrite(false);
+            }}
             value={selectedDate}
             prev2Label="◀◀" // «
             next2Label="▶▶" // »
@@ -77,7 +84,9 @@ const DiaryLeft = ({
           />
           <button
             onClick={() => {
-              setSelectedDate(null), setSelectedDiaryMenu(null);
+              setSelectedDate(null),
+                setSelectedDiaryMenu(null),
+                setDiaryWrite(false);
             }}
             className="DiaryLeft_Calendar_alldatebtn"
           >
@@ -92,7 +101,9 @@ const DiaryLeft = ({
           <DynamicFolder
             type="diary"
             selectedMenu={selectedDiaryMenu}
-            onMenuSelect={(menu) => setSelectedDiaryMenu(menu)}
+            onMenuSelect={(menu) => {
+              setSelectedDiaryMenu(menu), setDiaryWrite(false);
+            }}
           />
         )}
 

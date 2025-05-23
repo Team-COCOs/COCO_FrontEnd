@@ -12,6 +12,8 @@ interface DiaryProps {
   setSelectedDiaryMenu: React.Dispatch<
     React.SetStateAction<{ id: number; title: string } | null>
   >;
+  diaryWrite: boolean;
+  setDiaryWrite: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface DiaryType {
@@ -35,8 +37,10 @@ const DiaryRight = ({
   selectedDiaryMenu,
   setSelectedDiaryMenu,
   setSelectedDate,
+  diaryWrite,
+  setDiaryWrite,
 }: DiaryProps) => {
-  const [diaryWrite, setDiaryWrite] = useState<boolean>(false);
+  // const [diaryWrite, setDiaryWrite] = useState<boolean>(false);
   const [editingDiary, setEditingDiary] = useState<DiaryType | null>(null);
 
   return (
