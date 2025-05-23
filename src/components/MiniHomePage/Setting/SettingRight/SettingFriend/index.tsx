@@ -63,7 +63,7 @@ const SettingFriend = () => {
     };
 
     friends();
-  }, [friend]);
+  }, []);
 
   return (
     <SettingFriendStyle className="SettingFriend_wrap">
@@ -128,6 +128,8 @@ const SettingFriend = () => {
 
           if (message === "로그인이 필요합니다.") {
             router.push(`/home/${user?.id}`);
+          } else if (message === "삭제되었습니다!") {
+            window.location.reload();
           }
         }}
         message={message}

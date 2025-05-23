@@ -36,6 +36,7 @@ const ProfilePart = () => {
       <div className="ProfilePart_Texts">
         <a href="https://www.cyworld.com/" target="_blank">
           <b className="ProfilePart_addText">‣ 싸이월드 메인 개편</b>
+          <br />
           <b className="ProfilePart_addText">‣ 새 단장한 미니싸이월드</b>
         </a>
       </div>
