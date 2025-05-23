@@ -30,6 +30,7 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
   const { user } = useAuth();
   const userId = user?.id;
   const router = useRouter();
+  const { id } = router.query;
 
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
@@ -236,7 +237,7 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
                             삭제
                           </button>
                         </div>
-                      ) : data.isScripted ? (
+                      ) : userId === Number(id) && data.isScripted ? (
                         // 로그인한 남이 스크랩한 글
                         <div className="PhotoRight_btns">
                           <button
