@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import axiosInstance from "@/lib/axios";
 import axios from "axios";
 import { useSkin } from "@/context/SkinContext";
+import ShadowModal from "@/components/ShadowModal";
 
 const BKbuy = () => {
   const router = useRouter();
@@ -15,6 +16,9 @@ const BKbuy = () => {
   const [selectedDiary, setSelectedDiary] = useState("default-bk");
   const [selectedTab, setSelectedTab] = useState("default-tapcolor");
   const { fetchSkin } = useSkin();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (typeof id === "string") {
@@ -120,9 +124,10 @@ const BKbuy = () => {
           purchaseId: selectedMinihomepis,
         }),
       ]);
-
-      alert("미니홈피 효과 저장 완료!");
-      router.push(`/home/${id}`);
+      setIsOpen(true);
+      setMessage("미니홈피 효과 저장 완료!");
+      // alert("미니홈피 효과 저장 완료!");
+      // router.push(`/home/${id}`);
     } catch (error) {
       console.error("테마 저장 중 오류 발생:", error);
     }
@@ -204,6 +209,15 @@ const BKbuy = () => {
           </div>
         </div>
       </div>
+      <ShadowModal
+        type="success"
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          router.push(`/home/${id}`);
+        }}
+        message={message}
+      ></ShadowModal>
     </BKbuyStyled>
   );
 };

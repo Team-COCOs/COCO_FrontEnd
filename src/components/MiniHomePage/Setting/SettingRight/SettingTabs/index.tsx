@@ -55,7 +55,6 @@ const SettingTabs = () => {
       });
       setIsOpen(true);
       setMessage("언어 설정이 저장되었습니다.");
-      // alert("언어 설정이 저장되었습니다.");
     } catch (error) {
       console.error("언어 설정 저장 실패:", error);
     }
