@@ -66,7 +66,10 @@ const AddFriendModal = ({
       window.location.reload();
     } catch (error) {
       console.error("서버 요청 오류:", error);
-      alert("일촌 신청에 실패했습니다. 다시 시도해주세요.");
+      await Swal.fire({
+        title: "일촌 신청에 실패했습니다. 다시 시도해주세요.",
+        icon: "error",
+      });
     }
   };
   // 오늘 날짜

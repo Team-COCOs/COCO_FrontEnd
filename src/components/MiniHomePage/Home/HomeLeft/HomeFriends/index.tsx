@@ -4,6 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Loading from "@/components/Loading";
+import ShadowModal from "@/components/ShadowModal";
 
 const HomeFriends = () => {
   const router = useRouter();
@@ -11,6 +12,9 @@ const HomeFriends = () => {
   const { user } = useAuth();
   const [profile, setProfile] = useState<any>(null);
   const [selectedValue, setSelectedValue] = useState("");
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const homepiProfile = async () => {
@@ -22,8 +26,8 @@ const HomeFriends = () => {
         setProfile(response.data);
       } catch (err: any) {
         if (err.response?.status === 404) {
-          alert("존재하지 않는 페이지입니다.");
-          router.push("/");
+          setModalIsOpen(true);
+          setMessage("존재하지 않는 페이지입니다.");
         }
       }
     };
@@ -84,6 +88,16 @@ const HomeFriends = () => {
           ))}
         </select>
       </div>
+
+      <ShadowModal
+        type="error"
+        isOpen={modalIsOpen}
+        onClose={() => {
+          setModalIsOpen(false);
+          router.push("/");
+        }}
+        message={message}
+      />
     </HomeFriendsStyled>
   );
 };

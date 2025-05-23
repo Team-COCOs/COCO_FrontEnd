@@ -5,6 +5,7 @@ import axiosInstance from "@/lib/axios";
 import { useAuth } from "@/context/AuthContext";
 import Loading from "@/components/Loading";
 import axios from "axios";
+import ShadowModal from "@/components/ShadowModal";
 
 interface Props {
   setIsOpen: (value: boolean) => void;
@@ -22,6 +23,9 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [userTitle, setUserTitle] = useState(null);
   const [profile, setProfile] = useState<any>(null);
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -73,8 +77,8 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
         setProfile(response.data);
       } catch (err: any) {
         if (err.response?.status === 404) {
-          alert("존재하지 않는 페이지입니다.");
-          router.push("/");
+          setModalIsOpen(true);
+          setMessage("존재하지 않는 페이지입니다.");
         }
       }
     };
@@ -107,7 +111,8 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
               <div
                 className="DiaryTitle_plus_friend dotumFont"
                 onClick={() => {
-                  alert("로그인이 필요합니다.");
+                  setIsOpen(true);
+                  setMessage("로그인이 필요합니다.");
                 }}
               >
                 + 일촌맺기
@@ -128,6 +133,16 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
             ))}
         </div>
       </div>
+
+      <ShadowModal
+        type="error"
+        isOpen={modalIsOpen}
+        onClose={() => {
+          setModalIsOpen(false);
+          router.push("/");
+        }}
+        message={message}
+      />
     </DiaryTitleStyled>
   );
 };
