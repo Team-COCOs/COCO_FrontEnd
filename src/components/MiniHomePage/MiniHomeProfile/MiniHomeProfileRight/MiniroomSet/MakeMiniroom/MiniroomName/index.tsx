@@ -5,12 +5,17 @@ import axiosInstance from "@/lib/axios";
 
 import axios from "axios";
 import { useRouter } from "next/router";
+import ShadowModal from "@/components/ShadowModal";
 
 const MiniroomName = () => {
   const router = useRouter();
   const { id } = router.query;
   // 미니룸 이름 관리
   const [name, setName] = useState("");
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
 
   // 미니룸 이름 불러오기
   useEffect(() => {
@@ -37,12 +42,15 @@ const MiniroomName = () => {
 
   const handleSave = async () => {
     if (name.length === 0) {
-      alert("이름을 입력해주세요.");
+      setType("error");
+      setIsOpen(true);
+      setMessage("이름을 입력해주세요.");
     } else {
       const res = await axiosInstance.patch(`/minirooms/title`, { name });
 
-      alert(`미니룸 이름이 변경되었습니다.`);
-      router.push(`/home/${id}`);
+      setType("success");
+      setIsOpen(true);
+      setMessage("미니룸 이름이 변경되었습니다.");
     }
   };
 
@@ -67,6 +75,19 @@ const MiniroomName = () => {
         </div>
       </div>
       <div className="MiniroomName_wrap_title Gulim">미니룸 수정하기</div>
+
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+
+          if (message === "미니룸 이름이 변경되었습니다.") {
+            router.push(`/home/${id}`);
+          }
+        }}
+        message={message}
+      />
     </MiniroomNameStyled>
   );
 };

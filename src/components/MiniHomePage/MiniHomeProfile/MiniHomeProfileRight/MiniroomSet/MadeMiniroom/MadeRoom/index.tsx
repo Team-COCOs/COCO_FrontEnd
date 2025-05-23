@@ -2,6 +2,7 @@ import { MadeRoomStyled } from "./styled";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import ShadowModal from "@/components/ShadowModal";
 
 interface Minimi {
   id: number;
@@ -30,6 +31,10 @@ const MadeRoom = () => {
 
   // 미니룸 미니미 성별 관리
   const [profileGender, setProfileGender] = useState("woman");
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
 
   // 미니룸 배경 불러오기
   useEffect(() => {
@@ -89,8 +94,9 @@ const MadeRoom = () => {
         setProfileGender(response.data.gender);
       } catch (err: any) {
         if (err.response?.status === 404) {
-          alert("존재하지 않는 페이지입니다.");
-          router.push("/");
+          setType("error");
+          setIsOpen(true);
+          setMessage("존재하지 않는 페이지입니다.");
         }
       }
     };
@@ -163,6 +169,19 @@ const MadeRoom = () => {
           </div>
         </div>
       </div>
+
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+
+          if (message === "존재하지 않는 페이지입니다.") {
+            router.push("/");
+          }
+        }}
+        message={message}
+      />
     </MadeRoomStyled>
   );
 };

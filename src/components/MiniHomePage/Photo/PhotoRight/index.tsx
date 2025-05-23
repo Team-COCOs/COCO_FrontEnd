@@ -10,11 +10,13 @@ import { formatKoreanDate } from "@/utils/KrDate/date";
 import axios from "axios";
 import { PhotoData, PhotoProps } from "@/utils/Write/interface";
 import Skeleton from "@mui/material/Skeleton";
+import ShadowModal from "@/components/ShadowModal";
 
 const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
   const [photoData, setPhotoData] = useState<PhotoData[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loaded, setLoaded] = useState(false);
+  const [photoId, setPhotoId] = useState<number | null>(null);
 
   const itemsPerPage = 5;
 
@@ -28,6 +30,10 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
   const { user } = useAuth();
   const userId = user?.id;
   const router = useRouter();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
 
   const queryUserId = router.query.id;
 
@@ -70,7 +76,10 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
       const res = await axiosInstance.patch(`/photos/${photoId}/clip`);
 
       console.log("스크랩 정보 : ", res.data);
-      alert("스크랩 완료!");
+
+      setType("success");
+      setIsOpen(true);
+      setMessage("스크랩 완료!");
       getPhotoData?.();
     } catch (e) {
       console.log("스크랩 실패: ", e);
@@ -78,13 +87,22 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
   };
 
   // delete
-  const deletePhoto = async (photoId: number) => {
-    const confirmed = window.confirm("해당 게시글을 삭제하시겠습니까?");
-    if (!confirmed) return;
 
+  const confirm = (id: number) => {
+    setPhotoId(id);
+
+    setType("confirm");
+    setIsOpen(true);
+    setMessage("해당 게시글을 삭제하시겠습니까?");
+  };
+
+  const deletePhoto = async () => {
     try {
       await axiosInstance.delete(`/photos/${photoId}`);
-      alert("삭제되었습니다.");
+
+      setType("success");
+      setIsOpen(true);
+      setMessage("삭제 완료!");
       getPhotoData();
     } catch (err) {
       console.error("삭제 실패: ", err);
@@ -213,7 +231,7 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
                           </button>
                           <button
                             className="Gulim"
-                            onClick={() => deletePhoto(data.id)}
+                            onClick={() => confirm(data.id)}
                           >
                             삭제
                           </button>
@@ -223,7 +241,7 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
                         <div className="PhotoRight_btns">
                           <button
                             className="Gulim"
-                            onClick={() => deletePhoto(data.id)}
+                            onClick={() => confirm(data.id)}
                           >
                             삭제
                           </button>
@@ -269,6 +287,16 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
           </div>
         )}
       </div>
+
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+        message={message}
+        onConfirm={deletePhoto}
+      />
     </PhotoRightStyled>
   );
 };

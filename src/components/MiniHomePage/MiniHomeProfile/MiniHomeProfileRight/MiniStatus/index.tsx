@@ -7,6 +7,7 @@ import { Field, Form, Formik } from "formik";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Skeleton from "@mui/material/Skeleton";
+import ShadowModal from "@/components/ShadowModal";
 
 interface UserData {
   title: string;
@@ -27,6 +28,10 @@ const MiniStatus = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [loaded, setLoaded] = useState(false);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -59,13 +64,17 @@ const MiniStatus = () => {
   // 데이터 저장 함수
   const saveData = async (values: UserData) => {
     if (!userId) {
-      alert("로그인이 필요합니다.");
-      router.push(`/home/${id}`);
+      setType("error");
+      setIsOpen(true);
+      setMessage("로그인이 필요합니다.");
+
       return;
     }
 
     if (values.introduction.length > 50) {
-      alert("소개글은 50자 이내로 작성해주세요.");
+      setType("error");
+      setIsOpen(true);
+      setMessage("소개글은 50자 이내로 작성해주세요");
       return;
     }
 
@@ -84,8 +93,9 @@ const MiniStatus = () => {
       const res = await axiosInstance.post("/minihomepis/info", formData);
 
       if (res.data.message === "저장 완료") {
-        alert("저장 완료!");
-        window.location.reload();
+        setType("success");
+        setIsOpen(true);
+        setMessage("저장 완료!");
       }
     } catch (e: any) {
       console.log(e.response?.data);
@@ -202,6 +212,21 @@ const MiniStatus = () => {
           </div>
         </Form>
       </Formik>
+
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+
+          if (message === "로그인이 필요합니다.") {
+            router.push(`/home/${id}`);
+          } else if (message === "저장 완료!") {
+            window.location.reload();
+          }
+        }}
+        message={message}
+      />
     </MiniStatusStyle>
   );
 };

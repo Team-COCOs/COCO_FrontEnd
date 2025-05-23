@@ -11,6 +11,7 @@ import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
 import { useRouter } from "next/router";
 import MiniroomName from "./MiniroomName";
+import ShadowModal from "@/components/ShadowModal";
 
 interface MakeMiniroomProps {
   setfixMiniroom: (value: boolean) => void;
@@ -42,6 +43,10 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
 
   // 미니룸 이름 관리
   const [name, setName] = useState("");
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
 
   // 모바일 여부 확인
   const isMobile = useIsMobile();
@@ -80,8 +85,9 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
         setAllProduct(response.data);
       } catch (e: any) {
         if (e.response && e.response.status === 401) {
-          alert("로그인이 필요합니다.");
-          router.push(`/home/${id}`);
+          setType("error");
+          setIsOpen(true);
+          setMessage("로그인이 필요합니다.");
         } else {
           console.log(e, "구매 목록 불러오기 실패");
         }
@@ -219,15 +225,18 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
         items: fullLayoutData,
       });
 
-      alert("미니룸 레이아웃이 저장되었습니다!");
-      router.push(`/home/${id}`);
+      setType("error");
+      setIsOpen(true);
+      setMessage("미니룸 레이아웃이 저장되었습니다!");
     } catch (error: any) {
       if (error.response?.status === 401) {
-        alert("로그인이 필요합니다.");
-        router.push(`/home/${id}`);
+        setType("error");
+        setIsOpen(true);
+        setMessage("로그인이 필요합니다.");
       } else {
-        console.error("미니룸 레이아웃 저장 실패:", error.message || error);
-        alert("서버와의 연결에 문제가 발생했습니다. 다시 시도해주세요.");
+        setType("error");
+        setIsOpen(true);
+        setMessage("서버와의 연결에 문제가 발생했습니다. 다시 시도해주세요.");
       }
     }
   };
@@ -379,6 +388,16 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
             </div>
           </div>
         </div>
+
+        <ShadowModal
+          type={type}
+          isOpen={isOpen}
+          onClose={() => {
+            setIsOpen(false);
+            router.push(`/home/${user?.id}`);
+          }}
+          message={message}
+        />
       </MakeMiniroomStyled>
     </DndProvider>
   );
