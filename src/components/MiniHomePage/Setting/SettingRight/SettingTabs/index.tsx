@@ -40,7 +40,6 @@ const SettingTabs = () => {
       await axiosInstance.patch(`/useritems/set-tabs`, {
         tabs: userTabs,
       });
-      console.log(userTabs, "저장하는 탭 데이터");
       setIsOpen(true);
       setMessage("탭 설정이 저장되었습니다.");
     } catch (error) {
@@ -74,8 +73,9 @@ const SettingTabs = () => {
                 <label key={tab} className="Gulim">
                   <input
                     type="checkbox"
-                    checked={userTabs.includes(tab)}
+                    checked={tab === "coco" ? true : userTabs.includes(tab)}
                     onChange={() => handleCheckboxChange(tab)}
+                    disabled={tab === "coco"}
                   />
                   {tab}
                 </label>
