@@ -1,15 +1,14 @@
 import clsx from "clsx";
 import { SearchStyle } from "./styled";
-import Image from "next/image";
 import { useState } from "react";
 import ShadowModal from "@/components/ShadowModal";
-import axios from "axios";
 import { useRouter } from "next/router";
 
 const Search = () => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const userSearch = async () => {
     if (!search.trim()) {
@@ -17,21 +16,47 @@ const Search = () => {
       return;
     }
     router.push(`?keyword=${encodeURIComponent(search.trim())}`);
+    setSearch("");
   };
 
   return (
     <SearchStyle className={clsx("Search_wrap")}>
       <div className="Search_inputBack">
         <div className="Search_input">
-          <div className="Search_select"> 미니홈피 </div>
-          <div className="Search_downBtn">
-            <span className="Search_triangle"></span>
+          <div className="Search_select">미니홈피</div>
+
+          <div
+            className="Search_downBtn"
+            onClick={() =>
+              isDropdownOpen
+                ? setIsDropdownOpen(false)
+                : setIsDropdownOpen(true)
+            }
+          >
+            <span className="Search_triangle" />
           </div>
+
+          {isDropdownOpen && (
+            <div className="Search_dropdown">
+              <p
+                className="Search_option"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                미니홈피
+              </p>
+            </div>
+          )}
+
           <input
             type="text"
             placeholder="다른 미니홈피를 검색해보세요."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                userSearch();
+              }
+            }}
           />
         </div>
       </div>

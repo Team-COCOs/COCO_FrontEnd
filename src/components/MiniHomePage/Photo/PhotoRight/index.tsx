@@ -5,7 +5,7 @@ import axiosInstance from "@/lib/axios";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
 import Comment from "./Comment";
-import DOMPurify from "dompurify";
+import createDOMPurify from "dompurify";
 import { formatKoreanDate } from "@/utils/KrDate/date";
 import axios from "axios";
 import { PhotoData, PhotoProps } from "@/utils/Write/interface";
@@ -94,6 +94,17 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
   useEffect(() => {
     queryUserId && getPhotoData();
   }, [selectedMenu, queryUserId]);
+
+  let DOMPurify: any = null;
+  if (typeof window !== "undefined") {
+    DOMPurify = createDOMPurify(window);
+    DOMPurify.addHook("afterSanitizeAttributes", function (node: HTMLElement) {
+      if (node.tagName === "A") {
+        node.setAttribute("target", "_blank");
+        node.setAttribute("rel", "noopener noreferrer");
+      }
+    });
+  }
 
   return (
     <PhotoRightStyled>

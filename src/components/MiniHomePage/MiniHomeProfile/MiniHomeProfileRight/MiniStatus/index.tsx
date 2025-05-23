@@ -35,6 +35,8 @@ const MiniStatus = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/${userId}/my-status`
         );
 
+        console.log("상태 정보 : ", res.data);
+
         setUserData(res.data);
         setMinihomepi_image(res.data.minihomepi_image);
       } catch (e) {
