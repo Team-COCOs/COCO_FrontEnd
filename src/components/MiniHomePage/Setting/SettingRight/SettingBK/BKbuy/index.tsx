@@ -17,6 +17,7 @@ const BKbuy = () => {
   const [selectedTab, setSelectedTab] = useState("default-tapcolor");
   const { fetchSkin } = useSkin();
 
+  const [type, setType] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -35,8 +36,9 @@ const BKbuy = () => {
         setHomepiBkData(response.data);
       } catch (e: any) {
         if (e.response?.status === 401) {
-          alert("로그인이 필요합니다.");
-          router.push(`/home/${id}`);
+          setType("error");
+          setIsOpen(true);
+          setMessage("로그인이 필요합니다.");
         } else {
           console.error("구매 목록 불러오기 실패", e);
         }
@@ -124,10 +126,9 @@ const BKbuy = () => {
           purchaseId: selectedMinihomepis,
         }),
       ]);
+      setType("success");
       setIsOpen(true);
       setMessage("미니홈피 효과 저장 완료!");
-      // alert("미니홈피 효과 저장 완료!");
-      // router.push(`/home/${id}`);
     } catch (error) {
       console.error("테마 저장 중 오류 발생:", error);
     }
@@ -210,7 +211,7 @@ const BKbuy = () => {
         </div>
       </div>
       <ShadowModal
-        type="success"
+        type={type}
         isOpen={isOpen}
         onClose={() => {
           setIsOpen(false);

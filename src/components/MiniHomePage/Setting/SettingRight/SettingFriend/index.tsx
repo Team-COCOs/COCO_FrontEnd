@@ -19,20 +19,30 @@ const SettingFriend = () => {
   const [friend, setFriend] = useState<FriendData[]>([]);
   const router = useRouter();
   const { user } = useAuth();
+
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
 
-  const handleDelete = async (id: number) => {
-    if (confirm("정말 삭제하시겠습니까?")) {
-      try {
-        await axiosInstance.delete(`/friends/${id}`);
-        setFriend(friend.filter((f) => f.id !== id));
-        setIsOpen(true);
-        setMessage("삭제되었습니다!");
-        // alert("삭제되었습니다!");
-      } catch (e) {
-        console.log(e);
-      }
+  const [id, setId] = useState<number | null>(null);
+
+  const confirm = (friendId: number) => {
+    setId(friendId);
+    setIsOpen(true);
+    setType("confirm");
+    setMessage("정말 삭제하시겠습니까?");
+  };
+
+  const handleDelete = async () => {
+    try {
+      await axiosInstance.delete(`/friends/${id}`);
+      setFriend(friend.filter((f) => f.id !== id));
+
+      setType("success");
+      setIsOpen(true);
+      setMessage("삭제되었습니다!");
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -44,8 +54,9 @@ const SettingFriend = () => {
         setFriend(res.data.friends);
       } catch (e: any) {
         if (e.response?.status === 401) {
-          alert("로그인이 필요합니다.");
-          router.push(`/home/${user?.id}`);
+          setType("error");
+          setIsOpen(true);
+          setMessage("로그인이 필요합니다.");
         }
         console.log(e);
       }
@@ -78,7 +89,7 @@ const SettingFriend = () => {
                   className="Delete_btn"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleDelete(d.userId);
+                    confirm(d.userId);
                   }}
                 >
                   ✕
@@ -110,14 +121,18 @@ const SettingFriend = () => {
         )}
       </div>
       <ShadowModal
-        type="success"
+        type={type}
         isOpen={isOpen}
         onClose={() => {
           setIsOpen(false);
-          window.location.reload();
+
+          if (message === "로그인이 필요합니다.") {
+            router.push(`/home/${user?.id}`);
+          }
         }}
         message={message}
-      ></ShadowModal>
+        onConfirm={handleDelete}
+      />
     </SettingFriendStyle>
   );
 };
