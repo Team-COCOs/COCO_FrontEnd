@@ -71,10 +71,14 @@ const MiniStatus = () => {
       return;
     }
 
-    if (values.introduction.length > 50) {
+    function getByteLength(str: string): number {
+      return new TextEncoder().encode(str).length;
+    }
+
+    if (getByteLength(values.introduction) > 150) {
       setType("error");
       setIsOpen(true);
-      setMessage("소개글은 50자 이내로 작성해주세요");
+      setMessage("소개글은 최대 50자까지 입력 가능합니다.");
       return;
     }
 

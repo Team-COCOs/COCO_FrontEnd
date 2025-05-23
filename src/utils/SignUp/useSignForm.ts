@@ -307,6 +307,7 @@ const useSignForm = () => {
     handleBirthDayChange,
     isEmailChecked,
     isPhoneChecked,
+    setMessage,
   };
 };
 

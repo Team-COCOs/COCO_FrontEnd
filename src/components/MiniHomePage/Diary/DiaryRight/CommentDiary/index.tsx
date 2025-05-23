@@ -29,6 +29,7 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [type, setType] = useState("");
+  const [commentId, setCommentId] = useState<number | null>(null);
 
   const handleSaveComment = async (
     content: string,
@@ -59,7 +60,6 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
       setComment(""); // 댓글 입력창 초기화
       setReplyText(""); // 답글 입력창 초기화
       setReplyingCommentId(null); // 답글 입력창 닫기
-      window.location.reload();
     } catch (e: any) {
       if (e.response?.status === 401) {
         setType("error");
@@ -85,14 +85,18 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
   // 답글 텍스트 상태
   const [replyText, setReplyText] = useState("");
 
-  const handleReplyClick = (commentId: number) => {
-    setReplyingCommentId((prevId) => (prevId === commentId ? null : commentId));
+  const handleReplyClick = (id: number) => {
+    setReplyingCommentId((prevId) => (prevId === id ? null : id));
   };
 
-  const handleDeleteComment = async (commentId: number) => {
-    const confirmDelete = window.confirm("정말 이 댓글을 삭제하시겠습니까?");
-    if (!confirmDelete) return;
+  const confrim = (id: number) => {
+    setCommentId(id);
+    setType("confirm");
+    setIsOpen(true);
+    setMessage("정말 이 댓글을 삭제하시겠습니까?");
+  };
 
+  const handleDeleteComment = async () => {
     try {
       const response = await axiosInstance.delete(
         `/diaryComments/${commentId}`
@@ -100,7 +104,6 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
       setType("success");
       setIsOpen(true);
       setMessage("댓글이 삭제되었습니다.");
-      window.location.reload();
     } catch (e: any) {
       if (e.response?.status === 401) {
         setType("error");
@@ -158,7 +161,7 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
                       Number(user?.id) === Number(id)) && (
                       <span
                         className="DiaryComments_comment_deletebtn"
-                        onClick={() => handleDeleteComment(comment.id)}
+                        onClick={() => confrim(comment.id)}
                       >
                         ☒
                       </span>
@@ -231,7 +234,7 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
                             Number(user?.id) === Number(id)) && (
                             <span
                               className="DiaryComments_comment_deletebtn"
-                              onClick={() => handleDeleteComment(child.id)}
+                              onClick={() => confrim(child.id)}
                             >
                               ☒
                             </span>
@@ -272,9 +275,12 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
         isOpen={isOpen}
         onClose={() => {
           setIsOpen(false);
-          window.location.reload();
+          if (type !== "confirm") {
+            window.location.reload();
+          }
         }}
         message={message}
+        onConfirm={handleDeleteComment}
       />
     </CommentDiaryStyle>
   );

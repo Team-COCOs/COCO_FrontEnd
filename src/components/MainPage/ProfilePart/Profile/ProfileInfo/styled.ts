@@ -29,8 +29,8 @@ export const ProfileInfoStyle = styled.div`
     .Profile_new {
       font-size: 9px;
       font-weight: bold;
-      color: white;
-      background-color: ${({ theme }) => theme.colors.mainColor};
+      color: white !important;
+      background-color: ${({ theme }) => theme.colors.mainColor} !important;
       padding: 0 3px;
       border-radius: 3px;
       margin-left: 5px;

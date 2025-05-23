@@ -19,9 +19,11 @@ const SettingMyInfo = () => {
     passwordCheckError,
     phone,
     phoneError,
+    setType,
     type,
     isOpen,
     setIsOpen,
+    setMessage,
     message,
   } = useSignForm();
 
@@ -50,13 +52,13 @@ const SettingMyInfo = () => {
 
       await axiosInstance.patch(`/users/update/${type}`, data);
 
-      alert(
+      setType("success");
+      setIsOpen(true);
+      setMessage(
         `${
           type === "password" ? "비밀번호" : "전화번호"
         }가 성공적으로 변경되었습니다.`
       );
-
-      window.location.reload();
     } catch (err) {
       alert(
         `${type === "password" ? "비밀번호" : "전화번호"} 변경에 실패했습니다.`
@@ -181,7 +183,15 @@ const SettingMyInfo = () => {
       <ShadowModal
         type={type}
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={() => {
+          setIsOpen(false);
+          if (
+            message === "비밀번호가 성공적으로 변경되었습니다." ||
+            message === "전화번호가 성공적으로 변경되었습니다."
+          ) {
+            window.location.reload();
+          }
+        }}
         message={message}
       />
     </SettingMyInfoStyle>
