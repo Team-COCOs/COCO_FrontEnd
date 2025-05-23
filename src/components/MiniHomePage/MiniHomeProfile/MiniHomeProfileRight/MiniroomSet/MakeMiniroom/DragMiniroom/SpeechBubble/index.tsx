@@ -67,8 +67,9 @@ const SpeechBubble: React.FC<SpeechBubbleItemProps> = ({
           </button>
           <textarea
             value={item.text}
-            onChange={(e) => onTextChange(item.id, e.target.value.slice(0, 15))}
-            maxLength={16}
+            onChange={(e) => onTextChange(item.id, e.target.value)}
+            // onChange={(e) => onTextChange(item.id, e.target.value.slice(0, 15))}
+            maxLength={15}
             rows={2}
           />
           <div className="bubble-tail" />

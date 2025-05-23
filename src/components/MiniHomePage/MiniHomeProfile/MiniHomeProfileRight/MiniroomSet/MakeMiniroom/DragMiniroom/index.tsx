@@ -226,23 +226,27 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
   };
 
   // 말풍선 텍스트 변경 시 처리
+
   const handleTextChange = (id: string, text: string) => {
-    setItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, text } : item))
-    );
+    setItems((prev) => {
+      const newItems = prev.map((item) =>
+        item.id === id ? { ...item, text } : item
+      );
 
-    // 텍스트 변경 시 부모에게 데이터 전달
-    const updatedLayout = items.map((item) => ({
-      id: item.id,
-      type: item.type,
-      x: item.left,
-      y: item.top,
-      text: item.text || "", // 텍스트도 함께 전달
-    }));
+      // 여기서 업데이트된 newItems로 부모에게 전달
+      const updatedLayout = newItems.map((item) => ({
+        id: item.id,
+        type: item.type,
+        x: item.left,
+        y: item.top,
+        text: item.text || "",
+      }));
 
-    onDragComplete(updatedLayout);
+      onDragComplete(updatedLayout);
+
+      return newItems;
+    });
   };
-
   // 말풍선 삭제 시 처리
   const handleDelete = (id: string) => {
     const updatedItems = items.filter((item) => item.id !== id);
