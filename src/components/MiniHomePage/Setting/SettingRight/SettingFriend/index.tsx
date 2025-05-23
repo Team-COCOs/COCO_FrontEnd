@@ -4,6 +4,7 @@ import axiosInstance from "@/lib/axios";
 import EmptyPage from "@/components/EmptyPage";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
+import ShadowModal from "@/components/ShadowModal";
 
 interface FriendData {
   id: number;
@@ -18,13 +19,17 @@ const SettingFriend = () => {
   const [friend, setFriend] = useState<FriendData[]>([]);
   const router = useRouter();
   const { user } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleDelete = async (id: number) => {
     if (confirm("정말 삭제하시겠습니까?")) {
       try {
         await axiosInstance.delete(`/friends/${id}`);
         setFriend(friend.filter((f) => f.id !== id));
-        alert("삭제되었습니다!");
+        setIsOpen(true);
+        setMessage("삭제되었습니다!");
+        // alert("삭제되었습니다!");
       } catch (e) {
         console.log(e);
       }
@@ -104,6 +109,15 @@ const SettingFriend = () => {
           </div>
         )}
       </div>
+      <ShadowModal
+        type="success"
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          window.location.reload();
+        }}
+        message={message}
+      ></ShadowModal>
     </SettingFriendStyle>
   );
 };

@@ -37,7 +37,6 @@ const VisitorRight = () => {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/management/${id}`
         );
-
         setQuote(res.data?.content || "");
       } catch (err) {
         console.error("관리 가져오기 실패: ", err);

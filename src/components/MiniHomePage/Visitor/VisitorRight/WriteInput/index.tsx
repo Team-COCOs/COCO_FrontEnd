@@ -3,6 +3,7 @@ import { WriteInputStyle } from "./styled";
 import { useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { useRouter } from "next/router";
+import ShadowModal from "@/components/ShadowModal";
 
 interface GuestWriteProps {
   onSuccess: () => void;
@@ -14,6 +15,7 @@ const WriteInput = ({ onSuccess }: GuestWriteProps) => {
   const { id } = router.query;
   const [content, setContent] = useState("");
   const [isSecret, setIsSecret] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const miniProfile = !user?.profile_image
     ? user?.gender === "woman"
@@ -24,7 +26,7 @@ const WriteInput = ({ onSuccess }: GuestWriteProps) => {
   // 저장
   const handleSubmit = async () => {
     if (!content.trim()) {
-      alert("내용을 입력해주세요.");
+      setIsOpen(true);
       return;
     }
 
@@ -84,6 +86,12 @@ const WriteInput = ({ onSuccess }: GuestWriteProps) => {
           </button>
         </div>
       </div>
+      <ShadowModal
+        type="error"
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        message="내용을 입력해주세요."
+      ></ShadowModal>
     </WriteInputStyle>
   );
 };
