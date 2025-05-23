@@ -120,7 +120,6 @@ const DiaryContent = ({
   };
 
   const confirm = async (postId: number) => {
-    console.log("클릭됨");
     setDiaryId(postId);
     setIsOpen(true);
     setType("confirm");

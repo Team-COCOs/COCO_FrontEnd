@@ -3,6 +3,8 @@ import Image from "next/image";
 import axiosInstance from "@/utils/axiosInstance";
 import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
+import ShadowModal from "@/components/ShadowModal";
+import Swal from "sweetalert2";
 
 interface AddFriendModalProps {
   onClose: () => void;
@@ -28,6 +30,10 @@ const AddFriendModal = ({
   const [toInput, setToInput] = useState("");
   const isMessageValid = message.trim() !== "";
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [type, setType] = useState("");
+
   const handleSubmit = async () => {
     if (!isMessageValid) return;
 
@@ -35,7 +41,9 @@ const AddFriendModal = ({
       (fromLabelType === "직접입력" && fromInput.trim() === "") ||
       (toLabelType === "직접입력" && toInput.trim() === "")
     ) {
-      alert("일촌명을 설정해 주세요.");
+      setType("error");
+      setIsOpen(true);
+      setModalMessage("일촌명을 설정해 주세요.");
       return;
     }
 
@@ -48,9 +56,14 @@ const AddFriendModal = ({
 
     try {
       const response = await axiosInstance.post("/friends/request", payload);
-      alert(response.data.message);
+
+      await Swal.fire({
+        title: response.data.message,
+        icon: "success",
+      });
+
       onClose();
-      location.reload();
+      window.location.reload();
     } catch (error) {
       console.error("서버 요청 오류:", error);
       alert("일촌 신청에 실패했습니다. 다시 시도해주세요.");
@@ -184,6 +197,15 @@ const AddFriendModal = ({
           </div>
         </div>
       </div>
+
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+        message={modalMessage}
+      />
     </>
   );
 };

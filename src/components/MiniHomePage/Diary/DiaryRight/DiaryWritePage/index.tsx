@@ -7,6 +7,7 @@ import DiaryWriteEditor from "./DiaryWriteEditor";
 import DiaryWriteSelect from "./DiaryWriteSelect";
 import axiosInstance from "@/lib/axios";
 import { DiaryType } from "../../DiaryRight";
+import ShadowModal from "@/components/ShadowModal";
 
 interface FolderItem {
   id: number;
@@ -48,6 +49,10 @@ const DiaryWritePage = ({
   const [selectedFolderId, setSelectedFolderId] = useState<number | "">("");
   const [selectedFolderName, setSelectedFolderName] = useState<string>("");
   const [selectedMood, setSelectedMood] = useState("");
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
 
   // 기본
   const getDefaultFolder = (): FolderItem[] => [
@@ -96,32 +101,44 @@ const DiaryWritePage = ({
     const content = editorRef.current?.getHtml() || "";
 
     if (!user?.id) {
-      alert("로그인이 필요합니다.");
+      setType("error");
+      setIsOpen(true);
+      setMessage("로그인이 필요합니다.");
       return;
     }
 
     if (!selectedFolderName) {
-      alert("폴더를 선택해주세요.");
+      setType("error");
+      setIsOpen(true);
+      setMessage("폴더를 선택해주세요.");
       return;
     }
 
     if (!selectedWeather) {
-      alert("날씨를 선택해주세요.");
+      setType("error");
+      setIsOpen(true);
+      setMessage("날씨를 선택해주세요.");
       return;
     }
 
     if (!selectedMood) {
-      alert("기분을 선택해주세요.");
+      setType("error");
+      setIsOpen(true);
+      setMessage("기분을 선택해주세요.");
       return;
     }
 
     if (!visibility) {
-      alert("공개 설정을 선택해주세요.");
+      setType("error");
+      setIsOpen(true);
+      setMessage("공개 설정을 선택해주세요.");
       return;
     }
 
     if (!content) {
-      alert("내용을 입력해주세요.");
+      setType("error");
+      setIsOpen(true);
+      setMessage("내용을 입력해주세요.");
       return;
     }
 
@@ -138,7 +155,9 @@ const DiaryWritePage = ({
             content: content,
           }
         );
-        alert("다이어리 수정이 완료되었습니다!");
+        setType("success");
+        setIsOpen(true);
+        setMessage("다이어리 수정이 완료되었습니다!");
         window.location.reload();
       } else {
         // 신규 저장
@@ -149,16 +168,22 @@ const DiaryWritePage = ({
           visibility: visibility,
           content: content,
         });
-        alert("다이어리 저장이 완료되었습니다!");
+        setType("success");
+        setIsOpen(true);
+        setMessage("다이어리 저장이 완료되었습니다!");
         window.location.reload();
       }
     } catch (error: any) {
       console.error("저장 실패:", error);
       if (error.response.status === 401) {
-        alert("로그인이 필요합니다.");
+        setType("error");
+        setIsOpen(true);
+        setMessage("로그인이 필요합니다.");
         router.push(`/home/${id}`);
       }
-      alert("저장에 실패했습니다.");
+      setType("error");
+      setIsOpen(true);
+      setMessage("저장에 실패했습니다.");
     }
   };
 
@@ -190,6 +215,14 @@ const DiaryWritePage = ({
           저장
         </button>
       </div>
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+        message={message}
+      />
     </DiaryWritePageStyle>
   );
 };
