@@ -6,6 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 import axiosInstance from "@/lib/axios";
 import EditorPage from "./EditorPage";
 import { FolderItem, WritePageProps } from "@/utils/Write/interface";
+import ShadowModal from "@/components/ShadowModal";
 
 const WritePage = ({ editData }: WritePageProps) => {
   const { user } = useAuth();
@@ -49,6 +50,10 @@ const WritePage = ({ editData }: WritePageProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState("");
   const [file, setFile] = useState<File | null>(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
 
   // 공개 여부
   const [visibility, setVisibility] = useState("");
@@ -111,9 +116,26 @@ const WritePage = ({ editData }: WritePageProps) => {
 
   // 저장
   const submitPhoto = async (isEdit: boolean, postId?: number) => {
-    if (!title.trim()) return alert("제목을 입력해주세요.");
-    if (!selectedFolder) return alert("폴더를 선택해주세요.");
-    if (!visibility) return alert("공개 여부를 선택해주세요.");
+    if (!title.trim()) {
+      setType("error");
+      setIsOpen(true);
+      setMessage("제목을 입력해주세요.");
+      return;
+    }
+
+    if (!selectedFolder) {
+      setType("error");
+      setIsOpen(true);
+      setMessage("폴더를 선택해주세요.");
+      return;
+    }
+
+    if (!visibility) {
+      setType("error");
+      setIsOpen(true);
+      setMessage("공개 여부를 선택해주세요.");
+      return;
+    }
 
     const htmlContent = editorRef.current?.getHtml() || "";
 
@@ -132,15 +154,20 @@ const WritePage = ({ editData }: WritePageProps) => {
         await axiosInstance.patch(`/photos/${postId}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        alert("수정 완료!");
+
+        setType("success");
+        setIsOpen(true);
+        setMessage("수정 완료!");
       } else {
         // 저장 - POST 요청
         await axiosInstance.post("/photos/save", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
-        alert("저장 완료!");
+
+        setType("success");
+        setIsOpen(true);
+        setMessage("저장 완료!");
       }
-      window.location.reload();
     } catch (e) {
       console.log("실패:", e);
     }
@@ -230,6 +257,18 @@ const WritePage = ({ editData }: WritePageProps) => {
           {editData ? "수정" : "확인"}
         </button>
       </div>
+
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          if (type === "success") {
+            window.location.reload();
+          }
+        }}
+        message={message}
+      />
     </WritePageStyle>
   );
 };

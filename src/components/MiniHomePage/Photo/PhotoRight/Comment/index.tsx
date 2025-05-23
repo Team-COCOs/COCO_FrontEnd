@@ -7,6 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import axiosInstance from "@/lib/axios";
 import { formatKoreanDate } from "@/utils/KrDate/date";
 import { handleDeleteComment } from "@/utils/Comment/management";
+import ShadowModal from "@/components/ShadowModal";
 
 interface AuthorData {
   id: number;
@@ -40,14 +41,22 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
   const { user } = useAuth();
   const { id } = router.query;
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
+
   const submitComment = async ({ comment, parentId }: CommentSubmit) => {
     if (!comment.trim()) {
-      alert("댓글을 작성해주세요~");
+      setType("error");
+      setIsOpen(true);
+      setMessage("댓글을 작성해주세요~");
       return;
     }
 
     if (!user?.id) {
-      alert("로그인 후 작성해주세요~");
+      setType("error");
+      setIsOpen(true);
+      setMessage("로그인 후 작성해주세요~");
       return;
     }
 
@@ -191,6 +200,15 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
           확인
         </button>
       </div>
+
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+        message={message}
+      />
     </CommentStyle>
   );
 };
