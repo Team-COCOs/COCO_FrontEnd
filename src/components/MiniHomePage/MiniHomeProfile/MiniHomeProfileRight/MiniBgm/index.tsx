@@ -5,6 +5,7 @@ import Bgm from "./Bgm";
 import { useEffect, useState, useRef } from "react";
 import axiosInstance from "@/lib/axios";
 import { useRouter } from "next/router";
+import ShadowModal from "@/components/ShadowModal";
 
 interface BgmInfo {
   id: number;
@@ -40,6 +41,10 @@ const MiniBgm = () => {
   const [searchType, setSearchType] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
+
   const router = useRouter();
 
   useEffect(() => {
@@ -55,8 +60,9 @@ const MiniBgm = () => {
         setBgm(bgmItems);
       } catch (e: any) {
         if (e.response?.status === 401) {
-          alert("로그인이 필요합니다.");
-          router.push(`/home/${user?.id}`);
+          setType("error");
+          setIsOpen(true);
+          setMessage("로그인이 필요합니다.");
         }
         console.log(e);
       }
@@ -67,7 +73,9 @@ const MiniBgm = () => {
 
   const handlePlay = () => {
     if (!selectedBgm) {
-      alert("재생할 곡을 선택해주세요.");
+      setType("error");
+      setIsOpen(true);
+      setMessage("재생할 곡을 선택해주세요.");
       return;
     }
 
@@ -88,7 +96,9 @@ const MiniBgm = () => {
 
   const saveBgm = async () => {
     if (!selectedBgm) {
-      alert("등록할 곡을 선택해주세요.");
+      setType("error");
+      setIsOpen(true);
+      setMessage("등록할 곡을 선택해주세요.");
       return;
     }
 
@@ -100,11 +110,13 @@ const MiniBgm = () => {
         file: bgmFile,
       });
 
-      alert("배경음악이 등록되었습니다.");
-      window.location.reload();
+      setType("success");
+      setIsOpen(true);
+      setMessage("배경음악이 등록되었습니다.");
     } catch (e) {
-      console.error(e);
-      alert("등록 중 오류가 발생했습니다.");
+      setType("error");
+      setIsOpen(true);
+      setMessage("등록 중 오류가 발생했습니다.");
     }
   };
 
@@ -172,6 +184,21 @@ const MiniBgm = () => {
       </div>
 
       <audio ref={audioRef} hidden />
+
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+
+          if (message === "로그인이 필요합니다.") {
+            router.push(`/home/${user?.id}`);
+          } else if (message === "배경음악이 등록되었습니다.") {
+            window.location.reload();
+          }
+        }}
+        message={message}
+      />
     </MiniBgmStyle>
   );
 };

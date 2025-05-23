@@ -6,6 +6,7 @@ import axiosInstance from "@/lib/axios";
 import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
 import { useRouter } from "next/router";
+import ShadowModal from "@/components/ShadowModal";
 
 const MinimiSet = () => {
   const { user } = useAuth();
@@ -16,6 +17,10 @@ const MinimiSet = () => {
   const router = useRouter();
   const { id } = router.query;
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
+
   useEffect(() => {
     const fetchMinimiData = async () => {
       try {
@@ -23,8 +28,9 @@ const MinimiSet = () => {
         setMinimiData(response.data);
       } catch (e: any) {
         if (e.response && e.response.status === 401) {
-          alert("로그인이 필요합니다.");
-          router.push(`/home/${id}`);
+          setType("error");
+          setIsOpen(true);
+          setMessage("로그인이 필요합니다.");
         } else {
           console.log(e, "구매 목록 불러오기 실패");
         }
@@ -50,15 +56,19 @@ const MinimiSet = () => {
       await axiosInstance.patch("/useritems/set-minimi", {
         purchaseId,
       });
-      alert("대표 미니미가 저장되었습니다!");
-      window.location.reload();
+      setType("success");
+      setIsOpen(true);
+      setMessage("대표 미니미가 저장되었습니다!");
     } catch (error: any) {
       if (error?.response?.status === 401) {
-        alert("로그인이 필요합니다.");
-        router.push(`/home/${id}`);
+        setType("error");
+        setIsOpen(true);
+        setMessage("로그인이 필요합니다.");
       }
-      console.error("대표 미니미 저장 실패", error);
-      alert("대표 미니미 저장에 실패했습니다.");
+
+      setType("error");
+      setIsOpen(true);
+      setMessage("대표 미니미 저장에 실패했습니다.");
     }
   };
 
@@ -160,6 +170,21 @@ const MinimiSet = () => {
           </button>
         </div>
       </div>
+
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+
+          if (message === "로그인이 필요합니다.") {
+            router.push(`/home/${user?.id}`);
+          } else if (message === "대표 미니미가 저장되었습니다!") {
+            window.location.reload();
+          }
+        }}
+        message={message}
+      />
     </MinimiSetStyled>
   );
 };
