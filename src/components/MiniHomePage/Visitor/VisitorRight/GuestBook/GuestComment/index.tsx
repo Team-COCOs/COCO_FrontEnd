@@ -4,6 +4,7 @@ import { formatKoreanDate } from "@/utils/KrDate/date";
 import { useAuth } from "@/context/AuthContext";
 import axiosInstance from "@/lib/axios";
 import { useEffect, useState } from "react";
+import ShadowModal from "@/components/ShadowModal";
 
 interface commentVisit {
   id: number; // PK
@@ -26,17 +27,35 @@ const GuestComment = ({ comment, onRefresh, postId }: GuestCommentProps) => {
 
   const [commentInput, setCommentInput] = useState("");
 
-  const handleDeleteComment = (photoId: number) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
+
+  const [photoId, setPhotoId] = useState<number | null>(null);
+
+  const confirm = (id: number) => {
+    setPhotoId(id);
+    setIsOpen(true);
+    setMessage("정말 댓글 삭제하시겠습니까?");
+    setType("confirm");
+  };
+
+  const handleDeleteComment = () => {
     try {
       axiosInstance.delete(`/guestbooks-comments/${photoId}`);
 
-      alert("댓글이 삭제되었습니다.");
-      window.location.reload();
+      setIsOpen(true);
+      setMessage("댓글이 삭제되었습니다.");
+      setType("success");
     } catch (e: any) {
       if (e.response.status === 401) {
-        alert("로그인이 필요합니다.");
+        setIsOpen(true);
+        setMessage("로그인이 필요합니다.");
+        setType("error");
       } else {
-        alert("댓글 삭제 중 오류가 발생했습니다.");
+        setIsOpen(true);
+        setMessage("댓글 삭제 중 오류가 발생했습니다.");
+        setType("error");
         console.log(e, ": 댓글 삭제 중 오류");
       }
     }
@@ -50,12 +69,16 @@ const GuestComment = ({ comment, onRefresh, postId }: GuestCommentProps) => {
     postId: number;
   }) => {
     if (!comment.trim()) {
-      alert("댓글을 작성해주세요~");
+      setIsOpen(true);
+      setMessage("댓글을 작성해주세요~");
+      setType("error");
       return;
     }
 
     if (!user?.id) {
-      alert("로그인 후 작성해주세요~");
+      setIsOpen(true);
+      setMessage("로그인 후 작성해주세요~");
+      setType("error");
       setCommentInput("");
       return;
     }
@@ -101,7 +124,7 @@ const GuestComment = ({ comment, onRefresh, postId }: GuestCommentProps) => {
                   Number(user?.id) === Number(c.authorId)) && (
                   <span
                     className="GuestComment_deleteBtn"
-                    onClick={() => handleDeleteComment(c.id)}
+                    onClick={() => confirm(c.id)}
                   >
                     ☒
                   </span>
@@ -125,6 +148,22 @@ const GuestComment = ({ comment, onRefresh, postId }: GuestCommentProps) => {
           확인
         </button>
       </div>
+
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+
+          if (message === "댓글이 삭제되었습니다.") {
+            window.location.reload();
+          } else if (message === "로그인이 필요합니다.") {
+            router.push(`/home/${id}`);
+          }
+        }}
+        message={message}
+        onConfirm={handleDeleteComment}
+      />
     </GuestCommentStyle>
   );
 };

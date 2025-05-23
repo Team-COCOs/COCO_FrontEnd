@@ -7,6 +7,7 @@ import axiosInstance from "@/lib/axios";
 import EmptyPage from "@/components/EmptyPage";
 import { formatKoreanDate } from "@/utils/KrDate/date";
 import GuestComment from "./GuestComment";
+import ShadowModal from "@/components/ShadowModal";
 
 interface commentVisit {
   id: number; // PK
@@ -44,6 +45,11 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
   const { id } = router.query;
 
   const [visitData, setVisitData] = useState<visitDatas[]>([]);
+  const [visitId, setVisitId] = useState<number | null>(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
 
   useEffect(() => {
     if (!id) return;
@@ -79,14 +85,20 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
   }, [id, refresh, userId]);
 
   // 삭제
-  const deleteVisit = async (visitId: number) => {
-    const confirmed = window.confirm("정말로 이 방명록을 삭제하시겠습니까?");
-    if (!confirmed) return;
+  const confirm = (id: number) => {
+    setVisitId(id);
+    setType("confirm");
+    setMessage("정말로 이 방명록을 삭제하시겠습니까?");
+    setIsOpen(true);
+  };
 
+  const deleteVisit = async () => {
     try {
       await axiosInstance.delete(`/guestbooks/${visitId}`);
 
-      alert("삭제 완료되었습니다.");
+      setIsOpen(true);
+      setType("success");
+      setMessage("삭제 완료되었습니다.");
       onRefresh();
     } catch (e) {
       console.log("방명록 삭제 실패 : ", e);
@@ -98,7 +110,9 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
     try {
       await axiosInstance.patch(`/guestbooks/status/${visitId}`);
 
-      alert("완료되었습니다.");
+      setIsOpen(true);
+      setType("success");
+      setMessage("완료되었습니다.");
       onRefresh();
     } catch (e) {
       console.log("방명록 비밀 실패 : ", e);
@@ -138,7 +152,7 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
                       {v.status === "private" ? "공개로 하기" : "비밀로 하기"}
                     </div>
                     <span>|</span>
-                    <div className="Gulim" onClick={() => deleteVisit(v.id)}>
+                    <div className="Gulim" onClick={() => confirm(v.id)}>
                       삭제
                     </div>
                   </div>
@@ -146,7 +160,7 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
                   userId !== Number(id) &&
                   v.isMine && (
                     <div className="GuestBook_btns">
-                      <div className="Gulim" onClick={() => deleteVisit(v.id)}>
+                      <div className="Gulim" onClick={() => confirm(v.id)}>
                         삭제
                       </div>
                     </div>
@@ -177,6 +191,16 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
           ))
         )}
       </div>
+
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+        message={message}
+        onConfirm={deleteVisit}
+      />
     </GuestBookStyle>
   );
 };
