@@ -60,27 +60,32 @@ const SettingMyInfo = () => {
         }가 성공적으로 변경되었습니다.`
       );
     } catch (err) {
-      alert(
+      setType("error");
+      setIsOpen(true);
+      setMessage(
         `${type === "password" ? "비밀번호" : "전화번호"} 변경에 실패했습니다.`
       );
     }
   };
 
-  const deleteUser = async () => {
-    const confirmed = confirm(
+  const confirm = () => {
+    setType("confirm");
+    setIsOpen(true);
+    setMessage(
       "탈퇴 시 복구가 불가능하며, 게시글 및 댓글은 따로 삭제되지 않습니다. 탈퇴하시겠습니까?"
     );
+  };
 
-    if (!confirmed) return;
-
+  const deleteUser = async () => {
     try {
       await axiosInstance.patch("/users/delete");
 
       Cookies.remove("accessToken");
       Cookies.remove("refreshToken");
 
-      alert("탈퇴되었습니다.");
-      router.push("/");
+      setType("confirm");
+      setIsOpen(true);
+      setMessage("탈퇴되었습니다.");
     } catch (e) {
       console.log("탈퇴 실패 : ", e);
     }
@@ -176,7 +181,7 @@ const SettingMyInfo = () => {
         </div>
       </div>
 
-      <p className="SettingMyInfo_delete" onClick={deleteUser}>
+      <p className="SettingMyInfo_delete" onClick={confirm}>
         탈퇴하기
       </p>
 
@@ -190,9 +195,12 @@ const SettingMyInfo = () => {
             message === "전화번호가 성공적으로 변경되었습니다."
           ) {
             window.location.reload();
+          } else if (message === "탈퇴되었습니다.") {
+            router.push("/");
           }
         }}
         message={message}
+        onConfirm={deleteUser}
       />
     </SettingMyInfoStyle>
   );
