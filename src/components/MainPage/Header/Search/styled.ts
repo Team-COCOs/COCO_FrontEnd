@@ -16,6 +16,7 @@ export const SearchStyle = styled.div`
       background-color: ${({ theme }) => theme.colors.mainColor};
 
       .Search_input {
+        position: relative;
         display: flex;
         align-items: center;
         width: 100%;
@@ -28,15 +29,15 @@ export const SearchStyle = styled.div`
           width: 13%;
           color: ${({ theme }) => theme.colors.mainColor};
           font-weight: bold;
-          font-size: 13.5px;
+          font-size: 14px;
           margin-bottom: 2px;
 
           @media (max-width: 1240px) {
-            font-size: 12px;
+            font-size: 13px;
           }
 
           @media (max-width: 1200px) {
-            font-size: 11px;
+            font-size: 12px;
           }
         }
 
@@ -72,6 +73,20 @@ export const SearchStyle = styled.div`
             border-left: 4px solid transparent;
             border-right: 4px solid transparent;
             border-top: 6px solid rgb(225, 111, 4);
+          }
+        }
+
+        .Search_dropdown {
+          position: absolute;
+          background-color: white;
+          top: 30px;
+          left: 90px;
+          padding: 3px 10px;
+          font-size: 12px;
+          border: 1px solid rgb(207, 207, 207);
+
+          .Search_option {
+            cursor: pointer;
           }
         }
       }

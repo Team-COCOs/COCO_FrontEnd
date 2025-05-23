@@ -105,22 +105,32 @@ const EditorPage = forwardRef<EditorHandle, EditorPageProps>(
       const selection = window.getSelection();
       if (!selection || selection.rangeCount === 0) return;
 
+      const range = selection.getRangeAt(0);
       const selectedText = selection.toString().trim();
 
-      if (!/^https?:\/\//.test(selectedText)) {
-        // URL이 아니면 아무것도 안 함
-        return;
+      // 선택 영역에 포함된 노드가 a 태그인지 확인
+      let node = selection.anchorNode;
+      if (node) {
+        const parentAnchor = node.parentElement?.closest("a");
+        if (parentAnchor) {
+          // a 태그 풀기: 텍스트로 대체
+          const textNode = document.createTextNode(
+            parentAnchor.textContent || ""
+          );
+          parentAnchor.replaceWith(textNode);
+          return;
+        }
       }
 
-      const range = selection.getRangeAt(0);
+      // 선택한 텍스트가 https 로 시작 안 하면 안되게
+      if (!/^https?:\/\//.test(selectedText)) return;
 
-      // 새 a 태그 생성
+      // a 태그 생성
       const a = document.createElement("a");
       a.href = selectedText;
-      a.rel = "noopener noreferrer";
       a.textContent = selectedText;
 
-      // 선택된 내용 삭제 후 a 태그로 대체
+      // 선택된 텍스트를 링크로 대체
       range.deleteContents();
       range.insertNode(a);
 
