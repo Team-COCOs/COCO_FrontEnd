@@ -8,6 +8,7 @@ import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { DiaryType } from "..";
+import ShadowModal from "@/components/ShadowModal";
 
 interface DiaryContentProps {
   selectedDate: Date | null;
@@ -55,6 +56,11 @@ const DiaryContent = ({
 }: DiaryContentProps) => {
   const [diaryData, setDiaryData] = useState<DiaryType[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
+  const [diaryId, setDiaryId] = useState<number | null>(null);
+
   // selectedDate가 있을 경우 해당 날짜의 게시글만 필터링
   const filteredDiary = diaryData.filter((diary) => {
     // 날짜 필터
@@ -113,19 +119,30 @@ const DiaryContent = ({
     setDiaryWrite(true); // 수정 페이지 열기
   };
 
-  const handleDeleteBtn = async (diaryId: number) => {
-    const confirmDelete = window.confirm("정말 이 일기를 삭제하시겠습니까?");
-    if (!confirmDelete) return;
-
-    try {
-      const response = await axiosInstance.delete(`/diary/${diaryId}`);
-      alert("게시물이 삭제되었습니다!");
-      window.location.reload();
-    } catch (e: any) {
-      console.log(e, "e : 게시물 삭제 실패");
-      alert("게시물 삭제에 실패했습니다.");
-    }
+  const confirm = async (postId: number) => {
+    console.log("클릭됨");
+    setDiaryId(postId);
+    setIsOpen(true);
+    setType("confirm");
+    setMessage("정말 이 일기를 삭제하시겠습니까?");
   };
+
+  const handleDeleteBtn = () => {
+    axiosInstance
+      .delete(`/diary/${diaryId}`)
+      .then(() => {
+        setType("success");
+        setIsOpen(true);
+        setMessage("게시물이 삭제되었습니다!");
+      })
+      .catch((e) => {
+        console.log(e, "e : 게시물 삭제 실패");
+        setType("error");
+        setIsOpen(true);
+        setMessage("게시물 삭제에 실패했습니다.");
+      });
+  };
+
   const router = useRouter();
   const { id } = router.query;
   const { user } = useAuth();
@@ -204,9 +221,7 @@ const DiaryContent = ({
                           수정
                         </button>
                         <span>|</span>
-                        <button onClick={() => handleDeleteBtn(diary.id)}>
-                          삭제
-                        </button>
+                        <button onClick={() => confirm(diary.id)}>삭제</button>
                       </div>
                     ) : null}
                   </div>
@@ -283,6 +298,17 @@ const DiaryContent = ({
       ) : (
         <div></div>
       )}
+
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          window.location.reload();
+        }}
+        message={message}
+        onConfirm={handleDeleteBtn}
+      />
     </DiaryContentStyle>
   );
 };

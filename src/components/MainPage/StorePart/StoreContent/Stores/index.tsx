@@ -41,6 +41,7 @@ const Stores = ({ currentItems }: StoresProps) => {
     setPendingBuyId(storeItemId);
     setIsOpen(true);
     setType("confirm");
+    setMessage("정말 구매하시겠습니까?");
   };
 
   const confirmBuy = () => {

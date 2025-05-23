@@ -3,14 +3,15 @@ import { useEffect } from "react";
 interface ConfirmProps {
   onClose: () => void;
   onConfirm: () => void;
+  message: string;
 }
 
-const ConfirmModal = ({ onClose, onConfirm }: ConfirmProps) => {
+const ConfirmModal = ({ onClose, onConfirm, message }: ConfirmProps) => {
   return (
     <div className="window">
       <div className="title-bar">
         <div className="title-bar-text pixelFont">
-          아이템 구매 - Windows Internet...
+          confirm - Windows Internet...
         </div>
         <div className="title-bar-controls">
           <button aria-label="Close" onClick={onClose}>
@@ -19,7 +20,7 @@ const ConfirmModal = ({ onClose, onConfirm }: ConfirmProps) => {
         </div>
       </div>
       <div className="window-body">
-        <p>정말 구매하시겠습니까?</p>
+        <p>{message}</p>
         <div className="Confirm_btn">
           <button onClick={onConfirm}>확인</button>
           <button onClick={onClose}>취소</button>

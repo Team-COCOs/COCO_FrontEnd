@@ -3,6 +3,7 @@ import axiosInstance from "@/lib/axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import ShadowModal from "@/components/ShadowModal";
 
 export interface Comment {
   id: number;
@@ -25,13 +26,18 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
   const { id } = router.query;
   const [comment, setComment] = useState("");
   const { user } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [type, setType] = useState("");
 
   const handleSaveComment = async (
     content: string,
     parentCommentId: number | null
   ) => {
     if (!content.trim()) {
-      alert(
+      setType("error");
+      setIsOpen(true);
+      setMessage(
         parentCommentId === null
           ? "댓글을 입력해주세요."
           : "답글을 입력해주세요."
@@ -43,7 +49,9 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
         content,
         parentCommentId,
       });
-      alert(
+      setType("success");
+      setIsOpen(true);
+      setMessage(
         parentCommentId === null
           ? "댓글이 등록되었습니다."
           : "답글이 등록되었습니다."
@@ -54,9 +62,13 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
       window.location.reload();
     } catch (e: any) {
       if (e.response?.status === 401) {
-        alert("로그인이 필요합니다.");
+        setType("error");
+        setIsOpen(true);
+        setMessage("로그인이 필요합니다.");
       } else {
-        alert(
+        setType("error");
+        setIsOpen(true);
+        setMessage(
           parentCommentId === null
             ? "댓글 등록 중 오류가 발생했습니다."
             : "답글 등록 중 오류가 발생했습니다."
@@ -85,13 +97,19 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
       const response = await axiosInstance.delete(
         `/diaryComments/${commentId}`
       );
-      alert("댓글이 삭제되었습니다.");
+      setType("success");
+      setIsOpen(true);
+      setMessage("댓글이 삭제되었습니다.");
       window.location.reload();
     } catch (e: any) {
       if (e.response?.status === 401) {
-        alert("로그인이 필요합니다.");
+        setType("error");
+        setIsOpen(true);
+        setMessage("로그인이 필요합니다.");
       } else {
-        alert("댓글 삭제 중 오류가 발생했습니다.");
+        setType("error");
+        setIsOpen(true);
+        setMessage("댓글 삭제 중 오류가 발생했습니다.");
         console.log(e, ": 댓글 삭제 중 오류");
       }
     }
@@ -249,6 +267,15 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
           </button>
         </div>
       </div>
+      <ShadowModal
+        type={type}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          window.location.reload();
+        }}
+        message={message}
+      />
     </CommentDiaryStyle>
   );
 };

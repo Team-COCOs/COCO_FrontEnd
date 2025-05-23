@@ -14,7 +14,7 @@ interface ModalProps {
   message?: string;
   data?: any;
   userName?: string;
-  onConfirm?: () => void;
+  onConfirm?: () => void | Promise<void>;
 }
 
 const ShadowModal = ({
@@ -68,7 +68,13 @@ const ShadowModal = ({
         <FriendModal onClose={onClose} data={data} userName={userName!} />
       );
     } else if (type === "confirm") {
-      root.render(<ConfirmModal onClose={onClose} onConfirm={onConfirm!} />);
+      root.render(
+        <ConfirmModal
+          onClose={onClose}
+          onConfirm={onConfirm!}
+          message={message!}
+        />
+      );
     } else {
       root.render(
         <ProfileModal
