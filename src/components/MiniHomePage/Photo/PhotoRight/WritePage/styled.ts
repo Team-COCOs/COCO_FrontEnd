@@ -8,7 +8,7 @@ export const WritePageStyle = styled.div`
     padding: 20px 40px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+
     gap: 10px;
 
     @media (max-width: 768px) {
