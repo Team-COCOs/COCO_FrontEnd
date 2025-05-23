@@ -10,6 +10,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import { findNodeByKey } from "@/utils/Folder/useSearch";
+import ShadowModal from "@/components/ShadowModal";
 
 interface FolderProps {
   type: string;
@@ -26,6 +27,10 @@ const Folder = ({ type, onSave }: FolderProps) => {
   const [editTitle, setEditTitle] = useState<string>("");
   const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
   const [editingKey, setEditingKey] = useState<string | null>(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [modalType, setModalType] = useState("");
 
   const { user } = useAuth();
 
@@ -44,10 +49,10 @@ const Folder = ({ type, onSave }: FolderProps) => {
     setCheckedKeys(checkedKeysValue.checked || checkedKeysValue);
   };
 
+  let updatedTreeData = [...treeData];
+
   // 수정, 추가, 삭제
   const handleEdit = (action: string) => {
-    let updatedTreeData = [...treeData];
-
     if (action === "add") {
       addNewNode();
       return;
@@ -60,27 +65,33 @@ const Folder = ({ type, onSave }: FolderProps) => {
         editTitle
       );
     } else if (action === "delete") {
-      const confirmed = window.confirm(
-        "해당 폴더의 게시글이 모두 삭제됩니다. 삭제하시겠습니까?"
-      );
-      if (!confirmed) return;
-
-      checkedKeys.forEach((key) => {
-        const node = findNodeByKey(treeData, key);
-        if (node?.title === "스크랩") {
-          alert("스크랩 폴더는 삭제할 수 없습니다.");
-          return;
-        }
-
-        updatedTreeData = deleteNodeByKey(updatedTreeData, key);
-      });
-
-      setCheckedKeys([]);
-      setEditingKey(null);
-      setEditTitle("");
+      setModalType("confirm");
+      setIsOpen(true);
+      setMessage("해당 폴더의 게시글이 모두 삭제됩니다. 삭제하시겠습니까?");
     }
 
     setTreeData(updatedTreeData);
+  };
+
+  const handleDelete = () => {
+    checkedKeys.forEach((key) => {
+      const node = findNodeByKey(treeData, key);
+      if (node?.title === "스크랩") {
+        setModalType("error");
+        setIsOpen(true);
+        setMessage("스크랩 폴더는 삭제할 수 없습니다.");
+        return;
+      }
+
+      updatedTreeData = deleteNodeByKey(updatedTreeData, key);
+      setIsOpen(false);
+    });
+
+    setTreeData(updatedTreeData);
+
+    setCheckedKeys([]);
+    setEditingKey(null);
+    setEditTitle("");
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,7 +102,9 @@ const Folder = ({ type, onSave }: FolderProps) => {
   const handleStartEditing = () => {
     const node = findNodeByKey(treeData, checkedKeys[0]);
     if (node?.title === "스크랩") {
-      alert("스크랩 폴더는 수정할 수 없습니다.");
+      setModalType("error");
+      setIsOpen(true);
+      setMessage("스크랩 폴더는 수정할 수 없습니다.");
       return;
     }
 
@@ -117,7 +130,9 @@ const Folder = ({ type, onSave }: FolderProps) => {
   // 수정 끝 -> 제목 적용
   const handleFinishEditing = () => {
     if (editTitle.trim() === "스크랩") {
-      alert("폴더 이름을 '스크랩'으로 지정할 수 없습니다.");
+      setModalType("error");
+      setIsOpen(true);
+      setMessage("폴더 이름을 '스크랩'으로 지정할 수 없습니다.");
       return;
     }
 
@@ -190,7 +205,9 @@ const Folder = ({ type, onSave }: FolderProps) => {
       })
       .catch((e) => {
         if (e.response?.status === 401) {
-          alert("로그인이 필요합니다.");
+          setModalType("error");
+          setIsOpen(true);
+          setMessage("로그인이 필요합니다.");
           router.push(`/home/${user?.id}`);
         }
 
@@ -256,6 +273,16 @@ const Folder = ({ type, onSave }: FolderProps) => {
           <span className="pixelFont"> 폴더저장하기 </span>
         </button>
       </div>
+
+      <ShadowModal
+        type={modalType}
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+        message={message}
+        onConfirm={handleDelete}
+      />
     </FolderStyle>
   );
 };
