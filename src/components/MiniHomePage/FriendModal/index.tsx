@@ -3,9 +3,11 @@ import ReactDOM from "react-dom/client";
 import AddFriendModal from "./AddFriendModal";
 import { FriendModalStyle } from "./styled";
 import axios from "axios";
+import { ModalProvider, useModal } from "@/context/ModalContext";
+import ShadowModal from "@/components/ShadowModal";
 interface ModalProps {
-  type: string;
-  isOpen: boolean;
+  isType: string;
+  isModalOpen: boolean;
   onClose: () => void;
   requesterName: string;
   receiverName: string;
@@ -15,8 +17,8 @@ interface ModalProps {
 }
 
 const FriendModal = ({
-  type,
-  isOpen,
+  isType,
+  isModalOpen,
   onClose,
   requesterName,
   receiverName,
@@ -26,8 +28,10 @@ const FriendModal = ({
 }: ModalProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const { openModal, closeModal, message, type, isOpen } = useModal();
+
   useEffect(() => {
-    if (!isOpen || !containerRef.current) return;
+    if (!isModalOpen || !containerRef.current) return;
 
     // 이미 shadowRoot가 있으면 재사용, 없으면 새로 attach
     const shadowRoot =
@@ -55,7 +59,7 @@ const FriendModal = ({
     shadowRoot.appendChild(wrapper);
 
     const root = ReactDOM.createRoot(wrapper);
-    if (type === "add") {
+    if (isType === "add") {
       root.render(
         <AddFriendModal
           onClose={onClose}
@@ -64,6 +68,7 @@ const FriendModal = ({
           receiverUserId={receiverUserId}
           requesterImage={requesterImage}
           requesterGender={requesterGender}
+          openModal={openModal}
         />
       );
     }
@@ -71,11 +76,27 @@ const FriendModal = ({
     return () => {
       shadowRoot.innerHTML = "";
     };
-  }, [isOpen, onClose, type]);
+  }, [isModalOpen, onClose, isType]);
 
-  if (!isOpen) return null;
+  if (!isModalOpen) return null;
 
-  return <FriendModalStyle className="FriendModal_window" ref={containerRef} />;
+  return (
+    <FriendModalStyle className="FriendModal_window" ref={containerRef}>
+      <ModalProvider>
+        <ShadowModal
+          type={type}
+          isOpen={isOpen}
+          onClose={() => {
+            closeModal();
+            if (type === "success") {
+              window.location.reload();
+            }
+          }}
+          message={message}
+        />
+      </ModalProvider>
+    </FriendModalStyle>
+  );
 };
 
 export default FriendModal;

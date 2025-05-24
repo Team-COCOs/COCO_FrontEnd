@@ -6,7 +6,7 @@ import PayModal from "./PayModal";
 import ProfileModal from "./ProfileModal";
 import FriendModal from "./ProfileModal/FriendModal";
 import ConfirmModal from "./ConfirmModal";
-import { useModal } from "@/context/ModalContext";
+import { ModalProvider, useModal } from "@/context/ModalContext";
 
 // context, props 모두 가능하게
 interface ModalProps {
@@ -21,6 +21,8 @@ interface ModalProps {
 }
 
 const ShadowModal = (props: ModalProps) => {
+  const useContext = props.useContextOnly || props.type === undefined;
+
   const {
     type: ctxType,
     isOpen: ctxOpen,
@@ -29,9 +31,8 @@ const ShadowModal = (props: ModalProps) => {
     userName: ctxName,
     onConfirm: ctxConfirm,
     closeModal,
-  } = useModal();
+  } = useContext ? useModal() : ({} as any);
 
-  const useContext = props.useContextOnly || props.type === undefined;
   const type = useContext ? ctxType : props.type!;
   const isOpen = useContext ? ctxOpen : props.isOpen!;
   const onClose = useContext ? closeModal : props.onClose!;
@@ -75,7 +76,9 @@ const ShadowModal = (props: ModalProps) => {
       root.render(<PayModal onClose={onClose} />);
     } else if (type === "friendReq") {
       root.render(
-        <FriendModal onClose={onClose} data={data} userName={userName!} />
+        <ModalProvider>
+          <FriendModal onClose={onClose} data={data} userName={userName!} />
+        </ModalProvider>
       );
     } else if (type === "confirm") {
       root.render(

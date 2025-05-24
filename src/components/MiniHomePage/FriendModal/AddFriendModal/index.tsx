@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import axiosInstance from "@/utils/axiosInstance";
-import { useAuth } from "@/context/AuthContext";
-import axios from "axios";
 import ShadowModal from "@/components/ShadowModal";
-import Swal from "sweetalert2";
 
 interface AddFriendModalProps {
   onClose: () => void;
@@ -13,7 +10,24 @@ interface AddFriendModalProps {
   receiverUserId: string;
   requesterImage: string;
   requesterGender: string;
+  openModal: (
+    type: ModalType,
+    options?: {
+      message?: string;
+      data?: any;
+      userName?: string;
+      onConfirm?: () => void | Promise<void>;
+    }
+  ) => void;
 }
+
+type ModalType =
+  | "error"
+  | "success"
+  | "pay"
+  | "friendReq"
+  | "confirm"
+  | "profile";
 
 const AddFriendModal = ({
   onClose,
@@ -22,17 +36,14 @@ const AddFriendModal = ({
   receiverUserId,
   requesterImage,
   requesterGender,
+  openModal,
 }: AddFriendModalProps) => {
-  const [message, setMessage] = useState("일촌 신청합니다.");
+  const [friendMessage, setFriendMessage] = useState("일촌 신청합니다.");
   const [fromLabelType, setFromLabelType] = useState("직접입력");
   const [toLabelType, setToLabelType] = useState("직접입력");
   const [fromInput, setFromInput] = useState("");
   const [toInput, setToInput] = useState("");
-  const isMessageValid = message.trim() !== "";
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [type, setType] = useState("");
+  const isMessageValid = friendMessage.trim() !== "";
 
   const handleSubmit = async () => {
     if (!isMessageValid) return;
@@ -41,34 +52,27 @@ const AddFriendModal = ({
       (fromLabelType === "직접입력" && fromInput.trim() === "") ||
       (toLabelType === "직접입력" && toInput.trim() === "")
     ) {
-      setType("error");
-      setIsOpen(true);
-      setModalMessage("일촌명을 설정해 주세요.");
+      openModal("error", { message: "일촌명을 설정해 주세요." });
+
       return;
     }
 
     const payload = {
       receiverId: Number(receiverUserId),
-      message,
+      message: friendMessage,
       requester_name: toLabelType === "직접입력" ? toInput : toLabelType,
       receiver_name: fromLabelType === "직접입력" ? fromInput : fromLabelType,
     };
 
     try {
+      console.log(payload);
       const response = await axiosInstance.post("/friends/request", payload);
 
-      await Swal.fire({
-        title: response.data.message,
-        icon: "success",
-      });
-
-      onClose();
-      window.location.reload();
+      openModal("success", { message: response.data.message });
     } catch (error) {
       console.error("서버 요청 오류:", error);
-      await Swal.fire({
-        title: "일촌 신청에 실패했습니다. 다시 시도해주세요.",
-        icon: "error",
+      openModal("error", {
+        message: "일촌 신청에 실패했습니다. 다시 시도해주세요.",
       });
     }
   };
@@ -180,8 +184,8 @@ const AddFriendModal = ({
             {/* 메세지 입력 */}
             <div className="AddFriendModal_textarea_wrap">
               <textarea
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                value={friendMessage}
+                onChange={(e) => setFriendMessage(e.target.value)}
                 placeholder="메시지를 입력하세요. (50자 제한)"
                 className="AddFriendModal_textarea"
                 maxLength={50}
@@ -200,15 +204,6 @@ const AddFriendModal = ({
           </div>
         </div>
       </div>
-
-      <ShadowModal
-        type={type}
-        isOpen={isOpen}
-        onClose={() => {
-          setIsOpen(false);
-        }}
-        message={modalMessage}
-      />
     </>
   );
 };

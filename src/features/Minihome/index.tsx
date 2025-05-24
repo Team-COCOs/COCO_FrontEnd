@@ -239,8 +239,8 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
                         <DiaryTitle setIsOpen={setIsOpen} />
                         {/* 일촌 신청 모달 */}
                         <FriendModal
-                          type="add"
-                          isOpen={isOpen}
+                          isType="add"
+                          isModalOpen={isOpen}
                           onClose={() => setIsOpen(false)}
                           requesterName={requesterName}
                           receiverName={receiverName}

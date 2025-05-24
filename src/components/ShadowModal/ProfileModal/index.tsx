@@ -2,6 +2,7 @@ import { useState } from "react";
 import ShadowModal from "..";
 import EmptyPage from "@/components/EmptyPage";
 import DOMPurify from "dompurify";
+import { ModalProvider } from "@/context/ModalContext";
 interface ProfileModalProps {
   onClose: () => void;
   data: any;
@@ -67,16 +68,18 @@ const ProfileModal = ({ onClose, data, type, userName }: ProfileModalProps) => {
       </div>
 
       {isOpen && (
-        <ShadowModal
-          type="friendReq"
-          isOpen={isOpen}
-          onClose={() => {
-            setIsOpen(false);
-            onClose();
-          }}
-          data={reqData}
-          userName={userName}
-        />
+        <ModalProvider>
+          <ShadowModal
+            type="friendReq"
+            isOpen={isOpen}
+            onClose={() => {
+              setIsOpen(false);
+              onClose();
+            }}
+            data={reqData}
+            userName={userName}
+          />
+        </ModalProvider>
       )}
     </>
   );
