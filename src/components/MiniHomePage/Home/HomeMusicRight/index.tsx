@@ -40,8 +40,12 @@ const HomeMusicRight = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/useritems/bgm/${id}`
         );
         setPlaylist(res.data);
+        if (!res.data || res.data.length === 0) {
+          stop();
+        }
       } catch (e) {
         console.error("BGM 가져오기 오류:", e);
+        stop();
       }
     };
 

@@ -1,6 +1,7 @@
 // contexts/MusicPlayerContext.tsx
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 interface Track {
   name: string;
@@ -41,6 +42,9 @@ export const MusicPlayerProvider = ({
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const [volume, setVolume] = useState(1);
 
+  const router = useRouter();
+  const { id } = router.query;
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -58,6 +62,7 @@ export const MusicPlayerProvider = ({
       audio.pause();
     }
   }, [isPlaying, currentTrack]);
+
   useEffect(() => {
     const onFirstUserInteraction = () => {
       if (!hasPlayedOnce && playlist.length > 0) {
