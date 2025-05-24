@@ -43,7 +43,6 @@ const HomeMusicRight = () => {
         if (!res.data || res.data.length === 0) {
           stop();
         } else {
-          stop();
           if (!isPlaying) togglePlay();
         }
       } catch (e) {
