@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import axiosInstance from "@/utils/axiosInstance";
-import ShadowModal from "@/components/ShadowModal";
+import Swal from "sweetalert2";
 
 interface AddFriendModalProps {
   onClose: () => void;
@@ -52,7 +52,10 @@ const AddFriendModal = ({
       (fromLabelType === "직접입력" && fromInput.trim() === "") ||
       (toLabelType === "직접입력" && toInput.trim() === "")
     ) {
-      openModal("error", { message: "일촌명을 설정해 주세요." });
+      Swal.fire({
+        icon: "error",
+        title: "일촌명을 설정해 주세요.",
+      });
 
       return;
     }
@@ -65,10 +68,14 @@ const AddFriendModal = ({
     };
 
     try {
-      console.log(payload);
       const response = await axiosInstance.post("/friends/request", payload);
 
-      openModal("success", { message: response.data.message });
+      await Swal.fire({
+        icon: "success",
+        title: response.data.message,
+      });
+
+      window.location.reload();
     } catch (error) {
       console.error("서버 요청 오류:", error);
       openModal("error", {

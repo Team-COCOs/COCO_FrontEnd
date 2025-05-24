@@ -80,23 +80,7 @@ const FriendModal = ({
 
   if (!isModalOpen) return null;
 
-  return (
-    <FriendModalStyle className="FriendModal_window" ref={containerRef}>
-      <ModalProvider>
-        <ShadowModal
-          type={type}
-          isOpen={isOpen}
-          onClose={() => {
-            closeModal();
-            if (type === "success") {
-              window.location.reload();
-            }
-          }}
-          message={message}
-        />
-      </ModalProvider>
-    </FriendModalStyle>
-  );
+  return <FriendModalStyle className="FriendModal_window" ref={containerRef} />;
 };
 
 export default FriendModal;
