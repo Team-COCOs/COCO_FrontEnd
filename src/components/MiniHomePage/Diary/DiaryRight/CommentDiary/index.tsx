@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import ShadowModal from "@/components/ShadowModal";
+import { useModal } from "@/context/ModalContext";
 
 export interface Comment {
   id: number;
@@ -26,23 +27,22 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
   const { id } = router.query;
   const [comment, setComment] = useState("");
   const { user } = useAuth();
-  const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [type, setType] = useState("");
+
   const [commentId, setCommentId] = useState<number | null>(null);
+
+  const { type, isOpen, message, openModal, closeModal } = useModal();
 
   const handleSaveComment = async (
     content: string,
     parentCommentId: number | null
   ) => {
     if (!content.trim()) {
-      setType("error");
-      setIsOpen(true);
-      setMessage(
-        parentCommentId === null
-          ? "댓글을 입력해주세요."
-          : "답글을 입력해주세요."
-      );
+      openModal("error", {
+        message:
+          parentCommentId === null
+            ? "댓글을 입력해주세요."
+            : "답글을 입력해주세요.",
+      });
       return;
     }
     try {
@@ -50,29 +50,26 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
         content,
         parentCommentId,
       });
-      setType("success");
-      setIsOpen(true);
-      setMessage(
-        parentCommentId === null
-          ? "댓글이 등록되었습니다."
-          : "답글이 등록되었습니다."
-      );
+      openModal("success", {
+        message:
+          parentCommentId === null
+            ? "댓글이 등록되었습니다."
+            : "답글이 등록되었습니다.",
+      });
+
       setComment(""); // 댓글 입력창 초기화
       setReplyText(""); // 답글 입력창 초기화
       setReplyingCommentId(null); // 답글 입력창 닫기
     } catch (e: any) {
       if (e.response?.status === 401) {
-        setType("error");
-        setIsOpen(true);
-        setMessage("로그인이 필요합니다.");
+        openModal("error", { message: "로그인이 필요합니다." });
       } else {
-        setType("error");
-        setIsOpen(true);
-        setMessage(
-          parentCommentId === null
-            ? "댓글 등록 중 오류가 발생했습니다."
-            : "답글 등록 중 오류가 발생했습니다."
-        );
+        openModal("error", {
+          message:
+            parentCommentId === null
+              ? "댓글 등록 중 오류가 발생했습니다."
+              : "답글 등록 중 오류가 발생했습니다.",
+        });
       }
     }
   };
@@ -91,9 +88,7 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
 
   const confrim = (id: number) => {
     setCommentId(id);
-    setType("confirm");
-    setIsOpen(true);
-    setMessage("정말 이 댓글을 삭제하시겠습니까?");
+    openModal("confirm", { message: "정말 이 댓글을 삭제하시겠습니까?" });
   };
 
   const handleDeleteComment = async () => {
@@ -101,18 +96,14 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
       const response = await axiosInstance.delete(
         `/diaryComments/${commentId}`
       );
-      setType("success");
-      setIsOpen(true);
-      setMessage("댓글이 삭제되었습니다.");
+
+      openModal("success", { message: "댓글이 삭제되었습니다." });
     } catch (e: any) {
       if (e.response?.status === 401) {
-        setType("error");
-        setIsOpen(true);
-        setMessage("로그인이 필요합니다.");
+        openModal("error", { message: "로그인이 필요합니다." });
       } else {
-        setType("error");
-        setIsOpen(true);
-        setMessage("댓글 삭제 중 오류가 발생했습니다.");
+        openModal("error", { message: "댓글 삭제 중 오류가 발생했습니다." });
+
         console.log(e, ": 댓글 삭제 중 오류");
       }
     }
@@ -270,11 +261,13 @@ const CommentDiary = ({ diaryId, allComments }: CommentDiaryprops) => {
           </button>
         </div>
       </div>
+
       <ShadowModal
         type={type}
         isOpen={isOpen}
         onClose={() => {
-          setIsOpen(false);
+          closeModal();
+
           if (type !== "confirm") {
             window.location.reload();
           }

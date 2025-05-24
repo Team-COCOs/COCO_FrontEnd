@@ -3,16 +3,18 @@ import { SearchStyle } from "./styled";
 import { useState } from "react";
 import ShadowModal from "@/components/ShadowModal";
 import { useRouter } from "next/router";
+import { useModal } from "@/context/ModalContext";
 
 const Search = () => {
   const [search, setSearch] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  const { type, isOpen, message, openModal, closeModal } = useModal();
+
   const userSearch = async () => {
     if (!search.trim()) {
-      setIsOpen(true);
+      openModal("error", { message: "검색어를 입력해주세요." });
       return;
     }
     router.push(`?keyword=${encodeURIComponent(search.trim())}`);
@@ -65,10 +67,10 @@ const Search = () => {
       </div>
 
       <ShadowModal
-        type="error"
+        type={type}
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        message="검색어를 입력해주세요."
+        onClose={closeModal}
+        message={message}
       />
     </SearchStyle>
   );

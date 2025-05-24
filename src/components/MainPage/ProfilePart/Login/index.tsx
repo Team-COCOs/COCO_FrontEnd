@@ -5,18 +5,17 @@ import { useFormik } from "formik";
 import axios from "axios";
 import Cookie from "js-cookie";
 import { useRouter } from "next/router";
-import { catchAxiosError } from "@/utils/catchAxiosError";
 import { useDispatch } from "react-redux";
 import { setReduxUser } from "@/store/reducers/userSlice";
 import ShadowModal from "@/components/ShadowModal";
+import { useModal } from "@/context/ModalContext";
 
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [saveEmail, setSaveEmail] = useState(false);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState("");
+  const { type, isOpen, message, openModal, closeModal } = useModal();
 
   const formik = useFormik({
     initialValues: {
@@ -44,8 +43,7 @@ const Login = () => {
         }) // 서버 URL
         .then((res) => {
           if (res.data.message) {
-            setMessage(res.data.message);
-            setIsOpen(true);
+            openModal("error", { message: res.data.message });
             return;
           }
 
@@ -64,8 +62,7 @@ const Login = () => {
           window.location.href = "/";
         })
         .catch((e) => {
-          setMessage(e.response.data.message);
-          setIsOpen(true);
+          openModal("error", { message: e.response.data.message });
         });
     },
   });
@@ -125,9 +122,9 @@ const Login = () => {
       </div>
 
       <ShadowModal
-        type="error"
+        type={type}
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={closeModal}
         message={message}
       />
     </LoginStyle>

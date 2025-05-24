@@ -22,8 +22,7 @@ const Folder = ({ isType, onSave }: FolderProps) => {
   const router = useRouter();
   const userId = router.query.id;
 
-  const { type, isOpen, message, onConfirm, openModal, closeModal } =
-    useModal();
+  const { type, isOpen, message, openModal, closeModal } = useModal();
 
   // 폴더 축소, 확대
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
@@ -31,8 +30,6 @@ const Folder = ({ isType, onSave }: FolderProps) => {
   const [editTitle, setEditTitle] = useState<string>("");
   const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
   const [editingKey, setEditingKey] = useState<string | null>(null);
-
-  const { user } = useAuth();
 
   const {
     treeData, // 저장된 treeData

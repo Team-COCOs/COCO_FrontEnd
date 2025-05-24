@@ -303,7 +303,9 @@ const DiaryContent = ({
         isOpen={isOpen}
         onClose={() => {
           setIsOpen(false);
-          window.location.reload();
+          if (type !== "confirm") {
+            window.location.reload();
+          }
         }}
         message={message}
         onConfirm={handleDeleteBtn}

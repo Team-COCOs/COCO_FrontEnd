@@ -7,6 +7,7 @@ import CustomAudio from "./CustomAudio";
 import axiosInstance from "@/lib/axios";
 import Cookies from "js-cookie";
 import ShadowModal from "@/components/ShadowModal";
+import { useModal } from "@/context/ModalContext";
 interface StoreItem {
   id: number;
   name: string;
@@ -24,24 +25,18 @@ interface StoresProps {
 
 const Stores = ({ currentItems }: StoresProps) => {
   const token = Cookies.get("accessToken");
-  const [isOpen, setIsOpen] = useState(false);
   const [pendingBuyId, setPendingBuyId] = useState<number | null>(null);
-  const [message, setMessage] = useState("");
-  const [type, setType] = useState("");
+
+  const { type, isOpen, message, openModal, closeModal } = useModal();
 
   const handleBuyClick = (storeItemId: number) => {
     if (!token) {
-      setIsOpen(true);
-      setType("error");
-      setMessage("로그인 후 구매해주세요.");
+      openModal("error", { message: "로그인 후 구매해주세요." });
       return;
     }
 
-    console.log("클릭됨");
     setPendingBuyId(storeItemId);
-    setIsOpen(true);
-    setType("confirm");
-    setMessage("정말 구매하시겠습니까?");
+    openModal("confirm", { message: "정말 구매하시겠습니까?" });
   };
 
   const confirmBuy = () => {
@@ -53,20 +48,14 @@ const Stores = ({ currentItems }: StoresProps) => {
         console.log("상품 구매 : ", res.data);
 
         if (res.data.message) {
-          setIsOpen(true);
-          setType("error");
-          setMessage(res.data.message);
+          openModal("error", { message: res.data.message });
           return;
         }
 
-        setIsOpen(true);
-        setType("success");
-        setMessage("구매를 성공했습니다!");
+        openModal("success", { message: "구매를 성공했습니다!" });
       })
       .catch((e) => {
-        setIsOpen(true);
-        setType("error");
-        setMessage(e.response.data.message);
+        openModal("error", { message: e.response.data.message });
       });
   };
 
@@ -160,9 +149,9 @@ const Stores = ({ currentItems }: StoresProps) => {
         type={type}
         isOpen={isOpen}
         onClose={() => {
-          setIsOpen(false);
+          closeModal();
           if (type === "success") {
-            window.location.href = "/";
+            window.location.reload();
           }
         }}
         message={message}
