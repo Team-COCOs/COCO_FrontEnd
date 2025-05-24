@@ -12,16 +12,16 @@ export const SettingMyInfoStyle = styled.div`
       margin: 0 0 5px 5px;
       text-decoration: underline;
       text-underline-offset: 2px;
-      color: rgb(175, 175, 175);
+      color: rgb(175, 175, 175) !important;
       cursor: pointer;
     }
 
     .SettingMyInfo_header {
-      color: #4b4b4b;
+      color: #4b4b4b !important;
       font-size: 12px;
       font-weight: bolder;
       padding-bottom: 7px;
-      border-bottom: 1.5px dotted #ddd;
+      border-bottom: 1.5px dotted #ddd !important;
       margin-bottom: 7px;
 
       .SettingMyInfo_title {
@@ -39,9 +39,9 @@ export const SettingMyInfoStyle = styled.div`
       .SettingMyInfo_myBase {
         padding: 10px 15px;
         font-size: 11px;
-        border-top: 1.5px solid rgb(177, 177, 177);
-        border-bottom: 1.5px solid rgb(194, 194, 194);
-        background-color: rgb(249, 249, 249);
+        border-top: 1.5px solid rgb(177, 177, 177) !important;
+        border-bottom: 1.5px solid rgb(194, 194, 194) !important;
+        background-color: rgb(249, 249, 249) !important;
 
         @media (max-width: 1003px) {
           font-size: 10px;
@@ -57,12 +57,12 @@ export const SettingMyInfoStyle = styled.div`
           justify-content: flex-end;
           margin-top: 7px;
           gap: 5px;
-          color: rgb(62, 209, 235);
+          color: rgb(62, 209, 235) !important;
           font-weight: bold;
           cursor: pointer;
 
           .SettingMyInfo_myBaseIcon {
-            color: ${({ theme }) => theme.colors.mainColor};
+            color: ${({ theme }) => theme.colors.mainColor} !important;
             font-size: 6px;
           }
         }
@@ -91,7 +91,7 @@ export const SettingMyInfoStyle = styled.div`
 
         .SettingMyInfo_subText {
           font-size: 9px;
-          color: rgb(142, 142, 142);
+          color: rgb(142, 142, 142) !important;
           margin-left: 5px;
 
           @media (max-width: 520px) {
@@ -103,9 +103,9 @@ export const SettingMyInfoStyle = styled.div`
       .SettingMyInfo_password {
         display: flex;
         flex-direction: column;
-        border-top: 1.5px solid rgb(177, 177, 177);
-        border-bottom: 1.5px solid rgb(194, 194, 194);
-        background-color: rgb(249, 249, 249);
+        border-top: 1.5px solid rgb(177, 177, 177) !important;
+        border-bottom: 1.5px solid rgb(194, 194, 194) !important;
+        background-color: rgb(249, 249, 249) !important;
 
         .SettingMyInfo_textBox {
           display: flex;
@@ -157,7 +157,7 @@ export const SettingMyInfoStyle = styled.div`
             position: absolute;
             bottom: 3px;
             text-align: center;
-            color: rgb(255, 105, 105);
+            color: rgb(255, 105, 105) !important;
             font-size: 12px;
 
             @media (max-width: 580px) {
@@ -169,7 +169,7 @@ export const SettingMyInfoStyle = styled.div`
         .SettingMyInfo_underLine {
           width: 100%;
           height: 1px;
-          border-bottom: 1px dotted rgb(167, 167, 167);
+          border-bottom: 1px dotted rgb(167, 167, 167) !important;
         }
       }
 
@@ -181,10 +181,10 @@ export const SettingMyInfoStyle = styled.div`
 
         button {
           padding: 4px 5px;
-          background-color: rgb(248, 248, 248);
-          color: #4b4b4b;
+          background-color: rgb(248, 248, 248) !important;
+          color: #4b4b4b !important;
           font-size: 11px;
-          border: 1px solid #4b4b4b;
+          border: 1px solid #4b4b4b !important;
           border-radius: 2px;
           cursor: pointer;
           font-weight: bold;

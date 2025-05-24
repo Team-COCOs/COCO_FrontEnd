@@ -3,6 +3,7 @@ import { loadTossPayments } from "@tosspayments/payment-sdk";
 import axios from "axios";
 import { useState } from "react";
 import Skeleton from "@mui/material/Skeleton";
+import Swal from "sweetalert2";
 
 interface PayModalProps {
   onClose: () => void;
@@ -30,7 +31,10 @@ const PayModal = ({ onClose }: PayModalProps) => {
       });
     } catch (err) {
       console.error("결제 요청 중 오류:", err);
-      alert("결제를 시작할 수 없습니다.");
+      Swal.fire({
+        title: "결제를 진행할 수 없습니다.",
+        icon: "error",
+      });
     }
   };
 

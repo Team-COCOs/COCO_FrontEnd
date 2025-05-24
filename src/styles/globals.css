@@ -61,7 +61,8 @@ textarea,
 input[type="checkbox"],
 input[type="radio"] {
   background-color: white;
-  color: black;
+  color: rgb(0, 0, 0);
+  border-color: #d2d2d2;
 }
 
 h2 {

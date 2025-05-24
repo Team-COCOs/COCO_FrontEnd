@@ -3,13 +3,14 @@ import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import Loading from "../Loading";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 interface AdminRouteProps {
   children: ReactNode;
 }
 
 const AdminRoute = ({ children }: AdminRouteProps) => {
-  const { isLoggedIn, user, checkLogin } = useAuth();
+  const { user, checkLogin } = useAuth();
   const router = useRouter();
   const [checkingAuth, setCheckingAuth] = useState(true);
   const hasRedirected = useRef(false);
@@ -20,7 +21,10 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
       if (!token) {
         if (!hasRedirected.current) {
           hasRedirected.current = true;
-          alert("로그인이 필요합니다.");
+          await Swal.fire({
+            title: "로그인이 필요합니다.",
+            icon: "error",
+          });
           router.push("/");
         }
         return;
@@ -34,15 +38,24 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
   }, [checkLogin, router]);
 
   useEffect(() => {
-    if (!checkingAuth && user) {
-      if (user.role !== "admin") {
-        if (!hasRedirected.current) {
-          hasRedirected.current = true;
-          alert("관리자만 접근 가능한 페이지입니다.");
-          router.push("/");
+    const admin = async () => {
+      if (!checkingAuth && user) {
+        if (user.role !== "admin") {
+          if (!hasRedirected.current) {
+            hasRedirected.current = true;
+
+            await Swal.fire({
+              title: "관리자만 접근 가능한 페이지입니다.",
+              icon: "error",
+            });
+
+            router.push("/");
+          }
         }
       }
-    }
+    };
+
+    admin();
   }, [checkingAuth, user, router]);
 
   if (checkingAuth) return <Loading />;

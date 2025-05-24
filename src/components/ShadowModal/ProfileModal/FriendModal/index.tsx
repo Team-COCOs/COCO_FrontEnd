@@ -15,17 +15,21 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
   const [message, setMessage] = useState("");
   const [loaded, setLoaded] = useState(false);
 
+  const [type, setType] = useState("");
+
   const frienRequest = async (type: string) => {
     try {
       const res = await axiosInstance.post(`/friends/${type}`, {
         requesterId: data.requesterId,
       });
+      setType("success");
       setMessage(res.data.message);
       setIsOpen(true);
     } catch (e: any) {
       if (e.response?.status === 401) {
-        alert("로그인이 필요합니다.");
-        window.location.reload();
+        setType("error");
+        setMessage("로그인이 필요합니다.");
+        setIsOpen(true);
       }
       console.log(e);
     }
@@ -118,7 +122,7 @@ const FriendModal = ({ onClose, data, userName }: FriendModalProps) => {
       </div>
 
       <ShadowModal
-        type="success"
+        type={type}
         isOpen={isOpen}
         onClose={() => {
           setIsOpen(false);

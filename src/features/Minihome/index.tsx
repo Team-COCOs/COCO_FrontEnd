@@ -18,6 +18,7 @@ import HomeMusicRight from "@/components/MiniHomePage/Home/HomeMusicRight";
 import FriendModal from "@/components/MiniHomePage/FriendModal";
 // 로딩 중
 import Loading from "@/components/Loading";
+import ShadowModal from "@/components/ShadowModal";
 
 interface MinihomeLayoutProps {
   tapChildren: ReactNode;
@@ -50,6 +51,9 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
   // 일촌신청 이미지 및 성별
   const [requesterImage, setRequesterImage] = useState("");
   const [requesterGender, setRequesterGender] = useState("");
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
   // 로그인 한 사람 ID
   // 탭 클릭 시 상태 변경 함수
@@ -159,8 +163,8 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
         }
         console.error("방문자 수 기록 실패:", err);
         if (err.response?.status === 404) {
-          alert("존재하지 않는 페이지입니다.");
-          router.push("/");
+          setModalIsOpen(true);
+          setMessage("존재하지 않는 페이지입니다.");
         }
       }
     };
@@ -260,6 +264,16 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
           )}
         </div>
       )}
+
+      <ShadowModal
+        type="error"
+        isOpen={modalIsOpen}
+        onClose={() => {
+          setModalIsOpen(false);
+          router.push("/");
+        }}
+        message={message}
+      />
     </MinihomeStyle>
   );
 };

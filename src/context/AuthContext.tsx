@@ -8,6 +8,7 @@ import React, {
 import Cookies from "js-cookie";
 import axiosInstance from "@/lib/axios";
 import { useRouter } from "next/router";
+import ShadowModal from "@/components/ShadowModal";
 
 // ✅ NestJS 유저 프로필 DTO 기반 타입 정의
 type UserInfo = {
@@ -45,6 +46,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserInfo | null>(null);
   const router = useRouter();
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+
   // ✅ 서버에서 로그인 상태 및 프로필 정보 확인
   const checkLogin = async () => {
     try {
@@ -81,8 +85,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       setUser(null);
       setIsLoggedIn(false);
-      alert("로그아웃 되었습니다.");
-      router.push("/");
+
+      setIsOpen(true);
+      setMessage("로그아웃 되었습니다.");
     } catch (error) {
       console.error("로그아웃 실패:", error);
     }
@@ -100,6 +105,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       value={{ isLoggedIn, user, checkLogin, login: () => {}, logout }}
     >
       {children}
+
+      <ShadowModal
+        type="success"
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          router.push("/");
+        }}
+        message={message}
+      />
     </AuthContext.Provider>
   );
 };

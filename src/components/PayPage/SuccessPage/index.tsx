@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { PaymentSuccessStyled } from "./styled";
 import clsx from "clsx";
+import Swal from "sweetalert2";
 interface Props {
   dotori: string;
 }
@@ -24,7 +25,10 @@ const PaymentSuccess = ({ dotori }: Props) => {
       router.replace("/payment/success");
     } catch (error) {
       console.error("결제 정보 저장 실패:", error);
-      alert("결제 정보 저장 중 오류가 발생했습니다.");
+      Swal.fire({
+        title: "결제 정보 저장 중 오류가 발생했습니다.",
+        icon: "error",
+      });
     }
   };
 
