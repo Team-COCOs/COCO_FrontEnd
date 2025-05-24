@@ -105,7 +105,11 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
         setReceiverName(response.data.receiverName);
         setRequesterImage(response.data.requesterImage);
         setRequesterGender(response.data.requesterGender);
-      } catch (error) {
+      } catch (error: any) {
+        if (error.response.status === 401) {
+          alert("로그인이 필요합니다.");
+          window.location.reload();
+        }
         console.error("이름 정보 불러오기 실패:", error);
       }
     };

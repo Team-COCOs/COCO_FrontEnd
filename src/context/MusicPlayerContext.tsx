@@ -88,9 +88,14 @@ export const MusicPlayerProvider = ({
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (isPlaying) audio.pause();
-    else audio.play().catch((e) => console.warn("자동 재생 실패:", e));
-    setIsPlaying(!isPlaying);
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play().catch((e) => console.warn("자동 재생 실패:", e));
+    }
+
+    // 안전하게 토글
+    setIsPlaying((prev) => !prev);
   };
 
   const stop = () => {
@@ -109,6 +114,39 @@ export const MusicPlayerProvider = ({
 
   const prevTrack = () =>
     setCurrentTrack((prev) => (prev === 0 ? playlist.length - 1 : prev - 1));
+
+  // 🎯 오디오 이벤트 리스너로 상태 동기화
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    audio.addEventListener("play", handlePlay);
+    audio.addEventListener("pause", handlePause);
+
+    return () => {
+      audio.removeEventListener("play", handlePlay);
+      audio.removeEventListener("pause", handlePause);
+    };
+  }, []);
+  // 🎯 오디오 이벤트 리스너로 상태 동기화
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    audio.addEventListener("play", handlePlay);
+    audio.addEventListener("pause", handlePause);
+
+    return () => {
+      audio.removeEventListener("play", handlePlay);
+      audio.removeEventListener("pause", handlePause);
+    };
+  }, []);
 
   return (
     <MusicPlayerContext.Provider
