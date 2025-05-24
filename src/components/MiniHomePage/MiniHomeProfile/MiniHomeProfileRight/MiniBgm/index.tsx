@@ -6,6 +6,7 @@ import { useEffect, useState, useRef } from "react";
 import axiosInstance from "@/lib/axios";
 import { useRouter } from "next/router";
 import ShadowModal from "@/components/ShadowModal";
+import { useMusicPlayer } from "@/context/MusicPlayerContext";
 
 interface BgmInfo {
   id: number;
@@ -24,6 +25,8 @@ interface BgmInfo {
 
 const MiniBgm = () => {
   const { user } = useAuth();
+
+  const { stop: stopGlobalMusic } = useMusicPlayer();
 
   // 전체 내 bgm 넣기
   const [allBgm, setAllBgm] = useState<BgmInfo[]>([]);
@@ -79,14 +82,20 @@ const MiniBgm = () => {
       return;
     }
 
+    // 전역 BGM 정지
+    stopGlobalMusic();
+
     // 재생 중인지 아닌지 확인
     if (audioRef.current) {
       if (audioRef.current.paused) {
         audioRef.current.src = selectedBgm.storeItems.file;
-        audioRef.current.play().catch((err) => {
+        audioRef.current?.play().catch((err) => {
           console.warn("재생 실패:", err);
         });
-        setIsPlaying(true);
+
+        setTimeout(() => {
+          setIsPlaying(true);
+        }, 500);
       } else {
         audioRef.current.pause();
         setIsPlaying(false);
