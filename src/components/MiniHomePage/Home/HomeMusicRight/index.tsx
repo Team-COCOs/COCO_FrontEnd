@@ -42,6 +42,9 @@ const HomeMusicRight = () => {
         setPlaylist(res.data);
         if (!res.data || res.data.length === 0) {
           stop();
+        } else {
+          stop();
+          if (!isPlaying) togglePlay();
         }
       } catch (e) {
         console.error("BGM 가져오기 오류:", e);
