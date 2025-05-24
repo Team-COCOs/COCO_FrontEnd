@@ -14,6 +14,7 @@ import { SkinProvider } from "@/context/SkinContext";
 import { TabsProvider } from "@/context/TabsContext";
 import { MusicPlayerProvider } from "@/context/MusicPlayerContext";
 import MusicPlayerController from "@/context/MusicPlayerController";
+import { ModalProvider } from "@/context/ModalContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -66,20 +67,22 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
 
       <Provider store={store}>
-        <AuthProvider>
-          <SkinProvider>
-            <MusicPlayerProvider>
-              <MusicPlayerController />
-              <LanguageProvider>
-                <TabsProvider>
-                  <ThemeProvider theme={theme}>
-                    {loading ? <Loading /> : <Component {...pageProps} />}
-                  </ThemeProvider>
-                </TabsProvider>
-              </LanguageProvider>
-            </MusicPlayerProvider>
-          </SkinProvider>
-        </AuthProvider>
+        <ModalProvider>
+          <AuthProvider>
+            <SkinProvider>
+              <MusicPlayerProvider>
+                <MusicPlayerController />
+                <LanguageProvider>
+                  <TabsProvider>
+                    <ThemeProvider theme={theme}>
+                      {loading ? <Loading /> : <Component {...pageProps} />}
+                    </ThemeProvider>
+                  </TabsProvider>
+                </LanguageProvider>
+              </MusicPlayerProvider>
+            </SkinProvider>
+          </AuthProvider>
+        </ModalProvider>
       </Provider>
     </>
   );

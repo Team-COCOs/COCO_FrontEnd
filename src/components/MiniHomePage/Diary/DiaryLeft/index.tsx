@@ -96,7 +96,7 @@ const DiaryLeft = ({
       </div>
       <div className="DiaryLeft_folder_wrap Gulim">
         {editMode ? (
-          <Folder type="diary" onSave={handleSave} />
+          <Folder isType="diary" onSave={handleSave} />
         ) : (
           <DynamicFolder
             type="diary"

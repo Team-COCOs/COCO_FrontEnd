@@ -46,7 +46,7 @@ const PhotoLeft = ({ selectedMenu, setSelectedMenu, setWrite }: PhotoProps) => {
       <div className="PhotoLeft_title pixelFont">Photo Album</div>
       <div className="PhotoLeft_line"></div>
       {editMode ? (
-        <Folder type="photos" onSave={handleSave} />
+        <Folder isType="photos" onSave={handleSave} />
       ) : (
         <DynamicFolder
           type="photos"

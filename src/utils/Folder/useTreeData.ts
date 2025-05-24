@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { TreeNode } from "./types";
+import Swal from "sweetalert2";
 
 // 추가, 수정, 삭제, 중첩 제한
 export const useTreeData = () => {
@@ -47,7 +48,10 @@ export const useTreeData = () => {
   ): TreeNode[] => {
     const parentDepth = getNodeDepth(nodes, parentKey);
     if (parentDepth && parentDepth >= 2) {
-      alert("중첩할 수 없습니다.");
+      Swal.fire({
+        title: "중첩할 수 없습니다!",
+        icon: "error",
+      });
       return nodes;
     }
     return nodes.map((n) => {

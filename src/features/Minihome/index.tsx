@@ -107,8 +107,8 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
         setRequesterGender(response.data.requesterGender);
       } catch (error: any) {
         if (error.response.status === 401) {
-          alert("로그인이 필요합니다.");
-          window.location.reload();
+          setModalIsOpen(true);
+          setMessage("로그인이 필요합니다.");
         }
         console.error("이름 정보 불러오기 실패:", error);
       }
@@ -274,7 +274,11 @@ const MinihomeLayout = ({ tapChildren, children, id }: MinihomeLayoutProps) => {
         isOpen={modalIsOpen}
         onClose={() => {
           setModalIsOpen(false);
-          router.push("/");
+          if (message === "로그인이 필요합니다.") {
+            window.location.reload();
+          } else {
+            router.push("/");
+          }
         }}
         message={message}
       />

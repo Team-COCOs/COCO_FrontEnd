@@ -72,7 +72,7 @@ const SettingMyInfo = () => {
     setType("confirm");
     setIsOpen(true);
     setMessage(
-      "탈퇴 시 복구가 불가능하며, 게시글 및 댓글은 따로 삭제되지 않습니다. 탈퇴하시겠습니까?"
+      "탈퇴 시 복구가 불가능하며, \n 게시글 및 댓글은 따로 삭제되지 않습니다. \n 탈퇴하시겠습니까?"
     );
   };
 
@@ -83,7 +83,7 @@ const SettingMyInfo = () => {
       Cookies.remove("accessToken");
       Cookies.remove("refreshToken");
 
-      setType("confirm");
+      setType("success");
       setIsOpen(true);
       setMessage("탈퇴되었습니다.");
     } catch (e) {

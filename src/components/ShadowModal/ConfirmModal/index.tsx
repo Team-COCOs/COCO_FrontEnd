@@ -20,9 +20,24 @@ const ConfirmModal = ({ onClose, onConfirm, message }: ConfirmProps) => {
         </div>
       </div>
       <div className="window-body">
-        <p>{message}</p>
+        <p>
+          {message.split("\n").map((line, index) => (
+            <span key={index}>
+              {line}
+              <br />
+            </span>
+          ))}
+        </p>
+
         <div className="Confirm_btn">
-          <button onClick={onConfirm}>확인</button>
+          <button
+            onClick={() => {
+              onConfirm();
+              onClose();
+            }}
+          >
+            확인
+          </button>
           <button onClick={onClose}>취소</button>
         </div>
       </div>

@@ -11,15 +11,19 @@ import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
 import { findNodeByKey } from "@/utils/Folder/useSearch";
 import ShadowModal from "@/components/ShadowModal";
+import { useModal } from "@/context/ModalContext";
 
 interface FolderProps {
-  type: string;
+  isType: string;
   onSave: () => void;
 }
 
-const Folder = ({ type, onSave }: FolderProps) => {
+const Folder = ({ isType, onSave }: FolderProps) => {
   const router = useRouter();
   const userId = router.query.id;
+
+  const { type, isOpen, message, onConfirm, openModal, closeModal } =
+    useModal();
 
   // 폴더 축소, 확대
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
@@ -27,10 +31,6 @@ const Folder = ({ type, onSave }: FolderProps) => {
   const [editTitle, setEditTitle] = useState<string>("");
   const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
   const [editingKey, setEditingKey] = useState<string | null>(null);
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [modalType, setModalType] = useState("");
 
   const { user } = useAuth();
 
@@ -65,9 +65,11 @@ const Folder = ({ type, onSave }: FolderProps) => {
         editTitle
       );
     } else if (action === "delete") {
-      setModalType("confirm");
-      setIsOpen(true);
-      setMessage("해당 폴더의 게시글이 모두 삭제됩니다. 삭제하시겠습니까?");
+      console.log("삭제 버튼 눌림.");
+      console.log(handleDelete);
+      openModal("confirm", {
+        message: "해당 폴더의 게시글이 모두 삭제됩니다. \n 삭제하시겠습니까?",
+      });
     }
 
     setTreeData(updatedTreeData);
@@ -77,14 +79,11 @@ const Folder = ({ type, onSave }: FolderProps) => {
     checkedKeys.forEach((key) => {
       const node = findNodeByKey(treeData, key);
       if (node?.title === "스크랩") {
-        setModalType("error");
-        setIsOpen(true);
-        setMessage("스크랩 폴더는 삭제할 수 없습니다.");
+        openModal("error", { message: "스크랩 폴더는 삭제할 수 없습니다." });
         return;
       }
 
       updatedTreeData = deleteNodeByKey(updatedTreeData, key);
-      setIsOpen(false);
     });
 
     setTreeData(updatedTreeData);
@@ -102,9 +101,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
   const handleStartEditing = () => {
     const node = findNodeByKey(treeData, checkedKeys[0]);
     if (node?.title === "스크랩") {
-      setModalType("error");
-      setIsOpen(true);
-      setMessage("스크랩 폴더는 수정할 수 없습니다.");
+      openModal("error", { message: "스크랩 폴더는 수정할 수 없습니다." });
       return;
     }
 
@@ -130,9 +127,9 @@ const Folder = ({ type, onSave }: FolderProps) => {
   // 수정 끝 -> 제목 적용
   const handleFinishEditing = () => {
     if (editTitle.trim() === "스크랩") {
-      setModalType("error");
-      setIsOpen(true);
-      setMessage("폴더 이름을 '스크랩'으로 지정할 수 없습니다.");
+      openModal("error", {
+        message: "폴더 이름을 '스크랩'으로 지정할 수 없습니다.",
+      });
       return;
     }
 
@@ -146,7 +143,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
 
   // 트리 구조 저장 (useFlattenTree.ts 에서 저장)
   const handleSave = () => {
-    saveTreeData(type, treeData, onSave, router, userId);
+    saveTreeData(isType, treeData, onSave, router, userId, openModal);
   };
 
   // 확장 및 축소를 위한 함수
@@ -185,7 +182,7 @@ const Folder = ({ type, onSave }: FolderProps) => {
     }
 
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/${type}/folderList`, {
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/${isType}/folderList`, {
         params: { userId },
       })
       .then((res) => {
@@ -205,19 +202,18 @@ const Folder = ({ type, onSave }: FolderProps) => {
       })
       .catch((e) => {
         if (e.response?.status === 401) {
-          setModalType("error");
-          setIsOpen(true);
-          setMessage("로그인이 필요합니다.");
-          router.push(`/home/${user?.id}`);
+          openModal("error", {
+            message: "로그인이 필요합니다.",
+          });
         }
 
         console.log("폴더 데이터 로딩 실패:", e);
       });
-  }, [type, userId]);
+  }, [isType, userId]);
 
   return (
     <FolderStyle
-      className={`Folder_wrap ${type === "diary" ? "Folder_diaryWrap" : ""}`}
+      className={`Folder_wrap ${isType === "diary" ? "Folder_diaryWrap" : ""}`}
     >
       <div className="Folder_btns">
         <button className="pixelFont" onClick={() => handleEdit("add")}>
@@ -275,10 +271,14 @@ const Folder = ({ type, onSave }: FolderProps) => {
       </div>
 
       <ShadowModal
-        type={modalType}
+        type={type}
         isOpen={isOpen}
         onClose={() => {
-          setIsOpen(false);
+          closeModal();
+
+          if (message === "로그인이 필요합니다.") {
+            window.location.reload();
+          }
         }}
         message={message}
         onConfirm={handleDelete}
