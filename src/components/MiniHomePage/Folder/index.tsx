@@ -8,7 +8,6 @@ import { useDragDrop } from "@/utils/Folder/useDragDrop";
 import { saveTreeData } from "@/utils/Folder/useFlattenTree";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useAuth } from "@/context/AuthContext";
 import { findNodeByKey } from "@/utils/Folder/useSearch";
 import ShadowModal from "@/components/ShadowModal";
 import { useModal } from "@/context/ModalContext";

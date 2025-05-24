@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import DiaryWritePage from "./DiaryWritePage";
 import DiaryTopDate from "./DiaryTopDate";
 import DiaryContent from "./DiaryContent";
+import { ModalProvider } from "@/context/ModalContext";
 
 interface DiaryProps {
   selectedDiaryMenu: { id: number; title: string } | null;
@@ -56,14 +57,16 @@ const DiaryRight = ({
                 selectedDiaryMenu={selectedDiaryMenu}
                 setDiaryWrite={setDiaryWrite}
               />
-              <DiaryContent
-                selectedDate={selectedDate}
-                setSelectedDate={setSelectedDate}
-                selectedDiaryMenu={selectedDiaryMenu}
-                setSelectedDiaryMenu={setSelectedDiaryMenu}
-                setDiaryWrite={setDiaryWrite}
-                setEditingDiary={setEditingDiary}
-              />
+              <ModalProvider>
+                <DiaryContent
+                  selectedDate={selectedDate}
+                  setSelectedDate={setSelectedDate}
+                  selectedDiaryMenu={selectedDiaryMenu}
+                  setSelectedDiaryMenu={setSelectedDiaryMenu}
+                  setDiaryWrite={setDiaryWrite}
+                  setEditingDiary={setEditingDiary}
+                />
+              </ModalProvider>
             </div>
           ) : (
             <div className="DiaryWritePage_component_wrap">

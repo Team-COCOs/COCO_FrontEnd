@@ -4,6 +4,7 @@ import Folder from "../../Folder";
 import DynamicFolder from "../../DynamicFolder";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/router";
+import { ModalProvider } from "@/context/ModalContext";
 
 interface PhotoProps {
   selectedMenu: { id: number; title: string } | null;
@@ -36,17 +37,14 @@ const PhotoLeft = ({ selectedMenu, setSelectedMenu, setWrite }: PhotoProps) => {
     setEditMode(true);
   };
 
-  const handleClickFolder = (menu: any) => {
-    setSelectedMenu(menu);
-    setWrite(false); // WritePage에서 벗어나기
-  };
-
   return (
     <PhotoLeftStyled className="PhotoLeft_wrap">
       <div className="PhotoLeft_title pixelFont">Photo Album</div>
       <div className="PhotoLeft_line"></div>
       {editMode ? (
-        <Folder isType="photos" onSave={handleSave} />
+        <ModalProvider>
+          <Folder isType="photos" onSave={handleSave} />
+        </ModalProvider>
       ) : (
         <DynamicFolder
           type="photos"

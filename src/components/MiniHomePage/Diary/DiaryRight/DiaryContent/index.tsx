@@ -9,6 +9,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { DiaryType } from "..";
 import ShadowModal from "@/components/ShadowModal";
+import { ModalProvider, useModal } from "@/context/ModalContext";
 
 interface DiaryContentProps {
   selectedDate: Date | null;
@@ -56,9 +57,7 @@ const DiaryContent = ({
 }: DiaryContentProps) => {
   const [diaryData, setDiaryData] = useState<DiaryType[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [type, setType] = useState("");
+
   const [diaryId, setDiaryId] = useState<number | null>(null);
 
   // selectedDate가 있을 경우 해당 날짜의 게시글만 필터링
@@ -95,6 +94,8 @@ const DiaryContent = ({
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredDiary.slice(indexOfFirstItem, indexOfLastItem);
 
+  const { type, isOpen, message, openModal, closeModal } = useModal();
+
   const handlePrevPage = () => {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
@@ -121,24 +122,19 @@ const DiaryContent = ({
 
   const confirm = async (postId: number) => {
     setDiaryId(postId);
-    setIsOpen(true);
-    setType("confirm");
-    setMessage("정말 이 일기를 삭제하시겠습니까?");
+
+    openModal("confirm", { message: "정말 이 일기를 삭제하시겠습니까?" });
   };
 
   const handleDeleteBtn = () => {
     axiosInstance
       .delete(`/diary/${diaryId}`)
       .then(() => {
-        setType("success");
-        setIsOpen(true);
-        setMessage("게시물이 삭제되었습니다!");
+        openModal("success", { message: "게시물이 삭제되었습니다!" });
       })
       .catch((e) => {
         console.log(e, "e : 게시물 삭제 실패");
-        setType("error");
-        setIsOpen(true);
-        setMessage("게시물 삭제에 실패했습니다.");
+        openModal("error", { message: "게시물 삭제에 실패했습니다." });
       });
   };
 
@@ -229,10 +225,12 @@ const DiaryContent = ({
                   <div>공개설정 : {visibilityOptions[diary.visibility]}</div>
                 </div>
                 <div>
-                  <CommentDiary
-                    diaryId={diary.id}
-                    allComments={diary.comments}
-                  />
+                  <ModalProvider>
+                    <CommentDiary
+                      diaryId={diary.id}
+                      allComments={diary.comments}
+                    />
+                  </ModalProvider>
                 </div>
               </div>
               {/* 구분선 */}
@@ -302,7 +300,7 @@ const DiaryContent = ({
         type={type}
         isOpen={isOpen}
         onClose={() => {
-          setIsOpen(false);
+          closeModal();
           if (type !== "confirm") {
             window.location.reload();
           }

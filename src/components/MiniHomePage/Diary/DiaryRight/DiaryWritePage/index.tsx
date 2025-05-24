@@ -8,6 +8,7 @@ import DiaryWriteSelect from "./DiaryWriteSelect";
 import axiosInstance from "@/lib/axios";
 import { DiaryType } from "../../DiaryRight";
 import ShadowModal from "@/components/ShadowModal";
+import { useModal } from "@/context/ModalContext";
 
 interface FolderItem {
   id: number;
@@ -50,9 +51,7 @@ const DiaryWritePage = ({
   const [selectedFolderName, setSelectedFolderName] = useState<string>("");
   const [selectedMood, setSelectedMood] = useState("");
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [type, setType] = useState("");
+  const { type, isOpen, message, openModal, closeModal } = useModal();
 
   // 기본
   const getDefaultFolder = (): FolderItem[] => [
@@ -101,44 +100,38 @@ const DiaryWritePage = ({
     const content = editorRef.current?.getHtml() || "";
 
     if (!user?.id) {
-      setType("error");
-      setIsOpen(true);
-      setMessage("로그인이 필요합니다.");
+      openModal("error", { message: "로그인이 필요합니다." });
+
       return;
     }
 
     if (!selectedFolderName) {
-      setType("error");
-      setIsOpen(true);
-      setMessage("폴더를 선택해주세요.");
+      openModal("error", { message: "폴더를 선택해주세요." });
+
       return;
     }
 
     if (!selectedWeather) {
-      setType("error");
-      setIsOpen(true);
-      setMessage("날씨를 선택해주세요.");
+      openModal("error", { message: "날씨를 선택해주세요." });
+
       return;
     }
 
     if (!selectedMood) {
-      setType("error");
-      setIsOpen(true);
-      setMessage("기분을 선택해주세요.");
+      openModal("error", { message: "기분을 선택해주세요." });
+
       return;
     }
 
     if (!visibility) {
-      setType("error");
-      setIsOpen(true);
-      setMessage("공개 설정을 선택해주세요.");
+      openModal("error", { message: "공개 설정을 선택해주세요." });
+
       return;
     }
 
     if (!content) {
-      setType("error");
-      setIsOpen(true);
-      setMessage("내용을 입력해주세요.");
+      openModal("error", { message: "내용을 입력해주세요." });
+
       return;
     }
 
@@ -155,10 +148,7 @@ const DiaryWritePage = ({
             content: content,
           }
         );
-        setType("success");
-        setIsOpen(true);
-        setMessage("다이어리 수정이 완료되었습니다!");
-        window.location.reload();
+        openModal("success", { message: "다이어리 수정이 완료되었습니다!" });
       } else {
         // 신규 저장
         const response = await axiosInstance.post(`/diary/save`, {
@@ -168,22 +158,15 @@ const DiaryWritePage = ({
           visibility: visibility,
           content: content,
         });
-        setType("success");
-        setIsOpen(true);
-        setMessage("다이어리 저장이 완료되었습니다!");
-        window.location.reload();
+
+        openModal("success", { message: "다이어리 저장이 완료되었습니다!" });
       }
     } catch (error: any) {
-      console.error("저장 실패:", error);
       if (error.response.status === 401) {
-        setType("error");
-        setIsOpen(true);
-        setMessage("로그인이 필요합니다.");
-        router.push(`/home/${id}`);
+        openModal("error", { message: "로그인이 필요합니다." });
       }
-      setType("error");
-      setIsOpen(true);
-      setMessage("저장에 실패했습니다.");
+
+      openModal("error", { message: "저장에 실패했습니다." });
     }
   };
 
@@ -219,7 +202,13 @@ const DiaryWritePage = ({
         type={type}
         isOpen={isOpen}
         onClose={() => {
-          setIsOpen(false);
+          closeModal();
+
+          if (type === "success") {
+            window.location.reload();
+          } else if (message === "로그인이 필요합니다.") {
+            router.push(`/home/${id}`);
+          }
         }}
         message={message}
       />
