@@ -120,29 +120,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
         });
       }
     });
-    // console.log(initialItems, "initialItems");
-    // // ✅ 말풍선이 누락된 경우 강제로 추가
-    // const hasSpeechBubble = updatedItems.some(
-    //   (item) => item.type === "speechBubble"
-    // );
 
-    // if (!hasSpeechBubble) {
-    //   const speechBubble = initialItems.find(
-    //     (item) => item.type === "speechBubble"
-    //   );
-
-    //   if (speechBubble) {
-    //     layoutData.push({
-    //       id: speechBubble.id,
-    //       type: "speechBubble",
-    //       x: speechBubble.left ?? 0,
-    //       y: speechBubble.top ?? 0,
-    //       text: speechBubble.text ?? "",
-    //     });
-    //   }
-    // }
-
-    // console.log(initialItems, "initialItems2");
     onDragComplete(
       layoutData.map((item) => {
         const base = {
