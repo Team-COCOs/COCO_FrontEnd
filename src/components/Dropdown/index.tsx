@@ -64,6 +64,11 @@ const Dropdown = ({
     }
   }, [selected, label]);
 
+  const truncate = (str: string, maxLength: number = 6) => {
+    if (str.length <= maxLength) return str;
+    return str.slice(0, maxLength) + "...";
+  };
+
   return (
     <DropdownStyle className={clsx("Dropdown_select")} ref={wrapperRef}>
       <button className="Dropdown_default" onClick={() => setIsOpen(!isOpen)}>
@@ -89,7 +94,7 @@ const Dropdown = ({
                   className="Dropdown_option"
                   onClick={() => handleSelect(option)}
                 >
-                  {option.title}
+                  {truncate(option.title)}
                 </li>
               ))
             : publicOption?.map((option, idx) => (
@@ -98,7 +103,7 @@ const Dropdown = ({
                   className="Dropdown_option"
                   onClick={() => handleSelect(option)}
                 >
-                  {option.title}
+                  {truncate(option.title)}
                 </li>
               ))}
         </ul>

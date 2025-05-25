@@ -8,11 +8,14 @@ export const WritePageStyle = styled.div`
     padding: 20px 40px;
     display: flex;
     flex-direction: column;
-
     gap: 10px;
 
     @media (max-width: 768px) {
       padding: 10px;
+    }
+
+    .Dropdown_option {
+      font-size: 10px !important;
     }
 
     .WritePage_title {

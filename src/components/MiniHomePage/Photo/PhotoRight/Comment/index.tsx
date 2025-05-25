@@ -8,6 +8,7 @@ import axiosInstance from "@/lib/axios";
 import { formatKoreanDate } from "@/utils/KrDate/date";
 import { handleDeleteComment } from "@/utils/Comment/management";
 import ShadowModal from "@/components/ShadowModal";
+import { useModal } from "@/context/ModalContext";
 
 interface AuthorData {
   id: number;
@@ -41,26 +42,20 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
   const { user } = useAuth();
   const { id } = router.query;
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [type, setType] = useState("");
+  const { type, isOpen, message, openModal, closeModal } = useModal();
 
   const submitComment = async ({ comment, parentId }: CommentSubmit) => {
     if (!comment.trim()) {
-      setType("error");
-      setIsOpen(true);
-      setMessage("댓글을 작성해주세요~");
+      openModal("error", { message: "댓글을 작성해주세요~" });
+
       return;
     }
 
     if (!user?.id) {
-      setType("error");
-      setIsOpen(true);
-      setMessage("로그인 후 작성해주세요~");
+      openModal("error", { message: "로그인 후 작성해주세요~" });
+
       return;
     }
-
-    console.log("대댓글일 때 부모 아이디 : ", parentId);
 
     // parentId 는 null일 수 있음. (대댓글이 아닌 경우)
     try {
@@ -118,7 +113,11 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
                   <span
                     className="Comment_deleteBtn"
                     onClick={() =>
-                      handleDeleteComment("photos-comments", comment.id)
+                      handleDeleteComment(
+                        "photos-comments",
+                        comment.id,
+                        openModal
+                      )
                     }
                   >
                     ☒
@@ -177,7 +176,11 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
                       <span
                         className="Comment_deleteBtn"
                         onClick={() =>
-                          handleDeleteComment("photos-comments", child.id)
+                          handleDeleteComment(
+                            "photos-comments",
+                            child.id,
+                            openModal
+                          )
                         }
                       >
                         ☒
@@ -205,7 +208,8 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
         type={type}
         isOpen={isOpen}
         onClose={() => {
-          setIsOpen(false);
+          closeModal();
+          type === "success" && window.location.reload();
         }}
         message={message}
       />
