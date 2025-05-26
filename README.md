@@ -192,6 +192,15 @@ npm run dev
     <td><img src="https://github.com/user-attachments/assets/c4c4afb8-968e-4b6d-aaa7-a7103c475ac2"/></td>
    </tr>
   </table>
+
+   <table>
+   <tr>
+    <th> SEARCH </th>
+   </tr>
+   <tr>
+    <td><img src="https://github.com/user-attachments/assets/145d3634-f9d1-4ed4-9319-454969bf7358"/></td>
+   </tr>
+  </table>
  </div>
 
  <div align="center">
@@ -205,15 +214,6 @@ npm run dev
     <td><img src="https://github.com/user-attachments/assets/5ca2e4cf-8755-4f1e-819a-c51c1a78beb4" /></td>
   </tr>
  </table>
-
- <table>
-   <tr>
-    <th> SEARCH </th>
-   </tr>
-   <tr>
-    <td><img src="https://github.com/user-attachments/assets/145d3634-f9d1-4ed4-9319-454969bf7358"/></td>
-   </tr>
-  </table>
  </div>
 
 ![image](https://github.com/user-attachments/assets/fe091143-4bb0-4665-8577-2c18c3f60d79)
