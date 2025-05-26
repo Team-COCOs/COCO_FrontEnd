@@ -183,7 +183,11 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
                       />
                     )}
                     <img
-                      src={`${process.env.NEXT_PUBLIC_API_URL}${data.photo_url}`}
+                      src={
+                        data.photo_url.startsWith("/advertising")
+                          ? data.photo_url
+                          : `${process.env.NEXT_PUBLIC_API_URL}${data.photo_url}`
+                      }
                       alt="photo"
                       onLoad={() => setLoaded(true)}
                     />
