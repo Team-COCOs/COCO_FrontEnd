@@ -65,6 +65,10 @@ input[type="radio"] {
   border-color: #d2d2d2;
 }
 
+input[type="radio"] {
+  border-color: black !important;
+}
+
 h2 {
   all: unset;
 }

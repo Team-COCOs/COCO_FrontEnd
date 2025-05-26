@@ -209,3 +209,27 @@
   height: 150px;
   margin: 0 auto;
 }
+
+/* 개인정보처리방침 */
+.privacy_body {
+  padding: 0 10px;
+}
+
+.FontSmall {
+  font-size: 12px;
+}
+
+.FontMid {
+  font-size: 13.5px;
+  font-style: italic;
+}
+
+.empty_font {
+  width: 100%;
+  height: 3px;
+}
+
+.privacy_foot label {
+  font-size: 15px;
+  cursor: pointer !important;
+}
