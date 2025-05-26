@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import GuestBook from "./GuestBook";
 import axiosInstance from "@/lib/axios";
 import axios from "axios";
+import { ModalProvider } from "@/context/ModalContext";
 
 const VisitorRight = () => {
   const router = useRouter();
@@ -94,11 +95,13 @@ const VisitorRight = () => {
       </div>
 
       <div className="VisitorRight_guestBook">
-        <GuestBook
-          refresh={refresh}
-          onRefresh={() => setRefresh((prev) => !prev)}
-          setRefresh={setRefresh}
-        />
+        <ModalProvider>
+          <GuestBook
+            refresh={refresh}
+            onRefresh={() => setRefresh((prev) => !prev)}
+            setRefresh={setRefresh}
+          />
+        </ModalProvider>
       </div>
     </VisitorRightStyled>
   );

@@ -7,6 +7,7 @@ import axiosInstance from "@/lib/axios";
 import EmptyPage from "@/components/EmptyPage";
 import { formatKoreanDate } from "@/utils/KrDate/date";
 import GuestComment from "./GuestComment";
+import { ModalProvider, useModal } from "@/context/ModalContext";
 import ShadowModal from "@/components/ShadowModal";
 
 interface commentVisit {
@@ -47,9 +48,7 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
   const [visitData, setVisitData] = useState<visitDatas[]>([]);
   const [visitId, setVisitId] = useState<number | null>(null);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [type, setType] = useState("");
+  const { type, isOpen, message, openModal, closeModal } = useModal();
 
   useEffect(() => {
     if (!id) return;
@@ -87,18 +86,15 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
   // 삭제
   const confirm = (id: number) => {
     setVisitId(id);
-    setType("confirm");
-    setMessage("정말로 이 방명록을 삭제하시겠습니까?");
-    setIsOpen(true);
+    openModal("confirm", { message: "정말로 이 방명록을 삭제하시겠습니까?" });
   };
 
   const deleteVisit = async () => {
+    console.log("여기옴", visitId);
     try {
       await axiosInstance.delete(`/guestbooks/${visitId}`);
 
-      setIsOpen(true);
-      setType("success");
-      setMessage("삭제 완료되었습니다.");
+      openModal("success", { message: "삭제 완료되었습니다." });
       onRefresh();
     } catch (e) {
       console.log("방명록 삭제 실패 : ", e);
@@ -110,9 +106,8 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
     try {
       await axiosInstance.patch(`/guestbooks/status/${visitId}`);
 
-      setIsOpen(true);
-      setType("success");
-      setMessage("완료되었습니다.");
+      openModal("success", { message: "완료되었습니다." });
+
       onRefresh();
     } catch (e) {
       console.log("방명록 비밀 실패 : ", e);
@@ -182,11 +177,13 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
                 <div className="GuestBook_right Gulim">{v.content}</div>
               </div>
 
-              <GuestComment
-                comment={v.comments}
-                postId={v.id}
-                onRefresh={onRefresh}
-              />
+              <ModalProvider>
+                <GuestComment
+                  comment={v.comments}
+                  postId={v.id}
+                  onRefresh={onRefresh}
+                />
+              </ModalProvider>
             </div>
           ))
         )}
@@ -196,7 +193,7 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
         type={type}
         isOpen={isOpen}
         onClose={() => {
-          setIsOpen(false);
+          closeModal();
         }}
         message={message}
         onConfirm={deleteVisit}

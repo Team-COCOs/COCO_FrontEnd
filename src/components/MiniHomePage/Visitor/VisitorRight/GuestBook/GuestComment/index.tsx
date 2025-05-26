@@ -3,8 +3,9 @@ import { GuestCommentStyle } from "./styled";
 import { formatKoreanDate } from "@/utils/KrDate/date";
 import { useAuth } from "@/context/AuthContext";
 import axiosInstance from "@/lib/axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ShadowModal from "@/components/ShadowModal";
+import { useModal } from "@/context/ModalContext";
 
 interface commentVisit {
   id: number; // PK
@@ -27,35 +28,26 @@ const GuestComment = ({ comment, onRefresh, postId }: GuestCommentProps) => {
 
   const [commentInput, setCommentInput] = useState("");
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [message, setMessage] = useState("");
-  const [type, setType] = useState("");
+  const { type, isOpen, message, openModal, closeModal } = useModal();
 
   const [photoId, setPhotoId] = useState<number | null>(null);
 
   const confirm = (id: number) => {
     setPhotoId(id);
-    setIsOpen(true);
-    setMessage("정말 댓글 삭제하시겠습니까?");
-    setType("confirm");
+    openModal("confirm", { message: "정말 댓글 삭제하시겠습니까?" });
   };
 
-  const handleDeleteComment = () => {
+  const handleDeleteComment = async () => {
     try {
-      axiosInstance.delete(`/guestbooks-comments/${photoId}`);
+      await axiosInstance.delete(`/guestbooks-comments/${photoId}`);
 
-      setIsOpen(true);
-      setMessage("댓글이 삭제되었습니다.");
-      setType("success");
+      openModal("success", { message: "댓글이 삭제되었습니다." });
     } catch (e: any) {
       if (e.response.status === 401) {
-        setIsOpen(true);
-        setMessage("로그인이 필요합니다.");
-        setType("error");
+        openModal("error", { message: "로그인이 필요합니다." });
       } else {
-        setIsOpen(true);
-        setMessage("댓글 삭제 중 오류가 발생했습니다.");
-        setType("error");
+        openModal("error", { message: "댓글 삭제 중 오류가 발생했습니다." });
+
         console.log(e, ": 댓글 삭제 중 오류");
       }
     }
@@ -69,16 +61,12 @@ const GuestComment = ({ comment, onRefresh, postId }: GuestCommentProps) => {
     postId: number;
   }) => {
     if (!comment.trim()) {
-      setIsOpen(true);
-      setMessage("댓글을 작성해주세요~");
-      setType("error");
+      openModal("error", { message: "댓글을 작성해주세요~" });
       return;
     }
 
     if (!user?.id) {
-      setIsOpen(true);
-      setMessage("로그인 후 작성해주세요~");
-      setType("error");
+      openModal("error", { message: "로그인 후 작성해주세요~" });
       setCommentInput("");
       return;
     }
@@ -153,7 +141,7 @@ const GuestComment = ({ comment, onRefresh, postId }: GuestCommentProps) => {
         type={type}
         isOpen={isOpen}
         onClose={() => {
-          setIsOpen(false);
+          closeModal();
 
           if (message === "댓글이 삭제되었습니다.") {
             window.location.reload();

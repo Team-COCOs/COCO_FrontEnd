@@ -147,10 +147,10 @@ const Stores = ({ currentItems }: StoresProps) => {
         type={type}
         isOpen={isOpen}
         onClose={() => {
-          closeModal();
           if (type === "success") {
             window.location.reload();
           }
+          closeModal();
         }}
         message={message}
         onConfirm={confirmBuy}
