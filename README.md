@@ -352,7 +352,7 @@ npm run dev
     <th> 글 작성 및 수정, 삭제 </th>
    </tr>
    <tr>
-     <td> <img src="(https://github.com/user-attachments/assets/f25a3c91-0b06-4f99-95af-0328826ac054" /> </td>
+     <td> <img src="https://github.com/user-attachments/assets/f25a3c91-0b06-4f99-95af-0328826ac054" /> </td>
    </tr>
   </table>
  </div>
@@ -382,6 +382,17 @@ npm run dev
 - 방문자가 메시지를 남길 수 있으며, 비밀글 설정이 가능합니다.
 - 삭제가 가능합니다.
 - 공지사항을 입력할 수 있습니다.
+
+<div align="center">
+  <table>
+   <tr>
+    <th> 방명록 </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/afc09510-d268-4982-a368-dbf09c1f4e15" /> </td>
+   </tr>
+  </table>
+ </div>
 
 ### 💬 COCO (챗봇)
 - 2000년대 말투로 대답해주는 챗봇 기능입니다. 
