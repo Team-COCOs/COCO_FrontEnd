@@ -51,21 +51,16 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
         res = await axiosInstance.get(`/photos/${queryUserId}`);
       }
 
-      console.log("사진첩 : ", res.data);
+      console.log(res.data);
+      res.data.filter((item: PhotoData) => console.log(item.folder.id));
 
-      res.data.filter((i: PhotoData) =>
-        console.log("폴더 아이디:", i.folder.id)
-      );
+      // const filtered =
+      //   selectedMenu &&
+      //   res.data.filter(
+      //     (item: PhotoData) => item.folder.id === selectedMenu.id
+      //   );
 
-      console.log(selectedMenu);
-
-      const filtered =
-        selectedMenu &&
-        res.data.filter(
-          (item: PhotoData) => item.folder.id === selectedMenu.id
-        );
-
-      setPhotoData(filtered);
+      // setPhotoData(filtered);
     } catch (e: any) {
       console.log("사진첩 불러오기 에러 : ", e);
     }
