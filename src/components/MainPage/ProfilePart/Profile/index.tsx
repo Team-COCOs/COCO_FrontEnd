@@ -68,6 +68,8 @@ const Profile = ({ setHasToken }: profileProps) => {
       try {
         const res = await axiosInstance.get("/users/mainProfile");
 
+        console.log(res.data);
+
         const updatedData = {
           ...res.data,
           profile_image:
