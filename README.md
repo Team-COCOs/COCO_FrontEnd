@@ -169,6 +169,53 @@ npm run dev
 <br/>
 
 ## 🖼️ 화면 구성
+
+<div align="center">
+ <table>
+  <tr>
+   <th> MAIN(LOGIN X) </th>
+   <th> MAIN(LOGIN O) </th>
+  </tr>
+  <tr>
+    <td> <img src="https://github.com/user-attachments/assets/0f5f4d2a-d5b4-4f04-a84f-574966040506" /> </td>
+    <td><img src="https://github.com/user-attachments/assets/d8772cbf-2807-4013-b1c2-394e80d900ce" /></td>
+  </tr>
+ </table>
+
+ <table>
+   <tr>
+    <th> JOIN </th>
+    <th> FIND </th>
+   </tr>
+   <tr>
+    <td><img src="https://github.com/user-attachments/assets/2e8c02fd-464d-4f5b-a352-9ff9d6571428"/></td>
+    <td><img src="https://github.com/user-attachments/assets/c4c4afb8-968e-4b6d-aaa7-a7103c475ac2"/></td>
+   </tr>
+  </table>
+
+   <table>
+   <tr>
+    <th> SEARCH </th>
+   </tr>
+   <tr>
+    <td><img src="https://github.com/user-attachments/assets/145d3634-f9d1-4ed4-9319-454969bf7358"/></td>
+   </tr>
+  </table>
+ </div>
+
+ <div align="center">
+ <table>
+  <tr>
+   <th> MINIHOMPY(LOGIN X) </th>
+   <th> MINIHOMPY(LOGIN O) </th>
+  </tr>
+  <tr>
+    <td> <img src="https://github.com/user-attachments/assets/afac238e-2599-4a75-aa9f-d2f76f6b1391" /> </td>
+    <td><img src="https://github.com/user-attachments/assets/5ca2e4cf-8755-4f1e-819a-c51c1a78beb4" /></td>
+  </tr>
+ </table>
+ </div>
+
 ![image](https://github.com/user-attachments/assets/fe091143-4bb0-4665-8577-2c18c3f60d79)
 <img src="https://github.com/user-attachments/assets/061ddae4-e3a4-40fe-8ad5-f084c14354e1" width="80%"/>
 ![image](https://github.com/user-attachments/assets/2d75f56e-5cb2-40d8-963a-244b2c031351)
