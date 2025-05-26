@@ -72,13 +72,10 @@ const DynamicFolder = ({
           children: item.children ?? [],
         }));
 
-        console.log("폴더 전체 정보 : ", normalizedData);
-
         const treeData = buildTree(normalizedData);
         setFolderTree(treeData);
       })
       .catch((err) => {
-        console.log(type);
         console.log("폴더 데이터 로딩 실패:", err);
         // setFolderTree(getDefaultFolder());
       });

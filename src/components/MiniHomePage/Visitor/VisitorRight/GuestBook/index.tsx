@@ -74,8 +74,6 @@ const GuestBook = ({ refresh, onRefresh, setRefresh }: GuestBookProps) => {
           return item;
         });
 
-        console.log("방명록 정보 : ", processedData);
-
         setVisitData(processedData);
       } catch (e) {
         console.log("방명록 오류:", e);

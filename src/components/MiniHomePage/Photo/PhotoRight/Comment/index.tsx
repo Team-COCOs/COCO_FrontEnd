@@ -74,7 +74,6 @@ const Comment = ({ comments, onSubmitSuccess, postId }: CommentProps) => {
 
       // 옵셔널 체이닝 : 정의된 함수일 시 실행
       onSubmitSuccess?.();
-      console.log("댓글 등록 : ", res.data);
     } catch (e) {
       console.log("댓글 등록 실패 : ", e);
     }

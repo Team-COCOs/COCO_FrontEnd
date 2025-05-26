@@ -38,7 +38,6 @@ const WriteInput = ({ onSuccess }: GuestWriteProps) => {
         miniUserId: id,
       });
 
-      console.log("방명록 등록 성공:", res.data);
       setContent(""); // 초기화
       setIsSecret(false); // 초기화
       onSuccess();

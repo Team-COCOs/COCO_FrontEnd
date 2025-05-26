@@ -15,8 +15,6 @@ export const flattenTreeData = (treeData: TreeNode[]) => {
         parent_id: parentId,
       };
 
-      console.log(currentNode);
-
       return [
         currentNode,
         ...(children ? flatten(children, currentNode.key) : []),
@@ -57,10 +55,7 @@ export const saveTreeData = async (
       folders: flat,
     });
 
-    console.log("트리 저장 성공", res.data);
-
     if (res.data.message !== "폴더 트리 저장 완료") {
-      console.log("클릭");
       openModal("error", { message: res.data.message });
       return;
     } else {
