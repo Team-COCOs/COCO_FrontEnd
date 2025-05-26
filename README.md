@@ -319,6 +319,18 @@ npm run dev
 - 프로필 이미지 및 자기소개 등록을 할 수 있습니다.
 - 배경 음악(BGM) 관리 및 설정이 가능합니다.
 
+
+<div align="center">
+  <table>
+   <tr>
+    <th> 프로필 설정 </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/4d011e0b-5a06-4ebc-b2f0-66658e6a7507" /> </td>
+   </tr>
+  </table>
+ </div>
+
 ### 🧸 미니미 & 미니룸
 - 대표 미니미 설정 기능이 있습니다.
 - 드래그 앤 드롭 방식으로 미니룸 꾸미기가 가능합니다.
@@ -389,7 +401,7 @@ npm run dev
     <th> 방명록 </th>
    </tr>
    <tr>
-     <td> <img src="https://github.com/user-attachments/assets/afc09510-d268-4982-a368-dbf09c1f4e15" /> </td>
+     <td> <img src="https://github.com/user-attachments/assets/bcabb381-8b0a-4ecd-9195-e7c88d3bd573" /> </td>
    </tr>
   </table>
  </div>
@@ -398,12 +410,34 @@ npm run dev
 - 2000년대 말투로 대답해주는 챗봇 기능입니다. 
 - Botpress를 활용해, 2000년대 말투와 감성을 살린 레트로 스타일 챗봇을 구현했습니다.
 
+ <div align="center">
+  <table>
+   <tr>
+    <th> 코코 채팅 </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/af2c496a-140c-4b18-b2f5-0e34e724cc42" /> </td>
+   </tr>
+  </table>
+ </div>
+
 ### ⚙️ 관리 페이지
 - 미니홈피 효과 변경이 가능합니다. (미니홈피 배경, 탭 색, 탭 언어)
 - 유저 정보 수정이 가능합니다. (전화번호, 비밀번호)
 - 일촌 관리가 가능합니다.
 - 회원 탈퇴가 가능합니다. 
-- 탈퇴 시 유저 삭제가 아닌 탈퇴한 미니홈피로 검색 및 이동 되도록 설정하였습니다. 
+- 탈퇴 시 유저 삭제가 아닌 탈퇴한 미니홈피로 검색 및 이동 되도록 설정하였습니다.
+
+<div align="center">
+  <table>
+   <tr>
+    <th> 관리 </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/48cd7dab-41fc-4525-8031-be218e8f3d85" /> </td>
+   </tr>
+  </table>
+ </div>
 
 
 
