@@ -3,6 +3,7 @@ import { SignFormStyled } from "./styled";
 import Logo from "@/components/MainPage/Header/Logo";
 import ShadowModal from "@/components/ShadowModal";
 import useSignForm from "@/utils/SignUp/useSignForm";
+import { useEffect } from "react";
 
 const SignPage = () => {
   const form = useSignForm();
@@ -40,6 +41,7 @@ const SignPage = () => {
     isOpen,
     setIsOpen,
     message,
+    setType,
     type,
     formik,
     isFormValid,
@@ -57,6 +59,11 @@ const SignPage = () => {
   } = form;
 
   const fullEmail = `${localPart}@${useCustomDomain ? customDomain : domain}`;
+
+  useEffect(() => {
+    setType("privacy");
+    setIsOpen(true);
+  }, []);
 
   return (
     <SignFormStyled>

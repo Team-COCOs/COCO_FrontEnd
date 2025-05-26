@@ -7,6 +7,7 @@ import ProfileModal from "./ProfileModal";
 import FriendModal from "./ProfileModal/FriendModal";
 import ConfirmModal from "./ConfirmModal";
 import { ModalProvider, useModal } from "@/context/ModalContext";
+import PrivacyModal from "./PrivacyModal";
 
 // context, props 모두 가능하게
 interface ModalProps {
@@ -88,6 +89,8 @@ const ShadowModal = (props: ModalProps) => {
           message={message!}
         />
       );
+    } else if (type === "privacy") {
+      root.render(<PrivacyModal onClose={onClose} />);
     } else {
       root.render(
         <ProfileModal
