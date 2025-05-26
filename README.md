@@ -57,9 +57,9 @@ npm run dev
 <div align="center">
  <table>
   <tr>
-   <th> 김은주 </th>
-   <th> 최유진 </th>
-   <th> 이수정 </th>
+   <th> 김은주 (FE) </th>
+   <th> 최유진 (BE) </th>
+   <th> 이수정 (FE) </th>
   </tr>
   <tr>
     <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/11947569-e044-4b49-ac75-2e6716af390a" width="250" height="250"></td>
