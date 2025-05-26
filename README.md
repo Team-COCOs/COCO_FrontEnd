@@ -36,8 +36,6 @@
 
 > 📌 [⑦  화면 구성](#-화면-구성)
 
-> 📌 [⑦  반응형 화면 구성](#-반응형-화면-구성)
-
 > 📌 [⑧  주요 기능](#-주요-기능)  
 
 <br/>
@@ -65,8 +63,8 @@ npm run dev
    <th> 이수정 (FE) </th>
   </tr>
   <tr>
-    <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/11947569-e044-4b49-ac75-2e6716af390a" width="250" height="250"></td>
-    <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/66969824-3c90-4f2a-9e90-b62b59e74b3d" width="140" height="220"></td>
+    <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/aecb9e18-3c16-488b-bdc0-64d1fc41fad8" width="250" height="250"></td>
+    <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/181db926-4e7a-45b4-a316-8c67d7495e04" width="250" height="300"></td>
     <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/192382bb-171b-47eb-9959-1d8e46fc0364" width="230" height="220"></td>
   </tr>
   <tr>
@@ -319,6 +317,18 @@ npm run dev
 - 프로필 이미지 및 자기소개 등록을 할 수 있습니다.
 - 배경 음악(BGM) 관리 및 설정이 가능합니다.
 
+
+<div align="center">
+  <table>
+   <tr>
+    <th> 프로필 설정 </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/4d011e0b-5a06-4ebc-b2f0-66658e6a7507" /> </td>
+   </tr>
+  </table>
+ </div>
+
 ### 🧸 미니미 & 미니룸
 - 대표 미니미 설정 기능이 있습니다.
 - 드래그 앤 드롭 방식으로 미니룸 꾸미기가 가능합니다.
@@ -352,7 +362,7 @@ npm run dev
     <th> 글 작성 및 수정, 삭제 </th>
    </tr>
    <tr>
-     <td> <img src="(https://github.com/user-attachments/assets/f25a3c91-0b06-4f99-95af-0328826ac054" /> </td>
+     <td> <img src="https://github.com/user-attachments/assets/f25a3c91-0b06-4f99-95af-0328826ac054" /> </td>
    </tr>
   </table>
  </div>
@@ -383,16 +393,49 @@ npm run dev
 - 삭제가 가능합니다.
 - 공지사항을 입력할 수 있습니다.
 
+<div align="center">
+  <table>
+   <tr>
+    <th> 방명록 </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/bcabb381-8b0a-4ecd-9195-e7c88d3bd573" /> </td>
+   </tr>
+  </table>
+ </div>
+
 ### 💬 COCO (챗봇)
 - 2000년대 말투로 대답해주는 챗봇 기능입니다. 
 - Botpress를 활용해, 2000년대 말투와 감성을 살린 레트로 스타일 챗봇을 구현했습니다.
+
+ <div align="center">
+  <table>
+   <tr>
+    <th> 코코 채팅 </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/af2c496a-140c-4b18-b2f5-0e34e724cc42" /> </td>
+   </tr>
+  </table>
+ </div>
 
 ### ⚙️ 관리 페이지
 - 미니홈피 효과 변경이 가능합니다. (미니홈피 배경, 탭 색, 탭 언어)
 - 유저 정보 수정이 가능합니다. (전화번호, 비밀번호)
 - 일촌 관리가 가능합니다.
 - 회원 탈퇴가 가능합니다. 
-- 탈퇴 시 유저 삭제가 아닌 탈퇴한 미니홈피로 검색 및 이동 되도록 설정하였습니다. 
+- 탈퇴 시 유저 삭제가 아닌 탈퇴한 미니홈피로 검색 및 이동 되도록 설정하였습니다.
+
+<div align="center">
+  <table>
+   <tr>
+    <th> 관리 </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/48cd7dab-41fc-4525-8031-be218e8f3d85" /> </td>
+   </tr>
+  </table>
+ </div>
 
 
 
