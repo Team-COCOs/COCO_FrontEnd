@@ -148,7 +148,27 @@ npm run dev
 
 <br/>
 
-### 🖼️ 미리보기
+## 🗺 ERD
+
+<div align="center">
+
+ ![Image](https://github.com/user-attachments/assets/8080ba52-5a61-4e67-9eac-4993ea6f14f5)
+ 
+</div>
+
+<br/>
+
+## 📝 프로토타입
+
+<div align="center">
+
+ ![Image](https://github.com/user-attachments/assets/5e4ef7da-6c01-46c6-97e8-0b6507639d25)
+ 
+</div>
+
+<br/>
+
+## 🖼️ 미리보기
 ![image](https://github.com/user-attachments/assets/fe091143-4bb0-4665-8577-2c18c3f60d79)
 <img src="https://github.com/user-attachments/assets/061ddae4-e3a4-40fe-8ad5-f084c14354e1" width="80%"/>
 ![image](https://github.com/user-attachments/assets/2d75f56e-5cb2-40d8-963a-244b2c031351)
