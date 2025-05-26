@@ -2,43 +2,148 @@
 이 프로젝트는 2000년대 감성의 싸이월드 미니홈피를 현대적인 웹 기술로 재현한 프로젝트입니다.
 유저는 홈, 프로필, 다이어리, 사진첩, 방명록, 일촌 등 다양한 기능을 통해 추억의 미니홈피를 경험할 수 있습니다.
 
-### 📌 배포 주소
+<br/>
+
+## 📌 배포 주소
 
 - 배포 주소 : [COCOWORLD 바로가기](http://34.236.72.45/)
 - 테스트 계정 : id: cocoworld@cocoworld.com / pw: coco1234!!
 
+<br/>
+
 ## 🔖 목차  
 > **프로젝트 개요**
 > 
-> 📌 [①  프로젝트 소개](#-프로젝트-소개)  
-> 📌 [②  개발 동기](#-개발-동기)  
-> 📌 [③  웹 개발팀 소개](#-웹-개발팀-소개)  
+> 📌 [①  프로젝트 소개](#-프로젝트-소개)
+
+> 📌 [②  프로젝트 실행](#-프로젝트-실행)
+
+> 📌 [④  개발 기간](#-개발-기간)
+
+> 📌 [③  웹 개발팀 소개](#-웹-개발팀-소개)
+
 > 📌 [④  개발 환경](#-개발-환경)  
 
 ---
 
 >  **UI & 기능 소개**
 >
-> 📌 [⑤ ERD](#-erd)  
-> 📌 [⑥  프로토타입](#-프로토타입)  
-> 📌 [⑦  화면 구성](#-화면-구성)  
+> 📌 [⑤ ERD](#-erd)
+
+> 📌 [⑥  프로토타입](#-프로토타입)
+
+> 📌 [⑦  화면 구성](#-화면-구성)
+
 > 📌 [⑧  주요 기능](#-주요-기능)  
 
 <br/>
 
-### 📌 프로젝트 소개
+## 📌 프로젝트 소개
 - 싸이월드 미니홈피를 모티브로 한 웹 프로젝트입니다.
 - Next.js, NestJS, 등을 사용하여 추억의 미니홈피 기능을 구현하고 있습니다.
 - 2000년대 감성 그대로! 도토리로 아이템을 사고, 미니룸을 꾸미고, 일촌과 교류하며 나만의 미니홈피를 만들어볼 수 있습니다.
 
-### 🔅 프로젝트 실행
+<br/>
+
+## 🔅 프로젝트 실행
 ```
 npm install
 npm run dev
 ```
 
-### ⏱ 개발 기간
+<br/>
+
+## ⏱ 개발 기간
 - 2025.04.28 ~ 2025.05.21
+
+<br/>
+
+## 🗓 웹 개발팀 소개
+
+<div align="center">
+ <table>
+  <tr>
+   <th> 김은주 </th>
+   <th> 최유진 </th>
+   <th> 이수정 </th>
+  </tr>
+  <tr>
+    <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/11947569-e044-4b49-ac75-2e6716af390a" width="250" height="250"></td>
+    <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/66969824-3c90-4f2a-9e90-b62b59e74b3d" width="140" height="220"></td>
+    <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/192382bb-171b-47eb-9959-1d8e46fc0364" width="230" height="220"></td>
+  </tr>
+  <tr>
+    <td>
+     <div align="center">
+      <a href="https://github.com/ounjuu">@ounjuu</a>
+     </div>
+    </td>
+    <td>
+     <div align="center">
+      <a href="https://github.com/yujeen02">@yujeen02</a>
+     </div>
+    </td>
+    <td>
+     <div align="center">
+      <a href="https://github.com/jeong0300">@jeong0300</a>
+     </div>
+    </td>
+  </tr>
+ </table>
+</div>
+
+<br/>
+
+## 🖥 개발 환경
+
+<div align="center">
+ <h2>프론트엔드</h2>
+  
+   ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+   ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+   ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+
+  <h2>백엔드</h2>
+
+   ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
+   ![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
+   ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+
+  <h2>외부 API</h2>
+  
+   ![Toss API](https://img.shields.io/badge/Toss%20API-0064FF?style=for-the-badge&logo=toss&logoColor=white)
+   ![Kakao API](https://img.shields.io/badge/Kakao%20API-FFCD00?style=for-the-badge&logo=kakao&logoColor=black)
+   ![Naver API](https://img.shields.io/badge/Naver%20API-03C75A?style=for-the-badge&logo=naver&logoColor=white)
+   ![Google API](https://img.shields.io/badge/google%20API-4285F4?style=for-the-badge&logo=google&logoColor=white)
+   ![Jaeminai API](https://img.shields.io/badge/Jaeminai%20API-7952B3?style=for-the-badge&logo=jaeminai&logoColor=white)
+
+  <h2>개발 도구</h2>
+  
+   ![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white)
+   ![MySQL Workbench](https://img.shields.io/badge/MySQLWorkbench-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+
+
+  <h2>버전 관리</h2>
+  <img src="https://img.shields.io/badge/git-%23F05032.svg?&style=for-the-badge&logo=git&logoColor=white" alt="Git Badge" />
+  <img src="https://img.shields.io/badge/github-%23181717.svg?&style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge" />
+
+  <h2>라이브러리</h2>
+
+   ![Recharts](https://img.shields.io/badge/Recharts-FF6B6B?style=for-the-badge&logo=chartdotjs&logoColor=white)
+   ![Nodemailer](https://img.shields.io/badge/Nodemailer-009688?style=for-the-badge&logo=nodemailer&logoColor=white)
+   ![Crypto (Node)](https://img.shields.io/badge/Crypto-4B0082?style=for-the-badge&logo=crypto&logoColor=white)
+     ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+   ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+
+  <h2>배포</h2>
+  
+   ![AWS EC2](https://img.shields.io/badge/AWS%20EC2-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)
+   ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+
+
+</div>
+
+<br/>
 
 ### 🖼️ 미리보기
 ![image](https://github.com/user-attachments/assets/fe091143-4bb0-4665-8577-2c18c3f60d79)
