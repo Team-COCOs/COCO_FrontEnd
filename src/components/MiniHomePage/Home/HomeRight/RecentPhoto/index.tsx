@@ -10,6 +10,11 @@ interface HomeTabProps {
   activeTab: string;
 }
 
+type PhotoTitle = {
+  title: string;
+  isScripted?: boolean;
+};
+
 const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
   const isMobile = useIsMobile();
   const tabKeys = Object.keys(TAB_LABELS) as TabKey[];
@@ -18,7 +23,7 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
   );
   const router = useRouter();
   const { id } = router.query;
-  const [photoTitles, setPhotoTitles] = useState("");
+  const [photoTitles, setPhotoTitles] = useState<PhotoTitle[]>([]);
   const [newBoards, setNewBoards] = useState<{
     [key: string]: { count: number; total: number };
   }>({});
@@ -31,7 +36,9 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/photo/${id}`
         );
-        setPhotoTitles(response.data.titles);
+        setPhotoTitles(response.data);
+        console.log(response.data[0].title, "타이틀?");
+        console.log(response.data, "스크랩?");
       } catch (e: any) {
         if (e.response.status === 401) {
         } else {
@@ -91,16 +98,39 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
       <div className="RecentPhoto_wrap">
         <div className="RecentPhoto_title Gulim">Updated Photo</div>
         <div className="RecentPhoto_new">
-          {photoTitles.length > 0 ? (
+          {photoTitles[0] && photoTitles.length > 0 ? (
             <div className="RecentPhoto_new_photo Gulim">
               <div className="RecentPhoto_new_phototitle" onClick={handlePhoto}>
-                <span>사진첩</span> {photoTitles[0]}
+                {photoTitles[0].isScripted && photoTitles[0].title ? (
+                  <>
+                    <span className="RecentPhoto_scrap">스크랩</span>{" "}
+                    {photoTitles[0].title}
+                  </>
+                ) : (
+                  !photoTitles[0].isScripted &&
+                  photoTitles[0].title && (
+                    <>
+                      <span className="RecentPhoto_notscrap">사진첩</span>{" "}
+                      {photoTitles[0].title}
+                    </>
+                  )
+                )}
               </div>
               <div className="RecentPhoto_new_phototitle" onClick={handlePhoto}>
-                {photoTitles[1] ? (
-                  <>
-                    <span>사진첩</span> {photoTitles[1]}
-                  </>
+                {photoTitles[1] && photoTitles[1].title ? (
+                  photoTitles[1].isScripted ? (
+                    <>
+                      <span className="RecentPhoto_scrap">스크랩</span>{" "}
+                      {photoTitles[1]?.title}
+                    </>
+                  ) : (
+                    !photoTitles[1].isScripted && (
+                      <>
+                        <span className="RecentPhoto_notscrap">사진첩</span>{" "}
+                        {photoTitles[1].title}
+                      </>
+                    )
+                  )
                 ) : (
                   <span style={{ backgroundColor: "transparent" }}></span>
                 )}

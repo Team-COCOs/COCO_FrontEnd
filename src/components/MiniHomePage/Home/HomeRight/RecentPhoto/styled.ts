@@ -23,8 +23,23 @@ export const RecentPhotoStyled = styled.div`
       padding: 5px 2px;
       color: #4b4b4b;
       cursor: pointer;
-      span {
+      .RecentPhoto_notscrap {
         background-color: rgb(255, 129, 129);
+        border-radius: 3px;
+        font-size: 11px;
+        padding: 2px 3px;
+        color: white;
+        font-weight: bold;
+      }
+      .RecentPhoto_scrap {
+        background-color: rgb(112, 177, 255);
+        border-radius: 3px;
+        font-size: 11px;
+        padding: 2px 3px;
+        color: white;
+        font-weight: bold;
+      }
+      span {
         border-radius: 3px;
         font-size: 11px;
         padding: 2px 3px;
