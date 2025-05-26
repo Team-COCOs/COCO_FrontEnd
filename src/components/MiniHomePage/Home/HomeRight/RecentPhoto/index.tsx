@@ -37,8 +37,6 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
           `${process.env.NEXT_PUBLIC_API_URL}/minihomepis/photo/${id}`
         );
         setPhotoTitles(response.data);
-        console.log(response.data[0].title, "타이틀?");
-        console.log(response.data, "스크랩?");
       } catch (e: any) {
         console.log("Updated photos 업데이트 실패", e);
       }
