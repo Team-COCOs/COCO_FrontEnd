@@ -80,7 +80,6 @@ const GuestComment = ({ comment, onRefresh, postId }: GuestCommentProps) => {
 
       setCommentInput("");
       onRefresh();
-      console.log("댓글 등록 : ", res.data);
     } catch (e) {
       console.log("댓글 등록 실패 : ", e);
     }
@@ -146,7 +145,7 @@ const GuestComment = ({ comment, onRefresh, postId }: GuestCommentProps) => {
           if (message === "댓글이 삭제되었습니다.") {
             window.location.reload();
           } else if (message === "로그인이 필요합니다.") {
-            router.push(`/home/${id}`);
+            window.location.reload();
           }
         }}
         message={message}

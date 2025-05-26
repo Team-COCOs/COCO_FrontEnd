@@ -110,8 +110,6 @@ const WritePage = ({ editData }: WritePageProps) => {
         console.log("폴더 데이터 로딩 실패:", e);
         setFolder(getDefaultFolder());
       });
-
-    console.log(editData);
   }, []);
 
   // 저장

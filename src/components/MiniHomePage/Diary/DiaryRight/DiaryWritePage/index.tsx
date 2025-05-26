@@ -71,7 +71,6 @@ const DiaryWritePage = ({
       )
       .then((res) => {
         setFolder(res.data);
-        console.log("폴더 : ", res.data);
       })
       .catch((e) => {
         console.log("폴더 데이터 로딩 실패:", e);

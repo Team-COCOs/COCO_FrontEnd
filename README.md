@@ -3,6 +3,7 @@
 - 싸이월드 미니홈피를 모티브로 한 웹 프로젝트입니다.
 - Next.js, NestJS, 등을 사용하여 추억의 미니홈피 기능을 구현하고 있습니다.
 - 2000년대 감성 그대로! 도토리로 아이템을 사고, 미니룸을 꾸미고, 일촌과 교류하며 나만의 미니홈피를 만들어볼 수 있습니다.
+  
 <br/>
 
 ## 📌 배포 주소
@@ -34,6 +35,8 @@
 > 📌 [⑥  프로토타입](#-프로토타입)
 
 > 📌 [⑦  화면 구성](#-화면-구성)
+
+> 📌 [⑦  반응형 화면 구성](#-반응형-화면-구성)
 
 > 📌 [⑧  주요 기능](#-주요-기능)  
 
@@ -169,10 +172,85 @@ npm run dev
 <br/>
 
 ## 🖼️ 화면 구성
-![image](https://github.com/user-attachments/assets/fe091143-4bb0-4665-8577-2c18c3f60d79)
-<img src="https://github.com/user-attachments/assets/061ddae4-e3a4-40fe-8ad5-f084c14354e1" width="80%"/>
-![image](https://github.com/user-attachments/assets/2d75f56e-5cb2-40d8-963a-244b2c031351)
+
+<div align="center">
+ <table>
+  <tr>
+   <th> MAIN(LOGIN X) </th>
+   <th> MAIN(LOGIN O) </th>
+  </tr>
+  <tr>
+    <td> <img src="https://github.com/user-attachments/assets/0f5f4d2a-d5b4-4f04-a84f-574966040506" /> </td>
+    <td><img src="https://github.com/user-attachments/assets/d8772cbf-2807-4013-b1c2-394e80d900ce" /></td>
+  </tr>
+ </table>
+
+ <table>
+   <tr>
+    <th> JOIN </th>
+    <th> FIND </th>
+   </tr>
+   <tr>
+    <td><img src="https://github.com/user-attachments/assets/2e8c02fd-464d-4f5b-a352-9ff9d6571428"/></td>
+    <td><img src="https://github.com/user-attachments/assets/c4c4afb8-968e-4b6d-aaa7-a7103c475ac2"/></td>
+   </tr>
+  </table>
+
+   <table>
+   <tr>
+    <th> SEARCH </th>
+   </tr>
+   <tr>
+    <td><img src="https://github.com/user-attachments/assets/bd3e0e73-b0ce-417a-b764-f642f4696988"/></td>
+   </tr>
+  </table>
+ </div>
+
+ <div align="center">
+ <table>
+  <tr>
+   <th> MINIHOMPY(LOGIN X) </th>
+   <th> MINIHOMPY(LOGIN O) </th>
+  </tr>
+  <tr>
+    <td> <img src="https://github.com/user-attachments/assets/afac238e-2599-4a75-aa9f-d2f76f6b1391" /> </td>
+    <td><img src="https://github.com/user-attachments/assets/5ca2e4cf-8755-4f1e-819a-c51c1a78beb4" /></td>
+  </tr>
+ </table>
+
+ <table>
+   <tr>
+    <th> ADMIN </th>
+    <th> WITHDRAWN HOMPY </th>
+   </tr>
+   <tr>
+    <td><img src="https://github.com/user-attachments/assets/2d75f56e-5cb2-40d8-963a-244b2c031351"/></td>
+    <td><img src="https://github.com/user-attachments/assets/2adf1e16-b7b3-443d-ac83-ad79906e877e"/></td>
+   </tr>
+ </table>
+  
+ </div>
+
 ![image](https://github.com/user-attachments/assets/78a186a0-e3ba-4268-92cd-1128a480f0b5)
+
+<br/>
+
+### 🖼️ 반응형 화면 구성
+
+<div align="center">
+ <table>
+    <tr>
+     <th> MINIHOMPY(PROFILE) </th>
+     <th> MINIHOMPY(CONTENT) </th>
+    </tr>
+    <tr>
+     <td><img src="https://github.com/user-attachments/assets/42b97022-3f4a-4dae-b7c2-c53431441537"/></td>
+     <td><img src="https://github.com/user-attachments/assets/e3005417-8118-49e4-988d-7564c3e7aeb2"/></td>
+    </tr>
+  </table>
+</div>
+
+<br/>
 
 ## 🧩 주요 기능
 
@@ -184,10 +262,35 @@ npm run dev
 - 도토리를 사용하여 아이템 구매가 가능합니다.
 - 스킨, 미니미, 가구, 배경 음악 등 다양한 아이템을 구매할 수 있습니다.
 
+  <div align="center">
+  <table>
+   <tr>
+    <th> 친구 수락 </th>
+    <th> 기본 기능 </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/e67cbc6b-78a1-448a-acc6-358b146a8e48" /> </td>
+     <td><img src="https://github.com/user-attachments/assets/aa76b472-4db1-4c8c-841d-ca87aee4e9bc" /></td>
+   </tr>
+  </table>
+ </div>
+
 ### 🛠 admin
 
 - 관리자 전용 페이지입니다.
 - 상품을 등록 및 삭제할 수 있습니다
+- 유저 관리 및 통계 확인이 가능합니다.
+
+<div align="center">
+  <table>
+   <tr>
+    <th> ADMIN </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/c31dc6ca-c846-4724-af90-c51367e30dd8" /> </td>
+   </tr>
+  </table>
+ </div>
 
 ### 🧸 미니홈피 (홈)
 - 방문자 수(Today / Total), 프로필, 일촌 확인이 가능합니다.
@@ -197,6 +300,19 @@ npm run dev
 - 일촌 확인이 가능합니다.
 - 배경 음악 설정 및 재생이 가능합니다.
 - 홈 UI 커스터마이징(탭, 배경색 등)이 가능합니다.
+
+<div align="center">
+  <table>
+   <tr>
+    <th> 친구 신청 </th>
+    <th> 기본 기능 </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/ae7f8c3c-4aa8-4490-b4b2-95b938947099" /> </td>
+     <td><img src="https://github.com/user-attachments/assets/ba7ed22a-b7ea-4ba3-932f-93ab95f3596a" /></td>
+   </tr>
+  </table>
+ </div>
 
 ### 🎨 프로필
 - 상태 메시지 및 기분 아이콘 설정이 가능합니다.
@@ -210,6 +326,17 @@ npm run dev
 - 말풍선 입력 및 위치 지정이 가능합니다.
 - 모바일 터치 대응 및 반응형 렌더링이 되도록 설정하였습니다.
 
+<div align="center">
+  <table>
+   <tr>
+    <th> 미니룸 설정 </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/84e6a217-58fe-49e0-9675-ba4210788f30" /> </td>
+   </tr>
+  </table>
+ </div>
+
 ### 📅 다이어리
 - React-calendar를 커스텀하여 적용하였습니다.
 - 날짜별, 내용 검색별, 폴더별로 일기 확인이 가능합니다.
@@ -219,13 +346,37 @@ npm run dev
 - 페이지네이션을 사용하였습니다.
 - 폴더 관리가 가능합니다.
 
-### 🖼️ 게시판
+<div align="center">
+  <table>
+   <tr>
+    <th> 글 작성 및 수정, 삭제 </th>
+   </tr>
+   <tr>
+     <td> <img src="(https://github.com/user-attachments/assets/f25a3c91-0b06-4f99-95af-0328826ac054" /> </td>
+   </tr>
+  </table>
+ </div>
+
+### 🖼️ 사진첨
 - 사진을 포함한 글 작성, 수정, 삭제가 가능합니다.
 - 스크랩 기능이 있습니다.
 - 폴더 관리 기능이 있어서 사용자가 폴더를 수정할 수 있습니다.
 - 댓글, 대댓글 작성이 가능합니다.
 - 전체공개, 일촌공개, 비공개 설정이 가능합니다.
 - 에디터로 글꼴 및 글씨 크기 선택이 가능합니다.
+
+<div align="center">
+  <table>
+   <tr>
+    <th> 글 작성 </th>
+    <th> 스크랩 </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/afc09510-d268-4982-a368-dbf09c1f4e15" /> </td>
+     <td><img src="https://github.com/user-attachments/assets/d1921fe0-15b0-4b49-b43b-bbc4553eb474" /></td>
+   </tr>
+  </table>
+ </div>
 
 ### 📝 방명록
 - 방문자가 메시지를 남길 수 있으며, 비밀글 설정이 가능합니다.
@@ -243,7 +394,5 @@ npm run dev
 - 회원 탈퇴가 가능합니다. 
 - 탈퇴 시 유저 삭제가 아닌 탈퇴한 미니홈피로 검색 및 이동 되도록 설정하였습니다. 
 
-### 🖼️ 반응형 미리보기
-<img width="214" alt="image" src="https://github.com/user-attachments/assets/42b97022-3f4a-4dae-b7c2-c53431441537" />
-<img width="208" alt="image" src="https://github.com/user-attachments/assets/e3005417-8118-49e4-988d-7564c3e7aeb2" />
+
 

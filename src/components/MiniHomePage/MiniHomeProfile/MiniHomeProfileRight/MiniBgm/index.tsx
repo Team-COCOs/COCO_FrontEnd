@@ -56,7 +56,7 @@ const MiniBgm = () => {
         const res = await axiosInstance.get("/purchases");
 
         const bgmItems = res.data.filter(
-          (item: any) => item.storeItems.category === "bgm"
+          (item: any) => item.storeItems?.category === "bgm"
         );
 
         setAllBgm(bgmItems);

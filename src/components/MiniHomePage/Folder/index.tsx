@@ -61,8 +61,6 @@ const Folder = ({ isType, onSave }: FolderProps) => {
         editTitle
       );
     } else if (action === "delete") {
-      console.log("삭제 버튼 눌림.");
-      console.log(handleDelete);
       openModal("confirm", {
         message: "해당 폴더의 게시글이 모두 삭제됩니다. \n 삭제하시겠습니까?",
       });

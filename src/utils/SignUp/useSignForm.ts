@@ -234,8 +234,6 @@ const useSignForm = () => {
         "0"
       )}-${birthDay.padStart(2, "0")}`;
 
-      console.log(cleanedPhone);
-
       const data = {
         email: values.email,
         password: values.password,
