@@ -198,7 +198,7 @@ npm run dev
     <th> SEARCH </th>
    </tr>
    <tr>
-    <td><img src="https://github.com/user-attachments/assets/145d3634-f9d1-4ed4-9319-454969bf7358"/></td>
+    <td><img src="https://github.com/user-attachments/assets/bd3e0e73-b0ce-417a-b764-f642f4696988"/></td>
    </tr>
   </table>
  </div>
@@ -214,12 +214,23 @@ npm run dev
     <td><img src="https://github.com/user-attachments/assets/5ca2e4cf-8755-4f1e-819a-c51c1a78beb4" /></td>
   </tr>
  </table>
+
+ <table>
+   <tr>
+    <th> ADMIN </th>
+    <th> WITHDRAWN HOMPY </th>
+   </tr>
+   <tr>
+    <td><img src="https://github.com/user-attachments/assets/2d75f56e-5cb2-40d8-963a-244b2c031351"/></td>
+    <td><img src="https://github.com/user-attachments/assets/2adf1e16-b7b3-443d-ac83-ad79906e877e"/></td>
+   </tr>
+ </table>
+  
  </div>
 
-![image](https://github.com/user-attachments/assets/fe091143-4bb0-4665-8577-2c18c3f60d79)
-<img src="https://github.com/user-attachments/assets/061ddae4-e3a4-40fe-8ad5-f084c14354e1" width="80%"/>
-![image](https://github.com/user-attachments/assets/2d75f56e-5cb2-40d8-963a-244b2c031351)
 ![image](https://github.com/user-attachments/assets/78a186a0-e3ba-4268-92cd-1128a480f0b5)
+
+<br/>
 
 ## 🧩 주요 기능
 
@@ -230,6 +241,19 @@ npm run dev
 - (토스 API) 도토리 충전이 가능합니다.
 - 도토리를 사용하여 아이템 구매가 가능합니다.
 - 스킨, 미니미, 가구, 배경 음악 등 다양한 아이템을 구매할 수 있습니다.
+
+  <div align="center">
+  <table>
+   <tr>
+    <th> 친구 수락 </th>
+    <th> 기본 기능 </th>
+   </tr>
+   <tr>
+     <td> <img src="https://github.com/user-attachments/assets/e67cbc6b-78a1-448a-acc6-358b146a8e48" /> </td>
+     <td><img src="https://github.com/user-attachments/assets/aa76b472-4db1-4c8c-841d-ca87aee4e9bc" /></td>
+   </tr>
+  </table>
+ </div>
 
 ### 🛠 admin
 
