@@ -65,8 +65,8 @@ npm run dev
    <th> 이수정 (FE) </th>
   </tr>
   <tr>
-    <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/11947569-e044-4b49-ac75-2e6716af390a" width="250" height="250"></td>
-    <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/66969824-3c90-4f2a-9e90-b62b59e74b3d" width="140" height="220"></td>
+    <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/aecb9e18-3c16-488b-bdc0-64d1fc41fad8" width="250" height="250"></td>
+    <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/181db926-4e7a-45b4-a316-8c67d7495e04" width="250" height="300"></td>
     <td style="width: 250px;"><img src="https://github.com/user-attachments/assets/192382bb-171b-47eb-9959-1d8e46fc0364" width="230" height="220"></td>
   </tr>
   <tr>
