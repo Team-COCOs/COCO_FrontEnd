@@ -102,20 +102,25 @@ npm run dev
    ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
    ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
    ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+   ![Recharts](https://img.shields.io/badge/Recharts-FF6B6B?style=for-the-badge&logo=chartdotjs&logoColor=white)
+   ![React Calendar](https://img.shields.io/badge/React%20Calendar-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+
 
   <h2>백엔드</h2>
 
    ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
    ![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
    ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+   ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+   
+   ![TypeORM](https://img.shields.io/badge/TypeORM-0052CC?style=for-the-badge&logo=typeorm&logoColor=white)
+   ![JWT](https://img.shields.io/badge/JWT-F7DF1E?style=for-the-badge&logo=jwt&logoColor=black)
+   ![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
 
   <h2>외부 API</h2>
   
    ![Toss API](https://img.shields.io/badge/Toss%20API-0064FF?style=for-the-badge&logo=toss&logoColor=white)
-   ![Kakao API](https://img.shields.io/badge/Kakao%20API-FFCD00?style=for-the-badge&logo=kakao&logoColor=black)
-   ![Naver API](https://img.shields.io/badge/Naver%20API-03C75A?style=for-the-badge&logo=naver&logoColor=white)
-   ![Google API](https://img.shields.io/badge/google%20API-4285F4?style=for-the-badge&logo=google&logoColor=white)
-   ![Jaeminai API](https://img.shields.io/badge/Jaeminai%20API-7952B3?style=for-the-badge&logo=jaeminai&logoColor=white)
+   ![Botpress](https://img.shields.io/badge/Botpress-0F62AC?style=for-the-badge&logo=botpress&logoColor=white)
 
   <h2>개발 도구</h2>
   
@@ -124,21 +129,25 @@ npm run dev
 
 
   <h2>버전 관리</h2>
-  <img src="https://img.shields.io/badge/git-%23F05032.svg?&style=for-the-badge&logo=git&logoColor=white" alt="Git Badge" />
-  <img src="https://img.shields.io/badge/github-%23181717.svg?&style=for-the-badge&logo=github&logoColor=white" alt="GitHub Badge" />
+  
+  ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+  ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 
-  <h2>라이브러리</h2>
+  <h2>라이브러리 및 기타</h2>
 
-   ![Recharts](https://img.shields.io/badge/Recharts-FF6B6B?style=for-the-badge&logo=chartdotjs&logoColor=white)
-   ![Nodemailer](https://img.shields.io/badge/Nodemailer-009688?style=for-the-badge&logo=nodemailer&logoColor=white)
-   ![Crypto (Node)](https://img.shields.io/badge/Crypto-4B0082?style=for-the-badge&logo=crypto&logoColor=white)
-     ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
-   ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+  ![Redux Toolkit](https://img.shields.io/badge/Redux--Toolkit-593D88?style=for-the-badge&logo=redux&logoColor=white)
+  ![Formik](https://img.shields.io/badge/Formik-F77F00?style=for-the-badge&logo=formik&logoColor=white)
+  ![SweetAlert2](https://img.shields.io/badge/SweetAlert2-FF5C5C?style=for-the-badge&logo=alert&logoColor=white)
+  ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
+  
+  ![js-cookie](https://img.shields.io/badge/js--cookie-F29111?style=for-the-badge&logo=cookiecutter&logoColor=white)
+  ![Dompurify](https://img.shields.io/badge/Dompurify-2E8B57?style=for-the-badge&logo=security&logoColor=white)
+  ![clsx](https://img.shields.io/badge/clsx-000000?style=for-the-badge&logo=react&logoColor=white)
 
   <h2>배포</h2>
   
-   ![AWS EC2](https://img.shields.io/badge/AWS%20EC2-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)
-   ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
+  ![AWS EC2](https://img.shields.io/badge/AWS%20EC2-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)
+  ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 
 
 </div>
