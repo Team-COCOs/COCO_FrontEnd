@@ -99,13 +99,15 @@ const MakeMiniroom: React.FC<MakeMiniroomProps> = ({ setfixMiniroom }) => {
   const miniroomProduct = [
     defaultMiniroom,
     ...allProduct.filter(
-      (product) => product.storeItems.category === "miniroom"
+      (product) => product.storeItems?.category === "miniroom"
     ),
   ];
 
   const minimiProduct = [
     defaultMinimi,
-    ...allProduct.filter((product) => product.storeItems.category === "minimi"),
+    ...allProduct.filter(
+      (product) => product.storeItems?.category === "minimi"
+    ),
   ];
 
   const handleMiniroomSelect = (product: any) => {

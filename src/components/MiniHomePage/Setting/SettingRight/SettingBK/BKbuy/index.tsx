@@ -100,17 +100,19 @@ const BKbuy = () => {
   // 기존 필터에 기본값 추가
   const onlyMinihomepis = [
     defaultMinihomepis,
-    ...homepiBkData.filter((x) => x.storeItems.category === "minihomepis"),
+    ...homepiBkData.filter((x) => x.storeItems?.category === "minihomepis"),
   ];
 
   const onlySkin = [
     defaultBK,
-    ...homepiBkData.filter((x) => x.storeItems.category === "diary_background"),
+    ...homepiBkData.filter(
+      (x) => x.storeItems?.category === "diary_background"
+    ),
   ];
 
   const onlytab = [
     defaultTab,
-    ...homepiBkData.filter((x) => x.storeItems.category === "tapcolor"),
+    ...homepiBkData.filter((x) => x.storeItems?.category === "tapcolor"),
   ];
 
   const saveUserThemes = async () => {
