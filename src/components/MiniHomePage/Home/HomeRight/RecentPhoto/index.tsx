@@ -40,10 +40,7 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
         console.log(response.data[0].title, "타이틀?");
         console.log(response.data, "스크랩?");
       } catch (e: any) {
-        if (e.response.status === 401) {
-        } else {
-          console.log("Updated photos 업데이트 실패");
-        }
+        console.log("Updated photos 업데이트 실패", e);
       }
     };
     updatedPhotos();

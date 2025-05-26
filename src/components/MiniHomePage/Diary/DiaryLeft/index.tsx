@@ -44,12 +44,6 @@ const DiaryLeft = ({
     setEditMode(true); // 수정하기 버튼 눌렀을 때 Folder 컴포넌트 보이도록
   };
 
-  useEffect(() => {
-    if (selectedDate) {
-      console.log(selectedDate, "selectedDate");
-    }
-  }, [selectedDate]);
-
   return (
     <DiaryLeftStyled className="Diary_wrap">
       <div className="Diary_title pixelFont">DIARY</div>

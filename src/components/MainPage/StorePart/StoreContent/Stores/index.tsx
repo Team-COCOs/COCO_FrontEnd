@@ -45,8 +45,6 @@ const Stores = ({ currentItems }: StoresProps) => {
     axiosInstance
       .post("/purchases", { storeItemId: pendingBuyId })
       .then((res) => {
-        console.log("상품 구매 : ", res.data);
-
         if (res.data.message) {
           openModal("error", { message: res.data.message });
           return;
