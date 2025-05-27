@@ -67,6 +67,7 @@ const HomeProfile = () => {
   const moodValue = userData?.mood ?? "happy";
   const moodText =
     moods.find((m) => m.value === moodValue)?.text || "기분을 선택해보세요.";
+
   return (
     <HomeProfileStyled>
       <div className="HomeProfile_wrap">
