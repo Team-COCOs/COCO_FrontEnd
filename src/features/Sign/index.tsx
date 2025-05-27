@@ -40,6 +40,7 @@ const SignPage = () => {
     isPhoneDuplicate,
     isOpen,
     setIsOpen,
+    setMessage,
     message,
     setType,
     type,
@@ -72,7 +73,31 @@ const SignPage = () => {
 
         <b className="Sign_text"> 프로필 입력</b>
 
-        <form className="Sign_container" onSubmit={formik.handleSubmit}>
+        <form
+          className="Sign_container"
+          onSubmit={(e) => {
+            e.preventDefault();
+
+            if (!isFormValid) {
+              setMessage("모든 정보를 입력한 후 클릭하여 주세요~");
+              setType("error");
+              setIsOpen(true);
+              return;
+            } else if (
+              !isEmailChecked ||
+              !isPhoneChecked ||
+              isEmailDuplicate ||
+              isPhoneDuplicate
+            ) {
+              setMessage("중복 검사 후 클릭하여 주세요~");
+              setType("error");
+              setIsOpen(true);
+              return;
+            }
+
+            formik.handleSubmit();
+          }}
+        >
           <div className="Sign_line"></div>
 
           <div className="Sign_form">
@@ -321,13 +346,13 @@ const SignPage = () => {
               <button
                 className="Sign-PhoneCheck"
                 type="submit"
-                disabled={
-                  !isFormValid ||
-                  !isEmailChecked ||
-                  !isPhoneChecked ||
-                  isEmailDuplicate ||
-                  isPhoneDuplicate
-                }
+                // disabled={
+                //   !isFormValid ||
+                //   !isEmailChecked ||
+                //   !isPhoneChecked ||
+                //   isEmailDuplicate ||
+                //   isPhoneDuplicate
+                // }
               >
                 가입하기
               </button>
