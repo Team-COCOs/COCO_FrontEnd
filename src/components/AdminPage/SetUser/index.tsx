@@ -18,11 +18,13 @@ interface SetUserProps {
 
 const SetUser: React.FC<SetUserProps> = ({ title }) => {
   const [users, setUsers] = useState<User[]>([]);
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
   const fetchUsers = async () => {
     try {
       const res = await axiosInstance.get("admin/users");
       setUsers(res.data.users);
+      console.log(res.data.users.length, "res.data.users?");
     } catch (error) {
       console.error("유저 불러오기 실패", error);
     }
@@ -51,9 +53,10 @@ const SetUser: React.FC<SetUserProps> = ({ title }) => {
 
   const columns = [
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
+      title: "번호",
+      key: "index",
+      render: (_: any, __: any, index: number) =>
+        (currentPage - 1) * pageSize + index + 1,
     },
     {
       title: "이름",
@@ -102,7 +105,15 @@ const SetUser: React.FC<SetUserProps> = ({ title }) => {
           <div className="SetUser_set_title">대시보드</div>
           <h2>{title}</h2>
         </div>
-        <Table dataSource={dataSource} columns={columns} />
+        <Table
+          dataSource={dataSource}
+          columns={columns}
+          pagination={{
+            pageSize,
+            total: users.length,
+            onChange: (page) => setCurrentPage(page),
+          }}
+        />
       </div>
     </SetUserStyled>
   );
