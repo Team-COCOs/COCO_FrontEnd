@@ -62,7 +62,7 @@ const HomeProfile = () => {
       }
     };
     fetchUserInfo();
-  }, [userId]);
+  }, [userId, userData]);
 
   const moodValue = userData?.mood ?? "happy";
   const moodText =
