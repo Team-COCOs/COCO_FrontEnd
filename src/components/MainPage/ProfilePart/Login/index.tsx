@@ -10,7 +10,11 @@ import { setReduxUser } from "@/store/reducers/userSlice";
 import ShadowModal from "@/components/ShadowModal";
 import { useModal } from "@/context/ModalContext";
 
-const Login = () => {
+interface LoginProps {
+  setHasToken: React.Dispatch<React.SetStateAction<boolean | null>>;
+}
+
+const Login = ({ setHasToken }: LoginProps) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [saveEmail, setSaveEmail] = useState(false);
@@ -59,7 +63,9 @@ const Login = () => {
 
           dispatch(setReduxUser(res.data));
 
-          window.location.href = "/";
+          setHasToken(true);
+
+          router.replace("/");
         })
         .catch((e) => {
           openModal("error", { message: e.response.data.message });
@@ -102,10 +108,12 @@ const Login = () => {
       });
 
       dispatch(setReduxUser(response.data));
-      window.location.href = "/";
+
+      setHasToken(true);
+
+      router.replace("/");
     } catch (e: any) {
-      console.log(e);
-      console.error("❌ 테스트 로그인 에러:", e.response?.data || e.message);
+      console.log("테스트 로그인 e", e);
     }
   };
 

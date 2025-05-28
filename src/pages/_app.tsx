@@ -17,6 +17,7 @@ import MusicPlayerController from "@/context/MusicPlayerController";
 import { ModalProvider } from "@/context/ModalContext";
 import axios from "axios";
 import ServerDownPage from "@/components/ServerDownPage";
+import Cookies from "js-cookie";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,9 @@ export default function App({ Component, pageProps }: AppProps) {
         if (!res.data.ok) throw new Error();
         setIsServerDown(false);
       } catch (e) {
+        Cookies.remove("accessToken", { path: "/" });
+        Cookies.remove("refreshToken", { path: "/" });
+
         setIsServerDown(true);
       }
     };

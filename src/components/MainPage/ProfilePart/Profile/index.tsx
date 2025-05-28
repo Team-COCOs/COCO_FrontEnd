@@ -55,14 +55,6 @@ const Profile = ({ setHasToken }: profileProps) => {
   const { user, logout } = useAuth();
   const userRole = user?.role;
 
-  // const logout = () => {
-  //   Cookie.remove("accessToken");
-  //   Cookie.remove("refreshToken");
-  //   setHasToken(false);
-
-  //   router.push("/");
-  // };
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {

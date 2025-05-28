@@ -10,18 +10,23 @@ import { useEffect, useState } from "react";
 const ProfilePart = () => {
   const [hasToken, setHasToken] = useState<boolean | null>(null);
 
-  const router = useRouter();
-  const token = Cookie.get("accessToken");
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true); // 클라이언트에서만 렌더링
+    const token = Cookie.get("accessToken");
     setHasToken(!!token); // 토큰 존재 여부만 저장
-  }, [token]);
+  }, []);
 
   if (hasToken === null) return null;
 
   return (
     <ProfilePartStyle className={clsx("ProfilePart_wrap")}>
-      {hasToken ? <Profile setHasToken={setHasToken} /> : <Login />}
+      {hasToken ? (
+        <Profile setHasToken={setHasToken} />
+      ) : (
+        <Login setHasToken={setHasToken} />
+      )}
 
       <Advertising type="Advertising4" />
 
