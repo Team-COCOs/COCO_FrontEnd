@@ -45,66 +45,71 @@ const ShadowModal = (props: ModalProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!isOpen || !containerRef.current) return;
+    if (!containerRef.current) return;
 
-    const shadowRoot =
-      containerRef.current.shadowRoot ||
-      containerRef.current.attachShadow({ mode: "open" });
+    let shadowRoot = containerRef.current.shadowRoot;
+    if (!shadowRoot) {
+      shadowRoot = containerRef.current.attachShadow({ mode: "open" });
 
-    shadowRoot.innerHTML = "";
+      // CSS 링크 한 번만 추가
+      const link98 = document.createElement("link");
+      link98.rel = "stylesheet";
+      link98.href = "/styles/98.css/dist/98.css";
+      shadowRoot.appendChild(link98);
 
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "/styles/98.css/dist/98.css";
-    shadowRoot.appendChild(link);
+      const style = document.createElement("link");
+      style.rel = "stylesheet";
+      style.href = "/styles/modalShadow.css";
+      shadowRoot.appendChild(style);
 
-    const style = document.createElement("link");
-    style.rel = "stylesheet";
-    style.href = "/styles/modalShadow.css";
-    shadowRoot.appendChild(style);
-
-    const wrapper = document.createElement("div");
-    wrapper.className = "modal-wrapper";
-    shadowRoot.appendChild(wrapper);
-
-    const root = ReactDOM.createRoot(wrapper);
-
-    if (type === "error" || type === "success") {
-      root.render(
-        <AlertModal type={type} onClose={onClose} message={message!} />
-      );
-    } else if (type === "pay") {
-      root.render(<PayModal onClose={onClose} />);
-    } else if (type === "friendReq") {
-      root.render(
-        <ModalProvider>
-          <FriendModal onClose={onClose} data={data} userName={userName!} />
-        </ModalProvider>
-      );
-    } else if (type === "confirm") {
-      root.render(
-        <ConfirmModal
-          onClose={onClose}
-          onConfirm={onConfirm!}
-          message={message!}
-        />
-      );
-    } else if (type === "privacy") {
-      root.render(<PrivacyModal onClose={onClose} />);
-    } else {
-      root.render(
-        <ProfileModal
-          onClose={onClose}
-          data={data}
-          type={type}
-          userName={userName!}
-        />
-      );
+      // 모달 감싸는 div 한 번 생성
+      const wrapper = document.createElement("div");
+      wrapper.className = "modal-wrapper";
+      shadowRoot.appendChild(wrapper);
     }
 
-    return () => {
-      shadowRoot.innerHTML = "";
-    };
+    // 모달 열려있을 때만 내부 내용만 갱신 (wrapper 내부)
+    if (isOpen) {
+      const wrapper = shadowRoot.querySelector(".modal-wrapper")!;
+      const root = ReactDOM.createRoot(wrapper);
+
+      if (type === "error" || type === "success") {
+        root.render(
+          <AlertModal type={type} onClose={onClose} message={message!} />
+        );
+      } else if (type === "pay") {
+        root.render(<PayModal onClose={onClose} />);
+      } else if (type === "friendReq") {
+        root.render(
+          <ModalProvider>
+            <FriendModal onClose={onClose} data={data} userName={userName!} />
+          </ModalProvider>
+        );
+      } else if (type === "confirm") {
+        root.render(
+          <ConfirmModal
+            onClose={onClose}
+            onConfirm={onConfirm!}
+            message={message!}
+          />
+        );
+      } else if (type === "privacy") {
+        root.render(<PrivacyModal onClose={onClose} />);
+      } else {
+        root.render(
+          <ProfileModal
+            onClose={onClose}
+            data={data}
+            type={type}
+            userName={userName!}
+          />
+        );
+      }
+
+      return () => {
+        root.unmount();
+      };
+    }
   }, [isOpen, type]);
 
   if (!isOpen) return null;
