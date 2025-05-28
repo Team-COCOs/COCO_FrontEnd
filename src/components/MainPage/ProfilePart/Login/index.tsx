@@ -75,6 +75,36 @@ const Login = () => {
     }
   }, []);
 
+  const handleTestLogin = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        {
+          email: "cocoworld@cocoworld.com",
+          password: "coco1234!!",
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      Cookie.set("accessToken", response.data.access_token, {
+        path: "/",
+        expires: 1,
+      });
+
+      Cookie.set("refreshToken", response.data.refresh_token, {
+        path: "/",
+        expires: 1,
+      });
+
+      dispatch(setReduxUser(response.data));
+      window.location.href = "/";
+    } catch (e: any) {
+      console.log(e);
+    }
+  };
+
   return (
     <LoginStyle className={clsx("Login_wrap")}>
       <form onSubmit={formik.handleSubmit} className="Login_form">
@@ -104,6 +134,9 @@ const Login = () => {
           onChange={(e) => setSaveEmail(e.target.checked)}
         />
         <span className="Login_emailFont mainFont">이메일저장</span>
+        <span onClick={handleTestLogin} className="Login_testBtn mainFont">
+          테스트 계정 로그인
+        </span>
       </div>
       <div className="Loing_line"></div>
       <div className="Login_etc">

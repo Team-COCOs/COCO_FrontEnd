@@ -63,6 +63,9 @@ export const LoginStyle = styled.div`
       }
     }
 
+    .Login_testBtn {
+    }
+
     .Login_saveEmail {
       display: flex;
       align-items: center;
@@ -84,9 +87,20 @@ export const LoginStyle = styled.div`
         }
       }
 
-      .Login_emailFont {
+      .Login_emailFont,
+      .Login_testBtn {
         font-size: 12px;
         font-weight: bold;
+      }
+
+      .Login_testBtn {
+        font-size: 11px;
+        position: relative;
+        margin-left: 45px;
+        cursor: pointer;
+        color: rgb(141, 141, 141);
+        text-decoration: underline;
+        text-underline-offset: 2px;
       }
     }
 
