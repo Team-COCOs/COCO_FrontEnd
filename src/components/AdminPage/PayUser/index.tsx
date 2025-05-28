@@ -98,19 +98,7 @@ const PayUser: React.FC<PayUserProps> = ({ title }) => {
       title: "결제일",
       dataIndex: "created_at",
       key: "created_at",
-      render: (date: string) => new Date(date).toLocaleDateString(),
-    },
-    {
-      title: "삭제",
-      key: "action",
-      render: (_: any, record: Pays) => (
-        <button
-          className="PayUser_delete_btn"
-          onClick={() => handleDelete(record.id)}
-        >
-          삭제
-        </button>
-      ),
+      render: (date: string) => new Date(date).toLocaleString(),
     },
   ];
 
