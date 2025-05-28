@@ -9,6 +9,7 @@ import DashBoard from "../DashBoard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStoreItems } from "../../../store/reducers/storeItemSlice";
 import type { RootState, AppDispatch } from "../../../store/store";
+import PayUser from "../PayUser";
 
 interface AdminRightProps {
   selectedKey: string;
@@ -84,6 +85,9 @@ const AdminRight: React.FC<AdminRightProps> = ({ selectedKey }) => {
         );
       case "10":
         return <SetUser title="유저관리" />;
+
+      case "11":
+        return <PayUser title="결제관리" />;
 
       default:
         return <div>선택된 항목이 없습니다.</div>;
