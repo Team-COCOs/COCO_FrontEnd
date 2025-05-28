@@ -24,7 +24,6 @@ const SetUser: React.FC<SetUserProps> = ({ title }) => {
     try {
       const res = await axiosInstance.get("admin/users");
       setUsers(res.data.users);
-      console.log(res.data.users.length, "res.data.users?");
     } catch (error) {
       console.error("유저 불러오기 실패", error);
     }
