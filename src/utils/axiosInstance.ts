@@ -69,7 +69,7 @@ axiosInstance.interceptors.response.use(
         }
 
         // refresh_token을 서버로 보내서 access_token을 갱신
-        const response = await axios.get(`${baseURL}/auth/refresh`, {
+        const response = await axios.post(`${baseURL}/auth/refresh`, {
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${refreshToken}`, // refresh_token을 Authorization 헤더에 포함시켜서 요청
