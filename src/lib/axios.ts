@@ -5,9 +5,9 @@ import Cookies from "js-cookie";
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL, // 환경변수 사용
   withCredentials: true,
-  headers: {
-    Authorization: `Bearer ${Cookies.get("accessToken")}`,
-  },
+  // headers: {
+  //   Authorization: `Bearer ${Cookies.get("accessToken")}`,
+  // },
 });
 
 type RefreshResponse = {
