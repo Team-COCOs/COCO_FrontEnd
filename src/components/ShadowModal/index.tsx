@@ -48,67 +48,98 @@ const ShadowModal = (props: ModalProps) => {
     if (!containerRef.current) return;
 
     let shadowRoot = containerRef.current.shadowRoot;
+    let wrapper: HTMLElement | null = null;
+
     if (!shadowRoot) {
       shadowRoot = containerRef.current.attachShadow({ mode: "open" });
 
-      // CSS 링크 한 번만 추가
       const link98 = document.createElement("link");
       link98.rel = "stylesheet";
       link98.href = "/styles/98.css/dist/98.css";
-      shadowRoot.appendChild(link98);
 
       const style = document.createElement("link");
       style.rel = "stylesheet";
       style.href = "/styles/modalShadow.css";
-      shadowRoot.appendChild(style);
 
-      // 모달 감싸는 div 한 번 생성
-      const wrapper = document.createElement("div");
+      // wrapper 생성
+      wrapper = document.createElement("div");
       wrapper.className = "modal-wrapper";
+
+      shadowRoot.appendChild(link98);
+      shadowRoot.appendChild(style);
       shadowRoot.appendChild(wrapper);
+    } else {
+      wrapper = shadowRoot.querySelector(".modal-wrapper");
     }
 
-    // 모달 열려있을 때만 내부 내용만 갱신 (wrapper 내부)
-    if (isOpen) {
-      const wrapper = shadowRoot.querySelector(".modal-wrapper")!;
-      const root = ReactDOM.createRoot(wrapper);
+    if (isOpen && wrapper) {
+      const waitForCSS = Promise.all([
+        new Promise((res) => {
+          const link1 = shadowRoot!.querySelector(
+            'link[href="/styles/98.css/dist/98.css"]'
+          ) as HTMLLinkElement;
+          if (link1.sheet) res(null);
+          else link1.onload = () => res(null);
+        }),
+        new Promise((res) => {
+          const link2 = shadowRoot!.querySelector(
+            'link[href="/styles/modalShadow.css"]'
+          ) as HTMLLinkElement;
+          if (link2.sheet) res(null);
+          else link2.onload = () => res(null);
+        }),
+      ]);
 
-      if (type === "error" || type === "success") {
-        root.render(
-          <AlertModal type={type} onClose={onClose} message={message!} />
-        );
-      } else if (type === "pay") {
-        root.render(<PayModal onClose={onClose} />);
-      } else if (type === "friendReq") {
-        root.render(
-          <ModalProvider>
-            <FriendModal onClose={onClose} data={data} userName={userName!} />
-          </ModalProvider>
-        );
-      } else if (type === "confirm") {
-        root.render(
-          <ConfirmModal
-            onClose={onClose}
-            onConfirm={onConfirm!}
-            message={message!}
-          />
-        );
-      } else if (type === "privacy") {
-        root.render(<PrivacyModal onClose={onClose} />);
-      } else {
-        root.render(
-          <ProfileModal
-            onClose={onClose}
-            data={data}
-            type={type}
-            userName={userName!}
-          />
-        );
-      }
+      waitForCSS.then(() => {
+        const root = ReactDOM.createRoot(wrapper!);
 
-      return () => {
-        root.unmount();
-      };
+        switch (type) {
+          case "error":
+          case "success":
+            root.render(
+              <AlertModal type={type} onClose={onClose} message={message!} />
+            );
+            break;
+          case "pay":
+            root.render(<PayModal onClose={onClose} />);
+            break;
+          case "friendReq":
+            root.render(
+              <ModalProvider>
+                <FriendModal
+                  onClose={onClose}
+                  data={data}
+                  userName={userName!}
+                />
+              </ModalProvider>
+            );
+            break;
+          case "confirm":
+            root.render(
+              <ConfirmModal
+                onClose={onClose}
+                onConfirm={onConfirm!}
+                message={message!}
+              />
+            );
+            break;
+          case "privacy":
+            root.render(<PrivacyModal onClose={onClose} />);
+            break;
+          default:
+            root.render(
+              <ProfileModal
+                onClose={onClose}
+                data={data}
+                type={type}
+                userName={userName!}
+              />
+            );
+            break;
+        }
+
+        return () => root.unmount();
+      });
     }
   }, [isOpen, type]);
 
