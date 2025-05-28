@@ -85,6 +85,9 @@ const Login = () => {
         },
         {
           withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
 
