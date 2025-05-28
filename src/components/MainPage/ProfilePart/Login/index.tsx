@@ -91,8 +91,6 @@ const Login = () => {
         }
       );
 
-      console.log("✅ 로그인 응답:", response.data);
-
       Cookie.set("accessToken", response.data.access_token, {
         path: "/",
         expires: 1,

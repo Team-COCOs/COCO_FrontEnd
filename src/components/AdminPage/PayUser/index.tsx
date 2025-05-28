@@ -29,7 +29,6 @@ const PayUser: React.FC<PayUserProps> = ({ title }) => {
     try {
       const res = await axiosInstance.get("admin/payments");
       setPayUsers(res.data.payments);
-      console.log(res.data.payments, "res.data?");
     } catch (error) {
       console.error("유저 불러오기 실패", error);
     }
