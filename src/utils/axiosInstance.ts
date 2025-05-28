@@ -75,7 +75,7 @@ axiosInstance.interceptors.response.use(
             Authorization: `Bearer ${refreshToken}`, // refresh_token을 Authorization 헤더에 포함시켜서 요청
           },
         });
-
+        console.log(response.data.access_token, "response.data.access_token");
         // 새로 발급받은 access_token을 쿠키에 저장
         const newAccessToken = response.data.access_token;
 
