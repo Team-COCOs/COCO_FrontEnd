@@ -31,11 +31,8 @@ export default function App({ Component, pageProps }: AppProps) {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/health`
         );
-        console.log("✅ Health check response:", res.data);
-        if (!res.data.ok) throw new Error();
         setIsServerDown(false);
       } catch (e) {
-        console.log("❌ Health check failed:", e);
         setIsServerDown(true);
       }
     };
