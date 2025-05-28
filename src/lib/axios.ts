@@ -40,7 +40,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       const baseURL = process.env.NEXT_PUBLIC_API_URL;
       try {
-        const refreshToken = Cookies.get("refresh_token");
+        const refreshToken = Cookies.get("refreshToken");
 
         if (!refreshToken) {
           return Promise.reject(error);
@@ -62,7 +62,7 @@ axiosInstance.interceptors.response.use(
 
         if (!newAccessToken) {
           Cookies.remove("accessToken");
-          Cookies.remove("refresh_token");
+          Cookies.remove("refreshToken");
           Router.push("/");
           return Promise.reject(error);
         }
@@ -78,7 +78,7 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         Cookies.remove("accessToken");
-        Cookies.remove("refresh_token");
+        Cookies.remove("refreshToken");
 
         const tempToken = Cookies.get("temp_accessToken");
 
