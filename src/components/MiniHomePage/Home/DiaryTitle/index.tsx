@@ -65,7 +65,7 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
     };
 
     fetchFriendStatus();
-  }, [id]);
+  }, [id, user]);
 
   useEffect(() => {
     const homepiProfile = async () => {
