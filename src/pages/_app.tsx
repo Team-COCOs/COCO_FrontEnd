@@ -15,11 +15,35 @@ import { TabsProvider } from "@/context/TabsContext";
 import { MusicPlayerProvider } from "@/context/MusicPlayerContext";
 import MusicPlayerController from "@/context/MusicPlayerController";
 import { ModalProvider } from "@/context/ModalContext";
+import axios from "axios";
+import ServerDownPage from "@/components/ServerDownPage";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { id } = router.query;
+
+  const [isServerDown, setIsServerDown] = useState(false);
+
+  useEffect(() => {
+    const checkHealth = async () => {
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/health`
+        );
+        console.log("✅ Health check response:", res.data);
+        if (!res.data.ok) throw new Error();
+        setIsServerDown(false);
+      } catch (e) {
+        console.log("❌ Health check failed:", e);
+        setIsServerDown(true);
+      }
+    };
+
+    checkHealth();
+    const interval = setInterval(checkHealth, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     let startTime = 0;
@@ -75,7 +99,13 @@ export default function App({ Component, pageProps }: AppProps) {
                 <LanguageProvider>
                   <TabsProvider>
                     <ThemeProvider theme={theme}>
-                      {loading ? <Loading /> : <Component {...pageProps} />}
+                      {isServerDown ? (
+                        <ServerDownPage />
+                      ) : loading ? (
+                        <Loading />
+                      ) : (
+                        <Component {...pageProps} />
+                      )}
                     </ThemeProvider>
                   </TabsProvider>
                 </LanguageProvider>
