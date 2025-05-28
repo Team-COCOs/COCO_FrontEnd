@@ -12,6 +12,7 @@ export const DragMiniroomStyled = styled.div`
     flex-direction: column;
     overflow-x: scroll;
   }
+
   .DragMiniroom_speechbubble_btnwrap {
     width: 500px;
     display: flex;
@@ -36,5 +37,33 @@ export const DragMiniroomStyled = styled.div`
     justify-content: flex-start;
     font-size: 8px;
     color: gray;
+  }
+  @media (max-width: 1170px) {
+    .DragMiniroom_allWrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: unset;
+      flex-direction: column;
+      overflow-x: scroll;
+    }
+    .DragMiniroom_speechbubble_btnwrap {
+      /* width: 500px; */
+      display: flex;
+      justify-content: flex-start;
+      button {
+        width: 80px;
+        text-align: center;
+        font-size: 11px;
+        background: linear-gradient(to bottom, #ffffff, #dddddd);
+        border: 1px solid #000000;
+        border-radius: 3px;
+        padding: 6px 8px;
+        cursor: pointer;
+        margin-top: 5px;
+        margin-bottom: 15px;
+      }
+    }
   }
 `;
