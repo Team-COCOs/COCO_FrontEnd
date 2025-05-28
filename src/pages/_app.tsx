@@ -31,6 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL}/health`
         );
+        if (!res.data.ok) throw new Error();
         setIsServerDown(false);
       } catch (e) {
         setIsServerDown(true);

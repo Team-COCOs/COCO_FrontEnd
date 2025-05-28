@@ -12,7 +12,7 @@ const ServerDownPage = () => {
         <div className="Success_box">
           <div className="Success_text">
             <h3>점검 중!</h3>
-            <p> 현재 점검 중입니다. 잠시 후 다시 이용해주세요!</p>
+            <p> 현재 점검 중입니다. 5분 후에 다시 이용해주세요!</p>
           </div>
         </div>
       </div>
