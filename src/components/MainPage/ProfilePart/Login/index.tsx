@@ -53,12 +53,14 @@ const Login = ({ setHasToken }: LoginProps) => {
 
           Cookie.set("accessToken", res.data.access_token, {
             path: "/", // 모든 페이지에서 접근 가능
-            expires: 1,
+            // expires: 1,
+            expires: 0.007,
           });
 
           Cookie.set("refreshToken", res.data.refresh_token, {
             path: "/",
-            expires: 1,
+            // expires: 1,
+            expires: 7,
           });
 
           dispatch(setReduxUser(res.data));
@@ -104,7 +106,7 @@ const Login = ({ setHasToken }: LoginProps) => {
 
       Cookie.set("refreshToken", response.data.refresh_token, {
         path: "/",
-        expires: 1,
+        expires: 7,
       });
 
       dispatch(setReduxUser(response.data));
