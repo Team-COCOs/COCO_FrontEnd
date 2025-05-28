@@ -311,8 +311,10 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
               src={selectedMiniroom.storeItems.file || null}
               alt="miniroom background"
               style={{
-                width: "100%",
-                height: "auto",
+                // width: "100%",
+                // height: "auto",
+                width: 500,
+                height: 250,
                 display: "block",
                 maxHeight: 250,
                 maxWidth: "100%",
