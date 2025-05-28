@@ -91,6 +91,8 @@ const Login = () => {
         }
       );
 
+      console.log("✅ 로그인 응답:", response.data);
+
       Cookie.set("accessToken", response.data.access_token, {
         path: "/",
         expires: 1,
@@ -105,6 +107,7 @@ const Login = () => {
       window.location.href = "/";
     } catch (e: any) {
       console.log(e);
+      console.error("❌ 테스트 로그인 에러:", e.response?.data || e.message);
     }
   };
 
