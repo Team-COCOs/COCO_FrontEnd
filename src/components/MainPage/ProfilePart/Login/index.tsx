@@ -67,7 +67,8 @@ const Login = ({ setHasToken }: LoginProps) => {
 
           setHasToken(true);
 
-          router.replace("/");
+          // router.replace("/");
+          window.location.href = "/";
         })
         .catch((e) => {
           openModal("error", { message: e.response.data.message });
@@ -113,7 +114,8 @@ const Login = ({ setHasToken }: LoginProps) => {
 
       setHasToken(true);
 
-      router.replace("/");
+      // router.replace("/");
+      window.location.href = "/";
     } catch (e: any) {
       console.log("테스트 로그인 e", e);
     }
