@@ -48,6 +48,8 @@ const MiniroomItem: React.FC<MiniroomItemProps> = ({ item }) => {
         top: item.top,
         left: item.left,
         width: "fit-content",
+        maxHeight: "50px",
+        objectFit: "contain",
         height: 50,
         opacity: isDragging ? 0.5 : 1,
         cursor: "move",

@@ -314,7 +314,7 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
                 width: "100%",
                 height: "auto",
                 display: "block",
-                maxHeight: 260,
+                maxHeight: 250,
                 maxWidth: "100%",
               }}
             />
