@@ -5,6 +5,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 interface HomeTabProps {
   activeTab: string;
@@ -23,6 +24,7 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
   );
   const router = useRouter();
   const { id } = router.query;
+  const { user } = useAuth();
   const [photoTitles, setPhotoTitles] = useState<PhotoTitle[]>([]);
   const [newBoards, setNewBoards] = useState<{
     [key: string]: { count: number; total: number };
@@ -142,21 +144,30 @@ const RecentPhoto: React.FC<HomeTabProps> = ({ activeTab }) => {
             </div>
           )}
           <div className="RecentPhoto_new_alltab Gulim">
-            {filteredTabKeys.map((key) => (
-              <div
-                key={key}
-                className="RecentPhoto_new_tabs"
-                onClick={() => router.push(`/${key}/${id}`)}
-              >
-                <div className="tab">{TAB_LABELS[key]}</div>
-                <span>
-                  {newBoards[key]?.count ?? 0}/{newBoards[key]?.total ?? 0}
-                </span>
-                {newBoards[key]?.count > 0 && (
-                  <span className="RecentPhoto_new_alert">N</span>
-                )}
-              </div>
-            ))}
+            {filteredTabKeys.map((key) => {
+              const isOwnCocoTab =
+                key === "coco" && Number(user?.id) !== Number(id);
+
+              return (
+                <div
+                  key={key}
+                  className="RecentPhoto_new_tabs"
+                  onClick={() => {
+                    if (!isOwnCocoTab) {
+                      router.push(`/${key}/${id}`);
+                    }
+                  }}
+                >
+                  <div className="tab">{TAB_LABELS[key]}</div>
+                  <span>
+                    {newBoards[key]?.count ?? 0}/{newBoards[key]?.total ?? 0}
+                  </span>
+                  {newBoards[key]?.count > 0 && (
+                    <span className="RecentPhoto_new_alert">N</span>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
