@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 interface Track {
+  id: number;
   name: string;
   url: string;
   artist: string;
@@ -16,6 +17,7 @@ interface MusicPlayerContextType {
   isPlaying: boolean;
   volume: number;
   hasPlayedOnce: boolean;
+  setHasPlayedOnce: (value: boolean) => void;
   audioRef: React.RefObject<HTMLAudioElement>;
   setPlaylist: (tracks: Track[]) => void;
   togglePlay: () => void;
@@ -104,7 +106,7 @@ export const MusicPlayerProvider = ({
       audio.pause();
       audio.currentTime = 0;
       setIsPlaying(false);
-      //   setHasPlayedOnce(false);
+      // setHasPlayedOnce(false);
     }
   };
 
@@ -156,6 +158,7 @@ export const MusicPlayerProvider = ({
         isPlaying,
         volume,
         hasPlayedOnce,
+        setHasPlayedOnce,
         audioRef,
         setPlaylist,
         togglePlay,
