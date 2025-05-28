@@ -4,7 +4,6 @@ export const DotoriStyle = styled.div`
   &.Profile_infos {
     display: flex;
     align-items: center;
-    cursor: pointer;
     margin: 3px 0 0 -2px;
 
     .Profile_newText {

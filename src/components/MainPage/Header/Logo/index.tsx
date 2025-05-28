@@ -20,14 +20,14 @@ const Logo = ({ type }: LogoProps) => {
 
       <div
         className={!isHeader ? "Sign_img" : "Logo_img"}
-        onClick={() => window.location.reload()}
+        onClick={() => router.push("/")}
       >
         <Image src="/cocoworld.png" alt="logo" fill />
       </div>
 
       <p
         className={`logoFont ${!isHeader ? "Sign_logoFont" : ""}`}
-        onClick={() => window.location.reload()}
+        onClick={() => router.push("/")}
       >
         COCOWORLD
       </p>
