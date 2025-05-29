@@ -4,7 +4,7 @@ import Login from "@/components/MainPage/ProfilePart/Login";
 import Advertising from "../Advertising";
 import Cookie from "js-cookie";
 import Profile from "./Profile";
-import { useRouter } from "next/router";
+import Skeleton from "@mui/material/Skeleton";
 import { useEffect, useState } from "react";
 
 const ProfilePart = () => {

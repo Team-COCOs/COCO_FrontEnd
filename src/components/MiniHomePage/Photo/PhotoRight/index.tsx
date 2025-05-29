@@ -104,6 +104,7 @@ const PhotoRight = ({ selectedMenu, setWrite, setEditData }: PhotoProps) => {
 
   useEffect(() => {
     queryUserId && getPhotoData();
+    setCurrentPage(1);
   }, [selectedMenu, queryUserId]);
 
   let DOMPurify: any = null;
