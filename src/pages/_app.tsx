@@ -37,6 +37,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
         const { ok, status } = res.data;
 
+        console.log(res.data);
+
         if (!ok || status !== "ready") throw new Error("Server not ready");
 
         setIsServerDown(false);
