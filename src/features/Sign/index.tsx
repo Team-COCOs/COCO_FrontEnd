@@ -114,6 +114,7 @@ const SignPage = () => {
                       placeholder="이메일"
                       value={localPart}
                       onChange={(e) => setLocalPart(e.target.value)}
+                      disabled={isOpen}
                     />
                     <span>@</span>
                     <input
@@ -124,7 +125,7 @@ const SignPage = () => {
                       onBlur={() => {
                         if (!customDomain) setUseCustomDomain(false);
                       }}
-                      disabled={!useCustomDomain}
+                      disabled={!useCustomDomain || isOpen}
                     />
                     <select
                       className="Sign_input"
@@ -138,6 +139,7 @@ const SignPage = () => {
                           setDomain(e.target.value);
                         }
                       }}
+                      disabled={isOpen}
                     >
                       {predefinedDomains.map((d) => (
                         <option key={d} value={d}>
@@ -153,6 +155,7 @@ const SignPage = () => {
                   type="button"
                   onClick={() => handleDuplicateCheck("email")}
                   className="Sign_checkBtn"
+                  disabled={isOpen}
                 >
                   중복확인
                 </button>
@@ -163,6 +166,7 @@ const SignPage = () => {
                   className="Sign_input"
                   value={fullEmail}
                   onChange={formik.handleChange}
+                  disabled={isOpen}
                 />
               </div>
               <div className="Sign_error">{emailError}</div>
@@ -183,6 +187,7 @@ const SignPage = () => {
                     formik.handleChange(e);
                   }}
                   placeholder="비밀번호"
+                  disabled={isOpen}
                 />
               </div>
               <div className="Sign_error">{passwordError}</div>
@@ -203,6 +208,7 @@ const SignPage = () => {
                     handlePasswordCheckChange(e);
                   }}
                   placeholder="비밀번호 확인"
+                  disabled={isOpen}
                 />
               </div>
               <div className="Sign_error">{passwordCheckError}</div>
@@ -223,6 +229,7 @@ const SignPage = () => {
                     handleNameChange(e);
                   }}
                   placeholder="이름"
+                  disabled={isOpen}
                 />
               </div>
               <div className="Sign_error">{nameError}</div>
@@ -243,11 +250,13 @@ const SignPage = () => {
                     handlePhoneChange(e);
                   }}
                   placeholder="전화번호"
+                  disabled={isOpen}
                 />
                 <button
                   type="button"
                   className="Sign-PhoneCheck"
                   onClick={() => handleDuplicateCheck("phone")}
+                  disabled={isOpen}
                 >
                   전화번호 중복 확인
                 </button>
@@ -266,6 +275,7 @@ const SignPage = () => {
                   value="man"
                   checked={gender === "man"}
                   onChange={(e) => setGender(e.target.value)}
+                  disabled={isOpen}
                 />
                 <p className="mainFont">남자</p>
                 <input
@@ -274,6 +284,7 @@ const SignPage = () => {
                   value="woman"
                   className="Sign_radioBtn"
                   onChange={(e) => setGender(e.target.value)}
+                  disabled={isOpen}
                 />
                 <p className="mainFont">여자</p>
               </div>
@@ -295,6 +306,7 @@ const SignPage = () => {
                         setBirthYear(e.target.value);
                         handleBirthYearChange(e);
                       }}
+                      disabled={isOpen}
                     />
                     <input
                       type="number"
@@ -305,6 +317,7 @@ const SignPage = () => {
                         setBirthMonth(e.target.value);
                         handleBirthMonthChange(e);
                       }}
+                      disabled={isOpen}
                     />
                     <input
                       type="number"
@@ -315,6 +328,7 @@ const SignPage = () => {
                         setBirthDay(e.target.value);
                         handleBirthDayChange(e);
                       }}
+                      disabled={isOpen}
                     />
                   </div>
 
@@ -325,6 +339,7 @@ const SignPage = () => {
                       value="solar"
                       checked={birth === "solar"}
                       onChange={(e) => setBirth(e.target.value)}
+                      disabled={isOpen}
                     />
                     <p className="mainFont radioWidth">양력</p>
                     <input
@@ -333,6 +348,7 @@ const SignPage = () => {
                       value="lunar"
                       className="Sign_radioBtn"
                       onChange={(e) => setBirth(e.target.value)}
+                      disabled={isOpen}
                     />
                     <p className="mainFont radioWidth">음력</p>
                   </div>
