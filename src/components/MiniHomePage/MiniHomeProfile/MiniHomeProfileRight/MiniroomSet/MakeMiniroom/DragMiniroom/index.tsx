@@ -229,6 +229,9 @@ const DragMiniroom: React.FC<DragMiniroomProps> = ({
   const handleDelete = (id: string) => {
     const updatedItems = items.filter((item) => item.id !== id);
     setItems(updatedItems);
+    // initialItems도 삭제 반영
+    const updatedInitialItems = initialItems.filter((item) => item.id !== id);
+    setInitialItems(updatedInitialItems);
 
     // 말풍선 삭제 시 부모에게 데이터 전달
     const updatedLayout = updatedItems.map((item) => ({
