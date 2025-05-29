@@ -63,10 +63,8 @@ export const LoginStyle = styled.div`
       }
     }
 
-    .Login_testBtn {
-    }
-
     .Login_saveEmail {
+      position: relative;
       display: flex;
       align-items: center;
       gap: 3px;
@@ -95,8 +93,8 @@ export const LoginStyle = styled.div`
 
       .Login_testBtn {
         font-size: 11px;
-        position: relative;
-        margin-left: 45px;
+        position: absolute;
+        right: 5px;
         cursor: pointer;
         color: rgb(141, 141, 141);
         text-decoration: underline;
