@@ -2,7 +2,7 @@ import { HomeProfileStyled } from "./styled";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-
+import Skeleton from "@mui/material/Skeleton";
 interface UserData {
   title: string;
   minihomepi_image: string;
@@ -40,13 +40,12 @@ const convertTextToLinks = (text: string) => {
 };
 
 const HomeProfile = () => {
-  const [minihomepi_image, setMinihomepi_image] = useState<string>(
-    "/avatarImg/defaultProfile.png"
-  );
+  const [minihomepi_image, setMinihomepi_image] = useState<string | null>(null);
   const router = useRouter();
   const userId = router.query.id;
 
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -56,11 +55,13 @@ const HomeProfile = () => {
         );
 
         setUserData(res.data);
-        setMinihomepi_image(res.data.minihomepi_image);
+        setMinihomepi_image(res.data.minihomepi_image || null);
       } catch (e) {
-        console.error("에러 발생:", e);
+        console.error(e);
+        setMinihomepi_image(null);
       }
     };
+
     fetchUserInfo();
   }, [userId, userData]);
 
@@ -74,12 +75,55 @@ const HomeProfile = () => {
         <div className="HomeProfile_todayis Gulim">
           <span className="pixelFont">TODAY IS...</span> {moodText}
         </div>
-        <div className="HomeProfile_imgWrap">
-          <img
-            src={userData?.minihomepi_image || "/avatarImg/defaultProfile.png"}
-            alt="Profile img"
-          />
+        <div className="HomeProfile_imgWrap" style={{ position: "relative" }}>
+          {(!minihomepi_image || !loaded) && (
+            <Skeleton
+              variant="rectangular"
+              width="100%"
+              height={250}
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                zIndex: 1,
+              }}
+            />
+          )}
+
+          {minihomepi_image && (
+            <img
+              src={minihomepi_image}
+              alt="Profile img"
+              style={{
+                width: "100%",
+                height: "auto",
+                opacity: loaded ? 1 : 0,
+                transition: "opacity 0.3s ease-in-out",
+                position: "relative",
+                zIndex: 2,
+              }}
+              onLoad={() => setLoaded(true)}
+              onError={(e) => {
+                e.currentTarget.src = "/avatarImg/defaultProfile.png";
+                setLoaded(true);
+              }}
+            />
+          )}
+
+          {!minihomepi_image && loaded && (
+            <img
+              src="/avatarImg/defaultProfile.png"
+              alt="Default profile img"
+              style={{
+                width: "100%",
+                height: "auto",
+                position: "relative",
+                zIndex: 2,
+              }}
+            />
+          )}
         </div>
+
         <div className="HomeProfile_textarea Gulim">
           {userData?.introduction
             ? convertTextToLinks(userData.introduction)
