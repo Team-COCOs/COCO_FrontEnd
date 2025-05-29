@@ -25,30 +25,20 @@ export default function App({ Component, pageProps }: AppProps) {
   const { id } = router.query;
 
   const [isServerDown, setIsServerDown] = useState(false);
-  const [checkedServer, setCheckedServer] = useState(false);
 
   useEffect(() => {
     const checkHealth = async () => {
       try {
         const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/health`,
-          { timeout: 3000 }
+          `${process.env.NEXT_PUBLIC_API_URL}/health`
         );
-
-        const { ok, status } = res.data;
-
-        console.log(res.data);
-
-        if (!ok || status !== "ready") throw new Error("Server not ready");
-
+        if (!res.data.ok) throw new Error();
         setIsServerDown(false);
       } catch (e) {
         Cookies.remove("accessToken", { path: "/" });
         Cookies.remove("refreshToken", { path: "/" });
 
         setIsServerDown(true);
-      } finally {
-        setCheckedServer(true);
       }
     };
 
@@ -111,9 +101,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <LanguageProvider>
                   <TabsProvider>
                     <ThemeProvider theme={theme}>
-                      {!checkedServer ? (
-                        <Loading />
-                      ) : isServerDown ? (
+                      {isServerDown ? (
                         <ServerDownPage />
                       ) : loading ? (
                         <Loading />
