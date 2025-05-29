@@ -58,14 +58,15 @@ const Login = ({ setHasToken }: LoginProps) => {
 
           Cookie.set("refreshToken", res.data.refresh_token, {
             path: "/",
-            expires: 1,
+            expires: 7,
           });
 
           dispatch(setReduxUser(res.data));
 
           setHasToken(true);
 
-          router.replace("/");
+          // router.replace("/");
+          window.location.href = "/";
         })
         .catch((e) => {
           openModal("error", { message: e.response.data.message });
@@ -104,14 +105,15 @@ const Login = ({ setHasToken }: LoginProps) => {
 
       Cookie.set("refreshToken", response.data.refresh_token, {
         path: "/",
-        expires: 1,
+        expires: 7,
       });
 
       dispatch(setReduxUser(response.data));
 
       setHasToken(true);
 
-      router.replace("/");
+      // router.replace("/");
+      window.location.href = "/";
     } catch (e: any) {
       console.log("테스트 로그인 e", e);
     }

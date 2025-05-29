@@ -101,9 +101,11 @@ const DiaryTitle = ({ setIsOpen }: Props) => {
       <div>
         <div className="DiaryTitle_wrap">
           <div className="DiaryTitle_number_title">
-            {userTitle !== "미니홈피"
+            {userTitle
               ? userTitle
-              : `${profile?.name}님의 미니홈피`}
+              : profile?.name
+              ? `${profile.name}님의 미니홈피`
+              : "미니홈피"}
           </div>
           {!isOwnPage &&
             (!user ? (
