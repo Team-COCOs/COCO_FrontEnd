@@ -17,9 +17,7 @@ interface UserData {
 }
 
 const MiniStatus = () => {
-  const [minihomepi_image, setMinihomepi_image] = useState<string>(
-    "/avatarImg/defaultProfile.png"
-  );
+  const [minihomepi_image, setMinihomepi_image] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const { user } = useAuth();
@@ -125,7 +123,7 @@ const MiniStatus = () => {
         <Form>
           <div className="MiniStatus_top">
             <div className="MiniStatus_left">
-              <div className="MiniStatus_img">
+              <div className="MiniStatus_img" style={{ position: "relative" }}>
                 {!loaded && (
                   <Skeleton
                     variant="rectangular"
@@ -134,13 +132,23 @@ const MiniStatus = () => {
                     sx={{ position: "absolute", top: 0, left: 0, zIndex: 1 }}
                   />
                 )}
-                <Image
-                  src={minihomepi_image || "/avatarImg/defaultProfile.png"}
-                  alt="profile"
-                  fill
-                  style={{ objectFit: "cover" }}
-                  onLoad={() => setLoaded(true)}
-                />
+                {minihomepi_image && (
+                  <Image
+                    src={minihomepi_image}
+                    alt="profile"
+                    fill
+                    style={{
+                      objectFit: "cover",
+                      opacity: loaded ? 1 : 0,
+                      transition: "opacity 0.3s ease-in-out",
+                      zIndex: 2,
+                    }}
+                    onLoadingComplete={() => setLoaded(true)}
+                    onError={() => {
+                      setLoaded(true);
+                    }}
+                  />
+                )}
               </div>
 
               <div
