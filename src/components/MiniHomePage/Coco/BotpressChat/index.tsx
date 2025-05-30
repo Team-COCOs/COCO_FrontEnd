@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
+
 declare global {
   interface Window {
     botpress: {
@@ -14,11 +14,9 @@ declare global {
 }
 
 export default function BotpressChat() {
-  const router = useRouter();
-
-  useEffect(() => {
+  const initializeBot = () => {
     if (typeof window !== "undefined" && window.botpress) {
-      window.botpress?.init?.({
+      window.botpress.init({
         botId: "7d9faaf2-c025-4617-a734-39fad6ad26a6",
         clientId: "bf1698e9-73c3-4bb4-8836-178cdb6a49ce",
         hostUrl: "https://cdn.botpress.cloud/webchat/v2.4",
@@ -50,21 +48,19 @@ export default function BotpressChat() {
         },
       });
 
-      window.botpress?.on?.("webchat:ready", () => {
+      window.botpress.on("webchat:ready", () => {
         window.botpress.open();
       });
     }
-  }, [router.asPath, router.pathname]);
+  };
 
   return (
     <>
-      {/* 챗봇이 들어갈 영역 */}
       <div id="custom-bot-container" />
-
-      {/* Botpress 스크립트 로드 */}
       <Script
         src="https://cdn.botpress.cloud/webchat/v2.4/inject.js"
         strategy="afterInteractive"
+        onLoad={initializeBot}
       />
     </>
   );

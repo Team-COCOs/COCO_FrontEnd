@@ -15,6 +15,7 @@ const HomeFriends = () => {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [message, setMessage] = useState("");
+  const [prevWaveId, setPrevWaveId] = useState<number | null>(null);
 
   useEffect(() => {
     const homepiProfile = async () => {
@@ -50,10 +51,14 @@ const HomeFriends = () => {
     if (value === "파도타기") {
       try {
         // axios 요청
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/users/wave/${id}`
-        );
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/users/wave/${id}`;
+        const response = await axios.get(url, {
+          params: prevWaveId ? { exclude: prevWaveId } : {},
+        });
         const newId = response.data.userId;
+
+        // 이전 파도타기 ID 저장
+        setPrevWaveId(Number(newId));
 
         // 페이지 이동
         router.push(`/home/${newId}`);
