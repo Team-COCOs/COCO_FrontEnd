@@ -7,6 +7,7 @@ import HomeLeft from "@/components/MiniHomePage/Home/HomeLeft";
 // 코코 컴포넌트
 import CocoRight from "@/components/MiniHomePage/Coco/CocoRight";
 import Head from "next/head";
+import { useEffect } from "react";
 
 const MinihomePage = () => {
   const router = useRouter();
@@ -20,7 +21,7 @@ const MinihomePage = () => {
       <MinihomeLayout
         id={id as string}
         tapChildren={<HomeLeft />}
-        children={<CocoRight />}
+        children={<CocoRight key={id as string} />}
       />
     </>
   );
