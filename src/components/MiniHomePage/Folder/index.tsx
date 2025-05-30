@@ -182,8 +182,6 @@ const Folder = ({ isType, onSave }: FolderProps) => {
       .then((res) => {
         const fetchedData = res.data;
 
-        console.log(res.data);
-
         const nestedTreeData = fetchedData.map((item: any) => ({
           key: String(item.id),
           title: item.title,
