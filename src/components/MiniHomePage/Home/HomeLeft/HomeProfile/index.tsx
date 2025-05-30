@@ -98,7 +98,6 @@ const HomeProfile = () => {
                 width: "100%",
                 height: "auto",
                 opacity: loaded ? 1 : 0,
-                transition: "opacity 0.3s ease-in-out",
                 position: "relative",
                 zIndex: 2,
               }}
