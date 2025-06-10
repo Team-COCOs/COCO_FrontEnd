@@ -66,6 +66,13 @@ export const MusicPlayerProvider = ({
   }, [isPlaying, currentTrack]);
 
   useEffect(() => {
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = volume;
+    }
+  }, [volume]);
+
+  useEffect(() => {
     const onFirstUserInteraction = () => {
       if (!hasPlayedOnce && playlist.length > 0) {
         setIsPlaying(true);
