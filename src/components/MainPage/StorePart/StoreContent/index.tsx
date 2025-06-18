@@ -37,6 +37,7 @@ const StoreContent = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
+  // 스토어 아이템이 변경될 때마다 요청
   useEffect(() => {
     if (product === "skin") {
       dispatch(fetchStoreItems());
